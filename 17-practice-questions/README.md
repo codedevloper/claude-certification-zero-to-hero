@@ -71,6 +71,13 @@ Each domain file validates against [`schema/question-bank.schema.json`](schema/q
 3. Make every distractor plausible, and explain why it is wrong.
 4. Make every question distinct. The validator rejects stems that are more than 85% similar.
 5. Base answers only on facts verified against official documentation, as of the date in the registry.
+6. **No test-taking cues.** Write distractors as competent but inferior choices of similar length to the key. The
+   validator fails a bank when the key is the longest option in more than 40% of items, or when one answer position
+   is used far more or less often than chance.
+
+After adding or editing questions, run `python tools/shuffle_options.py` once. It gives every question a fair,
+reproducible answer order (seeded by the question ID) and remaps the key and rationales, so never refer to options by
+letter in question text.
 
 ## Validation
 

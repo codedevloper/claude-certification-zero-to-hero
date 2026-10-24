@@ -14,19 +14,19 @@
       "scenario": "Every week, Oliver at Acme Logistics asks Claude questions about the same carrier contracts, rate cards and escalation procedures. He re-uploads the same five files and re-explains his role each time.",
       "question": "Which Claude feature best fits this recurring work?",
       "options": {
-        "A": "A single artifact containing all five files.",
-        "B": "A Project with the five files in its knowledge and instructions describing his role and preferred style.",
+        "A": "A Project with the five files in its knowledge and instructions describing his role and preferred style.",
+        "B": "A new standalone chat each week with the files re-attached.",
         "C": "The research feature, so Claude can search for and gather the latest versions of his contracts each time he asks a question.",
-        "D": "A new standalone chat each week with the files re-attached."
+        "D": "A shared artifact that combines the five files into one reference document."
       },
       "answer": [
-        "B"
+        "A"
       ],
       "explanation": "Projects are self-contained workspaces with their own knowledge base and instructions that apply to every chat in the project. They suit recurring work on the same materials.",
       "why_incorrect": {
-        "A": "Artifacts are outputs Claude creates, not a store of reference documents and instructions for future chats.",
+        "B": "This is exactly the repetitive set-up he wants to avoid; nothing persists between standalone chats by design.",
         "C": "His contracts are internal documents, not web content; research is for multi-source investigation, often on the web.",
-        "D": "This is exactly the repetitive set-up he wants to avoid; nothing persists between standalone chats by design."
+        "D": "Artifacts are outputs Claude creates, not a store of reference documents and instructions for future chats."
       },
       "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
       "references": [
@@ -42,18 +42,18 @@
       "scenario": "Selin, a strategy analyst at Woodgrove Bank, needs a well-sourced overview of how five competitor banks have changed their mobile app features over the past year, drawing on many public sources.",
       "question": "Which Claude capability is the best fit?",
       "options": {
-        "A": "Research, which runs multiple linked searches, follows leads and produces a cited report.",
+        "A": "A single web search in an ordinary chat, asking Claude to list each competitor's mobile app changes.",
         "B": "An artifact that Claude builds from its training data alone, structured as a competitor-by-feature comparison table.",
-        "C": "A single web search in an ordinary chat, asking Claude to list each competitor's mobile app changes.",
+        "C": "Research, which runs multiple linked searches, follows leads and produces a cited report.",
         "D": "A Project containing last year's internal strategy deck."
       },
       "answer": [
-        "A"
+        "C"
       ],
       "explanation": "Research is designed for multi-step investigation: it runs a series of searches, decides what to look at next and cites its sources. Simple web search is better for quick factual lookups.",
       "why_incorrect": {
+        "A": "A single quick search suits simple factual lookups; this question needs many searches across sources.",
         "B": "Training data has a cutoff and lacks sources; the task needs current, cited information.",
-        "C": "A single quick search suits simple factual lookups; this question needs many searches across sources.",
         "D": "An old internal deck cannot provide the past year's external changes."
       },
       "module": "05-claude-products-and-models/01-product-ecosystem.md",
@@ -72,21 +72,21 @@
       "scenario": "Fourth Coffee's regional manager has four tasks this week: (1) a quick check of today's opening hours for a supplier's office, (2) an ongoing workspace for monthly store-performance reviews using the same templates, (3) a shareable interactive staff rota planner, and (4) a one-off question about how to phrase a thank-you note.",
       "question": "Which TWO feature matches are correct?",
       "options": {
-        "A": "Task 4: a new Project with uploaded etiquette guides.",
-        "B": "Task 1: the research feature, so that the supplier's opening hours are checked across several sources and cited.",
-        "C": "Task 2: a separate standalone chat each month, re-attaching the templates, so each month's review starts clean.",
-        "D": "Task 2: a Project holding the templates and review instructions.",
-        "E": "Task 3: an artifact the manager can refine and share."
+        "A": "Task 2: a Project holding the templates and review instructions.",
+        "B": "Task 2: a separate standalone chat each month, re-attaching the templates, so each month's review starts clean.",
+        "C": "Task 3: an artifact the manager can refine and share.",
+        "D": "Task 4: a new Project with uploaded etiquette guides.",
+        "E": "Task 1: the research feature, so that the supplier's opening hours are checked across several sources and cited."
       },
       "answer": [
-        "D",
-        "E"
+        "A",
+        "C"
       ],
       "explanation": "Match features to the shape of the work: chat (with web search if needed) for quick one-off questions, Projects for recurring work on shared materials, artifacts for standalone outputs to reuse or share, and research for deep multi-source investigation.",
       "why_incorrect": {
-        "A": "A one-off question is well served by an ordinary chat; a Project adds unnecessary set-up.",
-        "B": "Research takes longer and uses more of the usage allowance; a quick web search fits a simple fact lookup.",
-        "C": "Recurring work on the same templates benefits from a Project rather than repeating the set-up each time."
+        "B": "Recurring work on the same templates benefits from a Project rather than repeating the set-up each time.",
+        "D": "A one-off question is well served by an ordinary chat; a Project adds unnecessary set-up.",
+        "E": "Research takes longer and uses more of the usage allowance; a quick web search fits a simple fact lookup."
       },
       "module": "05-claude-products-and-models/01-product-ecosystem.md",
       "references": [
@@ -103,19 +103,19 @@
       "scenario": "A new user at Litware Publishing asks how Skills differ from Projects in the Claude apps.",
       "question": "Which explanation is most accurate?",
       "options": {
-        "A": "Skills are only for software developers and cannot be used in the Claude apps.",
-        "B": "Skills and Projects are two names for the same capability: a place to store reusable instructions and files for later chats.",
-        "C": "Skills are packaged instructions and resources Claude loads when relevant; Projects are workspaces with chats, knowledge and instructions.",
-        "D": "Projects are loaded automatically into any chat whenever their content seems relevant; Skills are folders of uploaded reference files."
+        "A": "Skills and Projects are two names for the same capability: a place to store reusable instructions and files for later chats.",
+        "B": "Skills are packaged instructions and resources Claude loads when relevant; Projects are workspaces with chats, knowledge and instructions.",
+        "C": "Projects are loaded automatically into any chat whenever their content seems relevant; Skills are folders of uploaded reference files.",
+        "D": "Skills are a developer feature used through the API and Claude Code, not something users add in the Claude apps."
       },
       "answer": [
-        "C"
+        "B"
       ],
       "explanation": "Skills give Claude procedural know-how (for example, how to produce a report in a house format) and load only when relevant. Projects group related chats with shared knowledge and instructions. They complement each other.",
       "why_incorrect": {
-        "A": "Skills are available in the Claude apps across plans, not only for developers.",
-        "B": "They serve different purposes: one packages reusable procedures, the other organises work and context.",
-        "D": "That describes how Skills are loaded; Project knowledge applies to chats inside that Project."
+        "A": "They serve different purposes: one packages reusable procedures, the other organises work and context.",
+        "C": "That describes how Skills are loaded; Project knowledge applies to chats inside that Project.",
+        "D": "Skills are available in the Claude apps across plans, not just for developers."
       },
       "module": "05-claude-products-and-models/01-product-ecosystem.md",
       "references": [
@@ -132,19 +132,19 @@
       "scenario": "A team lead at Contoso Health is introducing Claude's model families to colleagues.",
       "question": "Which description of the families is most accurate?",
       "options": {
-        "A": "All three families have identical capability; the names reflect release order and regional availability.",
-        "B": "Haiku is specialised for images, Sonnet for written text and Opus for audio and voice tasks.",
-        "C": "Opus is the fastest family because it is the largest, while Haiku is slower but uses the least capacity.",
-        "D": "Haiku is fastest and lowest-cost, Sonnet balances speed and intelligence, Opus targets complex work."
+        "A": "Haiku is fastest and lowest-cost, Sonnet balances speed and intelligence, Opus targets complex work.",
+        "B": "The three families differ mainly in knowledge cut-off date, with Opus the most recent and Haiku the oldest.",
+        "C": "Haiku is specialised for images, Sonnet for written text and Opus for audio and voice tasks.",
+        "D": "Opus is the fastest family because it is the largest, while Haiku is slower but uses the least capacity."
       },
       "answer": [
-        "D"
+        "A"
       ],
       "explanation": "Claude's families form a capability ladder. Haiku prioritises speed and cost, Sonnet offers the best balance for many tasks, and Opus targets the hardest reasoning and long-running work (as of 2026-10-24).",
       "why_incorrect": {
-        "A": "The families have different capability, latency and cost profiles.",
-        "B": "The families differ in capability, speed and cost, not in which single input type they handle.",
-        "C": "Larger, more capable models are generally slower, not faster."
+        "B": "The families have different capability, speed and cost profiles; the names do not indicate training dates.",
+        "C": "The families differ in capability, speed and cost, not in which single input type they handle.",
+        "D": "Larger, more capable models are generally slower, not faster."
       },
       "module": "05-claude-products-and-models/02-model-families.md",
       "references": [
@@ -161,18 +161,18 @@
       "question": "Which model family is the most natural starting point?",
       "options": {
         "A": "Whichever model was released most recently, regardless of the task.",
-        "B": "Haiku, because the task is simple, high-volume and speed-sensitive; check a sample for accuracy.",
-        "C": "No model; tagging cannot be done by language models.",
-        "D": "Opus, because consistency of tags matters, and the most capable model should be used whenever consistency is a requirement."
+        "B": "No model; tagging cannot be done by language models.",
+        "C": "Opus, because consistency of tags matters, and the most capable model should be used whenever consistency is a requirement.",
+        "D": "Haiku, because the task is simple, high-volume and speed-sensitive; check a sample for accuracy."
       },
       "answer": [
-        "B"
+        "D"
       ],
       "explanation": "Simple, repetitive tasks such as classification often run well on the fastest family. Start there, check quality on a sample, and move up only if accuracy falls short.",
       "why_incorrect": {
         "A": "Release date does not determine the best fit for a specific workload.",
-        "C": "Classification and tagging are well-suited tasks for language models.",
-        "D": "Using the most capable model for simple classification spends more capacity than the task needs."
+        "B": "Classification and tagging are well-suited tasks for language models.",
+        "C": "Using the most capable model for simple classification spends more capacity than the task needs."
       },
       "module": "05-claude-products-and-models/02-model-families.md",
       "references": [
@@ -191,17 +191,17 @@
       "options": {
         "A": "Split the study into one-page pieces and use a different model for each.",
         "B": "Haiku, because it is the fastest family and the director wants the memo quickly for the next investment committee.",
-        "C": "An Opus-class model, because deep reasoning across a long document matters more here than speed.",
-        "D": "Any model, because all current models have a long context window and therefore produce the same quality on long documents."
+        "C": "Any current model, because they share a long context window and so handle long documents equally well.",
+        "D": "An Opus-class model, because deep reasoning across a long document matters more here than speed."
       },
       "answer": [
-        "C"
+        "D"
       ],
       "explanation": "Complex, high-stakes reasoning over long material is where the most capable families earn their extra time and usage. Reserve them for tasks where quality is the deciding factor.",
       "why_incorrect": {
         "A": "Fragmenting the document makes reconciling cross-chapter conflicts harder, not easier.",
         "B": "Speed is less important here than careful reasoning; the fastest family is not tuned for this depth of work.",
-        "D": "Models differ in reasoning depth; complex synthesis benefits from a more capable family."
+        "C": "A long context window lets a model read the document, but models still differ in reasoning depth; complex synthesis benefits from a more capable family."
       },
       "module": "05-claude-products-and-models/02-model-families.md",
       "references": [
@@ -220,9 +220,9 @@
       "question": "Which TWO statements are accurate?",
       "options": {
         "A": "A more capable model is usually slower and uses more of the usage allowance than a smaller one on the same task.",
-        "B": "Once you choose a model in a chat, you can never use another.",
-        "C": "Each model family can read only documents up to a fixed page count, so long documents always require the largest family.",
-        "D": "Smaller models are reliable enough on simple tasks that their outputs do not need checking, unlike outputs from larger models.",
+        "B": "Smaller families can read much shorter documents, so long documents need the largest family.",
+        "C": "Smaller models are reliable enough on simple tasks that their outputs do not need checking, unlike outputs from larger models.",
+        "D": "The newest and largest model gives the best value for most tasks, because it needs fewer follow-up messages.",
         "E": "The best model depends on the task; a balanced model such as Sonnet is a sensible default for many everyday tasks."
       },
       "answer": [
@@ -231,9 +231,9 @@
       ],
       "explanation": "Model choice is a trade-off among capability, speed and usage. The right choice depends on the task, and a balanced family is a reasonable default for many everyday tasks.",
       "why_incorrect": {
-        "B": "Users can select a different model for new chats depending on the task.",
-        "C": "Families differ mainly in capability, speed and cost, not in a page count unique to each.",
-        "D": "All models can make mistakes; outputs still need appropriate checking."
+        "B": "Current families all have long context windows; they differ mainly in capability, speed and cost, not in how much they can read.",
+        "C": "All models can make mistakes; outputs still need appropriate checking.",
+        "D": "Larger models are slower and use more of the allowance; for many everyday tasks a balanced model is enough."
       },
       "module": "05-claude-products-and-models/02-model-families.md",
       "references": [
@@ -250,19 +250,19 @@
       "scenario": "Ravi at VanArsdel Foods hits his plan's usage limit by mid-week. Most of his chats are short email rewrites and quick formatting fixes, all done on the most capable model.",
       "question": "What change would most help him stay within his limits without hurting quality?",
       "options": {
-        "A": "Start every task by uploading all his reference files again.",
-        "B": "Use a lighter model for routine rewrites and formatting, and keep the most capable one for complex analysis.",
-        "C": "Use the research feature for each rewrite, since it gathers more context and so reduces the number of messages he sends.",
-        "D": "Keep using the most capable model for everything but write longer, more detailed prompts so fewer follow-ups are needed."
+        "A": "Start each task in a fresh chat with his reference files re-uploaded, so Claude has a clean context.",
+        "B": "Keep using the most capable model for everything but write longer, more detailed prompts so fewer follow-ups are needed.",
+        "C": "Use a lighter model for routine rewrites and formatting, and keep the most capable one for complex analysis.",
+        "D": "Use the research feature for each rewrite, since it gathers more context and so reduces the number of messages he sends."
       },
       "answer": [
-        "B"
+        "C"
       ],
       "explanation": "Model choice affects how quickly usage limits are reached. Matching lighter models to routine tasks and reserving the most capable model for demanding work preserves both quality and capacity.",
       "why_incorrect": {
         "A": "Repeatedly attaching large files consumes more of the allowance.",
-        "C": "Research uses limits faster and adds nothing to a simple rewrite.",
-        "D": "Longer prompts on the heaviest model use more of the allowance, not less."
+        "B": "Longer prompts on the heaviest model use more of the allowance, not less.",
+        "D": "Research uses limits faster and adds nothing to a simple rewrite."
       },
       "module": "05-claude-products-and-models/03-model-selection.md",
       "references": [
@@ -279,19 +279,19 @@
       "scenario": "Blue Yonder Airlines' customer-insights team needs a first draft of 30 internal survey invitation variations within the hour. Quality needs are moderate, and a human will polish the final choice.",
       "question": "Which trade-off is most sensible?",
       "options": {
-        "A": "Ask for one variation only to save time.",
-        "B": "Wait until next week so the team can use research for each variation.",
-        "C": "Prioritise depth with the most capable model, because invitation wording affects response rates and quality always comes first.",
-        "D": "Prioritise speed with a faster model, then have the editor refine the chosen variations."
+        "A": "Prioritise speed with a faster model, then have the editor refine the chosen variations.",
+        "B": "Use the most capable model, because wording affects response rates and a stronger first draft saves editing.",
+        "C": "Ask for five variations now and have the team write the remaining 25 by adapting those themselves.",
+        "D": "Use the research feature so each variation is grounded in best practice on survey response rates."
       },
       "answer": [
-        "D"
+        "A"
       ],
       "explanation": "When deadlines are tight, quality needs are moderate and a human will refine the output, a faster model is the efficient choice.",
       "why_incorrect": {
-        "A": "The team needs 30 options; reducing the output fails the requirement.",
-        "B": "Research is not suited to generating short copy variations and would miss the deadline.",
-        "C": "Depth matters less here than speed, and the human editor will polish the result anyway."
+        "B": "Depth matters less than speed here; quality needs are moderate and the human editor will polish the result anyway.",
+        "C": "The team needs 30 options within the hour; shifting most of the writing to people defeats the purpose.",
+        "D": "Research is slow and uses more allowance; it is not needed to generate short copy variations against a tight deadline."
       },
       "module": "05-claude-products-and-models/03-model-selection.md",
       "references": [
@@ -308,21 +308,21 @@
       "scenario": "Adatum Insurance is setting team guidance on model choice in the Claude apps for three recurring tasks: summarising daily news clippings, drafting complex claims-dispute analyses, and reformatting tables.",
       "question": "Which TWO guidelines are sound?",
       "options": {
-        "A": "Pilot each task on a lighter model, compare a few outputs with a stronger model, and step up only where quality differs meaningfully.",
+        "A": "Use the most capable model for the three tasks, so that quality is consistent and nobody has to make model decisions day to day.",
         "B": "Choose the model based on which one the team lead prefers.",
-        "C": "Use the most capable model for all three tasks, so that quality is consistent and nobody has to make model decisions day to day.",
-        "D": "Use the lightest model for everything, because staying within usage limits matters more than small quality differences on any task.",
-        "E": "Use the most capable model for complex claims-dispute analyses, where reasoning quality matters most."
+        "C": "Use the lightest model for everything, because staying within usage limits matters more than small quality differences on any task.",
+        "D": "Use the most capable model for complex claims-dispute analyses, where reasoning quality matters most.",
+        "E": "Pilot each task on a lighter model, compare a few outputs with a stronger model, and step up only where quality differs meaningfully."
       },
       "answer": [
-        "A",
+        "D",
         "E"
       ],
       "explanation": "Good model guidance is task-based and evidence-based: test lighter options, step up where quality requires it, and reserve the most capable models for complex work.",
       "why_incorrect": {
+        "A": "A blanket rule wastes capacity on simple tasks such as reformatting tables.",
         "B": "Preference is not a substitute for testing fit against task requirements.",
-        "C": "A blanket rule wastes capacity on simple tasks such as reformatting tables.",
-        "D": "Complex analyses can suffer on the lightest model; quality needs differ by task."
+        "C": "Complex analyses can suffer on the lightest model; quality needs differ by task."
       },
       "module": "05-claude-products-and-models/03-model-selection.md",
       "references": [
@@ -339,19 +339,19 @@
       "scenario": "Lena at Southridge Video switched from a balanced model to a lighter one to stretch her usage. Short rewrites are fine, but her multi-step budget variance explanations now skip steps and miss interactions between line items.",
       "question": "What should she do?",
       "options": {
-        "A": "Use the more capable model for variance analyses and the lighter model for short rewrites.",
-        "B": "Switch every task, including short rewrites, back to the most capable model available.",
-        "C": "Stop doing variance analyses with Claude altogether.",
-        "D": "Keep the lighter model for everything and add \"think carefully, step by step\" to the variance prompts to recover the quality."
+        "A": "Switch every task, including short rewrites, back to the most capable model available.",
+        "B": "Use the more capable model for variance analyses and the lighter model for short rewrites.",
+        "C": "Keep the lighter model for everything and add \"think carefully, step by step\" to the variance prompts to recover the quality.",
+        "D": "Stop doing variance analyses with Claude altogether."
       },
       "answer": [
-        "A"
+        "B"
       ],
       "explanation": "Model choice can be made per task. When a lighter model degrades quality on complex reasoning, move that task back to a more capable model while keeping simpler tasks on the efficient option.",
       "why_incorrect": {
-        "B": "Short rewrites are working fine; moving them to the heaviest model spends usage unnecessarily.",
-        "C": "The task worked before on a more capable model; the issue is the model choice, not the use case.",
-        "D": "Asking for careful reasoning may help a little, but the evidence shows the lighter model struggles with this multi-step task; moving it to a more capable model is the reliable fix."
+        "A": "Short rewrites are working fine; moving them to the heaviest model spends usage unnecessarily.",
+        "C": "Asking for careful reasoning may help a little, but the evidence shows the lighter model struggles with this multi-step task; moving it to a more capable model is the reliable fix.",
+        "D": "The task worked before on a more capable model; the issue is the model choice, not the use case."
       },
       "module": "05-claude-products-and-models/03-model-selection.md",
       "references": [
@@ -367,19 +367,19 @@
       "scenario": "After a very long chat about a product launch plan, Grace at Fabrikam Retail notices Claude has started forgetting decisions made near the beginning and is giving less focused answers.",
       "question": "What is the most effective step?",
       "options": {
-        "A": "Stay in the same chat and restate all the earlier decisions in each new message so Claude keeps them in view.",
+        "A": "Stay in the same chat and restate the earlier decisions in each new message so Claude keeps them in view.",
         "B": "Delete her earliest messages so the chat becomes shorter.",
-        "C": "Ask Claude for a summary of agreed decisions and open items, check it, and continue in a new chat from that summary.",
-        "D": "Switch the chat to a lighter model, which handles long conversations more efficiently and keeps answers focused."
+        "C": "Switch the chat to a lighter model, which handles long conversations more efficiently and keeps answers focused.",
+        "D": "Ask Claude for a summary of agreed decisions and open items, check it, and continue in a new chat from that summary."
       },
       "answer": [
-        "C"
+        "D"
       ],
       "explanation": "Very long conversations can lose focus and use more of the usage allowance. A checked summary carried into a fresh chat keeps the important context while giving Claude a clean starting point.",
       "why_incorrect": {
         "A": "Repeating material makes the conversation even longer, which worsens the problem.",
         "B": "The early decisions are what she needs; removing them loses that context entirely.",
-        "D": "A lighter model does not restore lost focus from a very long conversation."
+        "C": "A lighter model does not restore lost focus from a very long conversation."
       },
       "module": "04-context-engineering/02-managing-long-context.md",
       "references": [
@@ -396,9 +396,9 @@
       "scenario": "Omar at Trey Research works across several client Projects. He wants Claude to remember his general writing preferences everywhere, but he does not want details from one client Project to appear in another.",
       "question": "Which understanding of memory is correct?",
       "options": {
-        "A": "Memory is not available inside Projects, so he would need to restate his writing preferences in every Project chat.",
+        "A": "Memory is one shared pool, so anything discussed in one client Project is available in every other Project's chats.",
         "B": "Each Project has its own memory that other Projects do not use; account memory can hold general preferences.",
-        "C": "Memory is one shared pool, so anything discussed in one client Project is available in every other Project's chats.",
+        "C": "Memory is not available inside Projects, so he would need to restate his writing preferences in every Project chat.",
         "D": "To keep clients separate, he must create a separate Claude account per client."
       },
       "answer": [
@@ -406,8 +406,8 @@
       ],
       "explanation": "As of 2026-10-24, memory in the Claude apps is scoped: each Project keeps its own memory, and chats inside a Project use that Project's memory plus account-level memory, not other Projects' memory. A Project can also be set to ignore account memory.",
       "why_incorrect": {
-        "A": "Projects have their own memory; it is scoped to the Project.",
-        "C": "Project memory is kept separate per Project rather than pooled across Projects.",
+        "A": "Project memory is kept separate per Project rather than pooled across Projects.",
+        "C": "Projects have their own memory; it is scoped to the Project.",
         "D": "Project-scoped memory already separates Projects, and a Project can also be set not to use account memory."
       },
       "module": "04-context-engineering/04-memory-and-persistence.md",
@@ -418,27 +418,26 @@
     {
       "id": "CCAO-F-D3-015",
       "objective": "CCAO-F-3.4",
-      "type": "multiple",
-      "select": 2,
+      "type": "single",
       "difficulty": "intermediate",
       "category": "scenario",
       "scenario": "Hannah at Proseware Education wants a quick brainstorm about a personal topic and does not want it saved to Claude's memory or chat history.",
-      "question": "Which TWO options achieve this?",
+      "question": "Which option achieves this?",
       "options": {
-        "A": "Use a longer chat so the topic gets buried.",
-        "B": "Switch to a different model for that chat.",
-        "C": "Start an incognito chat, which is not saved to memory or chat history.",
+        "A": "Start an incognito chat, which is not saved to memory or chat history.",
+        "B": "Open Claude in her browser's private window, so the conversation is not stored once the window closes.",
+        "C": "Start the chat inside a new Project, since chats in a Project are kept out of her account memory and history.",
         "D": "Turn memory off for that chat before sending the first message.",
-        "E": "Ask Claude at the end of the chat to forget everything that was discussed, which removes it from memory and from her chat history."
+        "E": "Ask Claude at the end to forget everything discussed, which removes the chat from memory and from her history."
       },
       "answer": [
-        "C",
-        "D"
+        "A"
       ],
-      "explanation": "Incognito chats are not saved to memory or history. Memory can also be switched off for a single chat, but only before the first message is sent; that chat still appears in history. (Note: on Team and Enterprise plans, incognito chats can still be subject to organisation retention and export policies.)",
+      "explanation": "As of 2026-10-24, incognito chats are not saved to memory or chat history, so they meet both of Hannah's requirements. Memory can also be switched off for a single chat before the first message is sent, but that chat stays in chat history and can still be found when Claude searches past chats, so it does not keep the brainstorm out of history. (Note: on Team and Enterprise plans, incognito chats can still be subject to organisation retention and export policies.)",
       "why_incorrect": {
-        "A": "Burying a topic in a long chat does not prevent it from being saved.",
-        "B": "Model choice does not control memory or chat history.",
+        "B": "A private browser window affects what the browser stores locally, not what is saved to her Claude account.",
+        "C": "Project chats appear in chat history and use the Project's own memory; a Project does not make a chat private.",
+        "D": "Turning memory off for one chat keeps it out of memory, but the chat still stays in her chat history.",
         "E": "She can ask Claude to forget specific memories, but this does not stop the chat being saved in history; incognito does."
       },
       "module": "04-context-engineering/04-memory-and-persistence.md",
@@ -455,19 +454,19 @@
       "scenario": "Datum Corp's operations team uses one Project for a nine-month process-improvement programme. Key decisions are scattered across dozens of chats, and new team members get inconsistent answers about what was decided.",
       "question": "What is the best way to persist decisions so every chat in the Project uses them?",
       "options": {
-        "A": "Keep a concise, dated decision log in the Project knowledge and update it as decisions are made.",
-        "B": "Paste the full text of the key past chats into the Project instructions so every new chat starts with the history.",
-        "C": "Keep all work in one never-ending chat.",
-        "D": "Rely on Claude's memory to pick up each decision from whichever chat it was made in, and ask new members to trust it."
+        "A": "Paste the full text of the key past chats into the Project instructions so every new chat starts with the history.",
+        "B": "Ask each team member to tell Claude the decisions they know about, so they are stored in their own account memory.",
+        "C": "Keep a concise, dated decision log in the Project knowledge and update it as decisions are made.",
+        "D": "Continue the programme in one long-running chat so the full discussion history stays in a single place."
       },
       "answer": [
-        "A"
+        "C"
       ],
-      "explanation": "Project knowledge is available to every chat in the Project, so a curated decision log is a reliable way to persist important context. It is also readable by people, which helps onboarding and governance.",
+      "explanation": "Project knowledge is available to every chat in the Project, so a curated decision log is a reliable way to persist important context. It is also readable by people, which helps onboarding and governance. Memory, including a Project's own memory, is generated automatically from chats rather than curated, so it cannot be reviewed, dated and corrected like a shared decision log, and each member's account memory is personal to them.",
       "why_incorrect": {
-        "B": "Instructions should be concise guidance; dumping chat transcripts there adds noise and bulk.",
-        "C": "One very long chat degrades focus and becomes hard for new members to use.",
-        "D": "Memory captures selected topics and is not a controlled record; a maintained knowledge document is a dependable source of truth."
+        "A": "Instructions should be concise guidance; dumping chat transcripts there adds noise and bulk.",
+        "B": "Account memory is personal to each member, so new joiners do not get it, and it is not a reviewed, dated record anyone can read.",
+        "D": "One very long chat degrades focus, uses more of the allowance and is hard for new members to navigate."
       },
       "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
       "references": [

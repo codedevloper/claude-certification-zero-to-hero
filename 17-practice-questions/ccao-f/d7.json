@@ -14,19 +14,19 @@
       "scenario": "Claude keeps writing 800-word answers for Joel at Relecloud when he wants a few sentences. His prompt says, \"Don't be too wordy.\"",
       "question": "What is the most effective fix?",
       "options": {
-        "A": "Ask Claude to explain why its answers are so long, so it becomes aware of the problem and adjusts.",
-        "B": "Repeat \"don't be wordy\" several times in the prompt so that the instruction carries more weight.",
-        "C": "Switch to the most capable model, which is better at judging the right length for each question.",
-        "D": "Say concretely what you want: \"Answer in three sentences or fewer.\""
+        "A": "Repeat \"don't be wordy\" several times in the prompt so that the instruction carries more weight.",
+        "B": "Say concretely what you want: \"Answer in three sentences or fewer.\"",
+        "C": "Ask Claude to explain why its answers are so long, so it becomes aware of the problem and adjusts.",
+        "D": "Switch to the most capable model, which is better at judging the right length for each question."
       },
       "answer": [
-        "D"
+        "B"
       ],
       "explanation": "Vague or negative instructions leave room for interpretation. Saying what you want, with a concrete measure, is more reliable than saying what to avoid.",
       "why_incorrect": {
-        "A": "An explanation does not change the next output; a clear instruction does.",
-        "B": "Repetition does not define what length is acceptable.",
-        "C": "Model choice does not fix an unclear length requirement."
+        "A": "Repetition does not define what length is acceptable.",
+        "C": "An explanation does not change the next output; a clear instruction does.",
+        "D": "Model choice does not fix an unclear length requirement."
       },
       "module": "24-troubleshooting/prompts-and-outputs.md",
       "references": [
@@ -43,21 +43,21 @@
       "scenario": "Claude's weekly sales summaries for VanArsdel Foods are inconsistent: sometimes a table, sometimes prose, and regional figures are occasionally missing.",
       "question": "Which TWO prompt changes target the root causes?",
       "options": {
-        "A": "Use a fresh chat each day, so that earlier summaries in the conversation do not influence the structure of the new one.",
-        "B": "Add a line asking Claude to be more consistent this week and to keep the same style as the previous summaries.",
-        "C": "Specify an exact output structure, for example a table with fixed columns and a three-bullet commentary.",
-        "D": "Remove the regional breakdown from the input, so Claude has less data to handle and the summary is simpler and more uniform.",
-        "E": "List the required regions explicitly and ask Claude to write \"no data\" when a region is missing from the input."
+        "A": "List the required regions explicitly and ask Claude to write \"no data\" when a region is missing from the input.",
+        "B": "Remove the regional breakdown from the input, so Claude has less data to handle and the summary is simpler and more uniform.",
+        "C": "Use a fresh chat each day, so that earlier summaries in the conversation do not influence the structure of the new one.",
+        "D": "Add a line asking Claude to be more consistent this week and to keep the same style as the previous summaries.",
+        "E": "Specify an exact output structure, for example a table with fixed columns and a three-bullet commentary."
       },
       "answer": [
-        "C",
+        "A",
         "E"
       ],
       "explanation": "Inconsistent format comes from an unspecified structure; missing items come from unstated completeness requirements. Specify both explicitly, including how to handle gaps.",
       "why_incorrect": {
-        "A": "Changing chats does not define format or completeness.",
-        "B": "A general request does not define what consistency means.",
-        "D": "Removing data makes the summary less complete, not more."
+        "B": "Removing data makes the summary less complete, not more.",
+        "C": "Changing chats does not define format or completeness.",
+        "D": "A general request does not define what consistency means."
       },
       "module": "24-troubleshooting/prompts-and-outputs.md",
       "references": [
@@ -73,19 +73,19 @@
       "scenario": "A Contoso Health analyst asks Claude in a Project to answer questions from uploaded clinic procedures. Claude sometimes answers from general knowledge instead of the procedures, giving advice that differs from local practice.",
       "question": "What is the best fix?",
       "options": {
-        "A": "In the Project instructions, require answers only from the procedures, with quotes, and a clear note when they do not cover the question.",
-        "B": "Ask questions in shorter sentences.",
-        "C": "Upload general medical reference textbooks as well, so Claude has a fuller picture and relies less on its own general knowledge.",
-        "D": "Turn on memory so that, over time, Claude learns the clinic's procedures from the questions staff ask."
+        "A": "Ask questions in shorter sentences.",
+        "B": "Turn on memory so that, over time, Claude learns the clinic's procedures from the questions staff ask.",
+        "C": "In the Project instructions, require answers only from the procedures, with quotes, and a clear note when they do not cover the question.",
+        "D": "Upload general medical reference textbooks as well, so Claude has a fuller picture and relies less on its own general knowledge."
       },
       "answer": [
-        "A"
+        "C"
       ],
       "explanation": "When answers must reflect specific documents, say so explicitly, require quotes and give Claude permission to say the documents do not cover something. This reduces reliance on general knowledge.",
       "why_incorrect": {
-        "B": "Question length does not determine which source Claude relies on.",
-        "C": "More general material increases the chance of answers that differ from local procedures.",
-        "D": "Memory does not replace explicit grounding in the approved documents."
+        "A": "Question length does not determine which source Claude relies on.",
+        "B": "Memory does not replace explicit grounding in the approved documents.",
+        "D": "More general material increases the chance of answers that differ from local procedures."
       },
       "module": "14-evaluation-and-testing/06-diagnosing-failures.md",
       "references": [
@@ -101,9 +101,9 @@
       "scenario": "Claude drafts excellent first-round interview summaries for Northwind Lending's HR team, but consistently rates every candidate as a \"strong hire\", even when the interviewer's notes are negative.",
       "question": "What is the most likely cause, and the best fix?",
       "options": {
-        "A": "The interview notes are too long, so Claude reads only the opening section, which tends to be positive.",
+        "A": "A faster model would be less generous, because slower models spend more effort finding positives.",
         "B": "No rating rubric was defined; give criteria with examples per level and ask Claude to cite the notes behind each rating.",
-        "C": "A faster model would be less generous, because slower models spend more effort finding positives.",
+        "C": "The interview notes are too long, so Claude reads mainly the opening section, which tends to be positive.",
         "D": "Claude is designed to describe people positively, so it cannot give negative assessments of candidates."
       },
       "answer": [
@@ -111,8 +111,8 @@
       ],
       "explanation": "Ratings drift towards generic positivity when standards are undefined. A rubric with examples for each level, plus evidence for each rating, anchors judgements in the notes. Humans still make the hiring decision.",
       "why_incorrect": {
-        "A": "The summaries are otherwise accurate, so the notes are being read.",
-        "C": "Speed does not affect leniency; criteria do.",
+        "A": "Speed does not affect leniency; criteria do.",
+        "C": "The summaries are otherwise accurate, so the notes are being read.",
         "D": "Claude can give critical assessments when given clear criteria; the gap is the missing rubric."
       },
       "module": "14-evaluation-and-testing/06-diagnosing-failures.md",
@@ -129,19 +129,19 @@
       "scenario": "A team lead at Alpine Ski House wants a quick checklist for diagnosing a poor Claude response.",
       "question": "Which first question is most useful?",
       "options": {
-        "A": "Is the model having a technical problem today, and would trying again later give a better response?",
-        "B": "Was the response long enough to cover the topic in sufficient detail?",
-        "C": "Did I phrase the request politely enough for Claude to make its best effort?",
-        "D": "Did my prompt give Claude the context, task, format and constraints it needed?"
+        "A": "Did my prompt give Claude the context, task, format and constraints it needed?",
+        "B": "Did I phrase the request politely enough for Claude to make its best effort?",
+        "C": "Is the model having a technical problem today, and would trying again later give a better response?",
+        "D": "Was the response long enough to cover the topic in sufficient detail?"
       },
       "answer": [
-        "D"
+        "A"
       ],
       "explanation": "Most underperformance traces back to the prompt or inputs. Checking for missing context, unclear tasks, unspecified formats and unstated constraints resolves the majority of issues.",
       "why_incorrect": {
-        "A": "Outages are rare; most poor outputs trace to missing context or unclear instructions.",
-        "B": "Length is only one aspect and may not be the problem at all.",
-        "C": "Politeness is fine but does not supply missing requirements."
+        "B": "Politeness is fine but does not supply missing requirements.",
+        "C": "Outages are rare; most poor outputs trace to missing context or unclear instructions.",
+        "D": "Length is only one aspect and may not be the problem at all."
       },
       "module": "24-troubleshooting/prompts-and-outputs.md",
       "references": [
@@ -157,19 +157,19 @@
       "scenario": "Readers of Fabrikam Retail's internal newsletter, drafted with Claude, say the articles are too formal. The editor wants to adjust.",
       "question": "What is the best next step?",
       "options": {
-        "A": "Stop using Claude for the newsletter, since a tone problem shows it cannot match the company's culture.",
-        "B": "Keep the formal style, because it is safer for company-wide communication and readers will adjust to it over time.",
+        "A": "Keep the formal style, because it is safer for company-wide communication and readers will adjust to it over time.",
+        "B": "Ask readers to get used to the formal style.",
         "C": "Update the instructions with the new tone guidance and examples, then check the next issue against reader feedback.",
-        "D": "Ask readers to get used to the formal style."
+        "D": "Stop using Claude for the newsletter, since a tone problem shows it cannot match the company's culture."
       },
       "answer": [
         "C"
       ],
       "explanation": "Feedback should change the configuration that produces the output. Updating instructions with examples and checking the effect closes the loop.",
       "why_incorrect": {
-        "A": "The tone is adjustable; abandoning the tool is unnecessary.",
-        "B": "The goal is a newsletter people read; feedback indicates a gap.",
-        "D": "This places the burden on readers rather than fixing the output."
+        "A": "The goal is a newsletter people read; feedback indicates a gap.",
+        "B": "This places the burden on readers rather than fixing the output.",
+        "D": "The tone is adjustable; abandoning the tool is unnecessary."
       },
       "module": "03-prompt-engineering/08-iterating-on-prompts.md",
       "references": [
@@ -186,21 +186,21 @@
       "scenario": "Coho Winery's tasting-room team has used a Claude-drafted visitor FAQ for a month. Staff note that three questions are often asked but missing, and two answers are often misunderstood.",
       "question": "Which TWO adjustments are most appropriate?",
       "options": {
-        "A": "Ask Claude to draft answers for the three missing questions, using source material staff provide.",
-        "B": "Rewrite the two misunderstood answers with Claude, testing the new wording with a few staff before publishing.",
-        "C": "Ask Claude to add 50 more likely questions, so that the FAQ anticipates everything visitors could possibly ask.",
+        "A": "Ask Claude to add 50 more likely questions, so that the FAQ anticipates everything visitors could possibly ask.",
+        "B": "Remove the FAQ and return to relying on staff knowledge, since the gaps show the document cannot keep up with visitors' questions.",
+        "C": "Rewrite the two misunderstood answers with Claude, testing the new wording with a few staff before publishing.",
         "D": "Keep the misunderstood answers because they are technically accurate.",
-        "E": "Remove the FAQ and return to relying on staff knowledge, since the gaps show the document cannot keep up with visitors' questions."
+        "E": "Ask Claude to draft answers for the three missing questions, using source material staff provide."
       },
       "answer": [
-        "A",
-        "B"
+        "C",
+        "E"
       ],
       "explanation": "Use real-world feedback to make targeted changes: fill observed gaps with grounded content and fix confusing answers, then test the changes.",
       "why_incorrect": {
-        "C": "Adding unrequested questions makes the FAQ harder to use.",
-        "D": "If readers misunderstand, the answer fails its purpose.",
-        "E": "The FAQ has value; targeted fixes are better than removal."
+        "A": "Adding unrequested questions makes the FAQ harder to use.",
+        "B": "The FAQ has value; targeted fixes are better than removal.",
+        "D": "If readers misunderstand, the answer fails its purpose."
       },
       "module": "14-evaluation-and-testing/05-ab-testing-and-iteration.md",
       "references": [
@@ -216,19 +216,19 @@
       "scenario": "Tailspin Travel tried two versions of Project instructions for drafting client itineraries. Version A produces more detailed itineraries; Version B produces shorter ones that agents edit less. Agents prefer B, but two clients complained B omitted transfer times.",
       "question": "What is the best decision?",
       "options": {
-        "A": "Switch back to Version A, since its more detailed itineraries are less likely to omit any client-facing information.",
-        "B": "Alternate between A and B each week.",
-        "C": "Keep Version B, add an explicit requirement for transfer times, and confirm with fresh test itineraries.",
-        "D": "Keep Version B unchanged, since agents use it every day and their preference is the best measure of quality."
+        "A": "Keep Version B, add an explicit requirement for transfer times, and confirm with fresh test itineraries.",
+        "B": "Keep Version B unchanged, since agents use it every day and their preference is the best measure of quality.",
+        "C": "Run Version A and Version B in alternate weeks for another month and compare edit time and complaints.",
+        "D": "Switch back to Version A, since its more detailed itineraries are less likely to omit any client-facing information."
       },
       "answer": [
-        "C"
+        "A"
       ],
       "explanation": "Adjust based on evidence from all stakeholders: keep what works, fix the specific failure, and verify the change.",
       "why_incorrect": {
-        "A": "This discards B's benefits; the specific gap can be fixed instead.",
-        "B": "Alternating does not fix the omission and makes results inconsistent.",
-        "D": "This ignores a client-facing omission."
+        "B": "This ignores a client-facing omission.",
+        "C": "The omission is already identified; more alternating delays the fix and keeps exposing clients to it.",
+        "D": "This discards B's benefits; the specific gap can be fixed instead."
       },
       "module": "14-evaluation-and-testing/05-ab-testing-and-iteration.md",
       "references": [
@@ -245,8 +245,8 @@
       "question": "What is the most sensible way to proceed?",
       "options": {
         "A": "Review the instructions together, remove duplicates and conflicts, and test the result on fixed sample questions.",
-        "B": "Add one more instruction telling Claude to follow all previous instructions carefully and consistently.",
-        "C": "Switch to a different model whenever results get worse, since the newer instructions may suit another model better.",
+        "B": "Switch to a different model whenever results get worse, since the newer instructions may suit another model better.",
+        "C": "Add one more instruction telling Claude to follow the previous instructions carefully and consistently.",
         "D": "Revert permanently to having no instructions."
       },
       "answer": [
@@ -254,8 +254,8 @@
       ],
       "explanation": "Feedback-driven changes accumulate. Periodically consolidating instructions and testing against a fixed set of examples keeps them coherent.",
       "why_incorrect": {
-        "B": "Adding more instructions compounds the conflict and clutter.",
-        "C": "The cause is the instructions, not the model.",
+        "B": "The cause is the instructions, not the model.",
+        "C": "Adding more instructions compounds the conflict and clutter.",
         "D": "This discards all improvements instead of fixing the accumulated issues."
       },
       "module": "14-evaluation-and-testing/05-ab-testing-and-iteration.md",
@@ -272,18 +272,18 @@
       "scenario": "Hannah at Margie's Travel re-uploads the same 50-page supplier handbook to a new chat several times a day and is hitting her usage limit.",
       "question": "Which change is most efficient?",
       "options": {
-        "A": "Ask longer questions less often.",
-        "B": "Add the handbook to a Project's knowledge once and work in chats inside that Project.",
-        "C": "Use research for each question, which can look up the relevant parts of the handbook without re-uploading it.",
+        "A": "Add the handbook to a Project's knowledge once and work in chats inside that Project.",
+        "B": "Use research for each question, which can look up the relevant parts of the handbook without re-uploading it.",
+        "C": "Ask Claude to compress the handbook into a short summary once, and paste that summary into each new chat.",
         "D": "Paste the full text of the handbook into each message instead of attaching the file, which is lighter on usage."
       },
       "answer": [
-        "B"
+        "A"
       ],
       "explanation": "Project knowledge is reused across chats, and reused Project content counts less against usage limits than repeatedly uploading the same files (as of 2026-10-24). Projects also save set-up time.",
       "why_incorrect": {
-        "A": "This may help a little but does not address repeated uploads.",
-        "C": "Research uses more of the allowance and is not needed for questions about a known document.",
+        "B": "Research uses more of the allowance and is not needed for questions about a known document.",
+        "C": "A summary loses detail her questions depend on, and she still re-sends content in every chat.",
         "D": "This still sends the full content repeatedly."
       },
       "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
@@ -302,21 +302,21 @@
       "scenario": "Acme Logistics' customer operations team uses Claude daily. Usage reports show they hit limits early each week.",
       "question": "Which TWO changes are most likely to improve efficiency without reducing quality?",
       "options": {
-        "A": "Continue the same chat indefinitely, so that Claude always has the team's full context and nobody has to re-explain anything.",
-        "B": "Attach every team file to every chat.",
-        "C": "Use research for every question, so that answers are complete first time and fewer follow-up messages are needed.",
+        "A": "Use research for every question, so that answers are complete first time and fewer follow-up messages are needed.",
+        "B": "Continue in one long-running chat, so that Claude keeps the team's full context and nobody has to re-explain anything.",
+        "C": "Use a lighter model for routine formatting and rewriting tasks.",
         "D": "Combine related questions into one well-specified message instead of many quick follow-ups.",
-        "E": "Use a lighter model for routine formatting and rewriting tasks."
+        "E": "Attach every team file to every chat."
       },
       "answer": [
-        "D",
-        "E"
+        "C",
+        "D"
       ],
       "explanation": "Efficiency comes from fewer, clearer requests, the right model for the task and avoiding unnecessary heavy features or attachments.",
       "why_incorrect": {
-        "A": "Very long conversations consume more usage as the history grows.",
-        "B": "Large unnecessary attachments add usage without improving answers.",
-        "C": "Research uses more of the allowance and is unnecessary for routine questions."
+        "A": "Research uses more of the allowance and is unnecessary for routine questions.",
+        "B": "Very long conversations consume more usage as the history grows.",
+        "E": "Large unnecessary attachments add usage without improving answers."
       },
       "module": "03-prompt-engineering/08-iterating-on-prompts.md",
       "references": [
@@ -332,19 +332,19 @@
       "scenario": "Datum Corp's analysts each write their own long prompt every month to produce a quarterly-results briefing in a fixed house format. Outputs vary between analysts and the process takes hours.",
       "question": "Which change best standardises and speeds up the workflow?",
       "options": {
-        "A": "Let each analyst use a different model and compare results, then standardise on whichever looks best.",
-        "B": "Ask each analyst to write longer, more detailed personal prompts that describe the house format precisely.",
-        "C": "Have one experienced analyst produce all the briefings manually, so that the format is always consistent.",
-        "D": "Package the house format and steps as a Skill, or a shared Project with instructions and templates."
+        "A": "Package the house format and steps as a Skill, or a shared Project with instructions and templates.",
+        "B": "Let each analyst use a different model and compare results, then standardise on whichever looks best.",
+        "C": "Have one experienced analyst produce the briefings manually, so that the format stays consistent.",
+        "D": "Ask each analyst to write longer, more detailed personal prompts that describe the house format precisely."
       },
       "answer": [
-        "D"
+        "A"
       ],
       "explanation": "Repeatable procedures belong in reusable configurations. Skills package instructions and resources that Claude loads when relevant, and shared Projects hold common instructions and templates, so everyone follows the same steps.",
       "why_incorrect": {
-        "A": "This increases variation rather than standardising.",
-        "B": "Longer individual prompts keep the variation between analysts.",
-        "C": "This creates a bottleneck instead of a repeatable process."
+        "B": "This increases variation rather than standardising.",
+        "C": "This creates a bottleneck instead of a repeatable process.",
+        "D": "Longer individual prompts keep the variation between analysts."
       },
       "module": "04-context-engineering/06-progressive-disclosure-and-skills.md",
       "references": [
@@ -361,19 +361,19 @@
       "scenario": "Graphic Design Institute's communications officer asks Claude to draft each of 12 programme brochures from scratch, explaining the format every time.",
       "question": "Which workflow change best improves efficiency?",
       "options": {
-        "A": "Store one approved template and example in a Project with instructions, then draft each brochure from its own facts.",
-        "B": "Ask Claude to write all 12 brochures in one very long reply without a template.",
-        "C": "Write the brochures manually and use Claude only for spelling.",
-        "D": "Draft each brochure in a new chat with a different layout each time, then choose the layout that works best for the set."
+        "A": "Write the brochures manually and use Claude only for spelling.",
+        "B": "Draft each brochure in a new chat with a different layout each time, then choose the layout that works best for the set.",
+        "C": "Ask Claude to write all 12 brochures in one very long reply without a template.",
+        "D": "Store one approved template and example in a Project with instructions, then draft each brochure from its own facts."
       },
       "answer": [
-        "A"
+        "D"
       ],
       "explanation": "Templates and examples stored in a Project remove repeated set-up and improve consistency, letting each request focus on the specific content.",
       "why_incorrect": {
-        "B": "One huge reply without a template risks inconsistent quality and is hard to review.",
-        "C": "This forgoes most of the time savings.",
-        "D": "Varying the format for each brochure creates inconsistency across the set."
+        "A": "This forgoes most of the time savings.",
+        "B": "Varying the format for each brochure creates inconsistency across the set.",
+        "C": "One huge reply without a template risks inconsistent quality and is hard to review."
       },
       "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
       "references": [

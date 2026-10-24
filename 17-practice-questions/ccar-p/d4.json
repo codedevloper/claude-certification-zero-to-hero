@@ -14,19 +14,19 @@
       "scenario": "Northwind Lending is launching a Claude assistant that drafts adverse-action explanations for declined loan applications. The product owner proposes 'user satisfaction' as the single success metric.",
       "question": "Which metric set is most appropriate for this use case?",
       "options": {
-        "A": "User satisfaction score only, because the explanation is customer-facing",
-        "B": "BLEU score against a set of previously written letters",
-        "C": "Average output length, to keep letters concise",
-        "D": "Accuracy of stated reasons against the decision record, completeness of required disclosures, a compliance check for prohibited factors, and latency and cost per explanation"
+        "A": "Accuracy of stated reasons against the decision record, completeness of required disclosures, a check for prohibited factors, and cost and latency per letter",
+        "B": "BLEU and ROUGE overlap against previously approved letters, so new letters stay close to wording compliance has already signed off",
+        "C": "Readability grade, average length and the share of letters passing a template-structure check, so explanations stay clear and consistent",
+        "D": "Customer satisfaction and complaint rate per letter, tracked monthly against the manually written letters used before launch"
       },
       "answer": [
-        "D"
+        "A"
       ],
       "explanation": "Success criteria should be specific, measurable and cover every dimension that matters for the use case. For regulated adverse-action explanations, that means factual accuracy against the decision record, inclusion of required reasons, safety and compliance checks (for example no prohibited factors mentioned), plus operational measures of latency and cost per explanation. Satisfaction alone cannot detect a compliant-sounding but inaccurate letter.",
       "why_incorrect": {
-        "A": "Satisfaction does not measure accuracy or regulatory completeness.",
-        "B": "Surface-overlap metrics reward wording similarity, not correctness or compliance.",
-        "C": "Length is at most a secondary style metric and says nothing about correctness."
+        "B": "Surface-overlap metrics reward similar wording, not correct reasons or complete disclosures for each applicant.",
+        "C": "Readability and structure are secondary style measures; they say nothing about whether the stated reasons are accurate or compliant.",
+        "D": "Satisfaction and complaints are lagging and cannot detect a compliant-sounding letter that states the wrong reasons."
       },
       "module": "14-evaluation-and-testing/02-metrics.md",
       "references": [
@@ -44,20 +44,20 @@
       "question": "Which TWO additional metrics are most important to track for security? (Choose 2.)",
       "options": {
         "A": "Attack success rate on a red-team set of injected instructions embedded in issues and files",
-        "B": "Average tokens per pull request",
-        "C": "Rate of attempted out-of-scope actions, such as edits to protected paths or reads of secret files, per hundred tasks",
-        "D": "Percentage of pull requests with a friendly description",
-        "E": "Mean time for reviewers to approve pull requests"
+        "B": "Average tokens and tool calls per pull request, to spot sessions that explore far more of the repository than needed",
+        "C": "Share of pull requests whose description accurately summarises the diff, so reviewers are not misled",
+        "D": "Rate of attempted out-of-scope actions, such as edits to protected paths or reads of secret files, per hundred tasks",
+        "E": "Mean time for reviewers to approve agent pull requests, to detect rubber-stamping that would let unsafe changes merge"
       },
       "answer": [
         "A",
-        "C"
+        "D"
       ],
-      "explanation": "An agent with write capabilities needs security metrics in its evaluation, not just functional ones. Two high-value measures are the rate at which adversarial inputs (for example injected instructions in issues or files) cause the agent to take unintended actions, and the rate of attempted actions outside its allowed scope, such as touching protected paths or secrets. Token usage and response style are useful operationally but do not measure security.",
+      "explanation": "An agent with write capabilities needs security metrics in its evaluation, not just functional ones. Two high-value measures are the rate at which adversarial inputs (for example injected instructions in issues or files) cause the agent to take unintended actions, and the rate of attempted actions outside its allowed scope, such as touching protected paths or secrets. Token usage, description quality and reviewer speed are useful operationally but do not measure the agent's security behaviour.",
       "why_incorrect": {
-        "B": "A cost metric, not a security metric.",
-        "D": "A style metric that says nothing about security.",
-        "E": "Approval speed measures workflow efficiency, not whether the agent behaves safely."
+        "B": "Exploration volume is an efficiency signal; it does not distinguish benign thoroughness from unsafe behaviour or measure resistance to injection.",
+        "C": "Description accuracy is a quality and transparency measure; it does not test whether the agent can be steered into unsafe actions.",
+        "E": "Approval speed describes reviewer behaviour, not whether the agent itself acts safely under adversarial input."
       },
       "module": "14-evaluation-and-testing/07-safety-and-red-team-evals.md",
       "references": [
@@ -74,19 +74,19 @@
       "scenario": "Bluefin Grocers' dashboard shows cost per request for its recipe assistant fell 30% after a prompt change, and leadership calls the change a success.",
       "question": "What additional measure is needed before concluding that the change saved money?",
       "options": {
-        "A": "Cost per successfully completed task, with a quality measure, to check whether users now need more requests to reach a usable result",
-        "B": "The number of cache hits per day",
-        "C": "The model's public benchmark score",
-        "D": "The p99 latency of the new prompt"
+        "A": "Total token spend against the same week last year, to confirm that the saving is not caused by seasonal shifts in recipe traffic",
+        "B": "Average output tokens per request, to confirm the saving comes from shorter answers rather than from users sending fewer messages",
+        "C": "Cost per successfully completed task, with a quality measure, to check whether users now need more requests to reach a usable result",
+        "D": "Cache hit rate before and after the change, to confirm that the saving comes from prompt caching rather than chance traffic variation"
       },
       "answer": [
-        "A"
+        "C"
       ],
-      "explanation": "Cost per request can fall while total cost rises if users need more requests to get a usable result. The meaningful unit is cost per successfully completed task, paired with a quality measure. If the cheaper prompt causes more follow-up turns or more abandoned sessions, the apparent saving is illusory.",
+      "explanation": "Cost per request can fall while total cost rises if users need more requests to get a usable result. The meaningful unit is cost per successfully completed task, paired with a quality measure. If the cheaper prompt causes more follow-up turns or more abandoned sessions, the apparent saving is illusory, and diagnostics about caching, seasonality or output length do not answer that question.",
       "why_incorrect": {
-        "B": "Cache hits are one cost driver, not a measure of whether the overall change saved money.",
-        "C": "Benchmarks do not measure this application's task completion.",
-        "D": "Latency matters but does not answer whether total cost to complete tasks fell."
+        "A": "Aggregate spend controls for seasonality but cannot reveal whether each task now needs more requests or ends unresolved.",
+        "B": "This explains where per-request savings came from, not whether total cost to complete a task fell or quality held.",
+        "D": "Cache hits explain one cost driver; they do not show whether users still reach a usable result with the new prompt."
       },
       "module": "14-evaluation-and-testing/02-metrics.md",
       "references": [
@@ -102,19 +102,19 @@
       "scenario": "Contoso Health is evaluating a discharge-instructions generator. The team must decide how to measure 'safety' for this use case.",
       "question": "Which definition of a safety metric is most actionable?",
       "options": {
-        "A": "Whether the model refuses unsafe requests",
-        "B": "The rate of outputs containing defined clinical harm categories (dosage errors, contradictions of the care plan, omitted red-flag symptoms) on a labelled test set, with zero tolerance for the most severe",
-        "C": "A reviewer's overall impression that outputs 'seem safe'",
-        "D": "The model provider's published safety card"
+        "A": "The rate at which the generator refuses or escalates requests outside discharge instructions, measured on a red-team prompt set",
+        "B": "Pass rate on the model provider's published safety evaluations, plus a review of its system card for clinical caveats and limitations",
+        "C": "Clinician ratings of each output on a 1–5 safety scale, averaged across a monthly sample and tracked against a target average of 4.5",
+        "D": "The rate of outputs with defined clinical harms (dosage errors, care-plan contradictions, omitted red-flag symptoms) on a labelled test set, with zero tolerance for the most severe"
       },
       "answer": [
-        "B"
+        "D"
       ],
-      "explanation": "Actionable safety metrics are operationalised for the specific domain: a defined list of harmful failure categories (for example wrong dosage, contradicting the clinician's plan, omitted red-flag symptoms), a labelled test set covering them, and a target rate with zero tolerance for the most severe categories. Generic statements about 'being safe' or relying on refusals do not tell you whether outputs harm patients.",
+      "explanation": "Actionable safety metrics are operationalised for the specific domain: a defined list of harmful failure categories (for example wrong dosage, contradicting the clinician's plan, omitted red-flag symptoms), a labelled test set covering them, and a target rate with zero tolerance for the most severe categories. Refusal rates, averaged impression scores or provider-level evaluations do not tell you whether this application's outputs harm patients.",
       "why_incorrect": {
-        "A": "Refusal behaviour matters but does not measure harm in normal, benign outputs.",
-        "C": "Unstructured impressions are not repeatable or comparable across versions.",
-        "D": "Provider-level evaluations do not measure this application's domain-specific harms."
+        "A": "Refusal behaviour matters but does not measure harm in the normal, benign outputs that make up nearly all of the traffic.",
+        "B": "Provider-level evaluations do not measure this application's domain-specific harms.",
+        "C": "An undefined scale is not repeatable, and an average can hide rare but severe failures such as a dosage error."
       },
       "module": "14-evaluation-and-testing/02-metrics.md",
       "references": [
@@ -132,21 +132,21 @@
       "scenario": "Fabrikam Retail is building an evaluation set for a returns-policy assistant. It has 20,000 historical chat transcripts and a small team of policy experts.",
       "question": "Which THREE practices produce a strong evaluation dataset? (Choose 3.)",
       "options": {
-        "A": "Sample real transcripts stratified by topic so the set reflects production traffic",
-        "B": "Use only the 200 most recent transcripts because they are most relevant",
-        "C": "Add expert-written edge cases, such as policy exceptions and adversarial requests, that are rare in history",
-        "D": "Keep a held-out test split that is never used while iterating on prompts",
-        "E": "Have the model under test write the reference answers without expert review"
+        "A": "Use the 200 most recent transcripts, since policies change and older chats may be stale",
+        "B": "Have the model under test draft the reference answers, then spot-check 5% to speed up labelling",
+        "C": "Sample real transcripts stratified by topic so the eval set reflects production traffic",
+        "D": "Keep a held-out test split that is not used while iterating on prompts or examples",
+        "E": "Add expert-written edge cases, such as policy exceptions and adversarial requests, that are rare in history"
       },
       "answer": [
-        "A",
         "C",
-        "D"
+        "D",
+        "E"
       ],
-      "explanation": "Good eval sets reflect the real distribution of tasks while deliberately covering edge cases, are labelled reliably, and stay separate from material used to tune prompts. Sampling from real transcripts (stratified by topic), adding expert-written edge cases such as policy exceptions and adversarial inputs, and holding out a test split that is not used during prompt iteration all serve those goals. Using only the easiest or most recent cases biases results, and letting the model under test label its own answers without validation creates circularity.",
+      "explanation": "Good eval sets reflect the real distribution of tasks while deliberately covering edge cases, are labelled reliably, and stay separate from material used to tune prompts. Sampling from real transcripts (stratified by topic), adding expert-written edge cases such as policy exceptions and adversarial inputs, and holding out a test split that is not used during prompt iteration all serve those goals. A small recent slice biases results, and letting the model under test write its own references with light spot-checks creates circularity.",
       "why_incorrect": {
-        "B": "Recency alone under-represents seasonal and rare cases.",
-        "E": "This makes the evaluation circular; errors in references go undetected."
+        "A": "Two hundred recent chats under-represent seasonal and rare cases; older transcripts can be relabelled under current policy rather than discarded.",
+        "B": "Ninety-five percent of references go unchecked and were written by the system being evaluated, so its errors become the answer key."
       },
       "module": "14-evaluation-and-testing/03-building-eval-datasets.md",
       "references": [
@@ -162,19 +162,19 @@
       "scenario": "Lucerne Publishing evaluates a book-blurb generator. Some criteria are objective (length limit, no spoilers of the ending, required ISBN format) and others are subjective (tone fits the genre).",
       "question": "Which mixed-method grading approach is most appropriate?",
       "options": {
-        "A": "Human review of every blurb for every criterion",
-        "B": "An LLM judge for every criterion, including length and ISBN format",
-        "C": "Code-based checks for length and ISBN format, an LLM judge with a rubric for spoilers and tone calibrated against human labels, and periodic human audits of a sample",
-        "D": "Only code-based checks, because subjective criteria cannot be evaluated"
+        "A": "Code checks for length and ISBN format, a rubric-based LLM judge for spoilers and tone calibrated against human labels, and periodic human audits of a sample",
+        "B": "Code-based checks for length, ISBN format and spoilers via a keyword list of ending terms, with tone left to occasional author feedback",
+        "C": "A single LLM judge with a detailed rubric covering every criterion, including length and ISBN format, calibrated against human labels",
+        "D": "Two trained editors review every blurb against all criteria, with a third resolving disagreements, so each score reflects expert judgement"
       },
       "answer": [
-        "C"
+        "A"
       ],
-      "explanation": "Choose the cheapest reliable grader for each criterion. Objective, rule-like checks such as length and format are best handled by code. Criteria like spoiler detection and tone fit can be graded by an LLM judge with a clear rubric, calibrated against a sample of human labels. Humans then audit a slice periodically and handle disagreements. Using humans for everything does not scale, and using an LLM judge for deterministic checks adds cost and variance.",
+      "explanation": "Choose the cheapest reliable grader for each criterion. Objective, rule-like checks such as length and format are best handled by code. Criteria like spoiler detection and tone fit can be graded by an LLM judge with a clear rubric, calibrated against a sample of human labels. Humans then audit a slice periodically and handle disagreements. Using humans for everything does not scale, using an LLM judge for deterministic checks adds cost and variance, and keyword rules cannot handle judgement-based criteria.",
       "why_incorrect": {
-        "A": "Accurate but slow and costly; it does not scale to regression testing.",
-        "B": "Deterministic checks are cheaper and more reliable in code.",
-        "D": "Rubric-based LLM grading and human review can evaluate subjective criteria."
+        "B": "A keyword list cannot recognise spoilers phrased in new ways, and tone is left effectively ungraded.",
+        "C": "Length and format are deterministic, so code checks them more cheaply and reliably; a judge adds cost and variance there.",
+        "D": "Accurate but slow and costly; it does not scale to regression testing on every prompt change."
       },
       "module": "14-evaluation-and-testing/04-grading-methods.md",
       "references": [
@@ -190,19 +190,19 @@
       "scenario": "Kestrel Payments' prompt team reports eval accuracy rising from 84% to 97% over six weeks of iteration. After release, production accuracy measured by analyst corrections is about 85%.",
       "question": "What is the most likely explanation?",
       "options": {
-        "A": "The model was silently downgraded after release",
-        "B": "Prompt caching serves stale answers in production",
-        "C": "Analysts are correcting answers that were actually right",
-        "D": "The prompts were tuned against the same eval cases until they overfit; the eval lacked a held-out split representative of production traffic"
+        "A": "Production inputs include document formats the eval did not cover, so after release the model meets genuinely new cases that no prompt change was tested on",
+        "B": "Analysts apply stricter standards than the eval labels, so production accuracy is understated relative to the offline score",
+        "C": "The prompts were tuned against the same eval cases until they overfit; the eval lacked a held-out split representative of production",
+        "D": "The provider changed the model behind the pinned model ID after release, shifting behaviour away from what the eval measured"
       },
       "answer": [
-        "D"
+        "C"
       ],
-      "explanation": "When eval scores climb steadily during iteration but production does not move, the usual cause is overfitting to the eval: the team has tuned prompts against the same cases repeatedly, possibly adding examples drawn from them. A held-out test split, refreshed with recent production samples, gives an honest estimate. Model drift or caching would not explain a consistent gap between the eval set and production.",
+      "explanation": "When eval scores climb steadily during iteration but production stays at the starting level, the usual cause is overfitting to the eval: the team has tuned prompts against the same cases repeatedly, possibly adding examples drawn from them. A held-out test split, refreshed with recent production samples, gives an honest estimate. Model changes, new input formats or stricter labelling would not explain gains that exist offline and nowhere else.",
       "why_incorrect": {
-        "A": "Model versions are pinned by ID; the pattern points to evaluation design.",
-        "B": "Caching reuses input processing, not answers; it does not change outputs.",
-        "C": "Possible in a few cases, but it would not explain a consistent 12-point gap."
+        "A": "Coverage gaps can contribute, but they would not explain why thirteen points of gains vanished entirely, leaving production at the pre-iteration baseline.",
+        "B": "A labelling mismatch would show as a gap from the start, not as gains that appear offline and disappear in production.",
+        "D": "Model versions are pinned by ID; the pattern of offline gains that vanish in production points to evaluation design."
       },
       "module": "14-evaluation-and-testing/03-building-eval-datasets.md",
       "references": [
@@ -219,21 +219,21 @@
       "scenario": "Tailspin Insurance plans to use Claude Sonnet 5.5 as an LLM judge to grade claim-summary quality on a 1–5 scale. Early results show the judge rarely gives scores below 4.",
       "question": "Which TWO steps most improve the judge's reliability? (Choose 2.)",
       "options": {
-        "A": "Remove the rubric so the judge uses its own judgement",
-        "B": "Replace the vague 1–5 scale with a rubric that defines concrete criteria for each level, or binary pass/fail per criterion",
-        "C": "Use the same system prompt for the judge as for the summary generator",
-        "D": "Measure agreement between the judge and a sample of human-labelled summaries and refine the rubric until agreement is acceptable",
-        "E": "Average the judge's score with the summary length to break ties"
+        "A": "Ask the judge to output its score first and then a justification, so the score is not anchored by its own explanation",
+        "B": "Normalise each judge score against the batch mean so that scores spread across the full 1–5 range on every run",
+        "C": "Replace the vague 1–5 scale with a rubric defining concrete criteria for each level, or binary pass/fail per criterion",
+        "D": "Switch the judge to Claude Opus 5.5, since a more capable model should be stricter and spread its scores across the scale",
+        "E": "Measure agreement between the judge and human-labelled summaries and refine the rubric until agreement is acceptable"
       },
       "answer": [
-        "B",
-        "D"
+        "C",
+        "E"
       ],
-      "explanation": "LLM judges need a precise rubric with concrete descriptions of each score level (or a binary pass/fail per criterion), and they need calibration against human labels to measure agreement. Asking the judge to reason before scoring and grading one criterion at a time also helps. Removing the rubric, or using the same prompt as the generator, makes scores less reliable.",
+      "explanation": "LLM judges need a precise rubric with concrete descriptions of each score level (or a binary pass/fail per criterion), and they need calibration against human labels to measure agreement. Asking the judge to reason before scoring and grading one criterion at a time also helps. Swapping the judge model or rescaling its scores does not fix an undefined scale or show that the judge agrees with people.",
       "why_incorrect": {
-        "A": "Without criteria, scores become inconsistent and drift toward leniency.",
-        "C": "Sharing the generator's prompt biases the judge toward the generator's own framing.",
-        "E": "Length is unrelated to quality and adds noise."
+        "A": "Reasoning before scoring tends to improve judge reliability; scoring first removes that benefit and leaves the vague scale in place.",
+        "B": "Forcing a spread changes the distribution, not the accuracy; a batch of good summaries would be marked down arbitrarily.",
+        "D": "Leniency comes from the undefined scale; a different model without a rubric or calibration may be just as lenient, at higher cost."
       },
       "module": "14-evaluation-and-testing/04-grading-methods.md",
       "references": [
@@ -251,20 +251,20 @@
       "question": "Which TWO design choices are most important for a valid test? (Choose 2.)",
       "options": {
         "A": "Randomise assignment at the user or session level so each user consistently sees one variant",
-        "B": "Change the model and the prompt together to maximise the chance of a visible effect",
-        "C": "Alternate variants on every message within a conversation",
-        "D": "Pre-register the primary metric and required sample size from a power calculation, and do not stop early on a promising interim result",
-        "E": "Stop the test as soon as the new prompt is ahead on a daily dashboard"
+        "B": "Assign variants per message within a conversation so both prompts see the same users and the comparison is fully paired",
+        "C": "Pre-register the primary metric and sample size from a power calculation, and run to that size rather than stopping on an interim lead",
+        "D": "Run variant B in week one and variant A in week two, so each variant receives the full traffic in its period",
+        "E": "Check the add-to-cart rate daily and stop once one variant leads with p < 0.05, to limit exposure to a worse prompt"
       },
       "answer": [
         "A",
-        "D"
+        "C"
       ],
-      "explanation": "Valid A/B tests randomise at the right unit (usually the user or session, so one person does not see both variants), fix the primary metric and sample size in advance from a power calculation, and run until that size is reached rather than stopping when results look good. Changing several things at once or switching variants mid-session confounds the results.",
+      "explanation": "Valid A/B tests randomise at the right unit (usually the user or session, so one person does not see both variants), fix the primary metric and sample size in advance from a power calculation, and run until that size is reached rather than stopping when results look good. Running variants in different weeks or switching variants mid-session confounds the results.",
       "why_incorrect": {
-        "B": "Changing two variables at once makes it impossible to attribute the effect.",
-        "C": "Within-conversation switching contaminates both variants and confuses users.",
-        "E": "Peeking and stopping early inflates false positives."
+        "B": "Within-conversation switching contaminates both variants, since each turn depends on the other prompt's earlier replies.",
+        "D": "Sequential periods confound the prompt with the week: promotions, seasonality and traffic mix differ between them.",
+        "E": "Repeated peeking and stopping early inflates false positives."
       },
       "module": "14-evaluation-and-testing/05-ab-testing-and-iteration.md",
       "references": [
@@ -280,19 +280,19 @@
       "scenario": "Coho Winery's team iterates on a tasting-note generator. Each week they change several prompt sections at once, and quality sometimes improves and sometimes regresses without anyone knowing why.",
       "question": "Which iteration practice would most improve their process?",
       "options": {
-        "A": "Version-control prompts, change one element at a time, run the same eval suite on each change, and keep or revert based on the results",
-        "B": "Make bigger changes less often so there are fewer experiments to track",
-        "C": "Judge each change by reading three outputs the author picks",
-        "D": "Let the model rewrite its own prompt each week"
+        "A": "Run an automated prompt optimiser each week that rewrites sections and keeps whichever version scores highest on the eval",
+        "B": "Version-control prompts, change one element at a time, run the same eval suite on each change, and keep or revert based on the results",
+        "C": "Batch changes into a monthly release with a full eval run, so each release is tested thoroughly and there are fewer experiments to track",
+        "D": "Have the prompt author compare ten outputs before and after each change and record a judgement in the change log"
       },
       "answer": [
-        "A"
+        "B"
       ],
-      "explanation": "Effective iteration changes one thing at a time, runs the full offline eval suite on each change, records the result against a version-controlled prompt, and keeps or reverts based on evidence. This makes improvements attributable and regressions reversible. Larger batches of changes or decisions based on a few hand-picked examples hide cause and effect.",
+      "explanation": "Effective iteration changes one thing at a time, runs the full offline eval suite on each change, records the result against a version-controlled prompt, and keeps or reverts based on evidence. This makes improvements attributable and regressions reversible. Bundled releases, small hand-picked comparisons and unreviewed automated rewrites hide cause and effect.",
       "why_incorrect": {
-        "B": "Bundling changes makes cause and effect even harder to identify.",
-        "C": "Hand-picked samples are biased and too small to detect regressions.",
-        "D": "Unreviewed self-modification removes control and traceability."
+        "A": "Unreviewed rewrites change several things at once and optimise against the same eval, which removes traceability and invites overfitting.",
+        "C": "Testing each release thoroughly still bundles changes, so a regression cannot be attributed to the change that caused it.",
+        "D": "Ten author-chosen outputs are too few and too biased to detect regressions reliably."
       },
       "module": "14-evaluation-and-testing/05-ab-testing-and-iteration.md",
       "references": [
@@ -309,19 +309,19 @@
       "scenario": "Relecloud wants to compare Claude Opus 5.5 at `medium` effort with the same model at `low` effort for its ticket-triage agent. Each eval run costs real money and takes an hour.",
       "question": "Which experiment design gives a trustworthy answer at reasonable cost?",
       "options": {
-        "A": "Run each configuration on a different random sample of 20 cases to save money",
-        "B": "Run both effort levels on the same representative eval set (a paired comparison), compare quality, latency and cost per completed task, and apply a decision rule agreed in advance",
-        "C": "Compare one hand-picked difficult case on each configuration",
-        "D": "Compare `low` effort on Claude Haiku 5.5 with `medium` effort on Claude Opus 5.5 to test two ideas at once"
+        "A": "Compare `low` effort on Claude Haiku 5.5 with `medium` effort on Claude Opus 5.5, since a cheaper model may beat both ideas at once",
+        "B": "Run a two-week online A/B test with live tickets split between the two effort levels, since production traffic is the true benchmark",
+        "C": "Run each configuration on a different random sample of 50 cases, so the comparison covers twice as many distinct tickets for the same cost",
+        "D": "Run both effort levels on the same representative eval set (a paired comparison), compare quality, latency and cost per completed task, and apply a pre-agreed decision rule"
       },
       "answer": [
-        "B"
+        "D"
       ],
-      "explanation": "A paired comparison on the same representative eval cases isolates the effect of the single changed variable (effort) and needs fewer cases than unpaired comparisons. Tracking quality, latency and cost per completed task gives the full trade-off, and agreeing the decision rule in advance avoids rationalising results. A small online test first or a single-case comparison would not be trustworthy, and comparing different models at once confounds the result.",
+      "explanation": "A paired comparison on the same representative eval cases isolates the effect of the single changed variable (effort) and needs fewer cases than unpaired comparisons. Tracking quality, latency and cost per completed task gives the full trade-off, and agreeing the decision rule in advance avoids rationalising results. Unpaired samples add noise, going straight to an online test spends time and risk before offline evidence exists, and comparing different models at once confounds the result.",
       "why_incorrect": {
-        "A": "Different small samples add noise that can swamp the real difference.",
-        "C": "A single case cannot support a decision.",
-        "D": "Changing model and effort together confounds the result."
+        "A": "Changing model and effort together confounds the result.",
+        "B": "An online test is slower, costlier and exposes live tickets to an untested configuration; an offline paired comparison should come first.",
+        "C": "Different samples add case-to-case noise that can swamp the real difference; pairing removes it for the same budget."
       },
       "module": "14-evaluation-and-testing/05-ab-testing-and-iteration.md",
       "references": [
@@ -338,19 +338,19 @@
       "scenario": "Wingtip Toys ran an online A/B test of two prompts for 48 hours. Variant B's satisfaction score was 2 points higher with a p-value of 0.04, but traffic during the test was mostly a weekend holiday sale.",
       "question": "What is the most appropriate interpretation?",
       "options": {
-        "A": "Roll out variant B immediately because p < 0.05",
-        "B": "Discard variant B because two points is too small to matter",
-        "C": "Treat the result as provisional, because the sample was unrepresentative; extend or rerun the test across typical traffic before full rollout",
-        "D": "Rerun the test with a different metric until one is significant"
+        "A": "Roll out variant B, since p < 0.05 means the improvement is statistically established and further testing delays the benefit",
+        "B": "Discard variant B, because a 2-point gain is within the normal week-to-week noise of satisfaction scores on this assistant",
+        "C": "Re-analyse the existing data across other metrics, such as conversion and session length, to see whether they independently confirm the satisfaction result",
+        "D": "Treat the result as provisional, because the sample was unrepresentative; extend or rerun the test across typical traffic before full rollout"
       },
       "answer": [
-        "C"
+        "D"
       ],
-      "explanation": "A statistically significant result can still fail to generalise if the sample is unrepresentative. A short test dominated by atypical holiday-sale traffic may not reflect normal usage, so the result should be confirmed over a period that covers typical traffic (or analysed by segment) before rollout. Statistical significance alone does not guarantee practical or general validity.",
+      "explanation": "A statistically significant result can still fail to generalise if the sample is unrepresentative. A short test dominated by atypical holiday-sale traffic may not reflect normal usage, so the result should be confirmed over a period that covers typical traffic (or analysed by segment) before rollout. Statistical significance alone does not guarantee practical or general validity, and mining the same data for confirming metrics does not fix the sample.",
       "why_incorrect": {
-        "A": "Significance on an unrepresentative sample does not establish that the effect generalises.",
-        "B": "Small effects can matter at scale; the issue is representativeness, not size alone.",
-        "D": "Searching for a significant metric inflates false positives."
+        "A": "Significance on an unrepresentative sample does not establish that the effect generalises to normal traffic.",
+        "B": "The p-value already addresses noise within this sample; the issue is representativeness, and small effects can matter at scale.",
+        "C": "Testing more metrics on the same holiday-skewed data inflates false positives and leaves the sampling problem untouched."
       },
       "module": "14-evaluation-and-testing/05-ab-testing-and-iteration.md",
       "references": [
@@ -367,21 +367,21 @@
       "scenario": "Meridian Clinics' referral-letter assistant sometimes cites specialist clinics that do not exist. The prompt includes a directory of 400 clinics, and errors cluster on letters for rare specialties.",
       "question": "Which TWO interventions most directly address this hallucination pattern? (Choose 2.)",
       "options": {
-        "A": "Add examples of well-written letters for common specialties",
-        "B": "Instruct the assistant to state when no listed clinic matches the specialty, rather than inventing one",
-        "C": "Require the clinic to be selected by ID from the directory, via a lookup tool or schema constraint, and validate the ID before the letter is sent",
-        "D": "Ask the model to sound more confident in its recommendations",
-        "E": "Remove the directory to shorten the prompt"
+        "A": "Move the 400-clinic directory to the top of the system prompt under a heading, so the model attends to it more closely",
+        "B": "Require the clinic to be chosen by ID from the directory, through a lookup tool or schema constraint, and validate the ID before sending",
+        "C": "Instruct the assistant to say when no listed clinic matches the specialty, rather than inventing one",
+        "D": "Add few-shot examples of well-written referral letters that each name a clinic from the directory correctly",
+        "E": "Replace the directory with retrieval that returns the five clinics most similar to the requested specialty"
       },
       "answer": [
         "B",
         "C"
       ],
-      "explanation": "Fabricated entities near the edge of the provided data usually mean the model is filling gaps instead of admitting none match. Two direct fixes: give the model explicit permission and a defined way to say no matching clinic was found, and constrain the output so the clinic must be chosen from the directory (for example a schema enum or a lookup tool returning valid IDs), then validate it. Making the prompt more creative or adding unrelated examples does not address the gap.",
+      "explanation": "Fabricated entities near the edge of the provided data usually mean the model is filling gaps instead of admitting none match. Two direct fixes: give the model explicit permission and a defined way to say no matching clinic was found, and constrain the output so the clinic must be chosen from the directory (for example a schema enum or a lookup tool returning valid IDs), then validate it. Moving the directory, adding examples or narrowing it with similarity search does not close the gap.",
       "why_incorrect": {
-        "A": "Examples for common specialties do not cover the rare cases where errors occur.",
-        "D": "Encouraging confidence increases fabrication risk.",
-        "E": "Without the directory the model has no grounding at all."
+        "A": "Placement may help attention slightly, but it gives the model no sanctioned way to say no clinic matches and no validation of the result.",
+        "D": "Examples that always find a clinic reinforce the habit of naming one, and do not cover the rare specialties where errors occur.",
+        "E": "For rare specialties the nearest matches may not fit, and without a 'no match' path or validation the model can still invent or misuse a clinic."
       },
       "module": "14-evaluation-and-testing/06-diagnosing-failures.md",
       "references": [
@@ -398,19 +398,19 @@
       "scenario": "Margie's Travel's visa-advice assistant performs well in English but poorly on questions asked in Portuguese. The eval set contains only English cases.",
       "question": "What is the best first diagnostic step?",
       "options": {
-        "A": "Switch to the largest model, which should handle all languages better",
-        "B": "Translate all Portuguese questions to English before sending them",
-        "C": "Conclude that Claude does not support Portuguese",
+        "A": "Translate Portuguese questions into English before sending them, then translate the answers back for the customer",
+        "B": "Add Portuguese few-shot examples to the system prompt, then compare complaint rates from Portuguese-speaking users before and after the change",
+        "C": "Switch the Portuguese route to the most capable model, which handles less common languages more robustly than smaller tiers",
         "D": "Add Portuguese cases mirroring the English eval and measure which stage fails (retrieval, reasoning or output) on that slice"
       },
       "answer": [
         "D"
       ],
-      "explanation": "Before changing prompts or models, extend the evaluation to cover the failing slice: build a Portuguese test set with the same scenarios and measure where performance drops (retrieval of Portuguese sources, reasoning, or output language). Diagnosis needs data on the failing segment. Switching models or translating everything without evidence may fix the wrong thing.",
+      "explanation": "Before changing prompts or models, extend the evaluation to cover the failing slice: build a Portuguese test set with the same scenarios and measure where performance drops (retrieval of Portuguese sources, reasoning, or output language). Diagnosis needs data on the failing segment. Switching models, translating everything or adding examples without evidence may fix the wrong thing.",
       "why_incorrect": {
-        "A": "This may help but is unverified and expensive; without a Portuguese eval you cannot confirm it.",
-        "B": "This could help but is a fix chosen without diagnosis and may lose nuance.",
-        "C": "Claude is multilingual; the issue needs to be measured, not assumed."
+        "A": "This is a fix chosen without diagnosis, adds two translation steps that can lose nuance, and may not address the failing stage.",
+        "B": "Examples are a fix rather than a diagnosis, and complaint rates are slow, noisy evidence compared with a targeted eval slice.",
+        "C": "This may help but is unverified and expensive; without a Portuguese eval you cannot confirm it or know what failed."
       },
       "module": "14-evaluation-and-testing/06-diagnosing-failures.md",
       "references": [
@@ -426,19 +426,19 @@
       "scenario": "Trey Research's contract-analysis prompt worked well on an older model. After migrating to a current model, outputs are longer, the model asks clarifying questions the old one never asked, and one rule ('ALWAYS list every clause') causes very long lists of trivial clauses.",
       "question": "Which diagnosis best explains these symptoms?",
       "options": {
-        "A": "The prompt is tuned for the old model; the new model follows instructions more literally, so dated absolute rules over-trigger and verbosity defaults differ. Revise the prompt for the new model and re-evaluate",
-        "B": "The new model is less capable and should be rolled back",
-        "C": "The context window is too small for the contracts",
-        "D": "Prompt caching is returning outputs from the old model"
+        "A": "The new model reasons more by default; lower effort and request shorter answers so outputs return to the old model's length and style",
+        "B": "The contracts exceed the new model's effective attention span, so it compensates by listing every clause and asking questions",
+        "C": "The new model uses a different tokenizer, so the old `max_tokens` setting now permits much longer responses than the team originally intended",
+        "D": "The prompt was tuned for the old model; the new one follows instructions more literally, so absolute rules over-trigger and verbosity defaults differ. Revise and re-evaluate"
       },
       "answer": [
-        "A"
+        "D"
       ],
       "explanation": "These are signs of model mismatch: the prompt was tuned for an older model's behaviour. Newer models follow instructions more precisely, so absolute rules written to overcome weaker adherence now over-trigger, and they may be calibrated differently on verbosity and clarification. The fix is to revisit the prompt for the new model, removing dated emphasis, stating what 'relevant' means and specifying the desired length and when to ask questions, then re-running the eval.",
       "why_incorrect": {
-        "B": "The symptoms point to prompt-model mismatch, not lower capability.",
-        "C": "A small window would cause truncation or errors, not longer outputs and over-applied rules.",
-        "D": "Caches are model-scoped and store input processing, not outputs."
+        "A": "Lower effort may shorten output, but it leaves the absolute rule that causes trivial clause lists and does not address the clarifying questions.",
+        "B": "Nothing indicates a context problem; over-applying an explicit 'ALWAYS' rule is a prompt-model mismatch, not a capacity limit.",
+        "C": "Tokenizer changes can shift counts, but `max_tokens` is a cap rather than a target, and it cannot explain clarifying questions or over-applied rules."
       },
       "module": "14-evaluation-and-testing/06-diagnosing-failures.md",
       "references": [
@@ -454,19 +454,19 @@
       "scenario": "An architect at Alpine Ski House is triaging a list of assistant failures and wants to classify each by root cause before choosing fixes.",
       "question": "Which pairing of symptom and most likely root cause is correct?",
       "options": {
-        "A": "A response ends mid-sentence: a rate-limit problem",
-        "B": "An answer contradicts a policy document present in the context: a grounding or prompt-structure problem",
-        "C": "The model picks the wrong one of two near-identical tools: a caching problem",
-        "D": "JSON output occasionally fails to parse: a context-window problem"
+        "A": "An answer contradicts a policy document present in the context: a grounding or prompt-structure problem",
+        "B": "A response ends mid-sentence: the rate limiter cut generation short during a traffic spike, so add backoff",
+        "C": "The model picks the wrong one of two near-identical tools: stale tool definitions served from the prompt cache",
+        "D": "JSON output occasionally fails to parse: the context window is nearly full, so the model compresses its output"
       },
       "answer": [
-        "B"
+        "A"
       ],
       "explanation": "Matching symptoms to causes guides the fix. An answer that contradicts a document present in the context points to a prompt or grounding problem (for example the document is buried or the instructions do not prioritise it). Truncated output points to `max_tokens`, malformed JSON points to missing structured-output constraints, and wrong tool choice between overlapping tools points to tool design. Attributing these to rate limits or caching is a mismatch.",
       "why_incorrect": {
-        "A": "Truncation mid-sentence is typically `max_tokens`; rate limits return errors.",
-        "C": "This points to overlapping tool design, not caching.",
-        "D": "Parsing failures point to missing format constraints such as structured outputs."
+        "B": "Truncation mid-sentence is typically `max_tokens`; rate limits return errors rather than partial responses.",
+        "C": "This points to overlapping tool design; caching reuses identical input processing and does not serve stale definitions.",
+        "D": "Parsing failures point to missing format constraints such as structured outputs, not to context pressure."
       },
       "module": "14-evaluation-and-testing/06-diagnosing-failures.md",
       "references": [
@@ -483,21 +483,21 @@
       "scenario": "Fabrikam Retail runs a nightly job that generates 80,000 personalised email drafts using a shared 6,000-token brand guide followed by per-customer data. Nobody reads the drafts until the next morning.",
       "question": "Which TWO optimisations most reduce cost without affecting quality? (Choose 2.)",
       "options": {
-        "A": "Set `max_tokens` to 100 to cap output cost",
-        "B": "Switch to the smallest model without evaluating draft quality",
-        "C": "Submit the job through the Message Batches API",
-        "D": "Put the shared brand guide first with a cache breakpoint and the per-customer data after it",
-        "E": "Generate drafts synchronously during business hours to reduce queueing"
+        "A": "Set `max_tokens` to 150 so each draft's output cost is capped at a predictable level",
+        "B": "Put the shared brand guide first with a cache breakpoint and the per-customer data after it",
+        "C": "Run the job synchronously with fast mode so it finishes within an hour and frees capacity for the morning",
+        "D": "Move the job to Claude Haiku 5.5, since email drafts are simple enough for the smallest current model",
+        "E": "Submit the nightly job through the Message Batches API and key results by custom ID"
       },
       "answer": [
-        "C",
-        "D"
+        "B",
+        "E"
       ],
-      "explanation": "For latency-insensitive bulk jobs, the Message Batches API processes requests asynchronously at a discount. Placing the shared brand guide first with a cache breakpoint lets requests reuse the cached prefix, reducing input cost further, while per-customer data follows the breakpoint. Shrinking `max_tokens` risks truncation, and switching models without evaluation risks quality.",
+      "explanation": "For latency-insensitive bulk jobs, the Message Batches API processes requests asynchronously at a discount. Placing the shared brand guide first with a cache breakpoint lets requests reuse the cached prefix, reducing input cost further, while per-customer data follows the breakpoint. Shrinking `max_tokens` risks truncation, switching models without evaluation risks quality, and paying for speed buys nothing overnight.",
       "why_incorrect": {
         "A": "A tight cap risks truncated drafts, which affects quality.",
-        "B": "An unevaluated model change risks quality, which the requirement excludes.",
-        "E": "Synchronous processing forgoes the batch discount and gives no benefit for an overnight job."
+        "C": "Fast mode charges a premium for speed, and an overnight job gains nothing from finishing sooner; batch processing is discounted instead.",
+        "D": "A model change made without evaluating draft quality risks quality, which the requirement excludes."
       },
       "module": "15-production-operations/03-cost-optimisation.md",
       "references": [
@@ -514,19 +514,19 @@
       "scenario": "Kestrel Payments switches effort between `low` and `high` on alternate turns of a long agent conversation to save money. Afterwards, cache reads on the conversation history drop sharply and costs rise.",
       "question": "What explains the cost increase, and what is a better approach?",
       "options": {
-        "A": "Low effort produces longer outputs, which increases cost",
-        "B": "Caching only works at `high` effort",
-        "C": "Changing top-level effort between requests invalidates the cached message history; pin effort per route, or use the per-message effort mechanism where supported",
-        "D": "Switch to a different model on low-effort turns instead"
+        "A": "Low-effort turns make more tool calls to compensate, so the conversation grows faster and every later turn costs more",
+        "B": "Changing top-level effort mid-conversation invalidates the cached history; pin effort per route, or use per-message effort where supported",
+        "C": "Alternating effort changes the thinking blocks in history, which shifts the prefix; disable thinking on the low-effort turns instead",
+        "D": "Route the low-effort turns to Claude Haiku 5.5 instead, which is far cheaper per token and leaves the main model's cached history untouched"
       },
       "answer": [
-        "C"
+        "B"
       ],
       "explanation": "Thinking and effort settings are part of what the cache keys on, so changing the top-level effort between requests invalidates the cached message history. Pin effort per route instead, or, on models that support it, use the per-message effort mechanism, which changes effort without that invalidation (a beta feature as of 2026-10-24). Switching models would also break the cache, because caches are model-scoped.",
       "why_incorrect": {
-        "A": "Lower effort generally reduces output tokens; the cost rise comes from cache invalidation.",
-        "B": "Caching works at any effort level; changing the level between requests is the problem.",
-        "D": "Caches are model-scoped, so alternating models also discards the cached history."
+        "A": "Lower effort generally means fewer, more consolidated tool calls, and it would not explain the sharp drop in cache reads.",
+        "C": "Toggling thinking is itself a setting change that invalidates the message cache, and some current models reject disabled thinking; the trigger is the top-level change.",
+        "D": "Caches are model-scoped, so every Haiku turn reads the full history uncached, and the switch back adds further misses."
       },
       "module": "15-production-operations/03-cost-optimisation.md",
       "references": [
@@ -543,19 +543,19 @@
       "scenario": "Litware's document-QA service shows p95 latency of 9 seconds. Profiling shows 70% of time is input processing of a large, unchanging instruction and reference block, and 30% is output generation of short answers.",
       "question": "Which optimisation targets the dominant latency component?",
       "options": {
-        "A": "Ask for shorter answers to cut output time",
-        "B": "Increase `max_tokens` to avoid truncation retries",
-        "C": "Split the reference block across parallel requests and merge answers",
-        "D": "Cache the unchanging instruction and reference block so repeated requests skip reprocessing it"
+        "A": "Ask for shorter answers and stream them, so output generation finishes sooner and users see text earlier",
+        "B": "Cache the unchanging instruction and reference block so repeated requests skip reprocessing it",
+        "C": "Split the reference block across parallel requests and merge the partial answers, so each request processes less input",
+        "D": "Move to fast mode, which raises output tokens per second and shortens the generation stage of each request"
       },
       "answer": [
-        "D"
+        "B"
       ],
       "explanation": "Optimise the dominant stage first. When most latency comes from processing a large, unchanging input prefix, prompt caching reduces time to first token on cache hits as well as cost. Output-side measures (shorter answers, faster output speed) would address only 30% of the time. Splitting the reference block across parallel requests would lose shared context.",
       "why_incorrect": {
-        "A": "Output is only 30% of latency; this leaves the dominant input-processing cost untouched.",
-        "B": "There is no evidence of truncation; this does not reduce input processing.",
-        "C": "Parallel fragments lose shared context and multiply requests."
+        "A": "Output is 30% of latency; this leaves the dominant input-processing cost untouched.",
+        "C": "Parallel fragments lose shared context, multiply requests and still reprocess the full block every time.",
+        "D": "Fast mode speeds output generation, which is the smaller share of latency here, and it carries premium pricing."
       },
       "module": "15-production-operations/04-latency-optimisation.md",
       "references": [
@@ -572,21 +572,21 @@
       "scenario": "Northwind Lending is moving a document-classification service to production. Leadership wants early warning if quality degrades, for example after input formats change.",
       "question": "Which TWO monitoring practices provide the best early warning of quality degradation? (Choose 2.)",
       "options": {
-        "A": "Continuously score a sample of live traffic with automated checks or an LLM judge, calibrated by periodic human review",
-        "B": "Alert on drift in input and output distributions, such as document types, label proportions and stop-reason rates",
-        "C": "Monitor API uptime only",
-        "D": "Review the monthly invoice for unusual totals",
-        "E": "Re-run the offline eval once a year"
+        "A": "Re-run the full offline eval suite every quarter and before each prompt or model release, comparing against the baseline",
+        "B": "Track cost per thousand documents weekly, since degraded outputs often trigger retries and reprocessing that raise spend",
+        "C": "Alert on drift in input and output distributions, such as document types, label proportions and stop-reason rates",
+        "D": "Monitor API error rates and p95 latency per endpoint, alerting when either moves outside its normal operating range",
+        "E": "Continuously score a sample of live traffic with automated checks or an LLM judge, calibrated by periodic human review"
       },
       "answer": [
-        "A",
-        "B"
+        "C",
+        "E"
       ],
-      "explanation": "Quality monitoring in production needs both a direct and an indirect signal. Running an LLM judge or rule checks on a sampled slice of live traffic, with periodic human review to keep the judge honest, measures quality directly. Tracking input and output distribution drift (document types, lengths, label proportions, refusal and `max_tokens` stop rates) gives early indicators even before quality labels arrive. Uptime and invoice totals do not detect quality changes.",
+      "explanation": "Quality monitoring in production needs both a direct and an indirect signal. Running an LLM judge or rule checks on a sampled slice of live traffic, with periodic human review to keep the judge honest, measures quality directly. Tracking input and output distribution drift (document types, lengths, label proportions, refusal and `max_tokens` stop rates) gives early indicators even before quality labels arrive. Service health, cost and scheduled offline evals do not detect quality changes as they happen.",
       "why_incorrect": {
-        "C": "Uptime shows availability, not whether outputs are correct.",
-        "D": "Cost totals are lagging and say little about quality.",
-        "E": "Annual checks are far too infrequent for early warning."
+        "A": "Release-time evals are essential but do not see input-format changes that arrive between releases, so they give no early warning.",
+        "B": "Cost is a lagging, indirect signal and says little about classification quality.",
+        "D": "Errors and latency show service health, not whether classifications are correct; a format change can degrade quality with no error at all."
       },
       "module": "15-production-operations/02-observability.md",
       "references": [
@@ -602,19 +602,19 @@
       "scenario": "Tailspin Insurance's dashboards show a sudden rise in HTTP 429 responses from the Claude API every weekday at 09:00 when batch-style back-office jobs start alongside interactive traffic.",
       "question": "Which response best addresses the problem?",
       "options": {
-        "A": "Attribute usage by workload, move back-office jobs to the Batch API or off-peak scheduling, and use backoff that honours `retry-after` for interactive retries",
-        "B": "Retry every 429 immediately in a tight loop until it succeeds",
-        "C": "Switch all traffic to a larger model to get higher limits",
-        "D": "Ignore 429s because the SDK retries automatically"
+        "A": "Attribute usage by workload, move back-office jobs to the Batch API or off-peak, and use backoff that honours `retry-after` for interactive retries",
+        "B": "Put all traffic behind one shared queue that releases requests at the rate limit, so 429 responses stop appearing entirely",
+        "C": "Raise the SDK's `max_retries` to 10 with short fixed delays, so interactive requests eventually succeed during the morning peak",
+        "D": "Request a higher rate-limit tier for the organisation, since sustained 09:00 peaks show that demand has outgrown the current allocation for both workloads"
       },
       "answer": [
         "A"
       ],
-      "explanation": "429 responses indicate rate limits are being exceeded. Monitoring should break usage down by workload so the cause is visible, and the fix is to separate and shape traffic: move back-office jobs to the Batch API or schedule them off-peak, honour `retry-after` with exponential backoff, and request higher limits if sustained demand justifies it. Retrying immediately makes contention worse.",
+      "explanation": "429 responses indicate rate limits are being exceeded. Monitoring should break usage down by workload so the cause is visible, and the fix is to separate and shape traffic: move back-office jobs to the Batch API or schedule them off-peak, honour `retry-after` with exponential backoff, and request higher limits if sustained demand justifies it after that. Aggressive retries make contention worse, and a shared queue trades errors for interactive latency.",
       "why_incorrect": {
-        "B": "Immediate retries add load and prolong throttling.",
-        "C": "Limits are not increased by switching to a larger model, and costs would rise.",
-        "D": "SDK retries help transient spikes but do not resolve systematic contention between workloads."
+        "B": "A single queue stops 429s by making interactive users wait behind back-office jobs, which moves the problem into user-facing latency.",
+        "C": "More retries with short fixed delays add load during contention and ignore `retry-after`, prolonging throttling.",
+        "D": "More headroom may be justified later, but it pays to absorb back-office work that could move to batch or off-peak, and it does not separate the workloads."
       },
       "module": "15-production-operations/06-rate-limits-and-capacity.md",
       "references": [
@@ -631,19 +631,19 @@
       "scenario": "Woodgrove Bank wants its monitoring to detect possible prompt-injection or data-exfiltration attempts against its customer-facing assistant.",
       "question": "Which monitoring signal is most useful for this purpose?",
       "options": {
-        "A": "Total daily token usage",
-        "B": "Alerts on anomalous tool-use behaviour, such as unusual data-access sequences, bulk record retrieval or calls to unapproved destinations, correlated by session",
-        "C": "Average response latency",
-        "D": "The count of refusals only"
+        "A": "A classifier that scans each user message for known injection phrases and records the matches in the security log",
+        "B": "The daily count of refusals and safety-classifier stops, trended against a baseline to spot campaigns probing the assistant",
+        "C": "Daily token usage per customer account, with alerts when an account's consumption exceeds three times its 30-day average",
+        "D": "Alerts on anomalous tool use, such as unusual data-access sequences, bulk record retrieval or calls to unapproved destinations, correlated by session"
       },
       "answer": [
-        "B"
+        "D"
       ],
-      "explanation": "Security monitoring for LLM applications should look at behaviour, not only at volumes. Alerting on anomalous tool-use patterns, such as unusual sequences of data-access tools, bulk retrieval of records, or attempts to reach unapproved destinations, catches injection and exfiltration attempts that have bypassed prompt-level defences. Aggregate token counts or latency are too coarse and refusals are only a partial signal.",
+      "explanation": "Security monitoring for LLM applications should look at behaviour, not only at volumes. Alerting on anomalous tool-use patterns, such as unusual sequences of data-access tools, bulk retrieval of records, or attempts to reach unapproved destinations, catches injection and exfiltration attempts that have bypassed prompt-level defences. Token volumes are too coarse, phrase matching on user input misses indirect injection, and refusals are a partial signal.",
       "why_incorrect": {
-        "A": "Aggregate tokens are too coarse to identify a specific attack.",
-        "C": "Latency changes are not a reliable indicator of injection or exfiltration.",
-        "D": "Successful attacks often do not trigger refusals, so this misses the most important cases."
+        "A": "Indirect injection arrives through documents and tool results rather than user messages, and known phrases are easy to rephrase; it also says nothing about impact.",
+        "B": "Successful attacks often do not trigger refusals, so this misses the most important cases.",
+        "C": "Token volume is coarse: exfiltration can use few tokens, and many benign spikes would trigger alerts."
       },
       "module": "12-ai-security/11-logging-and-auditability.md",
       "references": [

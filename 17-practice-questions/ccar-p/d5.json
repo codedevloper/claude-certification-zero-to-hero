@@ -15,21 +15,21 @@
       "scenario": "Kestrel Payments is designing guardrails for a merchant-support assistant that can look up transactions and issue small goodwill credits up to a fixed limit.",
       "question": "Which THREE controls form a sound layered guardrail design? (Choose 3.)",
       "options": {
-        "A": "Screen inputs with a lightweight classifier for abuse and injection patterns before the main model call",
+        "A": "Log every credit the assistant issues and have finance reconcile totals against the limits at month end",
         "B": "Enforce credit caps and daily per-merchant totals in the credit tool's backend, independent of the model",
-        "C": "Scan outputs for sensitive data such as full card numbers before they reach the user",
-        "D": "Rely on a system-prompt rule that the assistant must never exceed the credit limit",
-        "E": "Let the model decide when a credit is justified with no further checks, because it has good judgement"
+        "C": "Put the credit limits in a dedicated system-prompt section and instruct the assistant to refuse any request above them",
+        "D": "Screen inputs with a lightweight classifier for abuse and injection patterns before the main model call",
+        "E": "Scan outputs for sensitive data such as full card numbers before they reach the user"
       },
       "answer": [
-        "A",
         "B",
-        "C"
+        "D",
+        "E"
       ],
-      "explanation": "Effective guardrails are layered and the strongest ones are deterministic. Input screening (for example a fast classifier for abuse or injection patterns) reduces risk early. Hard limits enforced in the credit tool's backend (amount caps, per-merchant daily totals) hold regardless of what the model says. Output checks for sensitive data such as full card numbers stop leakage. Relying on the system prompt or a single model's judgement alone is not a guardrail architecture.",
+      "explanation": "Effective guardrails are layered and the strongest ones are deterministic. Input screening (for example a fast classifier for abuse or injection patterns) reduces risk early. Hard limits enforced in the credit tool's backend (amount caps, per-merchant daily totals) hold regardless of what the model says. Output checks for sensitive data such as full card numbers stop leakage. Limits stated only in the prompt are guidance rather than enforcement, and month-end reconciliation detects overspend only after it has happened.",
       "why_incorrect": {
-        "D": "A prompt rule is guidance, not enforcement; the backend must enforce limits.",
-        "E": "Unchecked model discretion over money is the excessive-agency risk guardrails exist to contain."
+        "A": "Reconciliation is a useful detective control, but it finds overspend weeks after the money has gone rather than preventing it.",
+        "C": "A prompt rule is guidance the model can be talked out of; the limit has to be enforced in the backend where the credit is issued."
       },
       "module": "12-ai-security/14-enterprise-deployment-controls.md",
       "references": [
@@ -46,19 +46,19 @@
       "scenario": "Fourth Coffee's public chatbot occasionally gets attempts to make it write abusive content about competitors. The team wants a cheap pre-screen before the main model runs.",
       "question": "Which design is most appropriate?",
       "options": {
-        "A": "A static keyword blocklist only",
-        "B": "Generate the response first and screen only the output",
-        "C": "A fast, low-cost model call that classifies each input against a defined policy and returns a structured verdict, with flagged inputs routed to a safe fallback",
-        "D": "Ask users to agree to terms of use before chatting"
+        "A": "Add a firm instruction to the main system prompt telling the assistant to decline requests for abusive content about competitors",
+        "B": "A fast, low-cost model call that classifies each input against a defined policy and routes flagged inputs to a safe fallback",
+        "C": "A maintained blocklist of competitor names and abusive terms, updated weekly from flagged chats, that rejects matching messages before the main model runs",
+        "D": "Let the main model answer every message, then run a moderation classifier on the output and swap any abusive reply for a polite refusal"
       },
       "answer": [
-        "C"
+        "B"
       ],
-      "explanation": "A common harmlessness-screening pattern is a fast, low-cost model call that classifies user input against a defined policy and returns a structured verdict, with flagged inputs routed to a safe response or review. It runs before the main model, adds little latency and can be tuned and evaluated independently. Blocklists alone are easy to evade, and screening only after generation wastes cost and risks exposure.",
+      "explanation": "A common harmlessness-screening pattern is a fast, low-cost model call that classifies user input against a defined policy and returns a structured verdict, with flagged inputs routed to a safe response or review. It runs before the main model, adds little latency and can be tuned and evaluated independently. Blocklists alone are easy to evade, screening only after generation wastes cost, and an instruction in the main prompt is not an independent screen.",
       "why_incorrect": {
-        "A": "Keyword lists are easily evaded and generate false positives.",
-        "B": "Output screening is useful as a second layer, but without input screening every abusive prompt incurs the main model's cost.",
-        "D": "Terms set expectations but do not technically prevent abuse."
+        "A": "A prompt instruction relies on the main model itself, so it adds no cheap independent check that can be tuned and evaluated separately.",
+        "C": "Keyword lists are evaded by paraphrase and also block legitimate questions that mention competitors by name.",
+        "D": "Output screening is a useful second layer, but it is not a pre-screen: every abusive prompt still pays for a full main-model generation."
       },
       "module": "12-ai-security/02-prompt-injection.md",
       "references": [
@@ -74,19 +74,19 @@
       "scenario": "Proseware's coding agent runs shell commands in CI. A security review asks how to prevent it from exfiltrating secrets to arbitrary internet hosts if it is manipulated by malicious content in a dependency's README.",
       "question": "Which guardrail is most effective?",
       "options": {
-        "A": "Add a prompt instruction not to send secrets anywhere",
-        "B": "Review CI logs weekly for suspicious outbound requests",
-        "C": "Use a more capable model so it recognises malicious README content",
-        "D": "Run the agent in a sandbox with egress restricted to an allowlist of required hosts and with only the minimum secrets available"
+        "A": "Route every shell command through a second model that checks whether it looks like exfiltration before the command runs",
+        "B": "Scan CI logs after each run for outbound requests to unknown hosts and rotate any secret that appears to have been exposed",
+        "C": "Run the agent in a sandbox whose egress is restricted to an allowlist of required hosts, with only the minimum secrets available",
+        "D": "Add a system-prompt rule forbidding the transfer of credentials and tell the agent to treat dependency READMEs as untrusted data"
       },
       "answer": [
-        "D"
+        "C"
       ],
-      "explanation": "Network and filesystem isolation enforced by the environment is a hard boundary that holds even if the agent is manipulated. Running the agent in a sandbox whose egress is restricted to an allowlist of required hosts, with no secrets mounted beyond those strictly needed, prevents exfiltration regardless of the model's behaviour. Prompt warnings and post-hoc log review do not prevent the action.",
+      "explanation": "Network and filesystem isolation enforced by the environment is a hard boundary that holds even if the agent is manipulated. Running the agent in a sandbox whose egress is restricted to an allowlist of required hosts, with no secrets mounted beyond those strictly needed, prevents exfiltration regardless of the model's behaviour. Prompt warnings and post-hoc log review do not prevent the action, and a second model reviewing commands can itself be fooled by obfuscation.",
       "why_incorrect": {
-        "A": "Instructions can be overridden by injected content; they do not block network access.",
-        "B": "Detection after the fact does not prevent the exfiltration.",
-        "C": "Capability helps but is not a guaranteed boundary."
+        "A": "A model-based reviewer is probabilistic and can be fooled by obfuscated commands; it is not a hard boundary.",
+        "B": "Detection and rotation after the run limit damage but do not prevent the secret from leaving.",
+        "D": "Good hygiene, but instructions can be overridden by injected content; they do not block network access."
       },
       "module": "12-ai-security/07-supply-chain-risks.md",
       "references": [
@@ -103,19 +103,19 @@
       "scenario": "Civic Benefits Agency's guardrail classifier blocks 6% of legitimate questions about domestic-violence support services, frustrating vulnerable users.",
       "question": "What is the best response?",
       "options": {
-        "A": "Add legitimate sensitive-topic queries to the guardrail eval, refine the policy with allowed and disallowed examples, and route borderline cases to a helpful safe response instead of a hard block",
-        "B": "Remove the guardrail entirely",
-        "C": "Accept the false positives as the cost of safety",
-        "D": "Add 'domestic violence' to an allowlist that bypasses all checks"
+        "A": "Add legitimate sensitive-topic queries to the guardrail eval, refine the policy with allowed and disallowed examples, and give borderline cases a helpful safe reply",
+        "B": "Add domestic-violence keywords to an allowlist so matching queries skip the guardrail and go straight to the main model, with weekly spot checks of the bypassed traffic",
+        "C": "Keep the hard block but rewrite the refusal message so it lists the support hotlines that blocked users should call instead",
+        "D": "Lower the classifier's blocking threshold across the board until the false-positive rate on support questions falls below one per cent"
       },
       "answer": [
         "A"
       ],
-      "explanation": "Guardrails have false positives as well as false negatives, and both need measurement. The team should build an evaluation set that includes legitimate sensitive-topic queries, tune the policy and classifier prompt with examples of allowed versus disallowed requests, and route borderline cases to a safe, helpful response (for example signposting support services) rather than a hard block. Removing the guardrail or accepting the harm to users are both poor trade-offs.",
+      "explanation": "Guardrails have false positives as well as false negatives, and both need measurement. The team should build an evaluation set that includes legitimate sensitive-topic queries, tune the policy and classifier prompt with examples of allowed versus disallowed requests, and route borderline cases to a safe, helpful response (for example signposting support services) rather than a hard block. Loosening the threshold everywhere or adding a keyword bypass trades one harm for another, and a friendlier refusal still blocks the question.",
       "why_incorrect": {
-        "B": "This removes protection against genuinely harmful requests.",
-        "C": "Blocking vulnerable users from support information is itself a harm that should be reduced.",
-        "D": "A blanket bypass can be abused by attackers who include the phrase."
+        "B": "A keyword bypass is easily abused by anyone who includes the phrase, and weekly spot checks find misuse only afterwards.",
+        "C": "Signposting helps, but legitimate questions are still refused; the policy and classifier causing the false positives are left unchanged.",
+        "D": "A global threshold change trades false positives for false negatives on every topic, letting genuinely harmful requests through."
       },
       "module": "12-ai-security/14-enterprise-deployment-controls.md",
       "references": [
@@ -131,19 +131,19 @@
       "scenario": "Adatum Pharma's research agent can browse the web, read internal documents and send email. A threat-modelling workshop is identifying the most serious failure mode.",
       "question": "Which risk combination is most serious and why?",
       "options": {
-        "A": "Occasional hallucinated citations in research summaries",
-        "B": "Untrusted web content, access to internal documents and the ability to email externally together enable injection-driven data exfiltration",
-        "C": "Higher token cost from browsing",
-        "D": "Slow responses when many documents are read"
+        "A": "Stale internal documents, because the agent may combine outdated procedures with current web content and give researchers conflicting guidance",
+        "B": "Unbounded browsing loops, because the agent can fetch hundreds of pages per task and exhaust the monthly API budget",
+        "C": "Hallucinated citations in research summaries, because scientists may rely on fabricated papers in regulatory submissions",
+        "D": "Untrusted web content, access to internal documents and the ability to email externally together enable injection-driven data exfiltration"
       },
       "answer": [
-        "B"
+        "D"
       ],
       "explanation": "The most dangerous combination in agentic systems is access to private data, exposure to untrusted content and the ability to communicate externally. Together they allow an indirect prompt injection in a web page to instruct the agent to read internal documents and email them out. Breaking any leg of that combination, for example by removing external email or isolating untrusted content from private data access, sharply reduces risk.",
       "why_incorrect": {
-        "A": "A real quality risk, but far less severe than data exfiltration.",
-        "C": "Cost is an operational concern, not the most serious security failure mode.",
-        "D": "Latency affects user experience, not security."
+        "A": "Content freshness affects answer quality, but it does not combine untrusted input with a path for data to leave the company.",
+        "B": "Runaway cost is a genuine operational risk, but it is bounded by spend caps and is recoverable, unlike leaked data.",
+        "C": "A real quality risk, but it is caught by citation checks and review; it is far less severe than silent data exfiltration."
       },
       "module": "12-ai-security/01-llm-threat-modelling.md",
       "references": [
@@ -161,21 +161,21 @@
       "scenario": "A product manager at Wingtip Toys says 'Claude is deterministic if we use the same prompt, so we can skip regression testing after we change unrelated code'.",
       "question": "Which TWO statements correct this misunderstanding? (Choose 2.)",
       "options": {
-        "A": "Outputs can vary between runs with identical inputs, so quality should be measured statistically over a test set rather than by exact matching",
-        "B": "Setting `temperature` to 0 makes current models fully deterministic",
+        "A": "Regression testing can be limited to model version changes, because application code outside the prompt does not affect outputs",
+        "B": "Prompt caching returns stored outputs for repeated prompts, so identical requests give identical responses until the cache expires",
         "C": "Changes to surrounding code such as retrieval or templates change the model's inputs, so regression evaluation is still needed",
-        "D": "Prompt caching guarantees identical outputs for identical prompts",
-        "E": "Determinism only matters for code generation"
+        "D": "Setting `temperature` to 0 makes outputs repeatable, so the team needs to re-test when the prompt text changes but not after code changes",
+        "E": "Outputs can vary between runs with identical inputs, so quality should be measured statistically over a test set rather than by exact matching"
       },
       "answer": [
-        "A",
-        "C"
+        "C",
+        "E"
       ],
       "explanation": "LLM outputs can vary between runs even with the same input, and current models do not accept sampling parameters such as `temperature` to force determinism. Systems should therefore be evaluated statistically over a test set rather than by exact output matching. Separately, changes to surrounding code (retrieval, tool results, templates) change what the model sees, so regression tests remain necessary.",
       "why_incorrect": {
-        "B": "Sampling parameters are not accepted on current models.",
-        "D": "Caching reuses input processing; it does not cache or fix outputs.",
-        "E": "Variability affects all outputs and how they should be evaluated."
+        "A": "Code outside the prompt, such as retrieval or templating, changes what the model receives, so it can change outputs.",
+        "B": "Prompt caching reuses the processed input prefix to cut cost and latency; it does not store or replay outputs.",
+        "D": "Current models reject sampling parameters such as `temperature` with an error, and even where accepted it never guaranteed identical outputs."
       },
       "module": "01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md",
       "references": [
@@ -192,21 +192,21 @@
       "scenario": "Tailspin Insurance's claims agent runs unattended overnight. One night it loops on a failing tool for six hours, consuming a large share of the monthly budget.",
       "question": "Which TWO controls address this failure mode? (Choose 2.)",
       "options": {
-        "A": "Use a more capable model so it notices it is looping",
-        "B": "Enforce per-task caps on iterations, elapsed time and spend outside the model, with alerting on abnormal usage",
-        "C": "Increase the context window so the agent remembers earlier failures",
-        "D": "Return explicit error results from failing tools and define when the agent should stop and escalate",
-        "E": "Run the agent only during business hours"
+        "A": "Enable server-side compaction so the agent keeps a summary of its earlier failed attempts in context during long runs",
+        "B": "Switch to a more capable model at higher effort so the agent recognises repeated failures and changes its approach",
+        "C": "Enforce per-task caps on iterations, elapsed time and spend outside the model, with alerting on abnormal usage",
+        "D": "Move the job to business hours so an operator can watch the usage dashboard and cancel runaway tasks by hand",
+        "E": "Return explicit error results from failing tools and define when the agent should stop and escalate"
       },
       "answer": [
-        "B",
-        "D"
+        "C",
+        "E"
       ],
-      "explanation": "Unbounded consumption is a recognised LLM risk. Agents need hard limits on iterations, wall-clock time and spend per task, enforced outside the model, plus alerting when usage deviates from normal. Tools should return clear error results so the agent can stop or escalate rather than retry blindly. More capable models or longer context do not prevent runaway loops.",
+      "explanation": "Unbounded consumption is a recognised LLM risk. Agents need hard limits on iterations, wall-clock time and spend per task, enforced outside the model, plus alerting when usage deviates from normal. Tools should return clear error results so the agent can stop or escalate rather than retry blindly. More capable models, context management or manual supervision do not reliably prevent runaway loops.",
       "why_incorrect": {
-        "A": "Capability may help but provides no guaranteed bound on spend.",
-        "C": "More memory does not cap consumption.",
-        "E": "Runaway loops can happen at any time; limits are needed regardless of schedule."
+        "A": "Compaction manages context length; it does not cap iterations, time or spend.",
+        "B": "A stronger model may loop less often, but nothing bounds the run when it does; limits have to be enforced outside the model.",
+        "D": "Manual watching is unreliable and gives up the overnight capacity the team wanted; automated caps and alerts do the job."
       },
       "module": "10-agentic-ai/07-agent-reliability.md",
       "references": [
@@ -222,19 +222,19 @@
       "scenario": "Lucerne Publishing's summarisation tool sometimes produces summaries of long manuscripts that omit the final chapters, while still reading confidently.",
       "question": "Which limitation is most likely at play, and how should it be mitigated?",
       "options": {
-        "A": "The model refuses to summarise final chapters for safety reasons",
-        "B": "Prompt caching drops the end of long documents",
-        "C": "Uneven coverage of very long inputs (or silent truncation upstream); verify the full text is sent, then summarise per chapter and merge so coverage can be checked",
-        "D": "The model needs a `temperature` adjustment to read further"
+        "A": "Prompt caching is serving a stale prefix from an earlier, shorter draft; disable caching for manuscript requests and re-run them",
+        "B": "Uneven coverage of long inputs or silent truncation; check the full text is sent, then summarise per chapter and merge results",
+        "C": "The output limit is cutting the summary short; raise `max_tokens` so the model has room to cover the final chapters as well",
+        "D": "The context window is too small for whole manuscripts; move to a model with a larger window and resend the full text in a single request"
       },
       "answer": [
-        "C"
+        "B"
       ],
       "explanation": "Long-input tasks can suffer from uneven attention or from inputs that exceed what was actually sent (for example, the pipeline silently truncating to fit). The first check is whether the full manuscript reached the model; then decompose summarisation by chapter and merge, which gives each section full attention and makes omissions detectable. A confident tone is not evidence of completeness.",
       "why_incorrect": {
-        "A": "There is no refusal signal; the output is a confident but incomplete summary.",
-        "B": "Caching does not drop content from requests.",
-        "D": "Sampling parameters do not affect how much input is read and are not accepted on current models."
+        "A": "Caching matches an exact prefix, so it cannot substitute a different draft; it does not change what the model reads.",
+        "C": "An output cut-off would end mid-sentence with a `max_tokens` stop reason; these summaries finish confidently but skip content.",
+        "D": "It skips the check of what was actually sent, and a single pass over a very long input still risks uneven coverage."
       },
       "module": "01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md",
       "references": [
@@ -251,19 +251,19 @@
       "scenario": "Woodgrove Bank's operations agent prepares wire-transfer corrections. Regulators expect a human to approve each correction, and analysts complain that approval screens show only 'Approve correction?'.",
       "question": "Which human-in-the-loop design is most effective?",
       "options": {
-        "A": "Batch corrections and let analysts approve 50 at once to save time",
-        "B": "Skip human approval when the model's confidence exceeds 95%",
-        "C": "Let the agent execute and notify analysts afterwards",
-        "D": "Show the exact proposed action, the evidence and policy rule used, and any uncertainty; run deterministic validation first; and record each approver's decision and rationale for audit"
+        "A": "Group corrections by customer and let analysts approve each group in one step, with the full list of transfers behind an expandable link",
+        "B": "Let the agent execute corrections straight away and give analysts a same-day review screen showing each transfer and its evidence, with one-click reversal for any they reject",
+        "C": "Show the exact action, its evidence, the policy rule applied and any uncertainty, after deterministic validation, and record each approver's decision and rationale",
+        "D": "Auto-approve corrections when the model reports confidence above 95% and send the lower-confidence ones to analysts for approval"
       },
       "answer": [
-        "D"
+        "C"
       ],
       "explanation": "Approval is only meaningful if the reviewer has what they need to decide. The approval step should present the exact action (accounts, amounts, before and after), the evidence the agent used, the policy rule applied and any uncertainty, and should record the approver's decision for audit. Deterministic validation runs before the human sees it. Approving in bulk or relying on the model's confidence undermines oversight.",
       "why_incorrect": {
-        "A": "Bulk approval encourages rubber-stamping and weakens oversight.",
-        "B": "Model confidence is not calibrated authority and regulators expect human approval for each correction.",
-        "C": "Post-hoc notification is not approval."
+        "A": "Group approval hides the detail behind a click and encourages rubber-stamping, weakening the per-correction approval regulators expect.",
+        "B": "Approval after execution is not approval, and wire transfers are not reliably reversible.",
+        "D": "Regulators expect a human to approve each correction, and model confidence is not a calibrated measure of correctness."
       },
       "module": "10-agentic-ai/05-human-in-the-loop.md",
       "references": [
@@ -279,19 +279,19 @@
       "scenario": "Meridian Clinics uses Claude to draft responses to patient portal messages. Clinical staff review every draft, but review time is now the bottleneck.",
       "question": "Which approach best reduces review burden without weakening oversight of risky messages?",
       "options": {
-        "A": "Tier review by risk: clinicians fully review drafts about symptoms or medications, while low-risk administrative replies get lighter review or sampling, with monitoring of the risk classifier",
-        "B": "Remove review for all messages once accuracy exceeds 90% on the eval",
-        "C": "Review a random 10% of all drafts regardless of content",
-        "D": "Have Claude review its own drafts instead of clinicians"
+        "A": "Remove clinician review once drafts score above 90% on the eval, and reinstate it if patient complaints rise above the current baseline",
+        "B": "Add a second Claude pass that checks each draft against the clinic's guidelines, sending flagged drafts to clinicians and unflagged ones straight to patients",
+        "C": "Have clinicians review a random 10% sample of drafts each day, and send the rest directly to patients with an AI-drafted label",
+        "D": "Tier review by risk: full clinician review for symptom or medication drafts, lighter review or sampling for admin replies, and monitoring of the classifier"
       },
       "answer": [
-        "A"
+        "D"
       ],
-      "explanation": "Risk-based review focuses human attention where it matters. Classify messages by risk (for example clinical symptoms versus appointment logistics), require full clinician review of high-risk categories, and allow lighter review or sampling for low-risk administrative messages, with monitoring to verify the classification. Removing review entirely or reviewing randomly ignores risk.",
+      "explanation": "Risk-based review focuses human attention where it matters. Classify messages by risk (for example clinical symptoms versus appointment logistics), require full clinician review of high-risk categories, and allow lighter review or sampling for low-risk administrative messages, with monitoring to verify the classification. Removing review, sampling at random or letting a second model decide what clinicians see ignores where the risk sits.",
       "why_incorrect": {
-        "B": "Aggregate accuracy hides rare, high-severity errors in clinical messages.",
-        "C": "Random sampling gives high-risk messages the same light oversight as routine ones.",
-        "D": "Self-review is not independent oversight for clinical content."
+        "A": "A 90% aggregate score still means unreviewed errors on clinical messages, and complaints are a lagging signal of patient harm.",
+        "B": "Model review can help prioritise, but letting it decide which clinical drafts humans see removes oversight where it matters most.",
+        "C": "Random sampling treats a medication question like an appointment change, so most high-risk drafts reach patients unreviewed."
       },
       "module": "10-agentic-ai/05-human-in-the-loop.md",
       "references": [
@@ -308,21 +308,21 @@
       "scenario": "Northwind Lending added human approval to an agent's account-closure tool. Audits show approvers accept 99.7% of requests and median review time is four seconds.",
       "question": "Which TWO actions best address this automation-bias risk? (Choose 2.)",
       "options": {
-        "A": "Require approvers to confirm the specific facts that justify closure, shown alongside the evidence, rather than a single approve button",
-        "B": "Remove the approval step because approvers add no value",
-        "C": "Require three approvers instead of one",
-        "D": "Seed the approval queue with known-incorrect requests and measure reviewer catch rates",
-        "E": "Show approvers the model's confidence score in large text"
+        "A": "Remove the approval step and replace it with a weekly audit of sampled closures, since approvers are not adding value",
+        "B": "Require approvers to confirm the specific facts that justify closure, shown alongside the evidence, rather than a single approve button",
+        "C": "Display the model's confidence score and reasoning prominently so approvers can focus on low-confidence requests",
+        "D": "Require two independent approvers for every closure so that one inattentive reviewer cannot approve alone",
+        "E": "Seed the approval queue with known-incorrect requests and measure reviewer catch rates"
       },
       "answer": [
-        "A",
-        "D"
+        "B",
+        "E"
       ],
-      "explanation": "Very high acceptance with very short review times suggests rubber-stamping. Countermeasures include presenting the evidence and requiring approvers to confirm specific facts (not just click approve), inserting known-bad test cases to measure whether reviewers catch them, and tracking reviewer accuracy. Simply adding more approvers or removing the step does not restore meaningful oversight.",
+      "explanation": "Very high acceptance with very short review times suggests rubber-stamping. Countermeasures include presenting the evidence and requiring approvers to confirm specific facts (not just click approve), inserting known-bad test cases to measure whether reviewers catch them, and tracking reviewer accuracy. Adding approvers, foregrounding the model's confidence or removing the step does not restore meaningful oversight.",
       "why_incorrect": {
-        "B": "Removing oversight for an irreversible action increases risk; the step needs to be made effective.",
-        "C": "More approvers can each rubber-stamp; it multiplies cost without fixing the behaviour.",
-        "E": "Highlighting model confidence tends to increase automation bias."
+        "A": "Closures happen before the audit sees them; the fix is to make approval meaningful, not to drop it.",
+        "C": "Foregrounding the model's confidence anchors reviewers on it and tends to increase automation bias.",
+        "D": "Two rubber-stampers are no better than one and double the cost; the problem is how reviewers engage, not how many there are."
       },
       "module": "12-ai-security/13-human-oversight.md",
       "references": [
@@ -338,19 +338,19 @@
       "scenario": "An architect at Alpine Ski House is deciding which agent actions in a booking system should require human confirmation.",
       "question": "Which principle should guide the decision?",
       "options": {
-        "A": "Require confirmation for every tool call so nothing happens without a human",
-        "B": "Require confirmation based on reversibility and impact: irreversible, high-value or externally visible actions need approval, while read-only and easily reversible actions proceed with logging",
-        "C": "Require confirmation only when the model asks for it",
-        "D": "Require confirmation only for actions taken outside business hours"
+        "A": "Require confirmation for every write action, including holds and notes, so a human sees each change before it reaches the booking system",
+        "B": "Base it on reversibility and impact: irreversible, high-value or externally visible actions need approval; read-only and reversible ones proceed with logging",
+        "C": "Require confirmation for any action above a fixed monetary value, such as refunds over $500, and let every other booking action proceed automatically with logging",
+        "D": "Require confirmation when the model's self-reported confidence is low, so humans see the decisions most likely to be wrong"
       },
       "answer": [
         "B"
       ],
       "explanation": "Human-in-the-loop effort should scale with the consequences of an action: irreversible, high-impact or externally visible actions (refunds above a threshold, cancellations affecting other guests, messages to many customers) need confirmation, while read-only or easily reversible actions can proceed automatically with logging. Requiring confirmation for everything creates fatigue; requiring it for nothing removes oversight.",
       "why_incorrect": {
-        "A": "Confirming everything causes approval fatigue and erodes attention for the actions that matter.",
-        "C": "The model should not decide which of its own actions need oversight.",
-        "D": "Time of day is unrelated to the consequence of an action."
+        "A": "Confirming trivial, reversible writes creates approval fatigue, which erodes attention on the actions that matter.",
+        "C": "A value threshold misses irreversible or externally visible actions with no price, such as cancelling other guests' bookings or mass messages.",
+        "D": "Self-reported confidence is poorly calibrated and says nothing about consequences; a confident mistake can still be irreversible."
       },
       "module": "10-agentic-ai/05-human-in-the-loop.md",
       "references": [
@@ -368,21 +368,21 @@
       "scenario": "Contoso Health is planning a Claude-based clinical documentation assistant in the United States that will process protected health information (PHI).",
       "question": "Which TWO steps are prerequisites from a HIPAA perspective? (Choose 2.)",
       "options": {
-        "A": "Rely on the model's built-in safety training to protect PHI",
-        "B": "Execute a Business Associate Agreement with the provider that covers the specific services and features to be used",
-        "C": "Design for minimum-necessary PHI, with access controls, audit logging and encryption across the data flow",
-        "D": "Add a system-prompt line stating that the assistant is HIPAA compliant",
-        "E": "Use the most capable model, since compliance requires accuracy"
+        "A": "Obtain the provider's SOC 2 Type II report, which demonstrates the safeguards HIPAA requires of business associates",
+        "B": "Configure the integration for zero data retention, which removes the need for a BAA because the provider stores no PHI",
+        "C": "De-identify notes with a pattern-matching pass for names and dates, which takes the data outside HIPAA so no agreement is needed",
+        "D": "Design for minimum-necessary PHI, with access controls, audit logging and encryption across the data flow",
+        "E": "Execute a Business Associate Agreement with the provider that covers the specific services and features to be used"
       },
       "answer": [
-        "B",
-        "C"
+        "D",
+        "E"
       ],
-      "explanation": "Under HIPAA, a covered entity sending PHI to a vendor needs a Business Associate Agreement (BAA) covering the specific services used, and the architecture must apply the minimum-necessary principle along with administrative, physical and technical safeguards (access control, audit logging, encryption). Model capability, prompt wording or anonymity claims do not substitute for the contractual and technical requirements. Confirm current eligibility of specific features with the provider, as of the date of design.",
+      "explanation": "Under HIPAA, a covered entity sending PHI to a vendor needs a Business Associate Agreement (BAA) covering the specific services used, and the architecture must apply the minimum-necessary principle along with administrative, physical and technical safeguards (access control, audit logging, encryption). Zero data retention, an audit report or ad hoc de-identification does not substitute for the contractual and technical requirements. Confirm current eligibility of specific features with the provider, as of the date of design.",
       "why_incorrect": {
-        "A": "Model behaviour is not a HIPAA safeguard or a contractual protection.",
-        "D": "Compliance is a property of contracts, controls and processes, not a prompt statement.",
-        "E": "Accuracy matters clinically but is not a HIPAA prerequisite."
+        "A": "An audit report is useful due diligence but is not the contractual BAA that HIPAA requires.",
+        "B": "Zero data retention reduces exposure, but the provider still processes PHI, so a BAA covering the services used is still required.",
+        "C": "Pattern matching does not meet HIPAA de-identification standards, and a documentation assistant needs identified clinical detail anyway."
       },
       "module": "13-enterprise-ai-architecture/05-data-governance-and-compliance.md",
       "references": [
@@ -398,19 +398,19 @@
       "scenario": "Fabrikam Retail operates in the EU and wants Claude to personalise marketing emails using customer purchase history. The DPO asks for GDPR-aligned design.",
       "question": "Which design choice best reflects GDPR principles?",
       "options": {
-        "A": "Send full customer profiles so the model can find the best personalisation angle",
-        "B": "Hash customer names and send everything else unchanged",
-        "C": "Send only the minimum attributes needed for personalisation, document the lawful basis and processor terms, and suppress customers who have objected to direct marketing",
-        "D": "Avoid documenting the processing so there is less to audit"
+        "A": "Rely on consent captured in the general terms of service at sign-up, and send product categories rather than full order histories",
+        "B": "Send only the attributes needed for personalisation, document the lawful basis and processor terms, and suppress customers who have objected to direct marketing",
+        "C": "Pseudonymise customers by hashing names and emails before sending order histories, which takes the processing outside GDPR's scope",
+        "D": "Send full purchase histories under a signed data processing agreement, since the agreement makes the provider responsible for minimising and protecting what it receives"
       },
       "answer": [
-        "C"
+        "B"
       ],
-      "explanation": "GDPR requires a lawful basis for processing, purpose limitation and data minimisation, among other principles. The design should send only the attributes needed for personalisation (for example product categories rather than full order history with addresses), document the lawful basis and processor arrangements, and honour objections to direct marketing. Sending everything 'in case it is useful' violates minimisation.",
+      "explanation": "GDPR requires a lawful basis for processing, purpose limitation and data minimisation, among other principles. The design should send only the attributes needed for personalisation (for example product categories rather than full order history with addresses), document the lawful basis and processor arrangements, and honour objections to direct marketing. Sending everything 'in case it is useful' violates minimisation, and pseudonymised data remains personal data.",
       "why_incorrect": {
-        "A": "This conflicts with data minimisation and purpose limitation.",
-        "B": "Hashing one field does not make the rest of the personal data compliant or minimal.",
-        "D": "GDPR requires accountability and records of processing."
+        "A": "Minimising to categories is right, but consent bundled into general terms is not valid consent, and objections to marketing are ignored.",
+        "C": "Hashed or pseudonymised data is still personal data under GDPR, and the rest of the history is sent unminimised.",
+        "D": "A processor agreement is needed, but data minimisation remains the controller's duty; it does not justify sending everything."
       },
       "module": "13-enterprise-ai-architecture/05-data-governance-and-compliance.md",
       "references": [
@@ -426,19 +426,19 @@
       "scenario": "Civic Benefits Agency is a US government body that requires FedRAMP-authorised cloud services for production systems handling citizen data. A team has prototyped on the Claude API directly.",
       "question": "What should the architect do before production?",
       "options": {
-        "A": "Proceed, because the prototype has no security incidents",
-        "B": "Encrypt prompts client-side so the service never sees plain text",
-        "C": "Ask the vendor for a statement that the model is accurate enough for government use",
-        "D": "Verify which Claude deployment path holds the required FedRAMP authorisation level for this data as of the decision date, and move the production design onto that path"
+        "A": "Verify which Claude deployment path holds the required FedRAMP authorisation for this data as of the decision date, and use it",
+        "B": "Deploy through any major cloud marketplace listing for Claude, since the cloud provider's FedRAMP authorisation extends to every service in its catalogue",
+        "C": "Encrypt prompts client-side before sending them, so the service handles nothing but ciphertext and FedRAMP scope does not apply",
+        "D": "Proceed on the direct API, because the provider's SOC 2 and ISO 27001 reports cover the control families that FedRAMP assesses"
       },
       "answer": [
-        "D"
+        "A"
       ],
       "explanation": "Government compliance regimes such as FedRAMP apply to the specific service and deployment used. The architect should confirm which Claude offering and deployment path (for example a cloud platform's government region or an authorised offering) holds the required authorisation level for the data involved, as of the decision date, and adjust the architecture accordingly. A prototype's success or the model's capability does not establish authorisation.",
       "why_incorrect": {
-        "A": "The absence of incidents does not establish the required authorisation.",
-        "B": "The model needs plain text to process it; this does not resolve the authorisation requirement.",
-        "C": "Accuracy is unrelated to FedRAMP authorisation."
+        "B": "FedRAMP authorisations apply to specific services, regions and impact levels, not to everything a cloud provider lists.",
+        "C": "The model must read plain text to process it, so client-side encryption of prompts is not workable and does not change authorisation scope.",
+        "D": "Overlapping controls are not an authorisation; FedRAMP requires the specific service to hold the required level."
       },
       "module": "13-enterprise-ai-architecture/05-data-governance-and-compliance.md",
       "references": [
@@ -455,19 +455,19 @@
       "scenario": "Harbourline Credit Union must ensure that model inference for EU members' data runs in a specified geography. The team is choosing between building a self-hosted proxy and using a provider-level control.",
       "question": "Which approach is most appropriate, as of 2026-10-24?",
       "options": {
-        "A": "Use the provider's supported data-residency controls, such as the `inference_geo` parameter or an appropriate cloud-platform region, and record the reported inference location as evidence",
-        "B": "Build a proxy in the EU, which ensures inference also happens in the EU",
-        "C": "Ask members to confirm they are located in the EU",
-        "D": "Avoid sending names; then geography no longer matters"
+        "A": "Store prompts and responses in EU databases with a short retention period, so members' data at rest stays inside the region",
+        "B": "Use provider residency controls, such as the `inference_geo` parameter or a suitable cloud-platform region, and keep the reported inference location as evidence",
+        "C": "Pseudonymise member identifiers before each request so the data sent for inference no longer counts as personal data",
+        "D": "Route every request through a self-hosted proxy in an EU region, and record in the data protection impact assessment that model traffic now originates inside the EU"
       },
       "answer": [
-        "A"
+        "B"
       ],
-      "explanation": "Where a provider offers a supported control for inference geography, using it is simpler and auditable: the Claude API supports an `inference_geo` request parameter on recent models, and the response usage reports where inference ran, which provides evidence for compliance. Cloud-platform regional endpoints are another route. A home-grown proxy cannot change where the provider runs inference, and requiring users to self-declare location is not a control.",
+      "explanation": "Where a provider offers a supported control for inference geography, using it is simpler and auditable: the Claude API supports an `inference_geo` request parameter on recent models, and the response usage reports where inference ran, which provides evidence for compliance. Cloud-platform regional endpoints are another route. A home-grown proxy cannot change where the provider runs inference, and keeping stored data in the EU says nothing about where inference ran.",
       "why_incorrect": {
-        "B": "A proxy's location does not determine where the provider runs inference.",
-        "C": "User self-declaration does not control processing location.",
-        "D": "Other personal data remains, and residency requirements may apply regardless."
+        "A": "Data at rest in the EU is useful, but the requirement is about where inference runs, which this does not control.",
+        "C": "Pseudonymised data is still personal data, and the residency requirement applies regardless.",
+        "D": "Where traffic originates does not change where the provider runs inference."
       },
       "module": "13-enterprise-ai-architecture/05-data-governance-and-compliance.md",
       "references": [
@@ -484,21 +484,21 @@
       "scenario": "Northwind Lending uses Claude to summarise applicant files for underwriters. An internal review asks whether the summaries could introduce bias.",
       "question": "Which TWO practices best address bias and fairness risk? (Choose 2.)",
       "options": {
-        "A": "Rely on the model provider's general fairness training",
-        "B": "Remove human underwriters so decisions are consistent",
-        "C": "Run counterfactual tests that vary only protected or proxy attributes and check whether summaries change materially",
-        "D": "Exclude protected characteristics and known proxies from the summarisation inputs unless legally required",
-        "E": "Ask the model whether its summaries are biased"
+        "A": "Remove underwriters' discretion and approve or decline automatically from the summary so decisions are applied consistently",
+        "B": "Run counterfactual tests that vary only protected or proxy attributes and check whether summaries change materially",
+        "C": "Rely on the provider's published fairness evaluations and model card, which cover demographic bias across common tasks",
+        "D": "Have the model add a fairness self-assessment to each summary so underwriters can see whether bias was detected",
+        "E": "Exclude protected characteristics and known proxies from the summarisation inputs unless legally required"
       },
       "answer": [
-        "C",
-        "D"
+        "B",
+        "E"
       ],
       "explanation": "Fairness risk is measured, not assumed. Counterfactual testing (varying only protected or proxy attributes such as name, gender or postcode and checking whether summaries change materially) detects differential treatment. Excluding protected characteristics and known proxies from the summary's inputs where they are not legally required reduces the chance of influence. Relying on the model's general training or removing human underwriters does not address the risk.",
       "why_incorrect": {
-        "A": "General training does not measure behaviour in this specific application.",
-        "B": "Removing human judgement does not remove bias and reduces oversight.",
-        "E": "Self-assessment is not a reliable fairness measurement."
+        "A": "Consistency is not fairness; automating decisions removes oversight and can apply a biased summary at scale.",
+        "C": "General evaluations do not measure this prompt, data and use case; fairness has to be tested in context.",
+        "D": "A model's self-assessment is not a reliable measure of its own bias."
       },
       "module": "12-ai-security/12-ai-governance.md",
       "references": [
@@ -514,19 +514,19 @@
       "scenario": "Fabrikam Retail's customer-facing assistant answers product questions. Legal asks how to meet transparency expectations.",
       "question": "Which practice best supports transparency to end users?",
       "options": {
-        "A": "Present the assistant as a human agent to improve trust",
-        "B": "Disclose that users are interacting with an AI assistant, cite sources for factual answers where possible, and provide an easy route to a human",
-        "C": "Publish the entire system prompt on the website",
-        "D": "Add a disclaimer in the terms of service only"
+        "A": "Add a notice under each answer that it is AI-generated and may be inaccurate, and ask users to verify everything independently",
+        "B": "Disclose that users are talking to an AI, cite sources for factual answers where possible, and offer an easy route to a human",
+        "C": "Publish the full system prompt and model version on a help page so users can see exactly how the assistant is instructed",
+        "D": "Give the assistant a friendly human name and persona, and disclose AI involvement in the privacy policy that is linked from every page footer"
       },
       "answer": [
         "B"
       ],
-      "explanation": "Transparency means users know they are interacting with an AI system, understand its limitations, and can reach a human or verify important information. Clear disclosure, citations or links to the source of factual answers, and an obvious escalation path achieve this. Hiding AI involvement or publishing the full system prompt are not the transparency users need.",
+      "explanation": "Transparency means users know they are interacting with an AI system, understand its limitations, and can reach a human or verify important information. Clear disclosure, citations or links to the source of factual answers, and an obvious escalation path achieve this. Burying the disclosure, publishing prompt internals or adding a generic disclaimer is not the transparency users need.",
       "why_incorrect": {
-        "A": "Misrepresenting an AI as a human undermines trust and may breach regulation.",
-        "C": "Users rarely need prompt internals; transparency is about disclosure, limits and recourse.",
-        "D": "A buried disclaimer does not give users meaningful notice at the point of interaction."
+        "A": "Labelling helps, but without sources or a route to a human it shifts the whole burden of verification onto users.",
+        "C": "Prompt internals are not what users need to make informed decisions, and publishing them aids prompt attacks.",
+        "D": "A human persona with disclosure buried in a policy page misleads users about who they are talking to."
       },
       "module": "12-ai-security/12-ai-governance.md",
       "references": [
@@ -543,19 +543,19 @@
       "scenario": "Civic Benefits Agency's document-extraction step performs worse on applications written in non-standard English, leading to more requests for additional information from those applicants.",
       "question": "What is the most appropriate response?",
       "options": {
-        "A": "Optimise the overall accuracy metric, since it already exceeds the target",
-        "B": "Require applicants to submit documents in standard English",
-        "C": "Measure extraction accuracy by applicant segment, add representative cases to the eval set, improve the prompt and examples, and route uncertain extractions to human review in the meantime",
-        "D": "Replace extraction with manual processing for everyone"
+        "A": "Measure accuracy by applicant segment, add representative cases to the eval, improve the prompt and examples, and send uncertain extractions to human review for now",
+        "B": "Keep optimising the overall accuracy metric, which already exceeds its target, and document the weaker results for non-standard English in the system's public model card",
+        "C": "Route applications detected as non-standard English to manual processing indefinitely, and leave the extraction step unchanged for others",
+        "D": "Translate every application into standard English with a preprocessing step before extraction, then re-measure overall accuracy"
       },
       "answer": [
-        "C"
+        "A"
       ],
       "explanation": "This is a disparate-impact problem: performance differs across groups in a way that creates burden. The response is to measure performance by segment with an eval set representing those applicants, address the cause (prompt guidance, examples, or translation where appropriate), and add human review for low-confidence extractions to prevent harm while improvements are made. Ignoring segment performance or only fixing the aggregate metric hides the problem.",
       "why_incorrect": {
-        "A": "An aggregate metric can hide worse performance for specific groups.",
-        "B": "This shifts the burden onto the affected applicants.",
-        "D": "This discards the benefits for all users instead of fixing the gap."
+        "B": "Documenting the gap is not fixing it; the aggregate metric hides the burden on the affected applicants.",
+        "C": "Permanent manual handling slows those applicants down without measuring or fixing the cause.",
+        "D": "Translation may help but is untested here, can introduce its own errors, and is judged on the aggregate metric that hid the problem."
       },
       "module": "12-ai-security/12-ai-governance.md",
       "references": [

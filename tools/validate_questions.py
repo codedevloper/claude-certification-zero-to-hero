@@ -99,8 +99,63 @@ def validate() -> Report:
             if SequenceMatcher(None, a, b).ratio() > 0.85:
                 report.error(f"{id_a} and {id_b} are near-duplicates (>85% similar)")
 
+    check_cueing(report)
     report.warn(f"{len(seen)} questions checked") if seen else report.error("no questions found")
     return report
+
+
+# Bank-level answer-cueing limits. A well-written bank should not be answerable by test-taking tricks.
+MAX_LONGEST_KEY_RATE = 0.40      # share of items where the key is the longest option (or the k longest)
+POSITION_TOLERANCE = (0.5, 1.6)  # each letter's share of keys vs. its expected share
+MIN_EXPECTED_FOR_POSITION_CHECK = 6
+
+
+def longest_is_key(q: dict) -> bool:
+    opts = q.get("options", {})
+    k = len(q.get("answer", []))
+    if not opts or not k:
+        return False
+    longest = sorted(opts, key=lambda letter: -len(opts[letter]))[:k]
+    return set(longest) == set(q["answer"])
+
+
+def cueing_stats(questions: list[dict]) -> dict:
+    """Longest-option rate and per-letter observed/expected key counts for one bank."""
+    expected: dict[str, float] = {}
+    observed: dict[str, int] = {}
+    for q in questions:
+        opts = q.get("options", {})
+        share = len(q.get("answer", [])) / max(len(opts), 1)
+        for letter in opts:
+            expected[letter] = expected.get(letter, 0.0) + share
+        for letter in q.get("answer", []):
+            observed[letter] = observed.get(letter, 0) + 1
+    longest = sum(longest_is_key(q) for q in questions)
+    return {
+        "longest_rate": longest / len(questions) if questions else 0.0,
+        "positions": {letter: (observed.get(letter, 0), round(expected[letter], 1)) for letter in sorted(expected)},
+    }
+
+
+def check_cueing(report: Report) -> None:
+    banks: dict[str, list[dict]] = {}
+    for path in question_files():
+        bank = json.loads(path.read_text(encoding="utf-8"))
+        banks.setdefault(bank.get("track", "?"), []).extend(bank.get("questions", []))
+    for track, questions in sorted(banks.items()):
+        stats = cueing_stats(questions)
+        if stats["longest_rate"] > MAX_LONGEST_KEY_RATE:
+            report.error(
+                f"{track}: the key is the longest option in {stats['longest_rate']:.0%} of items "
+                f"(limit {MAX_LONGEST_KEY_RATE:.0%}); balance option lengths"
+            )
+        low, high = POSITION_TOLERANCE
+        for letter, (obs, exp) in stats["positions"].items():
+            if exp >= MIN_EXPECTED_FOR_POSITION_CHECK and not low * exp <= obs <= high * exp:
+                report.error(
+                    f"{track}: option {letter} is the key {obs} times vs ~{exp} expected; "
+                    "run python tools/shuffle_options.py"
+                )
 
 
 if __name__ == "__main__":

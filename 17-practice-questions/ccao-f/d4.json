@@ -14,19 +14,19 @@
       "scenario": "Fabrikam Retail's store-operations lead has 25 pages of interview notes from store managers about a new stock-counting process. She wants Claude's help turning them into requirements.",
       "question": "Which request will produce the most useful starting point?",
       "options": {
-        "A": "Ask Claude to add requirements that store managers probably forgot, so that the list is as complete as possible from the start.",
+        "A": "Ask Claude to write the full new process design straight away from the notes, so stakeholders have something concrete to react to.",
         "B": "Ask Claude to summarise the notes in one paragraph.",
-        "C": "Ask Claude to write the full new process design straight away from the notes, so stakeholders have something concrete to react to.",
-        "D": "Ask Claude to extract distinct needs, group them by theme, mark must-have or nice-to-have with a quote, and list open questions."
+        "C": "Ask Claude to extract distinct needs, group them by theme, mark must-have or nice-to-have with a quote, and list open questions.",
+        "D": "Ask Claude to add requirements that store managers probably forgot, so that the list is as complete as possible from the start."
       },
       "answer": [
-        "D"
+        "C"
       ],
       "explanation": "Claude is effective at structuring qualitative input into candidate requirements. Asking for themes, priorities, source quotes and open questions keeps the analysis traceable and highlights where stakeholders still need to decide.",
       "why_incorrect": {
-        "A": "Invented requirements are not grounded in stakeholder input and should be raised as questions, not asserted.",
+        "A": "Designing before requirements are agreed skips the analysis and hides gaps in the notes.",
         "B": "A single paragraph loses the individual needs, priorities and evidence that requirements work depends on.",
-        "C": "Designing before requirements are agreed skips the analysis and hides gaps in the notes."
+        "D": "Invented requirements are not grounded in stakeholder input and should be raised as questions, not asserted."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -43,21 +43,21 @@
       "scenario": "Lucerne Clinics' operations director lists ten ideas for using Claude and asks Mateo, an analyst, to recommend which to pilot first.",
       "question": "Which TWO criteria should carry the most weight when using Claude to evaluate the use cases?",
       "options": {
-        "A": "Which ideas use the largest number of Claude features at once, since broad pilots reveal more about the tool's capabilities.",
-        "B": "Which ideas would remove the most staff roles.",
-        "C": "The value of the outcome (time saved or quality gained) relative to the effort to set up the use case.",
+        "A": "The risk if Claude's output is wrong, and whether a practical human review step exists.",
+        "B": "The value of the outcome (time saved or quality gained) relative to the effort to set up the use case.",
+        "C": "Which ideas would remove the most staff roles.",
         "D": "Which ideas would make the most impressive demonstration for the board, since visible early wins build support for wider adoption.",
-        "E": "The risk if Claude's output is wrong, and whether a practical human review step exists."
+        "E": "Which ideas use the largest number of Claude features at once, since broad pilots reveal more about the tool's capabilities."
       },
       "answer": [
-        "C",
-        "E"
+        "A",
+        "B"
       ],
       "explanation": "Good first pilots combine clear value, reasonable effort and manageable risk with a workable review step. Claude can help score options against these criteria, but the criteria themselves should reflect business outcomes and risk.",
       "why_incorrect": {
-        "A": "Feature count is not a measure of value; simpler use cases often deliver more.",
-        "B": "Use-case selection should focus on value and risk; framing pilots around headcount cuts also tends to undermine adoption and trust.",
-        "D": "Demo appeal does not reflect sustained value or manageable risk."
+        "C": "Use-case selection should focus on value and risk; framing pilots around headcount cuts also tends to undermine adoption and trust.",
+        "D": "Demo appeal does not reflect sustained value or manageable risk.",
+        "E": "Feature count is not a measure of value; simpler use cases often deliver more."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -73,19 +73,19 @@
       "scenario": "Claude helped Alpine Ski House draft user stories for a new rental booking process. In review, the finance team says none of the stories cover deposits and refunds, which are critical for them.",
       "question": "What most likely went wrong in the requirements analysis?",
       "options": {
-        "A": "The stories were written too briefly, so details such as deposits and refunds were cut out to save space.",
-        "B": "The inputs did not include finance stakeholders' needs, so the stories could only reflect the views provided.",
-        "C": "The model used was optimised for speed, so it skipped the less common parts of the booking process.",
-        "D": "Claude avoids writing user stories that involve money, so financial requirements must always be written by hand."
+        "A": "The inputs did not include finance stakeholders' needs, so the stories could only reflect the views provided.",
+        "B": "The stories were written too briefly, so details such as deposits and refunds were cut out to save space.",
+        "C": "Claude is cautious about financial topics, so it tends to leave payment-related requirements for people to write.",
+        "D": "The model used was optimised for speed, so it skipped the less common parts of the booking process."
       },
       "answer": [
-        "B"
+        "A"
       ],
       "explanation": "Requirements generated with Claude are only as complete as the stakeholder input supplied. Before drafting, list the stakeholder groups and confirm each group's needs are represented, or ask Claude to identify perspectives that seem to be missing.",
       "why_incorrect": {
-        "A": "Length does not explain a whole missing stakeholder perspective.",
-        "C": "Missing coverage is caused by missing inputs, not by model speed.",
-        "D": "Claude can write financial user stories; it simply was not given that stakeholder input."
+        "B": "Length does not explain a whole missing stakeholder perspective.",
+        "C": "Claude can write financial user stories; it simply was not given that stakeholder input.",
+        "D": "Missing coverage is caused by missing inputs, not by model speed."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -101,19 +101,19 @@
       "scenario": "Datum Corp's legal operations team wants to \"use Claude for contract review.\" Requirements discussions keep stalling because people mean different things by the phrase.",
       "question": "What is the most productive way to use Claude to move the analysis forward?",
       "options": {
-        "A": "Ask Claude to break \"contract review\" into concrete use cases (clause extraction, playbook deviation flags, business summaries) with inputs, outputs and review points.",
-        "B": "Ask Claude for a definition of contract review from a dictionary.",
-        "C": "Postpone the analysis until a vendor can provide a ready-made solution.",
-        "D": "Choose the broadest interpretation and ask Claude to design an end-to-end automated review of every contract, so nothing is left out."
+        "A": "Choose the broadest interpretation and ask Claude to design an end-to-end automated review of every contract, so nothing is left out.",
+        "B": "Ask Claude to break \"contract review\" into concrete use cases (clause extraction, playbook deviation flags, business summaries) with inputs, outputs and review points.",
+        "C": "Ask Claude for a definition of contract review from a dictionary.",
+        "D": "Postpone the analysis until a vendor can provide a ready-made solution."
       },
       "answer": [
-        "A"
+        "B"
       ],
       "explanation": "Vague requests become workable once they are decomposed into concrete use cases with defined inputs, outputs and human checkpoints. Claude is useful for producing that breakdown so stakeholders can compare and choose.",
       "why_incorrect": {
-        "B": "A dictionary definition does not resolve which specific tasks the team needs.",
-        "C": "Delay does not clarify requirements; the team still needs to define what it wants.",
-        "D": "An undefined, all-encompassing scope increases risk and makes success hard to measure."
+        "A": "An undefined, all-encompassing scope increases risk and makes success hard to measure.",
+        "C": "A dictionary definition does not resolve which specific tasks the team needs.",
+        "D": "Delay does not clarify requirements; the team still needs to define what it wants."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -129,19 +129,19 @@
       "scenario": "A business analyst at Margie's Travel asks how Claude can best support requirements work without replacing stakeholder conversations.",
       "question": "Which description is most accurate?",
       "options": {
-        "A": "Claude replaces the need for a business analyst.",
-        "B": "Claude should be used only after requirements are fully signed off, to turn them into polished documentation.",
-        "C": "Claude can organise notes, draft requirements and suggest gaps, while stakeholders confirm priorities and decide.",
-        "D": "Claude can determine the real business requirements from general industry knowledge, so stakeholder interviews become optional."
+        "A": "Claude can run the requirements process end to end, with the analyst reviewing the final document.",
+        "B": "Claude can organise notes, draft requirements and suggest gaps, while stakeholders confirm priorities and decide.",
+        "C": "Claude can determine the real business requirements from general industry knowledge, so stakeholder interviews become optional.",
+        "D": "Claude is best used after requirements are signed off, to turn them into polished documentation."
       },
       "answer": [
-        "C"
+        "B"
       ],
       "explanation": "Claude augments requirements analysis by structuring information and surfacing gaps. Ownership of priorities and decisions stays with the people accountable for the outcome.",
       "why_incorrect": {
         "A": "Claude augments the analyst's work; judgement, facilitation and decisions stay with people.",
-        "B": "Claude is helpful during analysis, for example structuring interview notes and spotting gaps.",
-        "D": "Claude cannot know an organisation's needs unless they are provided; stakeholders remain the source."
+        "C": "Claude cannot know an organisation's needs unless they are provided; stakeholders remain the source.",
+        "D": "Claude is helpful during analysis, for example structuring interview notes and spotting gaps."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -157,19 +157,19 @@
       "scenario": "Coho Winery's logistics coordinator wants to reduce the time it takes to process distributor orders. She can describe each step of the current process in detail.",
       "question": "How can Claude help most effectively at the start?",
       "options": {
-        "A": "Ask Claude to design a completely new order process from best practice, without describing the current one, to avoid bias.",
+        "A": "Ask Claude to guarantee a 50% time reduction.",
         "B": "Ask Claude to recommend new logistics software straight away, since a better tool is the fastest way to cut processing time.",
-        "C": "Ask Claude to guarantee a 50% time reduction.",
-        "D": "Ask Claude to map the steps, find hand-offs, delays and duplication, and suggest options to test, stating assumptions."
+        "C": "Ask Claude to map the steps, find hand-offs, delays and duplication, and suggest options to test, stating assumptions.",
+        "D": "Ask Claude to design a completely new order process from best practice, without describing the current one, to avoid bias."
       },
       "answer": [
-        "D"
+        "C"
       ],
       "explanation": "Process optimisation starts with an accurate picture of the current state. Claude can map steps, highlight likely bottlenecks and propose experiments, as long as assumptions are explicit and results are tested in practice.",
       "why_incorrect": {
-        "A": "Without the current process, Claude cannot identify where time is actually lost.",
+        "A": "Claude cannot guarantee outcomes for a process it has only seen described; results need testing.",
         "B": "Choosing tools comes after understanding where the bottlenecks are.",
-        "C": "Claude cannot guarantee outcomes for a process it has only seen described; results need testing."
+        "D": "Without the current process, Claude cannot identify where time is actually lost."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -186,21 +186,21 @@
       "scenario": "Graphic Design Institute's head of operations is planning a move to a new student information system next year and wants Claude to help build the project plan.",
       "question": "Which TWO uses of Claude are most appropriate?",
       "options": {
-        "A": "Drafting a phased plan with milestones, dependencies and risks based on the scope, dates and constraints she provides.",
-        "B": "Producing a plan based only on a generic template with no institute details.",
-        "C": "Committing the institute to final go-live dates based on Claude's draft, so the vendor can begin scheduling work straight away.",
-        "D": "Approving the project budget on finance's behalf once Claude has estimated the costs from the vendor's price list.",
-        "E": "Generating a checklist of questions to ask the vendor and internal teams to uncover hidden dependencies."
+        "A": "Producing a plan from a generic project template, then adding the institute's details later.",
+        "B": "Committing the institute to final go-live dates based on Claude's draft, so the vendor can begin scheduling work straight away.",
+        "C": "Generating a checklist of questions to ask the vendor and internal teams to uncover hidden dependencies.",
+        "D": "Drafting a phased plan with milestones, dependencies and risks based on the scope, dates and constraints she provides.",
+        "E": "Approving the project budget on finance's behalf once Claude has estimated the costs from the vendor's price list."
       },
       "answer": [
-        "A",
-        "E"
+        "C",
+        "D"
       ],
       "explanation": "Claude is a strong planning partner: it drafts structured plans from provided context and surfaces questions that reveal risks. Commitments and approvals remain with the accountable people.",
       "why_incorrect": {
-        "B": "A generic plan ignores the institute's own constraints, systems and calendar.",
-        "C": "Plans need validation by the people doing the work; Claude's draft dates are a starting point, not commitments.",
-        "D": "Budget approval is a human governance decision, not something to delegate to Claude."
+        "A": "A generic plan ignores the institute's own constraints, systems and calendar.",
+        "B": "Plans need validation by the people doing the work; Claude's draft dates are a starting point, not commitments.",
+        "E": "Budget approval is a human governance decision, not something to delegate to Claude."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -217,18 +217,18 @@
       "question": "Which approach best combines Claude's capabilities with verification?",
       "options": {
         "A": "Ask Claude in an ordinary chat to list each vendor's certifications and pricing from what it already knows, to save time.",
-        "B": "Use research to gather and cite the vendors' published information, then confirm key claims with the vendors.",
-        "C": "Accept the vendors' marketing claims without checking anything.",
-        "D": "Ask Claude to compare the vendors and choose one, so the procurement team only needs to process the paperwork."
+        "B": "Rely on each vendor's own comparison sheet, since vendors know their products best.",
+        "C": "Ask Claude to compare the vendors and choose one, so the procurement team can move straight to the paperwork.",
+        "D": "Use research to gather and cite the vendors' published information, then confirm key claims with the vendors."
       },
       "answer": [
-        "B"
+        "D"
       ],
       "explanation": "Research tasks about third parties benefit from cited, current sources followed by targeted human confirmation, especially for claims that drive contractual or security decisions.",
       "why_incorrect": {
         "A": "Certifications change and recall may be outdated; current, cited sources are needed.",
-        "C": "Procurement decisions need claims confirmed, ideally with formal evidence.",
-        "D": "The decision and its accountability stay with the procurement team."
+        "B": "Vendor comparison sheets are marketing; procurement decisions need claims confirmed, ideally with formal evidence.",
+        "C": "The decision and its accountability stay with the procurement team."
       },
       "module": "05-claude-products-and-models/01-product-ecosystem.md",
       "references": [
@@ -244,19 +244,19 @@
       "scenario": "Acme Logistics' planning team uses Claude to draft weekly driver schedules. A manager suggests asking Claude for the \"optimal\" schedule across 400 drivers with dozens of hard constraints and simply using whatever it produces.",
       "question": "What is the most sensible approach?",
       "options": {
-        "A": "Ask Claude for the schedule several times and choose the version that looks most balanced, since repeated attempts reduce error.",
-        "B": "Accept Claude's schedule as optimal because language models are good at maths.",
+        "A": "Avoid Claude entirely for anything related to scheduling.",
+        "B": "Ask Claude for the schedule several times and choose the version that looks most balanced, since repeated attempts reduce error.",
         "C": "Use Claude to clarify constraints, explain trade-offs and review exceptions, but generate or check the schedule with a tool that tests every constraint.",
-        "D": "Avoid Claude entirely for anything related to scheduling."
+        "D": "Accept Claude's schedule as optimal because language models are good at maths."
       },
       "answer": [
         "C"
       ],
       "explanation": "Know where Claude fits in a process. It excels at language, structure and reasoning about trade-offs, but exhaustive constraint checking across hundreds of records needs a deterministic tool or explicit verification.",
       "why_incorrect": {
-        "A": "Picking by appearance does not verify that hard constraints are met.",
-        "B": "Large constraint-satisfaction problems need systematic checking; a fluent answer may silently break constraints.",
-        "D": "Claude still adds value in clarifying constraints, explaining options and drafting communications."
+        "A": "Claude still adds value in clarifying constraints, explaining options and drafting communications.",
+        "B": "Picking by appearance does not verify that hard constraints are met.",
+        "D": "Large constraint-satisfaction problems need systematic checking; a fluent answer may silently break constraints."
       },
       "module": "01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md",
       "references": [
@@ -273,18 +273,18 @@
       "question": "How can Claude best support the redesign?",
       "options": {
         "A": "Share the current emails and data, ask for diagnosed weak points and two alternative sequences, then test with a small group.",
-        "B": "Ask Claude to predict the open rate each new email will achieve, so she can pick the strongest sequence before sending anything.",
-        "C": "Ask Claude to write a brand-new sequence without seeing the current one.",
-        "D": "Replace the whole sequence for all new customers with Claude's first redesign, so results are measurable as quickly as possible."
+        "B": "Replace the whole sequence for new customers with Claude's first redesign, so results are measurable as quickly as possible.",
+        "C": "Ask Claude to predict the open rate each new email will achieve, so she can pick the strongest sequence before sending anything.",
+        "D": "Ask Claude to write a brand-new sequence without seeing the current one."
       },
       "answer": [
         "A"
       ],
       "explanation": "Solution design with Claude works well as an iterative loop: give it the current state and evidence, ask for options with reasoning, and test before scaling.",
       "why_incorrect": {
-        "B": "Claude cannot reliably predict precise future metrics; testing is needed.",
-        "C": "Without the current emails and data, Claude cannot build on what is working or fix what is not.",
-        "D": "Rolling out an untested redesign to everyone removes the chance to learn and adjust."
+        "B": "Rolling out an untested redesign to everyone removes the chance to learn and adjust.",
+        "C": "Claude cannot reliably predict precise future metrics; testing is needed.",
+        "D": "Without the current emails and data, Claude cannot build on what is working or fix what is not."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -300,19 +300,19 @@
       "scenario": "Adatum Insurance's claims team has designed a new intake form with Claude's help. Before rollout, the team lead wants to find weaknesses in the design.",
       "question": "Which use of Claude is most valuable at this stage?",
       "options": {
-        "A": "Ask Claude to confirm that the design meets good-practice standards, so the team has evidence of quality before rollout.",
+        "A": "Ask Claude to critique the design as a first-time claimant, a claims handler and an auditor, listing problems and fixes.",
         "B": "Ask Claude to add more fields to the form, so that every possible piece of information is captured at intake.",
-        "C": "Ask Claude to add the company logo to every field.",
-        "D": "Ask Claude to critique the design as a first-time claimant, a claims handler and an auditor, listing problems and fixes."
+        "C": "Ask Claude to confirm that the design meets good-practice standards, so the team has evidence of quality before rollout.",
+        "D": "Ask Claude to add the company logo to every field."
       },
       "answer": [
-        "D"
+        "A"
       ],
       "explanation": "Claude is useful as a critical reviewer when asked to take specific stakeholder perspectives and identify concrete problems. Framing the request as critique rather than confirmation produces more useful feedback.",
       "why_incorrect": {
-        "A": "Seeking confirmation invites agreement rather than a critical review.",
         "B": "Length is not the goal; a longer form may reduce completion rates.",
-        "C": "Branding does not uncover design weaknesses."
+        "C": "Seeking confirmation invites agreement rather than a critical review.",
+        "D": "Branding does not uncover design weaknesses."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -329,21 +329,21 @@
       "scenario": "Tailspin Travel's HR team used Claude to draft a new hybrid-working policy. The first draft was well received by managers but employees raised concerns in a pilot survey.",
       "question": "Which TWO next steps represent good iteration?",
       "options": {
-        "A": "Ask Claude to rewrite the survey comments in a more constructive, positive tone before sharing them with the policy group.",
+        "A": "Ignore the survey because managers approved the draft.",
         "B": "Give Claude the survey comments, ask it to group the concerns and suggest specific policy changes for each group.",
-        "C": "Start again from a blank page with a new prompt, so that the second draft is not anchored on the wording of the first.",
-        "D": "Ignore the survey because managers approved the draft.",
-        "E": "Produce a revised draft and a short change log explaining what changed and why, then re-test with a small employee group."
+        "C": "Ask Claude to rewrite the survey comments in a more constructive, positive tone before sharing them with the policy group.",
+        "D": "Produce a revised draft and a short change log explaining what changed and why, then re-test with a small employee group.",
+        "E": "Start again from a blank page with a new prompt, so that the second draft is not anchored on the wording of the first."
       },
       "answer": [
         "B",
-        "E"
+        "D"
       ],
       "explanation": "Iteration uses feedback as input: analyse it, make targeted changes, document what changed and validate again. This keeps what worked and fixes what did not.",
       "why_incorrect": {
-        "A": "Altering feedback hides the problems the iteration is meant to fix.",
-        "C": "Discarding the draft throws away the parts managers already supported.",
-        "D": "Employee feedback is evidence about whether the policy will work; ignoring it defeats the pilot."
+        "A": "Employee feedback is evidence about whether the policy will work; ignoring it defeats the pilot.",
+        "C": "Altering feedback hides the problems the iteration is meant to fix.",
+        "E": "Discarding the draft throws away the parts managers already supported."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -360,8 +360,8 @@
       "question": "What is the best first step in redesigning the process?",
       "options": {
         "A": "Sample drafts with advisers' edits, ask Claude to categorise the corrections, and fix the commonest causes.",
-        "B": "Stop the process, since a month of extra editing shows that Claude is not suited to drafting advice for students.",
-        "C": "Ask advisers to send drafts with fewer edits, since small imperfections matter less than the time saved.",
+        "B": "Ask advisers to send drafts with fewer edits, since small imperfections matter less than the time saved.",
+        "C": "Stop the process, since a month of extra editing shows that Claude is not suited to drafting advice for students.",
         "D": "Switch to the most capable model straight away, since drafting quality is mainly determined by model size."
       },
       "answer": [
@@ -369,8 +369,8 @@
       ],
       "explanation": "When a design underperforms, study the evidence. Categorising human corrections reveals whether the problem lies in missing context, unclear instructions or the wrong task split, and points to targeted fixes.",
       "why_incorrect": {
-        "B": "The evidence points to fixable causes; analysing the edits shows what to change.",
-        "C": "Sending uncorrected drafts would expose students to errors.",
+        "B": "Sending uncorrected drafts would expose students to errors.",
+        "C": "The evidence points to fixable causes; analysing the edits shows what to change.",
         "D": "Changing the model without understanding the corrections may not address the real cause."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
@@ -387,19 +387,19 @@
       "scenario": "Southridge Video's finance team spends hours each month writing commentary on budget variances. The numbers come from a spreadsheet; the commentary follows a standard structure and is reviewed by the finance manager.",
       "question": "Which integration approach augments the workflow sensibly?",
       "options": {
-        "A": "Let Claude write the commentary and publish it straight to the board pack, since the numbers come directly from the spreadsheet.",
-        "B": "A Project with the template and style guidance; analysts upload the month's variance table and the manager reviews Claude's draft as before.",
+        "A": "A Project with the template and style guidance; analysts upload the month's variance table and the manager reviews Claude's draft as before.",
+        "B": "Ask Claude to estimate the variances instead of using the spreadsheet figures.",
         "C": "Keep the process fully manual because finance content is too sensitive for any assistance.",
-        "D": "Ask Claude to estimate the variances instead of using the spreadsheet figures."
+        "D": "Let Claude write the commentary and publish it straight to the board pack, since the numbers come directly from the spreadsheet."
       },
       "answer": [
-        "B"
+        "A"
       ],
       "explanation": "Good integration augments existing steps: Claude takes on drafting from authoritative inputs, while existing controls such as manager review stay in place.",
       "why_incorrect": {
-        "A": "Removing the existing review step increases risk for financial reporting.",
+        "B": "Estimates would replace accurate source numbers with guesses.",
         "C": "With appropriate review and data handling, drafting assistance is a common, sensible augmentation.",
-        "D": "Estimates would replace accurate source numbers with guesses."
+        "D": "Removing the existing review step increases risk for financial reporting."
       },
       "module": "13-enterprise-ai-architecture/04-integration-patterns.md",
       "references": [
@@ -416,21 +416,21 @@
       "scenario": "Northwind Lending's operations team wants to redesign, not just speed up, how it handles internal policy questions from 600 staff. Today, questions arrive by email and two specialists answer them manually.",
       "question": "Which TWO design elements are most important in the redesigned workflow?",
       "options": {
-        "A": "Instructing Claude to answer every question even when the policy is silent.",
-        "B": "Removing the two specialists from the process once Claude is available, so their time can be moved to other work and costs fall.",
-        "C": "A shared Project with curated, approved policy documents and instructions to cite the relevant section and refer people to specialists when unsure.",
-        "D": "Letting each staff member upload their own copies of the policies to personal chats, so they can ask questions in the way that suits them.",
-        "E": "An escalation path where unusual or high-impact questions go to the specialists, whose answers then improve the knowledge base."
+        "A": "A shared Project with curated, approved policy documents and instructions to cite the relevant section and refer people to specialists when unsure.",
+        "B": "Instructing Claude to answer every question even when the policy is silent.",
+        "C": "Removing the two specialists from the process once Claude is available, so their time can be moved to other work and costs fall.",
+        "D": "An escalation path where unusual or high-impact questions go to the specialists, whose answers then improve the knowledge base.",
+        "E": "Letting each staff member upload their own copies of the policies to personal chats, so they can ask questions in the way that suits them."
       },
       "answer": [
-        "C",
-        "E"
+        "A",
+        "D"
       ],
       "explanation": "Redesigning a workflow means rethinking roles: Claude handles routine questions from curated sources, specialists handle exceptions and maintain the knowledge, and a feedback loop keeps improving the system.",
       "why_incorrect": {
-        "A": "Answering beyond the policy invites invented answers; escalation is safer.",
-        "B": "Specialists remain essential for edge cases, accountability and keeping the knowledge base accurate.",
-        "D": "Unmanaged copies diverge and lead to inconsistent answers."
+        "B": "Answering beyond the policy invites invented answers; escalation is safer.",
+        "C": "Specialists remain essential for edge cases, accountability and keeping the knowledge base accurate.",
+        "E": "Unmanaged copies diverge and lead to inconsistent answers."
       },
       "module": "13-enterprise-ai-architecture/04-integration-patterns.md",
       "references": [
@@ -447,19 +447,19 @@
       "scenario": "Proseware Education rolled out Claude for drafting parent newsletters. Adoption is low: teachers say it is \"one more tool\" and they forget to use it.",
       "question": "Which change is most likely to improve adoption?",
       "options": {
-        "A": "Send teachers a detailed explainer on how language models work, so they understand the tool well enough to use it.",
-        "B": "Leave adoption to chance and evaluate again next year.",
-        "C": "Require all newsletters to be written entirely by Claude from now on, so that using it becomes the default habit.",
-        "D": "Fit Claude into the existing routine, with a shared Project already set up with the template and examples and a short how-to guide."
+        "A": "Send teachers a monthly reminder email that the tool is available, with a link to the login page.",
+        "B": "Fit Claude into the existing routine, with a shared Project already set up with the template and examples and a short how-to guide.",
+        "C": "Send teachers a detailed explainer on how language models work, so they understand the tool well enough to use it.",
+        "D": "Require newsletters to be drafted entirely by Claude from now on, so that using it becomes the default habit."
       },
       "answer": [
-        "D"
+        "B"
       ],
       "explanation": "Adoption improves when Claude fits naturally into existing routines, with pre-configured Projects and clear guidance at the point of work, rather than being an extra, separate step.",
       "why_incorrect": {
-        "A": "Background knowledge helps, but the barrier is workflow fit rather than theory.",
-        "B": "Without changes, the same barriers will persist.",
-        "C": "Mandating full automation ignores teachers' judgement and may reduce quality and trust."
+        "A": "Reminders do not remove the barrier; the tool still sits outside the teachers' routine.",
+        "C": "Background knowledge helps, but the barrier is workflow fit rather than theory.",
+        "D": "Mandating full automation ignores teachers' judgement and may reduce quality and trust."
       },
       "module": "13-enterprise-ai-architecture/04-integration-patterns.md",
       "references": [
@@ -477,17 +477,17 @@
       "options": {
         "A": "Redesigning means removing human involvement from the process, while augmenting keeps people doing every step.",
         "B": "There is no difference; both mean adding Claude to a process.",
-        "C": "Augmenting improves existing steps; redesigning rethinks the steps and roles around what Claude and people do best.",
-        "D": "Augmenting means using a smaller, cheaper model; redesigning means moving the work to the most capable model available."
+        "C": "Augmenting means using a smaller, cheaper model; redesigning means moving the work to the most capable model available.",
+        "D": "Augmenting improves existing steps; redesigning rethinks the steps and roles around what Claude and people do best."
       },
       "answer": [
-        "C"
+        "D"
       ],
       "explanation": "Augmentation keeps the workflow shape and improves individual steps. Redesign reconsiders which steps exist and who does them, which can unlock larger gains but needs more change management.",
       "why_incorrect": {
         "A": "Redesign changes roles; human oversight usually remains, especially for important decisions.",
         "B": "They differ in scope: one keeps the process shape, the other changes it.",
-        "D": "Model size is unrelated to whether a workflow is augmented or redesigned."
+        "C": "Model size is unrelated to whether a workflow is augmented or redesigned."
       },
       "module": "13-enterprise-ai-architecture/04-integration-patterns.md",
       "references": [
@@ -503,17 +503,17 @@
       "scenario": "Fourth Coffee's marketing director asks Aisha whether Claude can \"write all our social posts from now on, with no one checking them.\"",
       "question": "Which response communicates value and limitations most accurately?",
       "options": {
-        "A": "No, Claude is not suitable for marketing content, because social posts need a human creative touch that AI cannot provide.",
-        "B": "Claude can draft posts quickly in the brand voice, but a person should check accuracy, tone and timing before publishing.",
+        "A": "Claude can draft posts quickly in the brand voice, but a person should check accuracy, tone and timing before publishing.",
+        "B": "No, Claude is not suitable for marketing content, because social posts need a human creative touch that AI cannot provide.",
         "C": "Yes, Claude is reliable for marketing content, so once the brand voice is set up the posts can be published as they are.",
         "D": "Yes, provided the posts stay short, because short posts leave very little room for errors to appear."
       },
       "answer": [
-        "B"
+        "A"
       ],
       "explanation": "Credible communication about Claude is balanced: state concrete benefits and the specific limitations, along with the controls that manage them.",
       "why_incorrect": {
-        "A": "Understating value ignores clear time savings in drafting.",
+        "B": "Understating value ignores clear time savings in drafting.",
         "C": "Overstating reliability sets unrealistic expectations and risks public errors.",
         "D": "Short posts can still contain errors or poor timing; length does not remove the need for review."
       },
@@ -532,21 +532,21 @@
       "scenario": "Contoso Health's operations manager is preparing a one-page summary for executives after a three-month Claude pilot in the scheduling team.",
       "question": "Which TWO items make the summary most credible?",
       "options": {
-        "A": "Measured results against the baseline, such as average time to draft a schedule notice before and after the pilot.",
+        "A": "Projected savings from extending Claude to every department, extrapolated from the scheduling team's results, to show the full opportunity.",
         "B": "Selected positive quotes with negative feedback removed.",
-        "C": "A statement that the model is the most advanced available, as proof of value.",
-        "D": "Projected savings from extending Claude to every department, extrapolated from the scheduling team's results, to show the full opportunity.",
-        "E": "Known limitations seen in the pilot and the controls the team uses to manage them."
+        "C": "Measured results against the baseline, such as average time to draft a schedule notice before and after the pilot.",
+        "D": "Known limitations seen in the pilot and the controls the team uses to manage them.",
+        "E": "A statement that the model is the most advanced available, as proof of value."
       },
       "answer": [
-        "A",
-        "E"
+        "C",
+        "D"
       ],
       "explanation": "Stakeholders trust evidence: measured outcomes against a baseline, plus an honest account of limitations and how they are handled.",
       "why_incorrect": {
+        "A": "Untested extrapolation weakens credibility; executives need evidence.",
         "B": "Omitting negative feedback misrepresents the pilot and undermines trust.",
-        "C": "Model reputation does not demonstrate value for this team's work.",
-        "D": "Untested extrapolation weakens credibility; executives need evidence."
+        "E": "Model reputation does not demonstrate value for this team's work."
       },
       "module": "13-enterprise-ai-architecture/06-stakeholder-communication.md",
       "references": [
@@ -563,18 +563,18 @@
       "question": "Which communication approach is most appropriate?",
       "options": {
         "A": "Tell the team that AI will make their roles obsolete, so they should adapt quickly.",
-        "B": "Say nothing about the pilot until it is complete, so the team is not distracted and the results are not influenced.",
-        "C": "Promise the team that nothing about their work or roles will change as a result of the pilot, to reduce anxiety.",
-        "D": "Explain the specific task, what stays with the team (judgement and approval), how data is handled, and invite feedback."
+        "B": "Promise the team that nothing about their work or roles will change as a result of the pilot, to reduce anxiety.",
+        "C": "Explain the specific task, what stays with the team (judgement and approval), how data is handled, and invite feedback.",
+        "D": "Say nothing about the pilot until it is complete, so the team is not distracted and the results are not influenced."
       },
       "answer": [
-        "D"
+        "C"
       ],
       "explanation": "Transparent, specific communication builds trust: be clear about scope, human responsibilities, data handling and how feedback will be used, without overpromising in either direction.",
       "why_incorrect": {
         "A": "This is speculative, increases anxiety and misrepresents a narrow drafting pilot.",
-        "B": "Secrecy increases mistrust and denies the team a chance to shape the pilot.",
-        "C": "An absolute promise is unlikely to be accurate and can damage trust later."
+        "B": "An absolute promise is unlikely to be accurate and can damage trust later.",
+        "D": "Secrecy increases mistrust and denies the team a chance to shape the pilot."
       },
       "module": "13-enterprise-ai-architecture/06-stakeholder-communication.md",
       "references": [
@@ -590,19 +590,19 @@
       "scenario": "After a successful pilot, Datum Corp's CFO asks for Claude to be rolled out to the legal team with the claim that it will \"eliminate contract errors.\" The pilot was in marketing.",
       "question": "How should the programme lead respond?",
       "options": {
-        "A": "Explain that marketing results do not transfer directly, propose a scoped legal pilot with success measures and review, and drop the error claim.",
+        "A": "Decline any legal use, because legal work is too complex for AI and the marketing pilot proves nothing about it.",
         "B": "Agree to the claim but quietly add reviewers later.",
-        "C": "Decline any legal use, because legal work is too complex for AI and the marketing pilot proves nothing about it.",
-        "D": "Agree, because a successful pilot in one team proves value in all teams."
+        "C": "Agree, since the legal team would use the same tool and similar prompts as marketing.",
+        "D": "Explain that marketing results do not transfer directly, propose a scoped legal pilot with success measures and review, and drop the error claim."
       },
       "answer": [
-        "A"
+        "D"
       ],
       "explanation": "Managing expectations means correcting overstatements, separating evidence from extrapolation, and proposing a measured way to test value in the new context.",
       "why_incorrect": {
+        "A": "A carefully scoped and reviewed pilot can test value; a blanket refusal is unnecessary.",
         "B": "Accepting an inaccurate claim misleads stakeholders even if controls are added afterwards.",
-        "C": "A carefully scoped and reviewed pilot can test value; a blanket refusal is unnecessary.",
-        "D": "Different tasks and risk levels mean results must be validated per use case."
+        "C": "Different tasks and risk levels mean results must be validated per use case, whatever the tool."
       },
       "module": "13-enterprise-ai-architecture/06-stakeholder-communication.md",
       "references": [

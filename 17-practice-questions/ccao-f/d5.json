@@ -14,19 +14,19 @@
       "scenario": "Carmen is setting up a Project at Wingtip Events for writing post-event reports. Every report must use the same section order, a neutral tone and the company's attendance-metric definitions.",
       "question": "Where should each piece of information go?",
       "options": {
-        "A": "Put all of it in the first message of each new chat, so that each report starts with a complete and current brief.",
-        "B": "Upload the tone and section guidance as a knowledge file and leave the Project instructions empty, to keep things in one place.",
-        "C": "Section order and tone in the Project instructions; the metric definitions document in Project knowledge.",
-        "D": "Put the metric definitions in Claude's account-level memory."
+        "A": "Put the whole brief in the first message of each new chat, so that each report starts with a complete and current brief.",
+        "B": "Section order and tone in the Project instructions; the metric definitions document in Project knowledge.",
+        "C": "Put the metric definitions in Claude's account-level memory.",
+        "D": "Upload the tone and section guidance as a knowledge file and leave the Project instructions empty, to keep things in one place."
       },
       "answer": [
-        "C"
+        "B"
       ],
       "explanation": "Project instructions shape how Claude behaves in every chat in the Project (role, tone, format). Project knowledge holds reference material Claude should draw on. Using each for its purpose keeps the Project predictable.",
       "why_incorrect": {
         "A": "Repeating set-up in every chat is error-prone; Projects exist to hold this persistently.",
-        "B": "Behavioural guidance such as tone and structure belongs in instructions, which tell Claude how to respond in every chat.",
-        "D": "Reference material that must be applied exactly belongs in Project knowledge, not in memory that captures selected topics."
+        "C": "Reference material that must be applied exactly belongs in Project knowledge, not in memory that captures selected topics.",
+        "D": "Behavioural guidance such as tone and structure belongs in instructions, which tell Claude how to respond in every chat."
       },
       "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
       "references": [
@@ -44,21 +44,21 @@
       "scenario": "Margie's Travel is creating a shared Project for its 12-person itinerary team on a Team plan. A senior planner will maintain it.",
       "question": "Which TWO configuration choices are sound?",
       "options": {
-        "A": "Give the senior planner \"Can edit\" access and most members \"Can view\" access, so they can chat but not change the set-up.",
-        "B": "Give every team member edit access, so that anyone who finds a useful supplier document can add it to the knowledge straight away.",
-        "C": "Upload every itinerary from the past ten years, so Claude has the widest possible set of examples to draw on for new trips.",
-        "D": "Leave the instructions blank so each planner can phrase their own each time.",
+        "A": "Upload every itinerary from the past ten years, so Claude has the widest possible set of examples to draw on for new trips.",
+        "B": "Leave the instructions blank so each planner can phrase their own each time.",
+        "C": "Give the senior planner \"Can edit\" access and most members \"Can view\" access, so they can chat but not change the set-up.",
+        "D": "Give every team member edit access, so that anyone who finds a useful supplier document can add it to the knowledge straight away.",
         "E": "Upload only current, approved supplier guides and itinerary templates to the Project knowledge."
       },
       "answer": [
-        "A",
+        "C",
         "E"
       ],
       "explanation": "On Team and Enterprise plans, Projects can be shared with view or edit permissions. Restricting edit rights to an owner and curating knowledge to current, relevant material keeps a shared Project reliable.",
       "why_incorrect": {
-        "B": "Uncontrolled edits lead to conflicting or outdated knowledge and inconsistent answers.",
-        "C": "Bulk uploads of loosely relevant material add noise and make answers less focused.",
-        "D": "Shared instructions are what make outputs consistent across the team."
+        "A": "Bulk uploads of loosely relevant material add noise and make answers less focused.",
+        "B": "Shared instructions are what make outputs consistent across the team.",
+        "D": "Uncontrolled edits lead to conflicting or outdated knowledge and inconsistent answers."
       },
       "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
       "references": [
@@ -74,18 +74,18 @@
       "scenario": "Jamal at Trey Research uploaded a 400-page set of research reports to a Project on a paid plan. Claude still answers questions using the material but now seems to draw on a few relevant passages rather than the whole set at once.",
       "question": "What is the most likely explanation?",
       "options": {
-        "A": "Projects only read the first section of each file, so long reports need to be split into many smaller uploads.",
-        "B": "Knowledge near the context limit made the Project switch to retrieval, which finds the relevant passages.",
-        "C": "The upload partly failed, so Claude can only see some of the reports and is filling the gaps from general knowledge.",
+        "A": "Knowledge near the context limit made the Project switch to retrieval, which finds the relevant passages.",
+        "B": "The upload partly failed, so Claude sees just some of the reports and is filling the gaps from general knowledge.",
+        "C": "Projects read the opening pages of each file, so long reports need to be split into many smaller uploads.",
         "D": "Claude ignores Project knowledge whenever memory is turned on."
       },
       "answer": [
-        "B"
+        "A"
       ],
       "explanation": "As of 2026-10-24, on paid plans, when Project knowledge approaches the context limit Claude automatically uses retrieval to find relevant parts of the knowledge, which expands capacity. Clear, well-structured documents help retrieval find the right passages.",
       "why_incorrect": {
-        "A": "There is no rule that Projects read only the first section of files; large knowledge bases are handled through retrieval on paid plans.",
-        "C": "Claude is answering accurately from the reports, which points to retrieval selecting passages rather than a failed upload.",
+        "B": "Claude is answering accurately from the reports, which points to retrieval selecting passages rather than a failed upload.",
+        "C": "There is no rule that Projects read the opening pages of files; large knowledge bases are handled through retrieval on paid plans.",
         "D": "Memory and Project knowledge are separate features; memory does not disable knowledge."
       },
       "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
@@ -102,19 +102,19 @@
       "scenario": "Bellows College's admissions office plans one Project for both undergraduate and postgraduate enquiries. The two have different deadlines, fees and tone requirements, and staff keep getting answers that mix them up.",
       "question": "What is the best configuration change?",
       "options": {
-        "A": "Use a standalone chat without a Project for every enquiry.",
-        "B": "Keep one Project and add an instruction to \"be careful to use the correct programme's information\" in every answer.",
-        "C": "Keep one Project and remove all fee documents to avoid mistakes.",
-        "D": "Create separate Projects for undergraduate and postgraduate enquiries, each with its own instructions and knowledge."
+        "A": "Create separate Projects for undergraduate and postgraduate enquiries, each with its own instructions and knowledge.",
+        "B": "Use a standalone chat without a Project for every enquiry.",
+        "C": "Keep one Project and add an instruction to \"be careful to use the correct programme's information\" in every answer.",
+        "D": "Keep one Project and remove the fee documents so that Claude cannot quote the wrong fees."
       },
       "answer": [
-        "D"
+        "A"
       ],
       "explanation": "Projects work best when scoped to a coherent body of work. When two audiences need different rules and facts, separate Projects prevent cross-contamination and make each easier to maintain.",
       "why_incorrect": {
-        "A": "This loses the persistent instructions and knowledge entirely.",
-        "B": "A vague instruction does not stop Claude drawing on the wrong set of fees and deadlines.",
-        "C": "Removing needed information makes the Project less useful rather than more accurate."
+        "B": "This loses the persistent instructions and knowledge entirely.",
+        "C": "A vague instruction does not stop Claude drawing on the wrong set of fees and deadlines.",
+        "D": "Removing needed information makes the Project less useful rather than more accurate."
       },
       "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
       "references": [
@@ -130,19 +130,19 @@
       "scenario": "Isabel at Fabrikam Retail uses the Gmail connector and asks Claude to summarise the PDF invoices attached to supplier emails from last week. Claude lists the emails and attachment names but cannot summarise the invoice contents.",
       "question": "What is the most likely reason?",
       "options": {
-        "A": "Gmail exposes message content and attachment metadata, not attachment contents; she should add the PDFs to the chat directly.",
-        "B": "Invoice PDFs need a more capable model to interpret tables, so she should switch models and ask again.",
+        "A": "Claude cannot read any PDF in any context.",
+        "B": "Gmail exposes message content and attachment metadata, not attachment contents; she should add the PDFs to the chat directly.",
         "C": "The Gmail connector has lost its authorisation, so it can see email headers but not files; she should disconnect and reconnect it.",
-        "D": "Claude cannot read any PDF in any context."
+        "D": "Invoice PDFs need a more capable model to interpret tables, so she should switch models and ask again."
       },
       "answer": [
-        "A"
+        "B"
       ],
       "explanation": "As of 2026-10-24, the Gmail connector exposes message content and attachment metadata, not attachment contents. Knowing each connector's scope helps users pick the right route for the data they need.",
       "why_incorrect": {
-        "B": "Model choice does not change what data the connector makes available.",
+        "A": "Claude can read PDFs uploaded directly or retrieved from supported sources such as Drive.",
         "C": "Listing emails and attachment names shows it is working within its normal scope.",
-        "D": "Claude can read PDFs uploaded directly or retrieved from supported sources such as Drive."
+        "D": "Model choice does not change what data the connector makes available."
       },
       "module": "05-claude-products-and-models/06-connectors-and-integrations.md",
       "references": [
@@ -159,18 +159,18 @@
       "question": "What is the best approach?",
       "options": {
         "A": "Ask colleagues to email him changes so he can tell Claude about them.",
-        "B": "Download a PDF of the guide on the first of each month and upload it to the Project, deleting the previous copy each time.",
-        "C": "Add the Google Doc from Google Drive, so Claude uses the latest synced version.",
-        "D": "Copy the full text of the guide into the Project instructions, so Claude always reads it before answering."
+        "B": "Add the Google Doc from Google Drive, so Claude uses the latest synced version.",
+        "C": "Copy the full text of the guide into the Project instructions, so Claude reads it first in each chat.",
+        "D": "Download a PDF of the guide on the first of each month and upload it to the Project, deleting the previous copy each time."
       },
       "answer": [
-        "C"
+        "B"
       ],
       "explanation": "Google Docs added to chats and Projects through the Drive connector sync from Drive, so Claude uses the latest version. As of 2026-10-24, adding Drive files to Project knowledge is available for private Projects.",
       "why_incorrect": {
         "A": "This is slow, error-prone and depends on people remembering to send updates.",
-        "B": "Manual re-uploads can be forgotten and create stale copies, while a Drive-linked Doc stays current.",
-        "D": "Instructions are for guidance on behaviour; pasted reference text goes stale and bloats the instructions."
+        "C": "Instructions are for guidance on behaviour; pasted reference text goes stale and bloats the instructions.",
+        "D": "Manual re-uploads can be forgotten and create stale copies, while a Drive-linked Doc stays current."
       },
       "module": "05-claude-products-and-models/06-connectors-and-integrations.md",
       "references": [
@@ -187,20 +187,20 @@
       "scenario": "Northwind Lending, on an Enterprise plan, is enabling the Google Drive connector for the first time.",
       "question": "Which TWO statements about access and administration are accurate?",
       "options": {
-        "A": "Once one administrator connects their Google account, every member can search every file in the company Drive through Claude.",
-        "B": "An organisation Owner must enable the connector before members can connect their own Google accounts.",
-        "C": "Content from connected Drive files is automatically copied into the shared knowledge of every Project in the organisation.",
-        "D": "The connector respects each user's existing Google permissions, so Claude can only reach files that user can access.",
+        "A": "An organisation Owner must enable the connector before members can connect their own Google accounts.",
+        "B": "Once one administrator connects their Google account, every member can search every file in the company Drive through Claude.",
+        "C": "The connector respects each user's existing Google permissions, so Claude can only reach files that user can access.",
+        "D": "Content from connected Drive files is automatically copied into the shared knowledge of every Project in the organisation.",
         "E": "Users can bypass the Owner setting by installing the connector in a personal browser."
       },
       "answer": [
-        "B",
-        "D"
+        "A",
+        "C"
       ],
       "explanation": "As of 2026-10-24, on Team and Enterprise plans an Owner enables Google Workspace connectors first; then each member authenticates with their own account, and Claude's access mirrors that user's Google permissions.",
       "why_incorrect": {
-        "A": "Each user authenticates individually and access mirrors their own Google permissions.",
-        "C": "Connector content is pulled into the chats and Projects where it is used; it is not automatically copied into every Project.",
+        "B": "Each user authenticates individually and access mirrors their own Google permissions.",
+        "D": "Connector content is pulled into the chats and Projects where it is used; it is not automatically copied into every Project.",
         "E": "Organisation controls govern connector availability for members on Team and Enterprise plans."
       },
       "module": "05-claude-products-and-models/06-connectors-and-integrations.md",
@@ -218,19 +218,19 @@
       "scenario": "Claude summarised a Google Slides deck from Drive for Wei at Southridge Video, but missed all the numbers shown in the embedded chart images.",
       "question": "What explains this, and what should Wei do?",
       "options": {
-        "A": "The Drive connector extracts text only, so embedded images are skipped; provide the figures as text or upload the charts.",
-        "B": "Claude declines to report numbers from presentations, to avoid misquoting financial data, so the figures must be typed in.",
-        "C": "The deck is too long; split it into one-slide files.",
-        "D": "Slides files can only be read in part through the Drive connector, so Wei should export the deck to Word first."
+        "A": "The deck is too long; split it into one-slide files.",
+        "B": "The Drive connector extracts text only, so embedded images are skipped; provide the figures as text or upload the charts.",
+        "C": "Slides files are read in part through the Drive connector, so Wei should export the deck to Word first.",
+        "D": "Claude declines to report numbers from presentations, to avoid misquoting financial data, so the figures must be typed in."
       },
       "answer": [
-        "A"
+        "B"
       ],
       "explanation": "As of 2026-10-24, the Drive connector reads text from supported files and does not process images embedded in documents. Knowing this helps users spot gaps and supply missing visual data another way.",
       "why_incorrect": {
-        "B": "There is no such refusal; the issue is how content is extracted from Drive files.",
-        "C": "Length is not the cause; images would still be skipped in shorter files.",
-        "D": "Slides text is read; only the embedded images are skipped."
+        "A": "Length is not the cause; images would still be skipped in shorter files.",
+        "C": "Slides text is read; only the embedded images are skipped.",
+        "D": "There is no such refusal; the issue is how content is extracted from Drive files."
       },
       "module": "05-claude-products-and-models/06-connectors-and-integrations.md",
       "references": [
@@ -246,19 +246,19 @@
       "scenario": "Rosa is writing Project instructions for Coho Winery's sales team. Her draft says: \"Be helpful and professional.\"",
       "question": "Which revision makes the instructions most effective?",
       "options": {
-        "A": "Add \"be very, very helpful\" for emphasis.",
-        "B": "Replace it with a detailed list of words, phrases and topics Claude must never use with customers.",
-        "C": "State the users, supported tasks, tone and format, which knowledge files to rely on, and what to do when information is missing.",
-        "D": "Leave it as is; Claude will infer everything else."
+        "A": "State the users, supported tasks, tone and format, which knowledge files to rely on, and what to do when information is missing.",
+        "B": "Add \"IMPORTANT: be helpful and accurate\" in capitals at the top so Claude takes it seriously.",
+        "C": "Replace it with a detailed list of words, phrases and topics Claude must avoid with customers.",
+        "D": "Keep it short and let Claude infer the rest from the knowledge files, since they describe the service."
       },
       "answer": [
-        "C"
+        "A"
       ],
       "explanation": "Strong system-level instructions explain the context and the expected behaviour: audience, purpose, style, sources and how to handle uncertainty. Specific guidance produces consistent results across chats.",
       "why_incorrect": {
-        "A": "Emphasis does not add the missing context about users, tasks or format.",
-        "B": "A banned-word list ignores the core guidance on role, tasks and format.",
-        "D": "Without specifics, outputs will vary from chat to chat and person to person."
+        "B": "Emphasis does not add the missing context about users, tasks or format.",
+        "C": "A banned-word list ignores the core guidance on role, tasks and format.",
+        "D": "Knowledge files describe the service, not the users, tone, format or what to do when information is missing; outputs will vary."
       },
       "module": "03-prompt-engineering/07-system-prompts-and-roles.md",
       "references": [
@@ -276,20 +276,20 @@
       "scenario": "Lucerne Clinics' HR team is writing instructions for a Project that answers staff questions about leave policies using uploaded policy documents.",
       "question": "Which THREE instructions are most appropriate?",
       "options": {
-        "A": "If the documents are unclear, choose the interpretation most favourable to the employee.",
-        "B": "Answer only from the uploaded policy documents and name the policy and section used.",
-        "C": "Never mention that answers come from documents, so they sound authoritative.",
+        "A": "Use plain language and keep answers under 150 words unless the person asks for more detail.",
+        "B": "If the documents are unclear, choose the interpretation most favourable to the employee.",
+        "C": "Avoid mentioning that answers come from documents, so they sound more authoritative.",
         "D": "If the documents do not cover a question, say so and direct the person to the HR inbox.",
-        "E": "Use plain language and keep answers under 150 words unless the person asks for more detail."
+        "E": "Answer only from the uploaded policy documents and name the policy and section used."
       },
       "answer": [
-        "B",
+        "A",
         "D",
         "E"
       ],
       "explanation": "Effective instructions define the source of truth, the behaviour when the source is silent, and the expected format. Escalating uncertain cases and citing sources keeps answers verifiable.",
       "why_incorrect": {
-        "A": "Resolving ambiguity on Claude's own judgement can produce inconsistent, unauthorised answers; unclear cases should be escalated.",
+        "B": "Resolving ambiguity on Claude's own judgement can produce inconsistent, unauthorised answers; unclear cases should be escalated.",
         "C": "Hiding sources makes answers harder to verify and undermines trust."
       },
       "module": "03-prompt-engineering/07-system-prompts-and-roles.md",
@@ -335,19 +335,19 @@
       "scenario": "A manager at Humongous Insurance asks why her Project instructions explain the reasons behind rules, such as \"Avoid jargon because most readers are new policyholders\", instead of just listing the rules.",
       "question": "What is the main benefit of giving reasons?",
       "options": {
-        "A": "Reasons are needed only for legal compliance documentation.",
-        "B": "Knowing why a rule exists helps Claude apply it sensibly in situations the rule did not anticipate.",
-        "C": "Reasons make instructions longer and more detailed, and longer instructions consistently produce better results.",
-        "D": "Claude tends to ignore rules that have no reason attached, so every rule needs a justification to be followed."
+        "A": "Reasons make instructions longer and more detailed, and longer instructions consistently produce better results.",
+        "B": "Claude tends to ignore rules that have no reason attached, so every rule needs a justification to be followed.",
+        "C": "Reasons mainly help auditors and colleagues understand the instructions later, rather than affecting answers.",
+        "D": "Knowing why a rule exists helps Claude apply it sensibly in situations the rule did not anticipate."
       },
       "answer": [
-        "B"
+        "D"
       ],
       "explanation": "Explaining the purpose behind an instruction lets Claude generalise it correctly, for example simplifying technical terms in a new kind of document because it understands who the readers are.",
       "why_incorrect": {
-        "A": "The benefit is better application of the rule, not documentation.",
-        "C": "Length alone does not improve results; the value comes from the context reasons provide.",
-        "D": "Claude follows clear rules without reasons; reasons improve judgement in edge cases."
+        "A": "Length alone does not improve results; the value comes from the context reasons provide.",
+        "B": "Claude follows clear rules without reasons; reasons improve judgement in edge cases.",
+        "C": "Reasons do help people, but the main benefit is that Claude applies the rule better in unanticipated cases."
       },
       "module": "03-prompt-engineering/07-system-prompts-and-roles.md",
       "references": [
@@ -363,19 +363,19 @@
       "scenario": "Acme Logistics' shared customs-guidance Project has grown over a year. Several team members have uploaded slightly different versions of the same export checklist, and answers sometimes quote different requirements.",
       "question": "What should the Project owner do?",
       "options": {
-        "A": "Keep one approved, dated version of the checklist, remove the duplicates, and agree who may update it.",
-        "B": "Delete the Project and start a new one each quarter.",
-        "C": "Add an instruction telling Claude to combine the requirements from all the versions, so no requirement is missed.",
-        "D": "Leave all versions in the knowledge, so Claude can compare them and choose the most complete one for each answer."
+        "A": "Add an instruction telling Claude to combine the requirements from every version, so no requirement is missed.",
+        "B": "Leave the versions in the knowledge, so Claude can compare them and choose the most complete one for each answer.",
+        "C": "Keep one approved, dated version of the checklist, remove the duplicates, and agree who may update it.",
+        "D": "Delete the Project and start a new one each quarter."
       },
       "answer": [
-        "A"
+        "C"
       ],
       "explanation": "Knowledge needs curation. One approved, dated version per document, plus clear ownership of changes, keeps answers consistent.",
       "why_incorrect": {
-        "B": "Rebuilding regularly loses useful configuration and does not fix the version-control problem.",
-        "C": "Combining conflicting versions can produce requirements the approved checklist does not contain; the fix is one approved version.",
-        "D": "Conflicting versions in knowledge cause conflicting answers; Claude cannot know which is approved."
+        "A": "Combining conflicting versions can produce requirements the approved checklist does not contain; the fix is one approved version.",
+        "B": "Conflicting versions in knowledge cause conflicting answers; Claude cannot know which is approved.",
+        "D": "Rebuilding regularly loses useful configuration and does not fix the version-control problem."
       },
       "module": "13-enterprise-ai-architecture/09-lifecycle-management.md",
       "references": [
@@ -392,21 +392,21 @@
       "scenario": "Woodgrove Bank's operations team relies on six shared Projects. The team lead wants a lightweight maintenance routine.",
       "question": "Which TWO practices should the routine include?",
       "options": {
-        "A": "Allow anyone on the team to edit instructions at any time without notice, so improvements reach everyone as quickly as possible.",
-        "B": "Review Projects only when a serious error has reached a customer.",
-        "C": "A named owner for each Project who reviews instructions and knowledge on a regular schedule, such as quarterly.",
-        "D": "Add every new document the team receives to every Project automatically, so that the knowledge in each Project stays complete.",
-        "E": "A small set of standard test questions run after each significant change to confirm answers are still correct."
+        "A": "A small set of standard test questions run after each significant change to confirm answers are still correct.",
+        "B": "A named owner for each Project who reviews instructions and knowledge on a regular schedule, such as quarterly.",
+        "C": "Add every new document the team receives to every Project automatically, so that the knowledge in each Project stays complete.",
+        "D": "Review a Project when users report a serious error, rather than on a fixed schedule.",
+        "E": "Allow anyone on the team to edit instructions at any time without notice, so improvements reach everyone as quickly as possible."
       },
       "answer": [
-        "C",
-        "E"
+        "A",
+        "B"
       ],
       "explanation": "Ownership, scheduled reviews and simple regression checks with known questions are effective ways to keep configurations reliable as content and needs change.",
       "why_incorrect": {
-        "A": "Unmanaged edits make behaviour change unexpectedly and are hard to trace.",
-        "B": "Purely reactive maintenance lets errors reach people before they are caught.",
-        "D": "Indiscriminate additions dilute knowledge and introduce conflicts."
+        "C": "Indiscriminate additions dilute knowledge and introduce conflicts.",
+        "D": "Purely reactive maintenance lets errors reach people before they are caught.",
+        "E": "Unmanaged edits make behaviour change unexpectedly and are hard to trace."
       },
       "module": "13-enterprise-ai-architecture/09-lifecycle-management.md",
       "references": [
@@ -422,19 +422,19 @@
       "scenario": "Graphic Design Institute's student-services team changed its Project instructions to make answers shorter. Afterwards, answers are shorter but no longer include the link to the booking system, which used to appear every time.",
       "question": "What is the most likely cause, and the best fix?",
       "options": {
-        "A": "Shorter answers cannot contain links, so the team must choose between brevity and including the booking link.",
-        "B": "The booking system may be offline, and Claude stops mentioning links to systems that are unavailable.",
-        "C": "The edit weakened the booking-link instruction; restore it explicitly and re-run standard test questions after each change.",
-        "D": "The Project knowledge was automatically deleted."
+        "A": "The Project knowledge was automatically deleted.",
+        "B": "Shorter answers cannot contain links, so the team must choose between brevity and including the booking link.",
+        "C": "The booking system may be offline, and Claude stops mentioning links to systems that are unavailable.",
+        "D": "The edit weakened the booking-link instruction; restore it explicitly and re-run standard test questions after each change."
       },
       "answer": [
-        "C"
+        "D"
       ],
       "explanation": "Changes to instructions can have unintended side effects. Compare the old and new versions, restore the lost requirement and test with a standard question set after every edit.",
       "why_incorrect": {
-        "A": "Short answers can include links if instructed.",
-        "B": "Claude is not checking the system's status; the change coincides with the instruction edit.",
-        "D": "Knowledge does not disappear because of an instruction edit; the instructions changed."
+        "A": "Knowledge does not disappear because of an instruction edit; the instructions changed.",
+        "B": "Short answers can include links if instructed.",
+        "C": "Claude is not checking the system's status; the change coincides with the instruction edit."
       },
       "module": "13-enterprise-ai-architecture/09-lifecycle-management.md",
       "references": [
@@ -451,18 +451,18 @@
       "question": "What is the most responsible maintenance step?",
       "options": {
         "A": "Disable code execution permanently to avoid any Skill risk.",
-        "B": "Review the new version's files, instructions and external connections before enabling it.",
-        "C": "Enable it for the whole organisation first, then ask users to report anything unusual over the following week.",
-        "D": "Install it straight away, because the earlier version from the same site has worked safely for six months."
+        "B": "Install it straight away, because the earlier version from the same site has worked safely for six months.",
+        "C": "Review the new version's files, instructions and external connections before enabling it.",
+        "D": "Enable it for the whole organisation first, then ask users to report anything unusual over the following week."
       },
       "answer": [
-        "B"
+        "C"
       ],
       "explanation": "Skills can include instructions and code that influence Claude's actions. Treat updates from less-trusted sources like new software: review the contents, check for unexpected network access, and only then enable them.",
       "why_incorrect": {
         "A": "Skills rely on code execution; a blanket disable removes their benefit instead of managing the risk.",
-        "C": "Broad rollout before review spreads any risk across all users.",
-        "D": "A previous version being safe does not guarantee the new one is; each version should be reviewed."
+        "B": "A previous version being safe does not guarantee the new one is; each version should be reviewed.",
+        "D": "Broad rollout before review spreads any risk across all users."
       },
       "module": "04-context-engineering/06-progressive-disclosure-and-skills.md",
       "references": [

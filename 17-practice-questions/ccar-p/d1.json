@@ -14,19 +14,19 @@
       "scenario": "Harbourline Credit Union's operations director asks for 'an AI agent that handles member disputes end to end'. Discovery shows that 70% of disputes fall into five card-chargeback reason codes with fixed evidence checklists, while the remainder need judgement across several back-office systems.",
       "question": "Which initial solution framing best translates this business problem into a Claude-based design?",
       "options": {
-        "A": "A workflow that classifies each dispute by reason code, has Claude assemble the evidence checklist and draft the case summary, and routes the non-standard remainder to analysts",
-        "B": "A single autonomous agent with access to every back-office system so it can handle all disputes uniformly",
-        "C": "A fine-tuned classifier only, because chargebacks are a classification problem and generation adds no value",
-        "D": "A chat assistant for members to self-serve dispute status, deferring internal process changes"
+        "A": "A single agent with read access to every back-office system and a dispute playbook in its system prompt, so one design covers standard and non-standard disputes alike",
+        "B": "A workflow that classifies each dispute by reason code, has Claude assemble the evidence checklist and draft the case summary, and routes non-standard cases to analysts",
+        "C": "A fine-tuned reason-code classifier feeding the existing case-management rules, deferring generative features until classification accuracy is proven in production",
+        "D": "A member-facing assistant that collects dispute details and supporting documents up front, so analysts receive complete cases and spend less time chasing missing evidence"
       },
       "answer": [
-        "A"
+        "B"
       ],
       "explanation": "Translating a business request starts from the shape of the work, not from the label the sponsor used. When most volume follows known, enumerable steps, a code-orchestrated workflow with Claude doing classification and evidence summarisation delivers value quickly, is testable and keeps cost predictable. The judgement-heavy remainder can be routed to people (or a later, narrower agent) once the workflow has produced data about those cases. Starting with a fully autonomous agent for everything maximises risk and cost for the part of the problem that does not need autonomy.",
       "why_incorrect": {
-        "B": "Uniform autonomy over every system adds cost, latency and excessive agency for the 70% of cases that follow fixed steps; it also makes failures harder to test and audit.",
-        "C": "Classification is one step, but the business value comes from evidence assembly and summarisation, which a classifier alone does not provide.",
-        "D": "This addresses a different problem (member status queries) and leaves the analyst workload the sponsor described untouched."
+        "A": "Giving one agent open-ended access to every system adds cost, latency and excessive agency to the 70% of disputes that follow fixed checklists, and makes those predictable cases harder to test and audit.",
+        "C": "Classification is only the first step; the analyst time goes into assembling evidence and writing the case summary, which a classifier does not touch, so most of the business value is deferred.",
+        "D": "Better intake helps, but analysts still assemble evidence and judge every case; the design shifts work to members rather than addressing the end-to-end dispute handling the sponsor asked about."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -43,21 +43,21 @@
       "scenario": "Contoso Health wants to reduce the time nurses spend writing discharge summaries. The draft must reflect the structured EHR record, never invent medications, and be signed by a clinician. Leadership asks you to identify which requirements should drive the architecture.",
       "question": "Which TWO requirements most directly shape the Claude solution architecture? (Choose 2.)",
       "options": {
-        "A": "Medications in the summary must come only from the structured EHR record, which implies grounding the prompt in that data and validating the output against it",
-        "B": "Summaries should use a warm, plain-language tone for patients",
-        "C": "A clinician must review and sign each summary, which implies a human approval step and an audit trail before filing",
-        "D": "The team prefers the most capable model available so quality is never in question",
-        "E": "The nurse UI should match the existing EHR colour scheme"
+        "A": "Quality must be high across specialties, which implies fixing the most capable model tier before any evaluation begins",
+        "B": "Medications must come from the structured EHR record, which implies grounding the prompt in that data and validating the output against it",
+        "C": "Summaries must follow the hospital's existing discharge template headings, which implies adding the template and worked examples to the system prompt",
+        "D": "A clinician must review and sign each summary, which implies a human approval step and an audit trail before filing",
+        "E": "Summaries must be readable by patients at a sixth-grade level, which implies a plain-language style guide and readability scoring"
       },
       "answer": [
-        "A",
-        "C"
+        "B",
+        "D"
       ],
-      "explanation": "Architecturally significant requirements are the ones that constrain structure. 'Never invent medications' forces grounding: the medication list should be passed from the structured record (and ideally validated against it after generation) rather than left to free generation. 'Signed by a clinician' forces a human approval step and an audit trail before anything is filed. Preferences about tone or UI colour matter but do not change the architecture, and choosing the largest model is a configuration decision that should follow evaluation, not precede it.",
+      "explanation": "Architecturally significant requirements are the ones that constrain structure. 'Never invent medications' forces grounding: the medication list should be passed from the structured record (and ideally validated against it after generation) rather than left to free generation. 'Signed by a clinician' forces a human approval step and an audit trail before anything is filed. Readability and template conformance matter, but they are met inside the prompt and the evaluation suite without changing components, and choosing the largest model is a configuration decision that should follow evaluation, not precede it.",
       "why_incorrect": {
-        "B": "Tone is a prompt-level requirement; it is handled in the system prompt and does not change components, data flows or controls.",
-        "D": "Model choice is a tunable configuration that should be justified by evaluation results; it is not a structural requirement.",
-        "E": "A UI styling preference does not affect the Claude processing architecture."
+        "A": "Model tier is a tunable configuration that should follow evaluation results; fixing it up front is a premature decision, not a structural requirement.",
+        "C": "Following a template is a prompt-content concern handled by instructions and examples; it does not change how data is grounded, approved or filed.",
+        "E": "Readability is a real requirement, but it is met with prompt instructions and an evaluation metric; it does not add components, data flows or controls to the architecture."
       },
       "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
       "references": [
@@ -73,19 +73,19 @@
       "scenario": "Fabrikam Retail's CFO asks whether Claude can 'replace the demand-forecasting system'. The current system is a statistical time-series model that produces SKU-level forecasts nightly with measured error bounds.",
       "question": "What is the most appropriate architectural recommendation?",
       "options": {
-        "A": "Replace the forecaster with Claude, prompting it with three years of sales history each night",
-        "B": "Keep the statistical forecaster as the source of numbers and use Claude to explain forecast movements, summarise qualitative signals and answer planner questions against the forecast data",
-        "C": "Replace the forecaster with Claude but ask it to output confidence intervals in a structured schema",
-        "D": "Decline the use case because LLMs cannot work with numeric data"
+        "A": "Keep the forecaster unchanged and limit Claude to a separate planner chatbot over policy documents, since LLMs add little value to numeric planning workflows",
+        "B": "Run Claude alongside the forecaster for a quarter with confidence intervals returned in a structured schema, then keep whichever produces lower forecast error",
+        "C": "Keep the statistical forecaster as the source of the numbers, and use Claude to explain forecast movements, summarise qualitative signals and answer planners' questions",
+        "D": "Replace the forecaster with Claude using the code execution tool, so it fits a fresh time-series model on three years of sales history each night and explains the result"
       },
       "answer": [
-        "B"
+        "C"
       ],
       "explanation": "Part of translating a business problem is recognising where an LLM adds value and where a deterministic or statistical component is the better tool. Numeric time-series forecasting with calibrated error bounds is a strength of the existing statistical system. Claude adds value around it: explaining forecast changes to planners, summarising promotions and supplier notes that affect demand, and turning analyst questions into queries. Replacing a well-performing quantitative model with free-text generation would lose calibration and auditability.",
       "why_incorrect": {
-        "A": "LLMs are not a substitute for calibrated numeric forecasting; this also loses the measured error bounds the business relies on.",
-        "C": "A structured schema guarantees the output format, not that the numbers are statistically calibrated.",
-        "D": "Claude can reason about and explain numeric data well; the issue is which component should own the forecast, not whether Claude can participate."
+        "A": "Claude can explain numeric forecasts and summarise the qualitative signals behind them; confining it to policy documents leaves the planners' main question unanswered.",
+        "B": "A schema guarantees the format of the intervals, not their statistical calibration, and framing the work as a replacement contest misses where Claude adds value alongside the forecaster.",
+        "D": "Refitting a model from scratch every night through generated code replaces a calibrated, measured system with one whose method can change run to run, losing the validated error bounds and reproducibility the business relies on."
       },
       "module": "13-enterprise-ai-architecture/08-business-value-and-roi.md",
       "references": [
@@ -101,19 +101,19 @@
       "scenario": "Civic Benefits Agency (a fictional state agency) wants Claude to 'decide' benefit eligibility from uploaded documents to clear a 40,000-application backlog. Eligibility rules are codified in statute and the agency must be able to explain every denial.",
       "question": "Which framing should the architect propose?",
       "options": {
-        "A": "Claude reads the statute and the documents and returns an approve/deny decision with a confidence score",
-        "B": "Claude approves clear-cut applications automatically and denies the rest pending appeal",
-        "C": "Claude extracts applicant facts into a validated schema and flags gaps, a rules engine applies the codified eligibility logic, and caseworkers review every proposed denial with Claude-drafted rationale",
-        "D": "Run the backlog through the Batch API with the most capable model to maximise decision accuracy"
+        "A": "The backlog runs through the Message Batches API on the most capable model at high effort, asking for a decision plus a written explanation that cites the relevant statute",
+        "B": "Claude reads the statute and each application and returns an approve or deny decision citing the statutory section it relied on, and caseworkers audit a 10% sample of decisions",
+        "C": "Claude extracts applicant facts into a validated schema and flags gaps, a rules engine applies the codified eligibility logic, and caseworkers review each proposed denial with a drafted rationale",
+        "D": "Claude auto-approves applications whose documents clearly meet every criterion and routes the remainder to caseworkers, clearing the easy cases first to shrink the backlog fast"
       },
       "answer": [
         "C"
       ],
       "explanation": "When decisions have legal effect and must be explainable, the deterministic rule logic should stay in code where it can be tested and cited, and the model should do what it is good at: extracting facts from messy documents into a validated schema, flagging missing evidence and drafting explanations that cite the rule applied. Denials go to a caseworker. This both clears the backlog (extraction is the slow part) and preserves accountability. Letting the model apply statute directly makes each decision hard to explain and reproduce.",
       "why_incorrect": {
-        "A": "Model confidence scores are not a legal explanation, and letting the model apply statute directly makes decisions hard to reproduce and audit.",
-        "B": "Automatic denial with appeal as the only safeguard shifts the burden onto applicants and fails the explainability requirement.",
-        "D": "Batch processing addresses cost and throughput, not where decision authority and explainability should sit."
+        "A": "Batch processing addresses cost and throughput, not where decision authority sits; a model-written explanation is not the same as a deterministic, testable rule trace.",
+        "B": "A cited section is not a reproducible decision trace: the model is still applying statute itself, and sampling 10% leaves most denials without the explanation the agency must be able to give.",
+        "D": "The model still decides eligibility, so approvals cannot be reproduced or audited against the codified rules, and wrong approvals spend public funds; codified logic belongs in a rules engine."
       },
       "module": "13-enterprise-ai-architecture/02-architecture-patterns.md",
       "references": [
@@ -130,19 +130,19 @@
       "scenario": "Kestrel Payments is designing a merchant-onboarding assistant. Merchants upload business documents; Claude extracts fields; a risk analyst approves; the result is written to the onboarding system. Analysts frequently correct extracted fields.",
       "question": "Which design element best closes the feedback loop in this end-to-end architecture?",
       "options": {
-        "A": "Log only whether the analyst clicked approve, to keep storage costs low",
-        "B": "Ask Claude to output a self-assessed confidence per field and skip review above 0.9",
-        "C": "Retrain a custom model weekly on approved records",
-        "D": "Store each analyst correction alongside the original extraction and source reference, and feed these pairs into a regression evaluation set used before every prompt or model change"
+        "A": "Collect the approved records each week and use them to fine-tune a custom extraction model, so analyst corrections are gradually absorbed into the model over time",
+        "B": "Have Claude return a per-field confidence score, route low-confidence fields to the analyst for review, and track how often analysts change those fields",
+        "C": "Record approve and reject outcomes per application in the audit log, and review the monthly rejection rate to decide when the extraction prompt needs rework",
+        "D": "Store each analyst correction with the original extraction and source reference, and add these pairs to a regression eval set run before each prompt or model change"
       },
       "answer": [
         "D"
       ],
       "explanation": "An end-to-end design includes a feedback path, not just input, processing and output. Analyst corrections are labelled data: capturing the original extraction, the correction and the document reference lets the team grow a regression eval set, measure field-level accuracy over time and test prompt or model changes before release. Simply logging approvals, or asking the model to self-rate, does not tell you where it was wrong.",
       "why_incorrect": {
-        "A": "A binary approval signal loses which fields were wrong and why, so it cannot drive targeted improvement.",
-        "B": "Self-reported confidence is not a calibrated accuracy measure and removing review on that basis weakens a control without evidence.",
-        "C": "Claude models are not retrained by customers in this workflow; improvement comes from prompts, context, tooling and evaluation."
+        "A": "Approved records hold the corrected values but not the original mistakes, and weekly retraining is not how this Claude workflow improves; without a regression set, changes ship untested.",
+        "B": "Self-reported confidence is not calibrated accuracy; skipping review on high-confidence fields weakens a control without evidence, and tracking only reviewed fields hides errors elsewhere.",
+        "C": "An application-level approve or reject signal loses which fields were wrong and why, so it cannot drive targeted prompt fixes or show whether a change helped."
       },
       "module": "13-enterprise-ai-architecture/02-architecture-patterns.md",
       "references": [
@@ -160,20 +160,20 @@
       "question": "Which THREE controls belong in the end-to-end design? (Choose 3.)",
       "options": {
         "A": "Wrap the patient's text in clearly delimited tags in the prompt and instruct Claude to treat it as data, not instructions",
-        "B": "Use structured outputs for the triage record, then insert it with parameterised queries and HTML-encode fields before rendering in the dashboard",
-        "C": "Accept free-form JSON without a schema so the model can add fields it thinks are useful",
-        "D": "Route any record with red-flag symptom categories to an on-call clinician queue regardless of the model's suggested priority",
-        "E": "Skip output encoding because the content was generated by Claude rather than typed by a user"
+        "B": "Route any record with red-flag symptom categories to an on-call clinician queue regardless of the model's suggested priority",
+        "C": "Treat Claude's output as trusted server-generated content in the dashboard, since the pipeline alone writes to that table and patients cannot reach it",
+        "D": "Use structured outputs for the triage record, insert it with parameterised queries, and HTML-encode fields before the dashboard renders them",
+        "E": "Let the model return free-form JSON stored in a document database, so new clinical fields can be added without schema migrations or redeploys"
       },
       "answer": [
         "A",
         "B",
         "D"
       ],
-      "explanation": "Each boundary in an end-to-end pipeline needs its own control. On input, patient text is untrusted and may contain instructions, so it should be delimited as data. On output, a structured-output schema guarantees the record's shape, but downstream systems must still treat it as untrusted: insert with parameterised queries and encode before rendering in HTML. Clinically, urgent cases need a deterministic escalation path rather than relying on the model alone. Removing schema validation 'for flexibility' or trusting model output because it came from Claude both create injection and data-quality risk.",
+      "explanation": "Each boundary in an end-to-end pipeline needs its own control. On input, patient text is untrusted and may contain instructions, so it should be delimited as data. On output, a structured-output schema guarantees the record's shape, but downstream systems must still treat it as untrusted: insert with parameterised queries and encode before rendering in HTML. Clinically, urgent cases need a deterministic escalation path rather than relying on the model alone. Dropping schema validation for flexibility, or trusting model output because the pipeline produced it, both create injection and data-quality risk.",
       "why_incorrect": {
-        "C": "Unconstrained output breaks downstream parsing and lets unexpected fields reach the database and UI.",
-        "E": "Model output can carry attacker-controlled text from the input; OWASP treats it as untrusted (improper output handling)."
+        "C": "The record is derived from patient text, so it can carry attacker-controlled content; OWASP treats model output as untrusted (improper output handling), regardless of which service wrote it.",
+        "E": "Schema-free output breaks downstream parsing and lets unexpected or attacker-shaped fields reach the database and the staff UI; flexibility here removes a key control."
       },
       "module": "13-enterprise-ai-architecture/02-architecture-patterns.md",
       "references": [
@@ -190,19 +190,19 @@
       "scenario": "Woodgrove Bank's statement-analysis service sends long PDFs to Claude and parses the reply. In production, roughly 2% of responses fail to parse and the service writes partial data to the ledger reconciliation table.",
       "question": "What is the most robust fix to the processing stage?",
       "options": {
-        "A": "Check `stop_reason` before parsing, handle `max_tokens` and `refusal` explicitly, use structured outputs for the schema, and write nothing to the ledger unless validation passes",
-        "B": "Raise `max_tokens` to the model maximum so responses are never truncated",
-        "C": "Add a regex step that repairs malformed JSON before insertion",
-        "D": "Prefill the assistant turn with an opening brace to force JSON"
+        "A": "Check `stop_reason` before parsing, handle `max_tokens` and `refusal` explicitly, use structured outputs for the schema, and block ledger writes until validation passes",
+        "B": "Add a JSON-repair step that closes unbalanced brackets and drops incomplete records before insertion, logging each repair so the team can track the failure rate over time",
+        "C": "Prefill the assistant turn with an opening brace to anchor the JSON, and retry any response that fails to parse up to three times before writing to the ledger",
+        "D": "Raise `max_tokens` to the model maximum and switch to streaming so long statements are not cut off, then parse the final message as the service does today"
       },
       "answer": [
         "A"
       ],
       "explanation": "Robust pipelines check why a response ended before using it. A response that stopped with `max_tokens` is truncated; one that stopped with `refusal` has no usable content. The service should branch on `stop_reason`, use structured outputs so successful responses always match the schema, and never write partial results. Larger `max_tokens` alone reduces truncation but does not handle refusals or validation, and regex repair hides real failures.",
       "why_incorrect": {
-        "B": "This reduces one cause but ignores refusals and still writes unvalidated data; it also raises worst-case cost.",
-        "C": "Silently repairing output masks truncation and can insert fabricated or partial values into financial records.",
-        "D": "Assistant prefill is rejected by current models; structured outputs are the supported way to constrain format."
+        "B": "Repairing output hides why the response ended, and silently dropping records leaves the reconciliation table incomplete; the stop reason is never checked.",
+        "C": "Assistant-turn prefill is rejected with a 400 on current models, and blind retries without checking `stop_reason` repeat refusals and truncations; structured outputs are the supported way to constrain format.",
+        "D": "This reduces truncation but ignores refusals and still writes unvalidated data to the ledger; it also raises worst-case cost per request."
       },
       "module": "06-claude-api/02-messages-api.md",
       "references": [
@@ -220,21 +220,21 @@
       "scenario": "Bluefin Grocers wants Claude to generate product descriptions for 250,000 catalogue items overnight, and also to power a live shopper Q&A widget with a sub-two-second first-token target.",
       "question": "Which TWO architectural choices best fit these two workloads? (Choose 2.)",
       "options": {
-        "A": "Use the Batch API for the shopper widget too, to halve its cost",
-        "B": "Submit the catalogue generation through the Message Batches API and key results by custom ID",
-        "C": "Run the catalogue job synchronously with fast mode so it finishes sooner",
-        "D": "Serve the shopper widget with streaming from a fast model at low effort, keeping the system prompt stable so it caches",
-        "E": "Use the same synchronous model configuration for both so prompts can be shared"
+        "A": "Use one synchronous model configuration for both workloads, so prompts, caching and monitoring stay shared and simple",
+        "B": "Run the catalogue job synchronously with fast mode across parallel workers, so all 250,000 items finish well before the morning",
+        "C": "Route the shopper widget through the Batch API off-peak and cache common answers, so most shoppers get an instant, cheaper reply",
+        "D": "Serve the shopper widget with streaming from a fast model at low effort, with a stable system prompt so it caches",
+        "E": "Submit the catalogue generation through the Message Batches API and key each result by its custom ID"
       },
       "answer": [
-        "B",
-        "D"
+        "D",
+        "E"
       ],
       "explanation": "Different workloads in the same solution deserve different processing paths. The catalogue job is latency-insensitive and high volume, which is exactly what the Message Batches API is for: asynchronous processing at a discount. The live widget needs low time-to-first-token, so streaming responses from a fast, cheaper model at low effort is appropriate, with a stable cached prefix where possible. Running everything synchronously on one model, or batching the live path, ignores the different service levels.",
       "why_incorrect": {
-        "A": "Batch results are asynchronous and cannot meet an interactive latency target.",
-        "C": "Fast mode trades a price premium for speed; an overnight job has no latency need and should optimise for cost instead.",
-        "E": "Shared prompts do not require identical serving paths, and one configuration cannot satisfy both cost and latency goals well."
+        "A": "Sharing prompts does not require identical serving paths, and one configuration cannot meet both the overnight cost goal and the interactive latency goal well.",
+        "B": "Fast mode charges a premium for speed, and an overnight job has no latency need; the Batch API would do the same work at a discount.",
+        "C": "Batch results are asynchronous and can take hours, so any question not already cached misses the two-second target; the live path needs synchronous streaming."
       },
       "module": "15-production-operations/03-cost-optimisation.md",
       "references": [
@@ -251,19 +251,19 @@
       "scenario": "Lucerne Publishing translates manuscripts into four languages. Each translation must then pass a house style checklist, and failed sections are revised until they pass or three attempts are used.",
       "question": "Which pattern best describes the appropriate design?",
       "options": {
-        "A": "A single prompt that asks for all four translations and a self-check in one call",
-        "B": "An evaluator-optimizer workflow: generate a translation, evaluate it against the style checklist, feed failures back, and stop after passing or three attempts",
-        "C": "An autonomous agent with a translation tool that decides when the work is finished",
-        "D": "A router that sends each manuscript to the cheapest model that supports the language"
+        "A": "An evaluator-optimizer loop: generate a translation, check it against the style checklist, feed failures back, and stop on a pass or after three attempts",
+        "B": "A routing workflow that sends each language to the model with the best translation benchmark for it, followed by one human style review per manuscript",
+        "C": "A single call per manuscript that produces the four translations plus a self-review against the house checklist, retrying the whole call if any language fails",
+        "D": "An autonomous agent with translation and checklist tools that decides which sections to revise and when the manuscript is ready to publish"
       },
       "answer": [
-        "B"
+        "A"
       ],
       "explanation": "This is the evaluator-optimizer pattern: one step generates, another evaluates against explicit criteria, and the loop repeats with feedback until the criteria pass or a limit is hit. The criteria are clear and the iteration demonstrably improves output. The per-language step can additionally fan out in parallel, but the defining structure is the generate-evaluate loop with a bound. A fully autonomous agent adds unpredictability without benefit when the steps are known.",
       "why_incorrect": {
-        "A": "One call cannot iterate on specific failures, and mixing four languages in one output makes evaluation and retries coarse.",
-        "C": "The steps and stopping criteria are known in advance, so ceding control flow to the model adds cost and unpredictability.",
-        "D": "Routing addresses model selection, not the requirement to check and revise against a checklist."
+        "B": "Routing addresses model selection; a single human review at the end does not implement the check-and-revise loop with a bounded number of attempts.",
+        "C": "Self-review in the same call is not an independent evaluation, and retrying all four languages when one section fails makes revisions coarse and costly.",
+        "D": "The steps and stopping rule are known in advance, so ceding control flow to the model adds cost and unpredictability and drops the three-attempt bound."
       },
       "module": "10-agentic-ai/02-workflow-patterns.md",
       "references": [
@@ -280,21 +280,21 @@
       "scenario": "Trey Research's security team wants help investigating alerts. Some alerts need two lookups; others need open-ended exploration across logs, asset inventory and threat intelligence, with an unknown number of steps.",
       "question": "Which TWO statements reflect sound pattern selection? (Choose 2.)",
       "options": {
-        "A": "Use a deterministic workflow for alert types with a known, fixed lookup sequence",
-        "B": "Use an agent for every alert because agents are more accurate than workflows",
-        "C": "Start with a multi-agent system so each data source has a dedicated agent",
-        "D": "Use an agent loop with scoped, read-only investigation tools for open-ended alerts where the next step depends on what is found",
-        "E": "Avoid tools and paste all logs into the prompt so the model sees everything"
+        "A": "Start with a multi-agent design in which logs, asset inventory and threat intelligence each have a dedicated agent under a lead",
+        "B": "Use a deterministic workflow for alert types whose lookup sequence is known and fixed, such as the two-lookup alerts",
+        "C": "Pre-load the relevant log window, asset record and threat feed into the prompt for each alert, so the model sees full context without tool calls",
+        "D": "Use one agent for every alert type, so analysts get a consistent experience and the team maintains a single investigation design",
+        "E": "Use an agent loop with scoped, read-only investigation tools for open-ended alerts where the next step depends on what is found"
       },
       "answer": [
-        "A",
-        "D"
+        "B",
+        "E"
       ],
       "explanation": "Agentic patterns earn their cost when the path cannot be specified in advance and the model must decide which tool to call next based on what it finds, which is true for open-ended investigations. Simple, enumerable alert types are better served by a fixed workflow that is cheaper, faster and easier to test. Routing between the two keeps each path appropriate. Agents are not inherently more accurate, and multi-agent designs add coordination cost that needs a reason.",
       "why_incorrect": {
-        "B": "Agents are not inherently more accurate; they trade predictability and cost for flexibility, which simple alerts do not need.",
-        "C": "Multi-agent coordination adds tokens and failure modes; it should follow evidence that a single agent is insufficient.",
-        "E": "Dumping all logs wastes context and cost and does not scale; scoped retrieval tools are the better pattern."
+        "A": "Per-source agents add coordination tokens and failure modes before there is evidence that one agent with scoped tools is insufficient.",
+        "C": "For open-ended alerts you cannot know in advance which data is relevant, and pre-loading broad context wastes tokens; scoped retrieval tools let the model fetch what it finds it needs.",
+        "D": "A single design is simpler to maintain, but simple alerts then pay agent-level cost and unpredictability for a sequence that could be fixed and tested; agents are not inherently more accurate."
       },
       "module": "10-agentic-ai/01-workflows-vs-agents.md",
       "references": [
@@ -310,19 +310,19 @@
       "scenario": "Alpine Ski House wants a booking assistant that answers questions about lift passes using the current price list, checks availability via an internal API, and drafts a confirmation email. Each conversation is short.",
       "question": "Which description best fits the 'augmented LLM' building block the team should start from?",
       "options": {
-        "A": "A model fine-tuned on historic booking conversations so it no longer needs tools",
-        "B": "A three-agent hierarchy with a planner, a pricing agent and an email agent",
-        "C": "A single Claude call loop given retrieval over the price list and a well-documented availability tool, adding orchestration only if evaluation shows it is needed",
-        "D": "A prompt containing the full price history for every season so no retrieval is needed"
+        "A": "A planner agent that delegates to a pricing agent and an email agent, so each specialist keeps a small context and can be improved separately",
+        "B": "A single Claude call loop with retrieval over the current price list and a well-documented availability tool, adding orchestration if evaluation shows a need",
+        "C": "A long cached system prompt holding the full season price list and booking policies, with Claude directing customers to the booking website to check availability",
+        "D": "A model customised on historic booking conversations so it learns pricing patterns and tone, with application code calling the availability API afterwards"
       },
       "answer": [
-        "C"
+        "B"
       ],
       "explanation": "The augmented LLM is the basic building block for both workflows and agents: a model enhanced with retrieval, tools and (where needed) memory, with well-designed interfaces to each. Starting there, with a clear tool contract for availability and retrieval for prices, often covers short conversational tasks without additional orchestration. Fine-tuning, very large static prompts or multi-agent hierarchies are not what the term refers to.",
       "why_incorrect": {
-        "A": "Fine-tuning does not give access to live availability or current prices, which change.",
-        "B": "This adds coordination overhead for a short, simple conversation; start with the simplest building block.",
-        "D": "Large static context raises cost, risks stale data and does not solve the live availability check."
+        "A": "A three-agent hierarchy adds coordination overhead for short, simple conversations; start from the simplest building block and add structure only when evaluation demands it.",
+        "C": "Caching makes a static prompt cheap but it still goes stale when prices change, and it drops the live availability check the assistant is meant to perform.",
+        "D": "Prices change, so patterns learned from history go stale, and moving the availability check outside the model loop is not what the augmented LLM building block describes."
       },
       "module": "10-agentic-ai/01-workflows-vs-agents.md",
       "references": [
@@ -338,19 +338,19 @@
       "scenario": "Northwind Lending runs a document-intake workflow: classify the document type, then apply one of six type-specific extraction prompts. Today every document goes through a single long prompt that covers all six types and accuracy on rare types is poor.",
       "question": "Which change best applies an appropriate workflow pattern?",
       "options": {
-        "A": "Parallelise: send every document to all six extraction prompts and keep the most confident result",
-        "B": "An orchestrator-workers agent that decides dynamically how many extraction subtasks to spawn",
-        "C": "Keep the single prompt and add three examples for every document type",
+        "A": "Send each document to all six focused extraction prompts in parallel and keep the result whose schema validates with the fewest empty fields",
+        "B": "An orchestrator agent that reads each document and decides dynamically which extraction subtasks to spawn and how to merge their outputs",
+        "C": "Keep the single prompt but add two worked examples per document type and move the rare types' instructions nearer the top of the prompt",
         "D": "A routing workflow: a lightweight classification step chooses one of six focused extraction prompts, each with its own schema and tests"
       },
       "answer": [
         "D"
       ],
-      "explanation": "Routing classifies an input and directs it to a specialised follow-up, which lets each prompt stay focused and lets you choose a cheaper or faster model for the classification step. It typically improves accuracy on rare categories that get crowded out in a catch-all prompt. Parallelisation and orchestrator-workers solve different problems, and simply adding examples to the monolith makes it longer without separating concerns.",
+      "explanation": "Routing classifies an input and directs it to a specialised follow-up, which lets each prompt stay focused and lets you choose a cheaper or faster model for the classification step. It typically improves accuracy on rare categories that get crowded out in a catch-all prompt. Parallelisation and orchestrator-workers solve different problems, and adding examples to the monolith makes it longer without separating concerns.",
       "why_incorrect": {
-        "A": "Running six extractions per document multiplies cost, and model confidence is a weak selector.",
-        "B": "The subtasks are known and fixed; dynamic orchestration adds cost without benefit.",
-        "C": "Eighteen examples make the catch-all prompt longer and slower without isolating the type-specific logic."
+        "A": "Running six extractions per document multiplies cost, and 'fewest empty fields' is a weak selector that can favour the wrong schema.",
+        "B": "The subtasks are known and fixed (one type, one extraction), so dynamic orchestration adds cost and variability without benefit.",
+        "C": "Twelve examples and reordering make the catch-all prompt longer without isolating the type-specific logic or giving each type its own tests."
       },
       "module": "10-agentic-ai/02-workflow-patterns.md",
       "references": [
@@ -366,19 +366,19 @@
       "scenario": "Adatum Pharma wants a research assistant that answers broad questions such as 'summarise all published evidence on compound class X across five literature databases'. A single agent run fills its context with search results and misses sources.",
       "question": "Which orchestration strategy is the most appropriate?",
       "options": {
-        "A": "An orchestrator that plans the search, delegates each database or sub-question to a worker subagent with its own context, and synthesises their condensed findings",
-        "B": "A single agent with a larger context window and instructions to be more thorough",
-        "C": "A sequential chain of five agents, each passing its full transcript to the next",
-        "D": "Five independent agents with no coordinator, whose outputs are concatenated"
+        "A": "A sequential chain of five agents, one per database, each receiving the previous agent's full transcript so nothing found earlier is lost",
+        "B": "Five parallel agents, one per database, whose reports are concatenated into a single document for the requesting scientist",
+        "C": "A single agent on a 1M-token context window with compaction enabled and explicit instructions to search each of the five literature databases thoroughly in turn",
+        "D": "A lead agent that plans the search, delegates each database or sub-question to a subagent with its own context, and synthesises their condensed findings"
       },
       "answer": [
-        "A"
+        "D"
       ],
       "explanation": "Broad, parallelisable research is the case where an orchestrator-worker multi-agent design pays off: a lead agent plans and delegates scoped searches to subagents, each of which explores in its own context window and returns a condensed finding. This keeps the lead's context clean and increases coverage. The cost is higher token usage, which is justified for high-value breadth-first questions. Making one context bigger or chaining sequential agents does not address the context-isolation problem.",
       "why_incorrect": {
-        "B": "A bigger window delays the problem; the agent still accumulates raw results and loses focus.",
-        "C": "Passing full transcripts forward recreates the context-bloat problem and removes parallelism.",
-        "D": "Without a coordinator there is no plan, deduplication or synthesis, so overlap and gaps go unmanaged."
+        "A": "Passing full transcripts forward recreates the context-bloat problem and removes parallelism.",
+        "B": "Parallel agents help coverage, but without a coordinator there is no plan, deduplication or synthesis, so overlaps and gaps go unmanaged.",
+        "C": "A bigger window and compaction delay the problem: the agent still accumulates raw results sequentially, and compaction summarises away source detail the synthesis needs."
       },
       "module": "10-agentic-ai/04-multi-agent-architecture.md",
       "references": [
@@ -395,21 +395,21 @@
       "scenario": "Tailspin Insurance runs a lead agent that delegates claim sub-investigations to subagents. Reviews show subagents duplicate each other's work and sometimes investigate the wrong policy period.",
       "question": "Which TWO changes most directly address these failures? (Choose 2.)",
       "options": {
-        "A": "Increase effort to max on every subagent",
-        "B": "Make the lead agent's delegation messages explicit about objective, scope boundaries such as policy period, tools to use and output format",
-        "C": "Have the lead partition the investigation into non-overlapping tasks and record which subagent owns each",
-        "D": "Spawn twice as many subagents so coverage improves",
-        "E": "Give every subagent the full transcripts of all other subagents"
+        "A": "Spawn additional subagents per claim so overlapping coverage catches whatever one subagent misses or misreads",
+        "B": "Make each delegation message explicit about objective, scope boundaries such as policy period, tools to use and output format",
+        "C": "Raise effort to max on each subagent so it reasons more carefully about which policy period and evidence apply",
+        "D": "Give each subagent the transcripts of its sibling subagents so it can see what has already been investigated",
+        "E": "Have the lead partition the investigation into non-overlapping tasks and record which subagent owns each"
       },
       "answer": [
         "B",
-        "C"
+        "E"
       ],
-      "explanation": "Most multi-agent failures trace back to the delegation contract. Each subagent needs a precise task description: objective, scope boundaries (for example the policy period), which tools to use and the expected output format. The lead should also partition work explicitly so tasks do not overlap. Raising effort on subagents or adding more of them does not fix ambiguous instructions, and sharing every transcript defeats context isolation.",
+      "explanation": "Most multi-agent failures trace back to the delegation contract. Each subagent needs a precise task description: objective, scope boundaries (for example the policy period), which tools to use and the expected output format. The lead should also partition work explicitly so tasks do not overlap. Raising effort or adding subagents does not fix ambiguous instructions, and sharing sibling transcripts defeats context isolation.",
       "why_incorrect": {
-        "A": "Deeper reasoning on an ambiguous task still answers the wrong question and raises cost.",
-        "D": "More agents with the same vague instructions increase duplication and cost.",
-        "E": "Sharing every transcript floods each context and removes the isolation that makes subagents useful."
+        "A": "More subagents with the same vague instructions increase duplication and cost rather than reducing it.",
+        "C": "Deeper reasoning on an ambiguous brief still investigates the wrong period, and max effort raises cost across every subagent.",
+        "D": "Sibling transcripts flood each context and remove the isolation that makes subagents useful; partitioning work up front prevents overlap more cheaply."
       },
       "module": "10-agentic-ai/04-multi-agent-architecture.md",
       "references": [
@@ -425,19 +425,19 @@
       "scenario": "Relecloud's product team proposes splitting a customer-support assistant into seven specialised agents (billing, shipping, returns, and so on) coordinated by a router agent. Each conversation is typically three turns and touches one topic.",
       "question": "What is the strongest architectural objection?",
       "options": {
-        "A": "Claude models cannot pass messages between agents",
-        "B": "Short, single-topic conversations do not benefit from parallel exploration, so the extra coordination tokens and failure modes are not justified; a single agent or simple routing to focused prompts is likely sufficient",
-        "C": "Seven agents would exceed the API rate limit",
-        "D": "Specialised agents always produce lower quality than a generalist"
+        "A": "Three-turn, single-topic conversations gain nothing from parallel exploration, so the extra coordination tokens and failure modes are unjustified; one agent with routing likely suffices",
+        "B": "Seven agents per conversation would multiply request volume and risk hitting the organisation's rate limits during peak support hours",
+        "C": "Hand-offs between agents lose conversation context, so customers would have to repeat details whenever the router passes them to a different specialist agent",
+        "D": "Specialised agents fragment the brand voice, because each has its own system prompt that drifts from the shared tone guidelines over time"
       },
       "answer": [
-        "B"
+        "A"
       ],
-      "explanation": "Multi-agent systems multiply token usage and add coordination failure modes; they are justified when tasks are parallelisable, exceed one context, or need many tools that confuse a single agent. Short, single-topic conversations rarely meet that bar. A single agent with topic-specific instructions loaded on demand (for example through Skills or routing to a focused prompt) is cheaper and easier to evaluate. The objection is about fit, not about Claude's inability to coordinate.",
+      "explanation": "Multi-agent systems multiply token usage and add coordination failure modes; they are justified when tasks are parallelisable, exceed one context, or need many tools that confuse a single agent. Short, single-topic conversations rarely meet that bar. A single agent with topic-specific instructions loaded on demand (for example through Skills or routing to a focused prompt) is cheaper and easier to evaluate. Concerns about hand-offs, rate limits or tone are real but secondary: the objection is about fit.",
       "why_incorrect": {
-        "A": "Multi-agent orchestration is a supported pattern; the issue is cost and complexity for this workload.",
-        "C": "Rate limits are a capacity-planning concern, not the core architectural objection.",
-        "D": "Specialisation can help; the objection is that its overhead is not warranted here."
+        "B": "Typically only the router and one specialist run per conversation, and rate limits are a capacity-planning concern rather than an architectural objection.",
+        "C": "Context can be passed on hand-off, and with single-topic conversations hand-offs are rare; this is an implementation detail, not the core objection.",
+        "D": "Shared tone guidance can be included in every prompt; voice drift is manageable and does not address whether the multi-agent structure is warranted."
       },
       "module": "10-agentic-ai/04-multi-agent-architecture.md",
       "references": [
@@ -455,21 +455,21 @@
       "scenario": "Proseware is designing a multi-agent system in which a web-research subagent reads arbitrary public pages and a finance subagent can initiate vendor payments. Both report to an orchestrator.",
       "question": "Which TWO design decisions best contain the risk of indirect prompt injection spreading across agents? (Choose 2.)",
       "options": {
-        "A": "Add a sentence to every agent's system prompt telling it to ignore instructions found in web pages",
-        "B": "Give all agents a shared scratchpad so the orchestrator can see everything",
-        "C": "Restrict the research subagent to read-only tools and have it return structured findings rather than raw page content",
-        "D": "Gate payment initiation behind a deterministic policy check and human approval, regardless of what upstream agents request",
-        "E": "Use the most capable model for the finance agent so it can recognise malicious instructions"
+        "A": "Gate payment initiation behind a deterministic policy check and human approval, whatever upstream agents request",
+        "B": "Run the finance agent on the most capable model at high effort so it can recognise and refuse malicious payment requests",
+        "C": "Give all agents a shared scratchpad so the orchestrator can review every step and spot injected instructions before they spread",
+        "D": "Restrict the research subagent to read-only tools and have it return structured findings rather than raw page content",
+        "E": "Add a standing instruction to every agent's system prompt to ignore instructions found in retrieved content and report them to the orchestrator"
       },
       "answer": [
-        "C",
+        "A",
         "D"
       ],
       "explanation": "Content fetched from the web is untrusted and can carry instructions. In a multi-agent system the danger is that such content flows to an agent with consequential tools. Two controls address this: keep the research subagent's tools read-only and have it return structured, summarised findings rather than raw page text, and require that payment actions pass through a deterministic policy check plus human approval that cannot be triggered by text from another agent. Telling agents to 'ignore instructions' helps but is not a boundary, and a shared memory store increases the spread.",
       "why_incorrect": {
-        "A": "Prompt-level instructions reduce but do not reliably prevent injection; they are not an enforcement boundary.",
-        "B": "A shared store lets injected text reach the agent holding payment tools more easily.",
-        "E": "Model capability is not a security control; consequential actions still need enforced gates."
+        "B": "Model capability is not a security control; consequential actions still need gates the model cannot talk its way past.",
+        "C": "A shared store lets injected text reach the agent holding payment tools more easily, and orchestrator review is itself model judgement.",
+        "E": "Prompt-level instructions reduce but do not reliably prevent injection; they are not an enforcement boundary."
       },
       "module": "12-ai-security/05-tool-misuse-and-excessive-agency.md",
       "references": [
@@ -486,19 +486,19 @@
       "scenario": "Coho Winery's compliance team asks Claude to review distributor contracts: extract key clauses, compare them against a policy playbook, and write a risk memo. A single prompt doing all three produces memos that miss clauses on long contracts.",
       "question": "Which decomposition is most effective?",
       "options": {
-        "A": "Keep one call but add 'be thorough and do not miss any clauses' in capitals",
-        "B": "Split the contract into pages and ask for a separate memo per page",
-        "C": "Chain three calls: extract clauses into a structured list, compare the list against the playbook, then draft the memo from the comparison results",
-        "D": "Raise effort on the single call and hope the extra reasoning covers long contracts"
+        "A": "Keep one call but restructure the prompt into XML-tagged sections for clauses, playbook and memo, and ask Claude to list each clause before writing",
+        "B": "Split each contract into page-sized chunks, run the full three-part review per chunk, and append the resulting mini-memos into one document",
+        "C": "Keep the single call, raise effort to high and use a 1M-token context, so long contracts fit with room for deeper reasoning",
+        "D": "Chain three calls: extract clauses into a structured list, compare the list against the playbook, then draft the memo from the comparison results"
       },
       "answer": [
-        "C"
+        "D"
       ],
-      "explanation": "Prompt chaining splits a complex task into sequential subtasks so each call has one clear job and its output can be inspected. Extracting clauses into a structured list first, then comparing that list to the playbook, then drafting the memo from the comparison makes each stage testable and keeps the memo grounded in what was actually extracted. Adding urgency language or asking for more thinking in the same monolithic call does not create checkpoints.",
+      "explanation": "Prompt chaining splits a complex task into sequential subtasks so each call has one clear job and its output can be inspected. Extracting clauses into a structured list first, then comparing that list to the playbook, then drafting the memo from the comparison makes each stage testable and keeps the memo grounded in what was actually extracted. Restructuring or adding reasoning to the same monolithic call does not create checkpoints.",
       "why_incorrect": {
-        "A": "Emphatic wording does not change the task structure and can cause over-triggering on modern models.",
-        "B": "Per-page memos lose cross-clause context and still need a merge step that the design does not provide.",
-        "D": "More reasoning helps somewhat, but a single call still provides no inspectable intermediate output to verify coverage."
+        "A": "Better structure helps, but a single call still gives the application no intermediate output it can check for coverage before the memo is written.",
+        "B": "Per-page reviews lose clauses that span pages and cross-clause context, and appending mini-memos is not a synthesis step.",
+        "C": "More reasoning helps somewhat, but the contracts already fit; a single call still provides no inspectable checkpoint to verify clause coverage."
       },
       "module": "03-prompt-engineering/05-task-decomposition-and-chaining.md",
       "references": [
@@ -515,21 +515,21 @@
       "scenario": "Wingtip Toys wants Claude to migrate 900 legacy report definitions to a new BI format. Each definition is independent, but the target format has subtle rules learned during the first few conversions.",
       "question": "Which THREE decomposition decisions are sound? (Choose 3.)",
       "options": {
-        "A": "Load all 900 definitions into a single request so the model sees the full picture",
-        "B": "Convert a small pilot set first and capture the rules discovered into a shared conversion guide used by every later unit",
+        "A": "Let each conversion derive the format rules from the specification independently, so early mistakes do not propagate",
+        "B": "Process the definitions in one long-context session so later conversions can benefit from rules learned on earlier ones",
         "C": "Treat each report definition as an independent unit of work that can be processed in parallel or via batch",
-        "D": "Validate each converted definition with a deterministic schema or parser check before accepting it",
-        "E": "Let each conversion infer the target-format rules independently to avoid bias from earlier examples"
+        "D": "Convert a small pilot set first and record the rules discovered in a shared conversion guide used by every later unit",
+        "E": "Validate each converted definition with a deterministic schema or parser check before accepting it"
       },
       "answer": [
-        "B",
         "C",
-        "D"
+        "D",
+        "E"
       ],
       "explanation": "Large, homogeneous work decomposes well into independent units that can run in parallel or in batches. Before scaling out, a small pilot surfaces the tricky rules; capturing them in a shared conversion guide (or Skill) gives every unit the same learned context. A deterministic validator per unit makes success objective. Converting everything in one giant context or letting each unit invent its own rules undoes those benefits.",
       "why_incorrect": {
-        "A": "This risks exceeding useful context, makes failures all-or-nothing and gives no per-unit validation.",
-        "E": "Rediscovering rules per unit produces inconsistent output; shared, validated guidance is the point of the pilot."
+        "A": "Rediscovering rules per unit produces inconsistent output and repeats the subtle mistakes the pilot is meant to catch; shared, validated guidance is the point.",
+        "B": "Carrying learning in one growing session crowds the context, makes failures hard to isolate and gives no per-unit validation; a written guide carries the rules more reliably."
       },
       "module": "10-agentic-ai/02-workflow-patterns.md",
       "references": [
@@ -546,19 +546,19 @@
       "scenario": "Margie's Travel built a three-step chain (extract itinerary, check visa rules, draft advice). Customers report wrong visa advice. Logs show the extraction step sometimes outputs the departure country in the 'destination' field.",
       "question": "What is the best next step?",
       "options": {
-        "A": "Rewrite the advice-drafting prompt to double-check destinations",
-        "B": "Merge the three steps into one prompt so errors cannot propagate",
-        "C": "Switch the entire chain to a larger model",
-        "D": "Constrain the extraction output with a schema, add a validation check between steps, and add regression cases for the field mix-up"
+        "A": "Add a step to the advice-drafting prompt that re-reads the original itinerary and corrects the destination before giving visa advice",
+        "B": "Constrain the extraction output with a schema, add a validation check between steps, and add regression cases for the field mix-up",
+        "C": "Move the extraction step to a more capable model at higher effort, since field confusion suggests the current one is struggling",
+        "D": "Merge extraction and visa checking into one prompt so the model sees the full itinerary while reasoning about visa rules"
       },
       "answer": [
-        "D"
+        "B"
       ],
       "explanation": "One advantage of decomposition is that intermediate outputs can be inspected and validated. Here the fault originates in step one and propagates. Adding schema constraints and a validation check (for example, destination must differ from origin and match a country list) at the step boundary, plus targeted test cases, fixes the root cause. Changing the final step or the model treats the symptom.",
       "why_incorrect": {
-        "A": "The final step receives the wrong field; it has no reliable way to detect the upstream error.",
-        "B": "Merging removes the inspection point that revealed the bug and makes the failure harder to locate.",
-        "C": "The defect is a field-mapping error with a clear root cause; a model change is unjustified without evaluation evidence."
+        "A": "This patches the symptom in the last step; the visa-rule step still receives the wrong field, and there are no tests to stop the mix-up returning.",
+        "C": "The defect is a field-mapping error with a clear root cause; a model change is unjustified without evaluation evidence and adds cost.",
+        "D": "Merging removes the inspection point that revealed the bug and makes the failure harder to locate and test."
       },
       "module": "14-evaluation-and-testing/06-diagnosing-failures.md",
       "references": [
@@ -575,19 +575,19 @@
       "scenario": "An architect at Fourth Coffee is deciding whether to decompose a quarterly market-analysis report into subtasks handled by separate calls or to give one agent the whole job.",
       "question": "Which TWO factors argue most strongly for decomposition? (Choose 2.)",
       "options": {
-        "A": "Each section requires large, distinct source material that would crowd a single context",
-        "B": "Intermediate results, such as market-size estimates, must be checked or reused by other teams",
-        "C": "The team wants to demonstrate that several different models can be used",
-        "D": "The entire task fits easily in one prompt and the output is short"
+        "A": "The team wants to show leadership that several model tiers can work together, and a decomposed design makes that visible",
+        "B": "The whole task fits comfortably in one prompt, and splitting it would let sections be written in parallel to cut latency",
+        "C": "Each section needs large, distinct source material that would crowd out the others in a single context",
+        "D": "Intermediate results, such as market-size estimates, must be checked independently or reused by other teams"
       },
       "answer": [
-        "A",
-        "B"
+        "C",
+        "D"
       ],
-      "explanation": "Decomposition is worth its overhead when subtasks benefit from separate context (for example, each needs large source material that would crowd others out) and when intermediate results need independent verification or reuse. If the task is small enough to fit comfortably with clear instructions, decomposition adds latency and integration work. Wanting to use more models or to reduce prompt length per se are weak reasons.",
+      "explanation": "Decomposition is worth its overhead when subtasks benefit from separate context (for example, each needs large source material that would crowd others out) and when intermediate results need independent verification or reuse. If the task fits comfortably with clear instructions, decomposition adds latency and integration work for little gain, and wanting to showcase several models is not a design reason.",
       "why_incorrect": {
-        "C": "Using more models is not a business or quality reason to decompose.",
-        "D": "This argues against decomposition, which would add latency and integration overhead for no gain."
+        "A": "Showcasing models is not a quality or business reason to decompose; model mix should follow from the subtasks, not drive them.",
+        "B": "If the task fits comfortably, decomposition adds integration overhead, and a small latency gain on a quarterly report is not a strong reason."
       },
       "module": "03-prompt-engineering/05-task-decomposition-and-chaining.md",
       "references": [
@@ -604,19 +604,19 @@
       "scenario": "Woodgrove Bank's contact centre wants Claude to draft after-call summaries. Agents currently spend six minutes per call on notes. The sponsor wants a business case.",
       "question": "Which metric set best demonstrates business value for this efficiency use case?",
       "options": {
-        "A": "Minutes of after-call work saved per call against the current baseline, the share of drafts accepted with minor edits, and fully loaded cost per summary",
-        "B": "Total tokens processed per month and average response latency",
-        "C": "Public benchmark scores of the model chosen",
-        "D": "A survey asking agents whether they like the tool"
+        "A": "After-call minutes saved per call against the six-minute baseline, the share of drafts accepted with minor edits, and fully loaded cost per summary",
+        "B": "Monthly token volume, p95 response latency and API cost per call, tracked on a dashboard against the budget approved for the pilot",
+        "C": "Agent satisfaction from a quarterly survey, weekly active users of the tool, and each agent's self-reported estimate of the minutes saved on a typical call",
+        "D": "Model accuracy on a public summarisation benchmark, plus an internal ROUGE score comparing drafts with agents' historic notes"
       },
       "answer": [
         "A"
       ],
-      "explanation": "Value for an efficiency use case should be measured as outcome per unit of cost, against a baseline: handling time saved, the proportion of drafts accepted with light edits (a quality proxy), and the fully loaded cost per summary including model tokens. Token counts or model benchmark scores alone do not connect to the business outcome, and user enthusiasm is useful but not sufficient.",
+      "explanation": "Value for an efficiency use case should be measured as outcome per unit of cost, against a baseline: handling time saved, the proportion of drafts accepted with light edits (a quality proxy), and the fully loaded cost per summary including model tokens. Token counts, benchmark scores or text-overlap metrics do not connect to the business outcome, and adoption and self-reported savings are useful but not sufficient.",
       "why_incorrect": {
-        "B": "These are operational metrics; they do not show whether agents save time or whether summaries are usable.",
-        "C": "Benchmarks describe general capability, not value in this workflow.",
-        "D": "Satisfaction is a useful signal but does not quantify the efficiency gain or quality."
+        "B": "These are operational and cost metrics; they do not show whether agents save time or whether the summaries are usable.",
+        "C": "Adoption and satisfaction are useful signals, but self-reported time savings are not measured against a baseline and the set omits quality and cost.",
+        "D": "Benchmarks describe general capability, and overlap with historic notes rewards copying old habits rather than measuring value in this workflow."
       },
       "module": "13-enterprise-ai-architecture/08-business-value-and-roi.md",
       "references": [
@@ -633,21 +633,21 @@
       "scenario": "Kestrel Payments' fraud-operations VP asks for an availability SLA of 99.99% and a 1-second p95 latency for a Claude-assisted case summariser that analysts open several times an hour.",
       "question": "Which TWO responses reflect sound alignment of the solution to its SLA? (Choose 2.)",
       "options": {
-        "A": "Propose graceful degradation so analysts still see raw case data when the model is unavailable, and set the AI component's availability target based on business impact",
-        "B": "Agree to 99.99% because the vendor's API is highly available",
-        "C": "Pre-compute summaries when cases are created and stream on-demand ones, then measure latency per stage against the target",
-        "D": "Meet latency by always using the largest model at max effort and adding retries",
-        "E": "Reject any SLA for AI features because LLM output is non-deterministic"
+        "A": "Decline a numeric SLA for the AI feature and publish best-effort targets instead, since model output varies from run to run",
+        "B": "Accept 99.99% by deploying across two cloud providers' Claude endpoints with automatic failover, since redundancy compounds availability",
+        "C": "Pre-compute summaries when cases are created, stream on-demand ones, and measure latency per stage against the target",
+        "D": "Design graceful degradation so analysts still see raw case data if the model is unavailable, and set the AI component's availability target by business impact",
+        "E": "Meet the 1-second p95 for full summaries by moving to the fastest model at low effort and capping output at 150 tokens"
       },
       "answer": [
-        "A",
-        "C"
+        "C",
+        "D"
       ],
-      "explanation": "SLAs should reflect business impact and be engineered across the whole system, not promised for a single dependency. A summariser that supports analysts can degrade gracefully (show raw case data if the model is unavailable), which makes a very high availability target for the AI component unnecessary. Latency targets should be measured per stage, with streaming and pre-computation (generating summaries when cases are created) used to meet perceived latency. Committing to a figure without design, or relying on retries alone, is unsound.",
+      "explanation": "SLAs should reflect business impact and be engineered across the whole system, not promised for a single dependency. A summariser that supports analysts can degrade gracefully (show raw case data if the model is unavailable), which makes a very high availability target for the AI component unnecessary. Latency targets should be measured per stage, with streaming and pre-computation (generating summaries when cases are created) used to meet perceived latency. Buying redundancy to hit a figure the business does not need, or truncating output to meet a latency number, both optimise the wrong thing.",
       "why_incorrect": {
-        "B": "System availability depends on every component and on rate limits; promising a single-dependency figure is not an engineered SLA.",
-        "D": "Higher effort and retries usually increase latency rather than reduce it.",
-        "E": "Non-determinism affects output content, not whether availability and latency can be targeted and measured."
+        "A": "Non-determinism affects output content, not whether availability and latency can be targeted and measured.",
+        "B": "Multi-provider failover is costly and still leaves system availability bounded by every other component; an assistive feature that can degrade gracefully does not need four nines.",
+        "E": "Squeezing generation into one second by truncating output trades away quality, when pre-computing summaries meets perceived latency without that sacrifice."
       },
       "module": "13-enterprise-ai-architecture/08-business-value-and-roi.md",
       "references": [
@@ -663,19 +663,19 @@
       "scenario": "Lucerne Publishing's executive team asks whether a proposed Claude rollout is an 'efficiency' or a 'transformation' initiative. The proposal lets editors commission first-draft translations into twelve new languages, opening markets the company never served.",
       "question": "How should the architect characterise the value, and why does it matter?",
       "options": {
-        "A": "Primarily efficiency, because translation is faster with AI; success is cost per translated word",
-        "B": "Primarily transformation, because it enables a capability the business did not have; success should be measured by new-market outcomes alongside quality gates, not only cost savings",
-        "C": "Neither; translation is a commodity task with no strategic value",
-        "D": "The distinction does not matter as long as the model is accurate"
+        "A": "Primarily transformation: it creates a capability the business lacked, so judge success on new-market outcomes with quality gates, not cost savings alone",
+        "B": "A mix of both, so the team should weight cost savings and new-market revenue equally in its reporting and let the steering committee decide which matters more",
+        "C": "Primarily efficiency: AI drafts are far cheaper than agency rates, so the business case should rest on cost per translated word against agency quotes",
+        "D": "Primarily risk: entering twelve markets with machine-drafted text exposes the brand, so the initiative should be framed as a controlled experiment"
       },
       "answer": [
-        "B"
+        "A"
       ],
       "explanation": "Efficiency initiatives do existing work faster or cheaper and are measured against a baseline cost. Transformation initiatives enable work or business models that were not previously viable and are measured by new outcomes such as revenue or market reach. This proposal opens new markets, so the business case, success metrics and risk appetite should reflect transformation: pilot revenue, time-to-market and quality gates per language, not only cost per word.",
       "why_incorrect": {
-        "A": "Cost per word matters, but there is no existing baseline for these twelve languages, so pure efficiency framing misses the value.",
-        "C": "Opening new markets is a strategic outcome, so this dismisses the core of the proposal.",
-        "D": "The framing determines metrics, investment horizon and risk appetite, so it does matter."
+        "B": "Deferring the call leaves metrics, investment horizon and risk appetite undefined, which is exactly what the framing is meant to settle.",
+        "C": "Cost per word matters, but there is no existing baseline for these twelve languages, so pure efficiency framing misses where the value comes from.",
+        "D": "Brand risk is a dimension to manage with quality gates, not the type of value the initiative creates; this framing undersells the opportunity."
       },
       "module": "13-enterprise-ai-architecture/08-business-value-and-roi.md",
       "references": [
