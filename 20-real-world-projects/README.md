@@ -80,6 +80,10 @@ cd 20-real-world-projects/04-devsecops-code-review-assistant
 CLAUDE_LAB_MODE=mock ../../.venv/bin/python -m pytest tests -q
 ```
 
+> **Why some code repeats across projects.** Each project is self-contained so you can copy one folder into your own
+> repository and run it. Small helpers (the model-call wrapper, schema validation, the audit log) are therefore
+> repeated rather than shared. In your own codebase, move them into one shared package.
+
 ## How to use the projects
 
 - **Read the README before the code.** The requirements and threat model explain why the code is shaped

@@ -5,7 +5,23 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed (full repository review, 2026-10-24)
+
+- Practice questions no longer reward test-taking tricks: CCAR-P distractors rewritten (longest-option key rate 96% to
+  14%), answer positions balanced, and the validator now fails banks with these cues
+- Security examples hardened: diff smuggling (project 04), case-insensitive asset checks (project 03), exact IP and
+  cited-evidence matching (project 05), look-alike domains and mixed recipients (lab 14), bare links (project 02)
+- Facts corrected: forced `tool_choice` and sampling-parameter scope, API version `2026-10-21`, model lifecycle
+  example, data-processor split, BAA and Console, `claude mcp add` commands, MCP deprecations, hook matchers
+- GitHub Actions pinned to commit SHAs with least-privilege permissions
+- Licence split into `LICENSE` (MIT) and `LICENSE-CONTENT.md` (CC BY 4.0)
+- Consistent page navigation on all module pages; clearer eligibility, study-plan and starting-point guidance
+- Mock-exam CLI rejects answers given after time runs out and invalid options; secret scanner judges the matched value
+
 ### Added
+
+- Five practice questions on gaps (Managed Agents, platform availability, A/B test power, Microsoft 365 connector)
+- CCAR-F stop-gap study map; `tools/build_page_nav.py`; `tools/shuffle_options.py`
 
 - "About the maintainer" section in the README, with Credly verification links for the maintainer's CCAO-F, CCAR-F
   and CCAR-P certifications

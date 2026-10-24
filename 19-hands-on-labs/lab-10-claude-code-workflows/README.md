@@ -53,11 +53,12 @@ flowchart TB
       SRC[src/ and tests/]
     end
     subgraph session[Claude Code session]
-      TC[Claude proposes a Bash call] --> PR{deny, then ask, then allow rules}
-      PR -->|deny| BL[blocked]
-      PR -->|otherwise| HKR[PreToolUse hook]
-      HKR -->|exit 2| BL
-      HKR -->|exit 0| NP[normal permission flow: allow or prompt]
+      TC[Claude proposes a Bash call] --> HKR[PreToolUse hook]
+      HKR -->|exit 2| BL[blocked]
+      HKR -->|exit 0| PR{deny, then ask, then allow rules}
+      PR -->|deny| BL
+      PR -->|ask or no match| NP[prompt the user]
+      PR -->|allow| RUN[run the command]
     end
     ST -.-> PR
     HK -.-> HKR
@@ -173,7 +174,7 @@ whenever a path placeholder is used.
 
 | Field | Value | Why |
 |---|---|---|
-| `name` | `release-notes` | The `/release-notes` command; must match the folder |
+| `name` | `release-notes` | The `/release-notes` command. Optional: it defaults to the folder name, and if set it becomes the command name |
 | `description` | what it does + "Use when ..." | Claude uses this to decide relevance |
 | `argument-hint` | `"[since-tag]"` | Shown in autocomplete. Quoted, because unquoted `[...]` is a YAML list |
 | `disable-model-invocation` | `true` | Only a person can start it; Claude will not run it on its own |
@@ -229,7 +230,7 @@ echo '{"tool_name":"Bash","tool_input":{"command":"git push --force origin main"
 - Run `/status` and check that the project settings file is listed under setting sources; run `/context`
   and check that `CLAUDE.md` is listed under memory files.
 - Ask "run the tests". It should run without a prompt (allow rule).
-- Ask "show me what's in .env". It should be refused (deny rule) even before the hook runs.
+- Ask "show me what's in .env". It should be refused by the deny rule. The hook runs first, but deny rules apply whatever the hook returns.
 - Ask "commit this change". You should be prompted (ask rule).
 - Run `/release-notes v0.1.0` after tagging a commit.
 

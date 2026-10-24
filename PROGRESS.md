@@ -14,7 +14,7 @@ placeholders. It does not mean every sentence has had expert human review; see [
 | AI security track (module 12) | Complete | 16 pages, OWASP LLM Top 10 2025 and agentic mapping | Sources checked 2026-10-24 |
 | CCAO-F track | Complete | Overview, 7 domain guides, exercises, scenarios, revision, readiness | Coverage matrix: 30/30 objectives |
 | CCAR-P track | Complete | Overview, 7 domain guides, exercises, scenarios, revision, readiness | Coverage matrix: 38/38 objectives |
-| Practice questions | Complete | 131 CCAO-F + 137 CCAR-P = **268** | Schema, keys, distractors, near-duplicate check |
+| Practice questions | Complete | 132 CCAO-F + 141 CCAR-P = **273** | Schema, keys, distractors, near-duplicates, answer-cueing limits |
 | Mock exams | Complete | Terminal + browser engines, 6 fixed forms | Unit tests, scripted CLI run, in-browser test |
 | Hands-on labs | Complete | **20** labs | All 20 pass in mock mode (`tools/run_lab_smoke.py`) |
 | Real-world projects | Complete | **5** projects | 173 offline tests passing |
@@ -37,6 +37,13 @@ placeholders. It does not mean every sentence has had expert human review; see [
 | Bandit SAST (Python) | No medium/high issues after review; low-severity findings are lab `assert` self-checks, non-crypto `random`, and fixed-argument `subprocess` |
 | Originality scan (2026-10-24) | Compared every 10-word sequence against 256 cited sources (250 web pages, the 4 official exam guides, the exam policy and NIST AI 600-1). 18 passages that echoed source wording were rewritten, along with one workflow adapted from the docs. The remaining matches are citations, required code/API syntax, official names and figures, and the official exam blueprint tables. |
 | Snyk Code scan | **Not run:** the Snyk MCP needs the maintainer to authenticate (`snyk_auth`) |
+
+## Independent review (2026-10-24)
+
+Five independent reviews (API accuracy, product facts, question quality, learner experience, code and security) were
+run on the whole repository. Every critical, high, medium and low finding was fixed or explicitly decided, in four
+verified commits. Decided, not changed: code repeated across the five projects stays, so each project can be copied out
+and run on its own.
 
 ## Known gaps
 

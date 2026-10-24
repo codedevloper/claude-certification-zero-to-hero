@@ -219,7 +219,8 @@ function feedbackContent(q, ok) {
   Object.entries(q.why_incorrect).sort().forEach(([l, why]) => list.append(el("li", { text: `${l}: ${why}` })));
   frag.append(list);
   if (q.module) frag.append(el("p", { class: "muted" }, "Study: ", el("a", { href: studyHref(q.module), text: q.module })));
-  if (q.references && q.references[0]) {
+  // Only ever link to https:// references, even though the bank is validated: defence in depth.
+  if (q.references && /^https:\/\/[^\s]+$/.test(q.references[0])) {
     frag.append(el("p", { class: "muted" }, "Docs: ", el("a", { href: q.references[0], rel: "noopener noreferrer", target: "_blank", text: q.references[0] })));
   }
   return frag;

@@ -33,9 +33,12 @@ def scan() -> Report:
         rel = path.relative_to(ROOT)
         for lineno, line in enumerate(path.read_text(encoding="utf-8", errors="ignore").splitlines(), 1):
             for label, pat in PATTERNS.items():
-                m = pat.search(line)
-                if m and not ALLOW.search(line):
-                    report.error(f"{rel}:{lineno}: possible {label}")
+                for m in pat.finditer(line):
+                    # Judge the matched value itself: a real key must not slip through just because
+                    # the same line also contains a word like "example".
+                    if not ALLOW.search(m.group(0)):
+                        report.error(f"{rel}:{lineno}: possible {label}")
+                        break
         if path.name == ".env":
             report.error(f"{rel}: real .env file must not be committed (use .env.example)")
     return report

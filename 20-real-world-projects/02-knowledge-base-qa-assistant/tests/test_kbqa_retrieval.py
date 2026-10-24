@@ -79,3 +79,11 @@ def test_top_hit_comes_from_expected_document(kb, question, expected_doc):
 def test_empty_directory_is_an_error(tmp_path):
     with pytest.raises(ValueError):
         load_kb(tmp_path)
+
+
+def test_bare_and_protocol_relative_links_are_blocked():
+    from kbqa.policy import output_violations
+    assert output_violations("Reset it at evil.example/reset today.")
+    assert output_violations("See //evil.example/x for details.")
+    assert not output_violations("Read the policy at intranet.acme.example/hr/leave.")
+    assert not output_violations("The file is named leave-policy.md and version 2.1 applies.")

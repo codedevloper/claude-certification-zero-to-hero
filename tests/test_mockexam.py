@@ -122,3 +122,21 @@ def test_forms_reference_existing_questions():
         ids = set(t.by_id())
         for form in load_forms(t.slug).values():
             assert set(form["question_ids"]) <= ids, form["id"]
+
+
+def test_answer_after_deadline_is_not_counted(track):
+    qs = track.questions[:2]
+    # start=0, check=0, remaining=0, then the answer arrives at t=999 (after a 1-minute limit)
+    clock = iter([0, 0, 0, 999, 999, 999])
+    result = run_session(track, qs, "timed", 1, prompt_in=lambda _: "A", out=lambda _: None, clock=lambda: next(clock))
+    assert result.timed_out
+    assert result.correct == 0
+
+
+@pytest.mark.parametrize("argv", [["--track", "CCAO-F", "--count", "0"], ["--track", "CCAO-F", "--domain", "99"],
+                                  ["--track", "CCAO-F", "--minutes", "0"]])
+def test_invalid_options_are_rejected(argv, tmp_path, monkeypatch):
+    monkeypatch.setenv("MOCKEXAM_PROGRESS", str(tmp_path / "p.json"))
+    if not load_tracks()["CCAO-F"].questions:
+        pytest.skip("question banks not present")
+    assert main(argv + ["--mode", "learn"], prompt_in=lambda _: "A", out=lambda _: None) == 2

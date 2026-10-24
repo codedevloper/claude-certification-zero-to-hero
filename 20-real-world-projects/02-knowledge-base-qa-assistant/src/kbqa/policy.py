@@ -15,6 +15,8 @@ ALLOWED_DOMAINS = frozenset({"acme.example", "intranet.acme.example"})
 _CONTROL = re.compile(r"[\x00-\x08\x0b-\x1f\x7f]")
 _EMAIL = re.compile(r"[\w.+-]+@([\w-]+(?:\.[\w-]+)+)")
 _URL = re.compile(r"https?://([^/\s:]+)", re.I)
+# Bare or protocol-relative links: "evil.example/reset", "//evil.example/x", "www.evil.example".
+_BARE_PATH = re.compile(r"(?:(?<=[\s(<\"'])|^)(?://)?((?:[a-z0-9-]+\.)+[a-z]{2,24})/", re.I)
 _CREDENTIAL_REQUEST = re.compile(
     r"\b(send|email|share|provide|give|tell)\b[^.]{0,60}\b(password|passcode|mfa code|one-time code|credentials?)\b",
     re.I,
@@ -37,7 +39,7 @@ def clean_question(question: str) -> str:
 
 def output_violations(answer: str) -> list[str]:
     problems = []
-    for domain in _EMAIL.findall(answer) + _URL.findall(answer):
+    for domain in set(_EMAIL.findall(answer) + _URL.findall(answer) + _BARE_PATH.findall(answer)):
         if domain.lower() not in ALLOWED_DOMAINS:
             problems.append(f"mentions external domain '{domain}'")
     for match in _CREDENTIAL_REQUEST.finditer(answer):

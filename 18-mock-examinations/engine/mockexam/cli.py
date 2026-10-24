@@ -110,6 +110,11 @@ def run_session(
             out(f"\n[time remaining {remaining // 60:02d}:{remaining % 60:02d}]")
         show_question(q, n, len(questions), out)
         action, given = ask(q, prompt_in, out, allow_skip=(mode == "timed"))
+        if deadline and clock() > deadline:
+            # The answer arrived after time ran out: like the real exam, it does not count.
+            timed_out = True
+            out("\nTime is up. That answer was not recorded; unanswered questions are scored as incorrect.")
+            break
         if action == "quit":
             out("\nEnding the session early; unanswered questions count as incorrect.")
             break
@@ -204,6 +209,13 @@ def main(argv: list[str] | None = None, prompt_in: InputFn = input, out: Callabl
         print_history(out)
         return 0
 
+    if args.count is not None and args.count < 1:
+        out("--count must be at least 1.")
+        return 2
+    if args.minutes is not None and args.minutes < 1:
+        out("--minutes must be at least 1.")
+        return 2
+
     tracks = load_tracks()
     out(wrap(DISCLAIMER) + "\n")
     code = (args.track or "").upper() or choose("Select a certification: ", sorted(tracks), prompt_in, out)
@@ -230,6 +242,9 @@ def main(argv: list[str] | None = None, prompt_in: InputFn = input, out: Callabl
     else:
         default = track.items if mode == "timed" else 20
         count = args.count or default
+        if args.domain is not None and args.domain not in track.domains:
+            out(f"Unknown domain {args.domain} for {code}. Valid domains: {', '.join(map(str, sorted(track.domains)))}")
+            return 2
         weak = progress.weak_question_ids(data) if args.weak else None
         questions = select_questions(track, count, rng, args.domain, weak)
         # Keep the official pace (minutes per item) when the session is shorter.
@@ -241,7 +256,7 @@ def main(argv: list[str] | None = None, prompt_in: InputFn = input, out: Callabl
         + (f"{minutes} minutes" if minutes else "untimed learning mode") + ".")
     result = run_session(track, questions, mode, minutes, prompt_in, out)
     print_report(result, mode, out)
-    if not args.no_save:
+    if not args.no_save and result.total:
         answered = {q.id: is_correct(q, result.responses.get(q.id)) for q in questions
                     if result.responses.get(q.id) is not None or mode == "timed"}
         progress.save(progress.record(data, result.to_record(mode), answered))
