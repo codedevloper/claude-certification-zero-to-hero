@@ -293,7 +293,7 @@ Eight of the 16 requests never reached the model (the `up` column shows `no`). I
 - **Refusals and fallbacks.** Current models can return `stop_reason: "refusal"`. The gateway surfaces it as `REFUSED_UPSTREAM` instead of passing on empty content. The Claude API also offers a server-side `fallbacks` option (beta) that retries a declined request on another model. If you enable it, record which model actually served the request in the audit log.
 - **Keep the gateway current.** Model IDs, parameters and pricing change. Keep allowed model lists and prices in configuration, not code, and review them on a schedule.
 
-> **Unverified:** the server-side refusal fallback feature and its beta header names come from the `claude-api` skill as of 2026-10-24. Check the Claude API documentation for current availability on your platform before relying on it.
+As of 2026-10-24, server-side fallback uses the `server-side-fallback-2026-07-01` beta header and is in beta on the Claude API and on Claude Models on Google Cloud (Anthropic managed). Other platforms need client-side fallback, and Claude Haiku 5.5 has no server-side fallback. See [Refusals and fallback](https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback#server-side-fallback).
 
 ## Cleanup
 

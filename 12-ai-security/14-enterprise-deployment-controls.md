@@ -65,7 +65,7 @@ articles for configuration details and plan requirements.
 | Rate limits | RPM, input and output tokens per minute per model class; readable via the Rate Limits API |
 | Admin API | Manage members, invites, workspaces, API keys, service accounts and federation rules programmatically with an admin credential |
 | Workload identity federation | Exchange your platform's identity token for short-lived credentials instead of long-lived API keys |
-| Inference geography | The `inference_geo` request parameter (supported on Opus 4.6 / Sonnet 4.6 and later) controls where inference runs; `usage.inference_geo` reports it |
+| Inference geography | The `inference_geo` request parameter (supported on Opus 4.6 / Sonnet 4.6 and later) controls where inference runs, with `"us"` or `"global"` as the only values as of 2026-10-24; `usage.inference_geo` reports it. For other regions, use a cloud platform's regional endpoint |
 | Usage and cost reporting | Usage and Cost Admin API; Console usage export by key and model |
 | OpenTelemetry | SDK and API tracing (beta) to your backend, metadata-only by default |
 

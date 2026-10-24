@@ -45,7 +45,7 @@ SEED = 19
 # Haiku 5.5 prices apply to prompts of 100K tokens or fewer; above that it is $0.50 / $2.50.
 PRICING = {
     "claude-opus-5-5": {"input": 4.00, "output": 20.00, "cache_read": 0.20},
-    "claude-sonnet-5-5": {"input": 2.00, "output": 10.00, "cache_read": 0.20},
+    "claude-sonnet-5-5": {"input": 2.00, "output": 10.00, "cache_read": 0.10},
     "claude-haiku-5-5": {"input": 0.10, "output": 0.50, "cache_read": 0.01},  # cache_read assumed 0.1x input
 }
 HAIKU_LONG_PROMPT = {"input": 0.50, "output": 2.50, "cache_read": 0.05}

@@ -456,14 +456,14 @@
       "question": "Which approach is most appropriate, as of 2026-10-24?",
       "options": {
         "A": "Store prompts and responses in EU databases with a short retention period, so members' data at rest stays inside the region",
-        "B": "Use provider residency controls, such as the `inference_geo` parameter or a suitable cloud-platform region, and keep the reported inference location as evidence",
+        "B": "Run inference through a cloud platform's regional endpoint or inference profile in the required geography, and keep that configuration as evidence",
         "C": "Pseudonymise member identifiers before each request so the data sent for inference no longer counts as personal data",
         "D": "Route every request through a self-hosted proxy in an EU region, and record in the data protection impact assessment that model traffic now originates inside the EU"
       },
       "answer": [
         "B"
       ],
-      "explanation": "Where a provider offers a supported control for inference geography, using it is simpler and auditable: the Claude API supports an `inference_geo` request parameter on recent models, and the response usage reports where inference ran, which provides evidence for compliance. Cloud-platform regional endpoints are another route. A home-grown proxy cannot change where the provider runs inference, and keeping stored data in the EU says nothing about where inference ran.",
+      "explanation": "Use the provider's own control for where inference runs rather than building around it. As of 2026-10-24 the Claude API's `inference_geo` parameter offers only `\"us\"` and `\"global\"`, so it cannot pin inference to the EU. Cloud platforms can: on Amazon Bedrock and Google-managed Claude models on Google Cloud, the endpoint or inference profile you call determines the inference region, and that deployment configuration is the audit evidence. A home-grown proxy cannot change where the provider runs inference, and keeping stored data in the EU says nothing about where inference ran.",
       "why_incorrect": {
         "A": "Data at rest in the EU is useful, but the requirement is about where inference runs, which this does not control.",
         "C": "Pseudonymised data is still personal data, and the residency requirement applies regardless.",

@@ -122,7 +122,7 @@ from collections import Counter
 from statistics import quantiles
 
 # Example prices per million tokens as of 2026-10-24 for claude-sonnet-5-5; check the pricing page before use.
-PRICES = {"claude-sonnet-5-5": {"input": 2.00, "output": 10.00, "cache_read": 0.20}}
+PRICES = {"claude-sonnet-5-5": {"input": 2.00, "output": 10.00, "cache_read": 0.10}}
 
 
 def per_class_prf(rows: list[dict]) -> dict:

@@ -85,14 +85,14 @@ Every Claude response carries a `usage` object. The four fields that matter for 
 |---|---|---|
 | `input_tokens` | Prompt tokens after the last cache breakpoint (or all of them if you do not cache) | Base input rate |
 | `cache_creation_input_tokens` | Prompt tokens written to the cache on this request | 1.25x input for the 5-minute TTL, 2x for the 1-hour TTL |
-| `cache_read_input_tokens` | Prompt tokens served from the cache | The model's cache-read rate (0.20 USD per million tokens on Opus 5.5 and Sonnet 5.5, as of 2026-10-24) |
+| `cache_read_input_tokens` | Prompt tokens served from the cache | The model's cache-read rate (USD 0.20 per million tokens on Opus 5.5 and USD 0.10 on Sonnet 5.5, as of 2026-10-24) |
 | `output_tokens` | Everything the model generated, including thinking | Output rate |
 
 `cost_from_usage` reads those fields from either an SDK object or a plain dict, picks the right rates, applies the cache-write multiplier for the chosen TTL, and halves everything when `batch=True`. The Batches API discount applies to every token in the request, including cache reads and writes, so the discounts stack. The function returns the split as well as the total, because "where does the money go" is usually a more useful question than "how much".
 
 `rates_for` handles one wrinkle: in `data/pricing.json`, `claude-haiku-5-5` has a higher rate for prompts above 100,000 tokens. The lab counts input, cache writes and cache reads together when testing that threshold.
 
-> **Unverified:** whether the Haiku 5.5 long-prompt threshold counts cached tokens, and the Haiku 5.5 cache-read rate itself, are not stated in the source this lab used. The file assumes 0.1x the input rate and marks it with `cache_read_unverified`. Check the [pricing page](https://platform.claude.com/docs/en/about-claude/pricing) before relying on Haiku cache figures.
+As of 2026-10-24, the [pricing page](https://platform.claude.com/docs/en/about-claude/pricing#long-context-pricing) confirms both assumptions: the Haiku 5.5 threshold counts all input tokens, including cache reads and cache writes, and Haiku 5.5 cache reads cost 0.1x the input rate (USD 0.01 per million up to 100,000 tokens, USD 0.05 above).
 
 ### 2. The live demo (`run_demo`)
 
@@ -220,8 +220,8 @@ Part 2: monthly scenarios for the synthetic Northwind workload
   B + prompt caching                              3,527.23   -69.4%
   C + batch for non-urgent work                   7,897.50   -31.4%
   D caching + batch                               3,454.85   -70.0%
-  E D + keyword router (with escalations)           858.19   -92.5%
-  F D + perfect router (upper bound)                794.03   -93.1%
+  E D + keyword router (with escalations)           839.13   -92.7%
+  F D + perfect router (upper bound)                772.25   -93.3%
 
   router accuracy on 24 labelled prompts: 87.5%
     true simple   -> routed {'simple': 8, 'medium': 0, 'complex': 0}

@@ -77,7 +77,7 @@ The same account, chats and Projects follow you across all three.
 
 There are also education plans. See [claude.com/pricing](https://claude.com/pricing) for prices and the full comparison.
 
-> **Unverified:** the exact feature split per plan changes often, and some features are in beta or available to selected users only. Treat the table as orientation and confirm on the pricing page and in the Help Center.
+As of 2026-10-24, the plan comparison on [claude.com/pricing](https://claude.com/pricing) matches the table for Projects, research, Claude Code, Opus access, priority access, single sign-on, SCIM, audit logs, the compliance API, custom data retention and role-based access. That page lists Team for 2 to 150 seats and Enterprise with a 20-seat minimum. The split changes often, and some features are in beta or limited to selected users, so check the page before relying on a detail.
 
 ### App features
 

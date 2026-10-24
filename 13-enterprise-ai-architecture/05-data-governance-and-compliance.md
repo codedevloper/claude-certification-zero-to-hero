@@ -132,10 +132,16 @@ to federal and state agencies, running in a FedRAMP High authorised environment.
 early access at the same time, so confirm that each specific capability you plan to use is inside the authorised
 boundary before relying on it.
 
-> **Unverified:** The exact list of regions and data-residency commitments for each platform changes frequently and was not verified
-> here. Confirm with the platform documentation and your contract.
+As of 2026-10-24, the [data residency documentation](https://platform.claude.com/docs/en/manage-claude/data-residency) lists two
+settings for the Claude API: inference geo (`"global"` or `"us"`, per request or as a workspace default) and workspace geo (where data
+is stored at rest; `"us"` is the only value, and it cannot be changed after the workspace is created). On Amazon Bedrock and on
+Google-managed Claude models on Google Cloud, the endpoint or inference profile decides the inference region instead.
 
-**Data residency controls.** On the Claude API, the `inference_geo` request parameter lets you request where inference runs (supported on
+> **Unverified:** The region lists and residency commitments of the cloud platforms (Amazon Bedrock, Google Cloud, Microsoft Foundry)
+> were not checked here. Confirm them in each provider's own documentation and in your contract.
+
+**Data residency controls.** On the Claude API, the `inference_geo` request parameter chooses where inference runs, with only `"us"` (US-only) or `"global"` available as of
+2026-10-24, so it cannot pin inference to the EU (supported on
 recent models; the response's `usage.inference_geo` reports where it ran), as of 2026-10-24. Cloud platforms offer their own regional
 controls. Residency of inference is only one part: also check where your logs, indexes, embeddings and backups live.
 

@@ -52,9 +52,11 @@ The entry names below are as listed on the OWASP GenAI Security Project's announ
 | ASI09 | Human-Agent Trust Exploitation | Humans over-trust agents, or agents (or attackers via agents) exploit that trust | [Human oversight](13-human-oversight.md) | [Lab 13](../19-hands-on-labs/lab-13-human-in-the-loop/README.md) |
 | ASI10 | Rogue Agents | Agents that deviate from intended behaviour or operate outside authorised scope | [Tool misuse and excessive agency](05-tool-misuse-and-excessive-agency.md), [Logging and auditability](11-logging-and-auditability.md), [Enterprise deployment controls](14-enterprise-deployment-controls.md) | [Project 05](../20-real-world-projects/05-agentic-investigation-assistant/README.md) |
 
-> **Unverified:** The one-line summaries for ASI05 to ASI10 are our interpretation of the entry names. We confirmed
-> the IDs and names on the OWASP announcement but did not review the full downloadable document for each entry's
-> definition. Read the OWASP document before citing these summaries.
+The one-line summaries are our paraphrases. On 2026-10-24 we checked those for ASI05 to ASI10 against the Description
+section of each entry in the
+[OWASP Top 10 for Agentic Applications for 2026](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
+document, where the full ASI05 title is "Unexpected Code Execution (RCE)". Quote the OWASP text, not these summaries,
+in formal work.
 
 ## Cross-reference: STRIDE to OWASP
 

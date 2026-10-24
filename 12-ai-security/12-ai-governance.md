@@ -92,9 +92,10 @@ Key dates, per the implementation timeline maintained at
 | 2 December 2027 | High-risk obligations for Annex III systems (per the timeline) |
 | 2 August 2028 | High-risk obligations for Annex I systems (per the timeline) |
 
-> **Unverified:** The staggered high-risk dates above reflect amendments that the timeline site lists but that we
-> have not checked against the Official Journal text. Confirm the current dates on
-> [EUR-Lex](https://eur-lex.europa.eu/eli/reg/2024/1689/oj) before relying on them.
+> **Unverified:** the 2 December 2026, 2 December 2027 and 2 August 2028 dates come from an amending regulation (the
+> "Digital Omnibus on AI", reported as Regulation (EU) 2026/1744). We could not open its Official Journal text on
+> 2026-10-24 because EUR-Lex blocked automated access. Confirm the regulation number and dates in the consolidated
+> text of Regulation (EU) 2024/1689 on [EUR-Lex](https://eur-lex.europa.eu/eli/reg/2024/1689/oj) before relying on them.
 
 For most enterprises using Claude, the typical role is **deployer** (and sometimes provider of an AI system built on
 a GPAI model). Anthropic is the provider of the underlying GPAI model.

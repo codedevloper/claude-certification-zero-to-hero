@@ -42,7 +42,7 @@ class for each, so your application code changes very little.
 | Integration with Bedrock tooling (Bedrock guardrails, knowledge bases, existing Bedrock governance) | Claude in Amazon Bedrock |
 | Google Cloud identity, VPC controls and billing | Vertex AI |
 | Azure identity (Entra ID), Azure networking and Azure Marketplace billing | Microsoft Foundry |
-| Specific data-residency guarantees | Compare each platform's regional options; on the Claude API, the `inference_geo` parameter controls where inference runs |
+| Specific data-residency guarantees | Compare each platform's regional options; on the Claude API, `inference_geo` offers only US-only or global inference (as of 2026-10-24); for other regions, use a platform's regional endpoint or inference profile |
 
 ### Feature availability snapshot (as of 2026-10-24)
 

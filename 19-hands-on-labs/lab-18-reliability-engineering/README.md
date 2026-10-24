@@ -119,7 +119,7 @@ A response arriving is not the same as a job succeeding. `summarise` loops on th
 
 **Server-side fallback.** For `claude-opus-5-5`, the API can do the refusal fallback for you: call `client.beta.messages.create(...)` with `betas=["server-side-fallback-2026-07-01"]` and `fallbacks="default"`, and the API re-runs a refused request on a suitable model within the same call, routing by refusal category. The lab implements the fallback in application code because the offline mock client has no `beta` namespace, and because the application-level version makes the logic visible. In production, prefer the server-side parameter where it is available, and still check `stop_reason` on the final response, since the fallback model can refuse too.
 
-> **Unverified:** the server-side fallback details (beta header value, `"default"` form, model support) come from the claude-api skill as of 2026-10-24. Check the refusals documentation on platform.claude.com before relying on them.
+As of 2026-10-24, the [Refusals and fallback](https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback#server-side-fallback) page confirms these details: the beta header is `server-side-fallback-2026-07-01`, `fallbacks="default"` routes by refusal category (or you can name up to three fallback models), and the feature is in beta on the Claude API and on Claude Models on Google Cloud (Anthropic managed). It is not supported on the Message Batches API, and Claude Haiku 5.5 has no server-side fallback.
 
 ### 5. Idempotent side effects (`TicketService`, `create_ticket`)
 

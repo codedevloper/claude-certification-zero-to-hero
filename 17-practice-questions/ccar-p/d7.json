@@ -26,7 +26,7 @@
       "why_incorrect": {
         "B": "User settings have the lowest precedence and each engineer can edit them.",
         "C": "CLAUDE.md is guidance Claude reads, not an enforced permission rule.",
-        "D": "Project settings can be overridden by a developer's local settings, and a CI check on the repository does not control what runs on a laptop."
+        "D": "A checked-in project settings file only covers that repository, and developers can edit or remove it in their own working copy. Only managed settings are enforced centrally and cannot be changed by the developer."
       },
       "module": "09-claude-code/04-permissions-and-settings.md",
       "references": [
@@ -86,7 +86,7 @@
       "explanation": "Hooks run deterministic code at defined points in Claude Code's lifecycle. A `PreToolUse` hook can inspect each tool call before it executes and block it, and the same hook can emit a log event. Deployed through managed settings, it applies to every developer. Instructions in CLAUDE.md are advisory, prefix-based deny rules in project settings are easy to bypass, and a `PostToolUse` hook fires only after the command has run.",
       "why_incorrect": {
         "A": "CLAUDE.md is advisory, and a quarterly audit finds the write months after it happened.",
-        "B": "Bash permission patterns are fragile for constraining arguments such as host names buried in arbitrary commands; project settings can be overridden locally and nothing is logged centrally.",
+        "B": "Bash permission patterns are fragile for constraining arguments such as host names buried in arbitrary commands, and nothing records centrally what was blocked.",
         "D": "A `PostToolUse` hook runs after the command has executed, so it can alert but not block."
       },
       "module": "09-claude-code/06-hooks.md",
@@ -298,6 +298,92 @@
       "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
       "references": [
         "https://code.claude.com/docs/en/headless"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-011",
+      "objective": "CCAR-P-7.1",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Proseware Analytics wants every engineer who clones its data-platform repository to get the same internal ticketing MCP server in Claude Code, without running setup commands by hand. The server needs a per-user API token, and security forbids tokens in version control.",
+      "question": "Which configuration approach best meets both requirements?",
+      "options": {
+        "A": "Define the server at project scope in a checked-in `.mcp.json`, reading each engineer's token from an environment variable",
+        "B": "Commit the server definition to `.mcp.json` with a shared service-account token inline, so it works the moment the repository is cloned",
+        "C": "Publish a wiki page telling each engineer to add the server at user scope with `claude mcp add` and paste in their own token",
+        "D": "Configure the server at local scope on one reference laptop, then copy that machine's `~/.claude.json` to every engineer's laptop"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Project-scoped MCP servers live in `.mcp.json` at the repository root and are meant to be checked into version control so the whole team gets the same tools. `.mcp.json` supports environment variable expansion, so each engineer supplies their own token from their environment and no secret is committed. Claude Code asks each developer to approve project-scoped servers in interactive sessions.",
+      "why_incorrect": {
+        "B": "This puts a credential in version control, which security forbids, and a shared token removes per-user accountability.",
+        "C": "Manual per-developer setup is exactly what the team wants to avoid, and configurations drift between engineers.",
+        "D": "Local scope is per-user state in `~/.claude.json`; copying that file between machines is brittle and spreads one person's credentials."
+      },
+      "module": "09-claude-code/07-mcp-in-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/mcp"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-012",
+      "objective": "CCAR-P-7.2",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Litware Labs' developers often ask Claude Code to fix an urgent bug while a long feature task is still running in another Claude Code session in the same checkout. The two sessions' edits collide, and developers keep stashing and restoring work to untangle them.",
+      "question": "Which workflow change best addresses this?",
+      "options": {
+        "A": "Pause the feature session, run `/clear`, fix the bug in that same session and checkout, then restart the feature",
+        "B": "Keep both sessions in one shared checkout, but tell each session in its prompt exactly which files it is allowed to modify",
+        "C": "Run each task in its own git worktree, for example with `claude --worktree <name>`, so sessions edit separate checkouts",
+        "D": "Hand the bug fix to a subagent inside the feature session so that both tasks are coordinated by one main session"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "A git worktree is a separate checkout on its own branch, so parallel Claude Code sessions in different worktrees cannot overwrite each other's edits. Claude Code supports this directly with `claude --worktree`, letting the bug fix and the feature proceed in parallel and merge through normal review.",
+      "why_incorrect": {
+        "A": "Clearing context discards the feature session's progress and serialises work that could safely run in parallel.",
+        "B": "Prompt-level file boundaries are not enforced, and both sessions still share one working tree and branch, so changes still mix.",
+        "D": "A subagent works in the same working directory, so the bug fix still lands in the feature branch's uncommitted changes."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/common-workflows",
+        "https://code.claude.com/docs/en/worktrees"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-013",
+      "objective": "CCAR-P-7.3",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Adatum Software's platform team added a `PostToolUse` hook to the repository's `.claude/settings.json` to run the code formatter after Claude edits a file, using the matcher `edit|write`. Developers report that edited files are never formatted, and no hook error appears in the transcript.",
+      "question": "What is the most effective way to diagnose and fix the problem?",
+      "options": {
+        "A": "Use `/hooks` to confirm the hook loaded under `PostToolUse`, then correct the case-sensitive matcher to `Edit|Write`",
+        "B": "Add a CLAUDE.md rule telling Claude to run the formatter itself after every edit, and remove the hook from settings entirely",
+        "C": "Move the hook from `PostToolUse` to `PreToolUse` so the formatter runs reliably on every file before Claude writes to it",
+        "D": "Make the formatter script exit with code 1 after it succeeds, so Claude Code prints its output in the transcript"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "The `/hooks` menu shows which hooks are loaded, for which event and from which settings file, which confirms whether the configuration is being read. Hook matchers compare against tool names as written and are case-sensitive, so `edit|write` never matches the `Edit` and `Write` tools; correcting the matcher fixes the silent failure.",
+      "why_incorrect": {
+        "B": "A CLAUDE.md rule is advisory rather than deterministic, and it abandons the hook without finding the root cause.",
+        "C": "`PreToolUse` fires before the edit, so it would format the old file contents, and it leaves the matcher bug in place.",
+        "D": "Exit code 1 signals a non-blocking error rather than success, and it does nothing to make the hook fire in the first place."
+      },
+      "module": "09-claude-code/06-hooks.md",
+      "references": [
+        "https://code.claude.com/docs/en/hooks-guide",
+        "https://code.claude.com/docs/en/hooks"
       ]
     }
   ]

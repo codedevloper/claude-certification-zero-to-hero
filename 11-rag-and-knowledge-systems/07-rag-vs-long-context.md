@@ -44,8 +44,13 @@ cross-document relationships. Weaknesses: per-request token volume grows with th
 time to first token rises with very long prompts, every user must be allowed to see everything in the prompt, and
 answer quality can degrade when the relevant detail is a small needle in a very large haystack.
 
-> **Unverified:** Exactly how retrieval accuracy within a very long context varies with length and position for current
-> models. Anthropic does not publish a single figure for this; test it on your own documents.
+As of 2026-10-24, Anthropic's [context windows page](https://platform.claude.com/docs/en/build-with-claude/context-windows) says
+that accuracy and recall degrade as token count grows ("context rot"). Its
+[prompting guidance](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#long-context-prompting)
+says to put long documents above the query, and that queries at the end improved response quality by up to 30 percent in tests.
+
+> **Unverified:** How much retrieval accuracy drops at a given context length or position for a specific current model.
+> The Claude documentation gives no per-model figure; test it on your own documents.
 
 ### Classic RAG
 

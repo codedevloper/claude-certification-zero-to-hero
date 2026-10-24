@@ -378,6 +378,92 @@
       "references": [
         "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
       ]
+    },
+    {
+      "id": "CCAO-F-D7-014",
+      "objective": "CCAO-F-7.1",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Harbour Lane Clinics' office manager runs a Project that answers staff questions about leave. Asked how many holiday days can carry over, Claude says 5 on one day and 10 on another. The Project's knowledge holds both the 2025 and the 2026 staff handbooks.",
+      "question": "What is the most likely cause, and the best fix?",
+      "options": {
+        "A": "The two handbooks conflict; remove the outdated one and ask Claude to name the source document in each answer.",
+        "B": "Staff questions are too brief; ask staff to add \"please be accurate\" to the end of every question they type.",
+        "C": "The 2026 handbook is outweighed; upload two more copies of it so that it dominates the older handbook.",
+        "D": "The current model is unsuited to policy questions; switch to another model and ask each question twice to compare."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Claude uses everything in Project knowledge, so two handbooks with different carry-over rules give it conflicting sources and inconsistent answers. Removing the superseded version fixes the root cause, and asking Claude to name its source makes any remaining conflict easy to spot.",
+      "why_incorrect": {
+        "B": "A vague request for accuracy does not tell Claude which of two contradictory documents is current.",
+        "C": "Duplicate copies leave the conflicting 2025 rule in place and waste Project knowledge capacity.",
+        "D": "The inconsistency comes from contradictory sources, which would mislead any model; asking twice does not resolve which is current."
+      },
+      "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
+      "references": [
+        "https://support.claude.com/en/articles/9517075-what-are-projects",
+        "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
+      ]
+    },
+    {
+      "id": "CCAO-F-D7-015",
+      "objective": "CCAO-F-7.2",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Brightwater Housing Trust drafts tenant letters in a Project. Over two weeks the compliance reviewer left 14 comments. Three issues recur in most letters: the complaints route is missing, jargon is unexplained, and deadlines lack dates. The other comments are one-off wording preferences.",
+      "question": "What is the best way to adjust the approach?",
+      "options": {
+        "A": "Leave the instructions as they are and fix each comment by hand, since the reviewer's feedback varies between letters.",
+        "B": "Add the three recurring issues as specific Project instructions, fix one-offs per letter, and review the next batch.",
+        "C": "Paste all 14 comments into the Project instructions so that every preference the reviewer has voiced is always applied.",
+        "D": "Have Claude write two versions of every new letter and send the reviewer whichever version reads more formally."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Feedback is most useful when you separate recurring patterns from one-off preferences. Turning the three recurring issues into specific, testable instructions removes them at the source, while one-offs stay as individual edits. Checking the next batch with the reviewer confirms the change worked.",
+      "why_incorrect": {
+        "A": "This ignores the clear pattern in the feedback, so the same three issues keep returning in every letter.",
+        "C": "Adding every one-off preference bloats the instructions and can introduce conflicts that make results worse.",
+        "D": "Formality is not what the reviewer flagged, and two versions double the review effort without fixing the issues."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D7-016",
+      "objective": "CCAO-F-7.3",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "cost-performance",
+      "scenario": "Orchard Valley Co-op's coordinator keeps the volunteer rota in a Google Doc that changes several times a week. Every Monday she exports it to PDF, deletes last week's copy from her private Project's files and uploads the new one before Claude drafts the weekly volunteer email. When she forgets, Claude uses an old rota.",
+      "question": "Which change best removes the wasteful step?",
+      "options": {
+        "A": "Add the Google Doc to the Project's files with the Google Drive option, so Claude uses its latest version.",
+        "B": "Paste the full rota text into each Monday chat instead of uploading a file, so Claude sees that week's version.",
+        "C": "Ask Claude to draft four weeks of volunteer emails at once from the current rota, cutting the number of uploads.",
+        "D": "Add a Project instruction asking Claude to warn her whenever the uploaded rota seems older than one week."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "In a private Project, Google Docs added from Google Drive sync directly, so Claude always works from the latest version. This removes the weekly export, delete and upload routine and the risk of drafting from a stale rota.",
+      "why_incorrect": {
+        "B": "Pasting is still a manual weekly step that she can forget, so it does not remove the waste or the risk.",
+        "C": "The rota changes several times a week, so emails drafted weeks ahead would quickly be wrong.",
+        "D": "Claude cannot reliably tell how current a rota is, and the manual export and upload routine remains."
+      },
+      "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
+      "references": [
+        "https://support.claude.com/en/articles/10166901-use-google-workspace-connectors"
+      ]
     }
   ]
 }

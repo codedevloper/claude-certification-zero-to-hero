@@ -64,7 +64,7 @@ The [Agent2Agent (A2A) protocol](https://a2a-protocol.org/latest/) is an open st
 
 The A2A project positions itself as **complementary** to MCP: MCP connects an agent to its tools and data; A2A connects agents to each other. Use agent-to-agent delegation when the other party owns the reasoning (for example a supplier's claims-adjudication agent), when work is long-running, or when you must not see the other side's internals or data.
 
-> **Unverified:** Claude's products do not, as of 2026-10-24, document built-in A2A client or server support that we could confirm. To call or expose an A2A agent from a Claude-based system you would typically wrap it as a tool (an MCP tool or a client tool) or build an A2A server around your Claude agent with an A2A SDK. Check current documentation before designing around native support.
+> **Unverified:** whether any Claude product supports A2A natively. As of 2026-10-24, A2A does not appear in the documentation indexes of [platform.claude.com](https://platform.claude.com/llms.txt) or [code.claude.com](https://code.claude.com/docs/llms.txt), but absence from an index does not prove there is no support. To call or expose an A2A agent from a Claude-based system you would typically wrap it as a tool (an MCP tool or a client tool) or build an A2A server around your Claude agent with an A2A SDK. Search those docs and Anthropic's announcements for "A2A" before designing around native support.
 
 ### Related building blocks that are not integration protocols
 

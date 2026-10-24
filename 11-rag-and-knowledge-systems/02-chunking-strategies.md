@@ -45,8 +45,9 @@ against your evaluation set (see [RAG evaluation](06-rag-evaluation.md)). Factor
 - **Embedding model input limit.** Chunks longer than the model's limit are truncated silently by some clients.
 - **Generation budget.** K chunks multiplied by chunk size is the context you send on every request.
 
-> **Unverified:** Any single "optimal" chunk size quoted in blogs. Results depend on corpus, embedding model and
-> queries, so measure on your own data rather than adopting a number.
+There is no single "optimal" chunk size. Anthropic's [Contextual Retrieval](https://www.anthropic.com/research/contextual-retrieval)
+write-up says the choice of chunk size, chunk boundary and overlap can affect retrieval performance, and it does not recommend one
+number. Results depend on corpus, embedding model and queries, so measure on your own data rather than adopting a figure from a blog.
 
 ### Overlap
 

@@ -164,9 +164,9 @@ blocked. A hook cannot loosen permissions: deny and ask rules still apply even i
 (here an empty list) runs the command directly without a shell, which the hooks documentation recommends
 whenever a path placeholder is used.
 
-> **Unverified:** the hooks documentation shows the `args` field but this lab could not confirm which Claude
-> Code version introduced it. If your version reports it as an unknown field, delete the `"args": []` line;
-> the hook then runs through a shell and works the same for this path.
+The `args` field (exec form) was added in Claude Code 2.1.139, per the
+[Claude Code changelog](https://code.claude.com/docs/en/changelog). On an older version, update Claude Code, or delete
+the `"args": []` line; the hook then runs through a shell and works the same for this path.
 
 ### The Skill
 

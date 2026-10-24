@@ -231,9 +231,11 @@ Claude Code's built-in tools and subagents on your own infrastructure. Keep the 
 complete control and offline determinism, or when policy must run in your own trust boundary. In every
 option, keep the policy checks (scope, protected accounts, allow-list) in code you own.
 
-> **Unverified:** Agent SDK option names for subagents, turn limits and pre-tool hooks are described
-> generally here. Check [code.claude.com/docs/en/agent-sdk](https://code.claude.com/docs/en/agent-sdk)
-> for the current API before you implement them.
+In the Python Agent SDK, as of 2026-10-24, these are `ClaudeAgentOptions` fields: `agents` (a dict of
+`AgentDefinition` subagents), `max_turns`, `max_budget_usd` (a client-side cost estimate that can overshoot) and
+`hooks`, where a `PreToolUse` hook can return `permissionDecision: "deny"`. See the
+[Python SDK reference](https://code.claude.com/docs/en/agent-sdk/python) and the
+[hooks guide](https://code.claude.com/docs/en/agent-sdk/hooks).
 
 See also [Managed Agents and the Agent SDK](../../10-agentic-ai/06-managed-agents-and-agent-sdk.md) and
 [multi-agent architecture](../../10-agentic-ai/04-multi-agent-architecture.md).

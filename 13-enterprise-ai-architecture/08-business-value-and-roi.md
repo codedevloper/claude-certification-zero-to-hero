@@ -120,7 +120,7 @@ from dataclasses import dataclass
 # Prices in USD per million tokens, as of 2026-10-24. Re-check the official pricing page before use.
 PRICES = {
     "claude-opus-5-5":   {"input": 4.00, "output": 20.00, "cache_read": 0.20},
-    "claude-sonnet-5-5": {"input": 2.00, "output": 10.00, "cache_read": 0.20},
+    "claude-sonnet-5-5": {"input": 2.00, "output": 10.00, "cache_read": 0.10},
 }
 
 @dataclass
@@ -168,9 +168,9 @@ if __name__ == "__main__":
 Output with these synthetic inputs (cache-write cost ignored for simplicity):
 
 ```text
-model cost / month:    $230.40
+model cost / month:    $223.20
 labour value / month:  $34,560.00
-net benefit / month:   $28,329.60
+net benefit / month:   $28,336.80
 payback (months):      3.2
 12-month ROI:          278%
 same workload on Opus: $446.40 / month

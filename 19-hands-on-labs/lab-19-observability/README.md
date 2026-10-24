@@ -38,9 +38,9 @@ Prices used by the lab, as of 2026-10-24 (from the `claude-api` skill; confirm o
 | `claude-sonnet-5-5` | 2.00 | 10.00 |
 | `claude-haiku-5-5` | 0.10 (prompts up to 100K tokens) | 0.50 (prompts up to 100K tokens) |
 
-The lab also prices prompt-cache writes at 1.25 times the input rate (5-minute time to live) and cache reads at USD 0.20 per million for Opus 5.5 and Sonnet 5.5.
+The lab also prices prompt-cache writes at 1.25 times the input rate (5-minute time to live) and cache reads at USD 0.20 per million for Opus 5.5 and USD 0.10 per million for Sonnet 5.5 (as of 2026-10-24).
 
-> **Unverified:** the Haiku 5.5 cache-read rate is not listed in the sources used for this lab. The code assumes 0.1 times the input price. Check the pricing page before you use the figure.
+The Haiku 5.5 cache-read rate the code uses (0.1 times the input price: USD 0.01 per million, or USD 0.05 for prompts over 100K tokens) matches the [pricing page](https://platform.claude.com/docs/en/about-claude/pricing) as of 2026-10-24.
 
 ## Prerequisites
 
@@ -127,11 +127,11 @@ On failure, the code records `error.type`, a short message and an `exception` ev
 
 The `gen_ai.*` attribute names follow the OpenTelemetry GenAI semantic conventions, which are still marked as in development. Note one subtlety the lab handles: in those conventions `gen_ai.usage.input_tokens` **includes** cache reads and writes, whereas the Messages API's `usage.input_tokens` **excludes** them. The lab adds them back and also records `gen_ai.usage.cache_read.input_tokens` and `gen_ai.usage.cache_write.input_tokens`.
 
-> **Unverified:** the GenAI semantic conventions are still changing. Check the current OpenTelemetry specification before you rely on an attribute name in a dashboard.
+As of 2026-10-24, the Claude [span reference](https://platform.claude.com/docs/en/api/opentelemetry/spans) confirms that the GenAI conventions are still in development and pins Claude's spans to the conventions as of 24 September 2026. It also confirms that `gen_ai.usage.input_tokens` includes cache reads and writes. Attribute names can still change, so check the reference before you build a dashboard on one.
 
 In production you would not write your own tracer. As of 2026-10-24 the Claude SDKs can emit OpenTelemetry spans themselves (beta). You register a tracer provider and the SDK creates an `anthropic.messages.create` span per request, with `gen_ai.*` usage attributes and `anthropic.request.id`. In Python that is a standard `TracerProvider` plus, optionally, `Anthropic(open_telemetry={...})` to choose a provider or content mode. The default content mode is metadata only (no prompts or responses), which is the privacy-preserving choice. Separately, an organisation admin can configure server-side API tracing to an OTLP endpoint. Read the [OpenTelemetry pages in the Claude docs](https://platform.claude.com/docs) for the current option names, because beta APIs change.
 
-> **Unverified:** exact OpenTelemetry option names and span names in the SDK may change during the beta. Treat the names above as illustrative and confirm them in the docs.
+As of 2026-10-24, the [SDK setup page](https://platform.claude.com/docs/en/manage-claude/opentelemetry/sdk) confirms the names above: the `anthropic.messages.create` span, the Python `open_telemetry` client option with `tracer_provider` and `traces.content_mode` keys, and `metadata_only` as the default content mode. The page warns that a new SDK version can rename spans, attributes and options during the beta, so pin your SDK version.
 
 ## Synthetic test data
 

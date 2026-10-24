@@ -104,11 +104,15 @@ The architect's job is to translate obligations into **controls and evidence**.
 | FedRAMP (US federal cloud services) | Use of cloud services with an appropriate FedRAMP authorisation level and boundary | Deploy through a platform and region whose authorisation covers the use (for example, a government cloud region of a hyperscaler); keep data inside the authorised boundary |
 | EU AI Act (risk-based obligations) | Transparency duties; heavier obligations for high-risk uses | Classify the use case early; document; human oversight; logging |
 
-> **Unverified:** which Claude offerings are covered by a HIPAA BAA, by zero data retention, and by specific
-> FedRAMP authorisations depends on contract, platform and region, and changes over time. Confirm with the
-> [Anthropic Trust Center](https://trust.anthropic.com), the
-> [Privacy Center](https://privacy.anthropic.com) and the relevant cloud provider's compliance pages before
-> designing around it.
+As of 2026-10-24, the [API and data retention](https://platform.claude.com/docs/en/manage-claude/api-and-data-retention)
+page says: zero data retention is arranged per organisation through Anthropic sales; HIPAA-ready API access needs a signed
+BAA (standard BAA in the Claude Console, or a negotiated one through sales); a feature eligibility table lists which API
+features each arrangement covers; and the Claude Team and Enterprise product interfaces are not ZDR-eligible. On Amazon
+Bedrock and Google-managed Claude models on Google Cloud, the cloud provider is the data processor, so its own terms apply.
+
+> **Unverified:** which FedRAMP authorisations cover which Claude models, regions and features, and what your own
+> contract adds or excludes. Check the [Anthropic Trust Center](https://trust.anthropic.com), the
+> [Privacy Center](https://privacy.anthropic.com), the relevant cloud provider's compliance pages and your contract.
 
 Cross-cutting governance frameworks: the [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
 (Govern, Map, Measure, Manage) and ISO/IEC 42001 for AI management systems. Platform-level controls that

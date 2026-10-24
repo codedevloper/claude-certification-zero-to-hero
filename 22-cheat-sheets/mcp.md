@@ -57,12 +57,12 @@ capabilities) include Tasks (long-running work), MCP Apps (interactive UI) and S
 - Tool **execution** errors come back in the tool result (so the model can react); **protocol** errors use JSON-RPC
   `error` objects.
 
-## 6. A minimal Python server (official SDK, FastMCP style)
+## 6. A minimal Python server (official SDK, `MCPServer`, formerly FastMCP)
 
 ```python
-from mcp.server.fastmcp import FastMCP
+from mcp.server import MCPServer
 
-mcp = FastMCP("acme-inventory")
+mcp = MCPServer("acme-inventory")
 
 @mcp.tool()
 def stock_level(sku: str) -> dict:
@@ -73,12 +73,15 @@ def stock_level(sku: str) -> dict:
     return {"sku": sku, "on_hand": data[sku]}
 
 if __name__ == "__main__":
-    mcp.run()  # stdio by default
+    mcp.run(transport="stdio")
 ```
 
-> **Unverified:** SDK class names and defaults move between SDK releases. Check the
-> [Python SDK repository](https://github.com/modelcontextprotocol/python-sdk) for the version you install, and confirm
-> it implements the protocol revision your host expects.
+As of 2026-10-24, the `mcp` package is at version 2 (2.3.0 on PyPI), which renamed `FastMCP` to `MCPServer` and removed
+the `mcp.server.fastmcp` module, per the SDK's
+[migration guide](https://github.com/modelcontextprotocol/python-sdk/blob/main/docs/migration.md). The code above follows
+the official [server quickstart](https://modelcontextprotocol.io/docs/develop/build-server). On 1.x, use
+`from mcp.server.fastmcp import FastMCP` instead. Confirm that your SDK version implements the protocol revision your
+host expects.
 
 ## 7. Using MCP with Claude
 
