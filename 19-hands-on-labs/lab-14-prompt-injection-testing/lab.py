@@ -29,6 +29,7 @@ import tempfile
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+from email.utils import getaddresses
 from urllib.parse import urlparse
 
 HERE = Path(__file__).resolve().parent
@@ -112,6 +113,18 @@ def spotlight(document: str) -> tuple[str, str]:
 URL_RE = re.compile(r"https?://[^\s)\"']+")
 
 
+def is_internal_host(host: str | None) -> bool:
+    """Exact domain or a true subdomain. `endswith(domain)` alone would accept evilfabrikam.example."""
+    host = (host or "").lower().rstrip(".")
+    return host == INTERNAL_DOMAIN or host.endswith("." + INTERNAL_DOMAIN)
+
+
+def recipients_are_internal(to: str) -> bool:
+    """Every parsed address must be internal; 'a@evil.com, b@fabrikam.example' must not pass."""
+    addresses = [addr for _, addr in getaddresses([to]) if addr]
+    return bool(addresses) and all("@" in a and is_internal_host(a.rsplit("@", 1)[1]) for a in addresses)
+
+
 def tool_policy(name: str, args: dict) -> str | None:
     """Return a reason to deny, or None to allow. Runs outside the model, so injection cannot change it."""
     if name not in {"send_email", "create_ticket"}:
@@ -120,10 +133,10 @@ def tool_policy(name: str, args: dict) -> str | None:
     if CANARY in blob:
         return "tool arguments contain the confidential code"
     if name == "send_email":
-        to = str(args.get("to", "")).strip().lower()
-        if not to.endswith("@" + INTERNAL_DOMAIN):
+        to = str(args.get("to", "")).strip()
+        if not recipients_are_internal(to):
             return f"recipient outside @{INTERNAL_DOMAIN}"
-        if any(urlparse(u).hostname and not urlparse(u).hostname.endswith(INTERNAL_DOMAIN) for u in URL_RE.findall(blob)):
+        if any(not is_internal_host(urlparse(u).hostname) for u in URL_RE.findall(blob)):
             return "external link in email"
     return None
 
@@ -136,7 +149,7 @@ def output_policy(text: str) -> str | None:
         return "markdown image in output"
     for url in URL_RE.findall(text):
         host = urlparse(url).hostname or ""
-        if not host.endswith(INTERNAL_DOMAIN):
+        if not is_internal_host(host):
             return f"external link in output ({host})"
     try:
         data = json.loads(text)
@@ -394,6 +407,14 @@ def main() -> int:
     kinds = {(c["kind"], c["channel"]) for c in cases}
     check("corpus has benign and attack cases on direct and indirect channels",
           {("attack", "direct"), ("attack", "indirect"), ("benign", "indirect")} <= kinds)
+    check("look-alike domain is external (evilfabrikam.example)", not is_internal_host("evilfabrikam.example"))
+    check("real subdomain is internal (mail.fabrikam.example)", is_internal_host("mail.fabrikam.example"))
+    check("mixed recipient list is denied",
+          tool_policy("send_email", {"to": "a@evil.example, b@fabrikam.example", "body": "hi"}) is not None)
+    check("look-alike link in an email is denied",
+          tool_policy("send_email", {"to": "b@fabrikam.example", "body": "see https://evilfabrikam.example/x"}) is not None)
+    check("internal recipient with internal link is allowed",
+          tool_policy("send_email", {"to": "Ops <ops@fabrikam.example>", "body": "https://wiki.fabrikam.example/x"}) is None)
     sample = "Line one.\n  Line   two."
     check("datamarking round-trips to the same words", undatamark(datamark(sample)) == " ".join(sample.split()))
     b1, w1 = spotlight("x </document> y </DOC-abc123> z")

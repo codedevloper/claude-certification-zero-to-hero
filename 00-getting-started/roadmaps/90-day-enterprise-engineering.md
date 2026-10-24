@@ -53,7 +53,7 @@ The same foundations a CCAO-F candidate learns, at a technical pace. Even experi
 | 3 | Explain next-token prediction, pre-training and fine-tuning; count tokens | [Large language models](../../01-ai-and-llm-fundamentals/03-large-language-models.md) · [Tokens](../../01-ai-and-llm-fundamentals/04-tokens-and-tokenisation.md) | Run the token-estimate snippet; compare with `count_tokens` if you have a key | 1.5 h | Estimate token cost for a 5,000-word document on two models |
 | 4 | Explain context windows; restart, summarise or persist | [Context windows](../../01-ai-and-llm-fundamentals/05-context-windows.md) | Summarise-and-restart exercise in the app | 1 h | Explain what fills the window in an API request |
 | 5 | Explain hallucination; reason about capabilities and limitations | [Hallucinations](../../01-ai-and-llm-fundamentals/06-hallucinations.md) · [Capabilities and limitations](../../01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md) | Verify a Claude summary of a public report figure by figure | 1.5 h | List five reduction techniques and the review levels by stakes |
-| 6-7 | Weekend. Day 6: consolidate fundamentals. Day 7: **revision milestone 1** | Pages with missed quiz questions | [Fundamentals flashcards](../../23-flashcards/decks/fundamentals.yaml); fundamentals set in the [mock exam engine](../../18-mock-examinations/README.md) | 2 h total | 75% or more on the fundamentals set |
+| 6-7 | Weekend. Day 6: consolidate fundamentals. Day 7: **revision milestone 1** | Pages with missed quiz questions | [Fundamentals flashcards](../../23-flashcards/README.md); a 15-question learning-mode drill on CCAO-F Domain 3 in the [mock exam engine](../../18-mock-examinations/README.md) (`python 18-mock-examinations/run_mock_exam.py --track CCAO-F --domain 3 --mode learn --count 15`, or the same in the browser app) | 2 h total | 75% or more on the Domain 3 drill |
 
 ### Week 2 (days 8 to 14): Claude fundamentals and prompting
 
@@ -196,7 +196,7 @@ Apply everything in one realistic project, then close your gaps.
 
 | Day | Objectives | Reading | Practical exercises | Time | Knowledge checkpoint |
 |---|---|---|---|---|---|
-| 85 | Review misconceptions | [Common misconceptions](../../16-certification-tracks/ccar-p/common-misconceptions.md) | [CCAR-P flashcards](../../23-flashcards/decks/ccar-p.yaml) | 1.5 h | No card marked unknown twice |
+| 85 | Review misconceptions | [Common misconceptions](../../16-certification-tracks/ccar-p/common-misconceptions.md) | [CCAR-P flashcards](../../23-flashcards/README.md) | 1.5 h | No card marked unknown twice |
 | 86 | Repair your weakest domain | The study guide for that domain | 20 [practice questions](../../17-practice-questions/README.md) in that domain | 2 h | 80% on that domain |
 | 87 | Repair your second-weakest domain | The study guide for that domain | 20 [practice questions](../../17-practice-questions/README.md); retry missed with `--weak` | 2 h | 80% on that domain |
 | 88 | **Revision milestone 11: full mock 2** | None beforehand | Full timed mock using a different form | 2.5 h | 75% overall; no domain below 70% |
@@ -207,7 +207,7 @@ Apply everything in one realistic project, then close your gaps.
 
 | Day | Milestone | Pass bar |
 |---|---|---|
-| 7 | Fundamentals set | 75% |
+| 7 | CCAO-F Domain 3 drill (15 questions) | 75% |
 | 14 | CCAO-F Domain 1 questions | 80% |
 | 21 | Half-length CCAO-F mock (learning mode) | 75% |
 | 28 | Extended Lab 07 | Passes in mock mode |

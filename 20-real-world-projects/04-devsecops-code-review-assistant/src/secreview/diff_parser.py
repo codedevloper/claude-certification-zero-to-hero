@@ -9,7 +9,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 
-HUNK = re.compile(r"^@@ -\d+(?:,\d+)? \+(\d+)(?:,(\d+))? @@")
+HUNK = re.compile(r"^@@ -\d+(?:,(\d+))? \+(\d+)(?:,(\d+))? @@")
 MAX_DIFF_BYTES = 400_000  # refuse very large diffs instead of silently truncating them
 
 
@@ -33,10 +33,31 @@ def parse_unified_diff(text: str) -> list[FileDiff]:
     files: list[FileDiff] = []
     current: FileDiff | None = None
     new_line = 0
-    in_hunk = False
+    old_left = new_left = 0  # lines still owed by the open hunk, from its @@ header
     for raw in text.splitlines():
+        if old_left > 0 or new_left > 0:
+            # Inside a hunk every line is content, even one that looks like a header
+            # (an added line "++ /dev/null" shows up as "+++ /dev/null"). The header's
+            # counts, not the line's prefix, decide where the hunk ends.
+            if raw.startswith("\\"):
+                continue  # "\ No newline at end of file"
+            tag, body = (raw[:1], raw[1:]) if raw else (" ", "")
+            if tag == "+":
+                new_left -= 1
+                if current is not None:
+                    current.lines.append((new_line, body, True))
+                new_line += 1
+            elif tag == "-":
+                old_left -= 1  # removed lines do not exist in the new file
+            else:
+                old_left -= 1
+                new_left -= 1
+                if current is not None:
+                    current.lines.append((new_line, body if tag == " " else raw, False))
+                new_line += 1
+            continue
         if raw.startswith("diff --git "):
-            current, in_hunk = None, False
+            current = None
             continue
         if raw.startswith("+++ "):
             target = raw[4:].strip()
@@ -46,25 +67,12 @@ def parse_unified_diff(text: str) -> list[FileDiff]:
                 path = target[2:] if target.startswith("b/") else target
                 current = FileDiff(path=path)
                 files.append(current)
-            in_hunk = False
-            continue
-        if raw.startswith("--- ") and not in_hunk:
             continue
         m = HUNK.match(raw)
         if m:
-            new_line = int(m.group(1))
-            in_hunk = True
+            old_left = int(m.group(1)) if m.group(1) is not None else 1
+            new_line = int(m.group(2))
+            new_left = int(m.group(3)) if m.group(3) is not None else 1
             continue
-        if not in_hunk or current is None:
-            continue
-        if raw.startswith("+"):
-            current.lines.append((new_line, raw[1:], True))
-            new_line += 1
-        elif raw.startswith("-"):
-            continue  # removed lines do not exist in the new file
-        elif raw.startswith("\\"):
-            continue  # "\ No newline at end of file"
-        else:
-            current.lines.append((new_line, raw[1:] if raw.startswith(" ") else raw, False))
-            new_line += 1
+        # Anything else outside a hunk ("--- a/x", "index ...", mode lines) is metadata.
     return files

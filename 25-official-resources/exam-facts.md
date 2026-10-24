@@ -25,7 +25,7 @@
 | Rescheduling | **Plan on 48 hours.** The v1.0 exam guides say 24 hours, but the Partner Academy FAQ and the Pearson VUE page (both checked 2026-10-24) say cancellations and reschedules must be made at least 48 hours ahead, or the fee is forfeited |
 | Conduct | NDA covering all exam content; no AI tools, notes or second monitor during the exam |
 
-> The free [Anthropic Academy](https://anthropic.skilljar.com/) courses are open to anyone, but they award
+> The free [Claude Academy](https://academy.claude.com/) courses are open to anyone, but they award
 > certificates of completion, not certifications.
 
 ## Exam-by-exam

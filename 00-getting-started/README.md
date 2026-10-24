@@ -8,6 +8,10 @@ This module helps you set up, pick a direction and plan your time. It takes abou
 
 > **Unofficial resource.** This is an independent, community-written study repository. It is not produced or endorsed by Anthropic. Every explanation and practice question is original. Always read the official exam guide before you sit an exam; exam facts used here are recorded in [`registry.yaml`](../16-certification-tracks/registry.yaml) and summarised in [Exam facts](../25-official-resources/exam-facts.md).
 
+> **Before you plan to sit an exam:** as of 2026-10-24, Anthropic's certification exams are open only to people at
+> organisations in the **Claude Partner Network**. Everything in this repository is free to use either way. See
+> [exam facts](../25-official-resources/exam-facts.md) for eligibility and registration.
+
 ## Learning objectives
 
 After completing this module you will be able to:

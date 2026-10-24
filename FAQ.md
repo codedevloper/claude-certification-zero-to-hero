@@ -39,7 +39,7 @@ the baseline for this release is **2026-10-24**. Exam facts are held in one mach
 
 ### What licence does it use?
 
-See [LICENSE](LICENSE).
+Code is under the [MIT License](LICENSE) and educational content under CC BY 4.0; the certificate images are excluded. See [LICENSE-CONTENT.md](LICENSE-CONTENT.md) for details and attribution wording.
 
 ## The certifications
 
@@ -65,7 +65,7 @@ material.
 
 As of 2026-10-24, the certification exams are open to organisations in the **Claude Partner Network**: registration
 runs through the Anthropic Partner Academy (Skilljar) and scheduling through Pearson VUE. If your organisation is not a
-partner, you can still use this repository and Anthropic's free [Anthropic Academy](https://anthropic.skilljar.com/)
+partner, you can still use this repository and Anthropic's free [Claude Academy](https://academy.claude.com/)
 courses, which award certificates of completion rather than certifications. Check the official pages for any change to
 eligibility.
 

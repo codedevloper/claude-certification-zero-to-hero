@@ -34,7 +34,7 @@ flowchart LR
 | 4 | Define tokens; estimate token counts; explain why output costs more | [Tokens and tokenisation](../../01-ai-and-llm-fundamentals/04-tokens-and-tokenisation.md) | Estimate the tokens in three of your own emails using the rule of thumb; optionally run the page's Python snippet | 1 h | Estimate tokens for a 1,000-word document and explain why long chats cost more |
 | 5 | Explain the context window; choose restart, summarise or persist (CCAO-F-3.4) | [Context windows](../../01-ai-and-llm-fundamentals/05-context-windows.md) | The offsite-planning summarise-and-restart exercise on that page | 1.25 h | Give the right strategy for four scenarios without notes |
 | 6 | Explain hallucinations; apply reduction and checking techniques (2.2, 2.3) | [Hallucinations](../../01-ai-and-llm-fundamentals/06-hallucinations.md) · [Capabilities and limitations](../../01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md) | Ask Claude to summarise a public report with numbers; verify every number against the source | 1.5 h | List five techniques to reduce hallucination and three things to spot-check first |
-| 7 | **Revision milestone 1** | Re-read any Module 01 page with a missed quiz question | Review the [fundamentals flashcards](../../23-flashcards/decks/fundamentals.yaml); take the fundamentals set in the [mock exam engine](../../18-mock-examinations/README.md) in learning mode | 1 h | 75% or more on the fundamentals set; study log updated |
+| 7 | **Revision milestone 1** | Re-read any Module 01 page with a missed quiz question | Review the [fundamentals flashcards](../../23-flashcards/README.md); take a 15-question learning-mode drill on CCAO-F Domain 3 in the [mock exam engine](../../18-mock-examinations/README.md) (`python 18-mock-examinations/run_mock_exam.py --track CCAO-F --domain 3 --mode learn --count 15`, or the same in the browser app) | 1 h | 75% or more on the Domain 3 drill; study log updated |
 
 ## Week 2: Claude fundamentals and prompting
 
@@ -46,7 +46,7 @@ flowchart LR
 | 11 | Give clear instructions; separate instructions from material | [Clear, direct instructions](../../03-prompt-engineering/01-clear-direct-instructions.md) · [Structure with XML tags](../../03-prompt-engineering/02-structure-with-xml-tags.md) | Wrap a pasted document in tags and ask two questions about it | 1 h | Page quizzes fully correct |
 | 12 | Use examples; ask for reasoning when it helps | [Examples (few-shot)](../../03-prompt-engineering/03-examples-few-shot.md) · [Reasoning and thinking](../../03-prompt-engineering/04-reasoning-and-thinking.md) | Give Claude two example replies in your team's style and ask for a third | 1 h | Explain when examples help and when they over-constrain |
 | 13 | Decompose complex tasks; iterate; adapt to task type (1.2, 1.3, 1.4) | [Task decomposition and chaining](../../03-prompt-engineering/05-task-decomposition-and-chaining.md) · [Iterating on prompts](../../03-prompt-engineering/08-iterating-on-prompts.md) · [Study guide: Domain 1](../../16-certification-tracks/ccao-f/study-guide/domain-1.md) | Break "plan a team event" into a chain of four prompts; Domain 1 items in [practical exercises](../../16-certification-tracks/ccao-f/practical-exercises.md) | 1.5 h | 75% or more on 10 Domain 1 [practice questions](../../17-practice-questions/README.md) |
-| 14 | **Revision milestone 2** | Pages linked from missed questions | [Fundamentals flashcards](../../23-flashcards/decks/fundamentals.yaml) again; 10 more Domain 1 questions | 1 h | 80% or more on Domain 1 overall |
+| 14 | **Revision milestone 2** | Pages linked from missed questions | [Fundamentals flashcards](../../23-flashcards/README.md) again; 10 more Domain 1 questions | 1 h | 80% or more on Domain 1 overall |
 
 ## Week 3: output evaluation, products and Projects
 
@@ -76,7 +76,7 @@ flowchart LR
 
 | Day | Objectives | Reading | Practical exercises | Time | Knowledge checkpoint |
 |---|---|---|---|---|---|
-| 29 | Repair weak areas | [Common misconceptions](../../16-certification-tracks/ccao-f/common-misconceptions.md) · study guides for your two weakest domains | Retry missed questions (`--weak`); [CCAO-F flashcards](../../23-flashcards/decks/ccao-f.yaml) | 1.5 h | 80% or more on retried questions |
+| 29 | Repair weak areas | [Common misconceptions](../../16-certification-tracks/ccao-f/common-misconceptions.md) · study guides for your two weakest domains | Retry missed questions (`--weak`); [CCAO-F flashcards](../../23-flashcards/README.md) | 1.5 h | 80% or more on retried questions |
 | 30 | **Revision milestone 5: readiness** | [Revision notes](../../16-certification-tracks/ccao-f/revision-notes.md) · [CCAO-F one-pager](../../22-cheat-sheets/ccao-f-one-pager.md) · [Exam day](../../16-certification-tracks/ccao-f/exam-day.md) | Second full mock with a different form; [readiness assessment](../../16-certification-tracks/ccao-f/readiness-assessment.md) | 2.5 h | Above 80% overall with no domain below 70%, and "ready" on the assessment |
 
 If you are not ready on day 30, that is normal. Add a week: one day per weak domain, then another full mock.

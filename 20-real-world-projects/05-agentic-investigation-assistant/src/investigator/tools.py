@@ -196,7 +196,9 @@ def _run(ctx: Context, role: str, name: str, a: dict) -> tuple[str, bool]:
         ctx.audit.log(role, "evidence_recorded", evidence_id=ev.id, claim=ev.claim, citations=ev.citations)
         return f"Recorded as {ev.id}.", False
     if name == "propose_action":
-        evidence_text = json.dumps([e.excerpts for e in ctx.evidence.items.values()])
+        # Only the evidence this proposal cites may justify it.
+        cited = [ctx.evidence.items[e] for e in a["evidence_ids"] if e in ctx.evidence.items]
+        evidence_text = json.dumps([e.excerpts for e in cited])
         err = ctx.gate.policy_check(a["action"], a["target"], a["evidence_ids"],
                                     scope_users=set(ctx.incident["scope"]["users"]),
                                     protected_users=ctx.protected_users, evidence_text=evidence_text,

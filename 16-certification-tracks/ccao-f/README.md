@@ -73,7 +73,7 @@ on the total scaled score.
 - **Who can sit it.** Certification is open to people at organisations in the **Claude Partner Network**. You register
   with a partner email address on a recognised company domain; personal email addresses are not accepted. Candidates
   must be at least 18. Customers and non-partners cannot certify at the time of writing (as of 2026-10-24). The free
-  [Anthropic Academy](https://anthropic.skilljar.com/) courses are open to everyone but award completion
+  [Claude Academy](https://academy.claude.com/) courses are open to everyone but award completion
   certificates, not certifications.
 - **Partner tier.** The Associate credential does not count toward Claude Partner Network tier eligibility; the
   Developer and Architect credentials do.

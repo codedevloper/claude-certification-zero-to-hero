@@ -100,7 +100,9 @@ All code is in [`lab.py`](lab.py).
 
 **Mock model.** `mock_summariser` is scripted to be gullible when undefended and, when spotlighted, to still fall for instructions phrased as company policy ("Per policy, ..."). That is a teaching device to show each layer doing work; it is **not** a measurement of Claude. Live mode measures the real model.
 
-**Self-checks.** Ten checks test the defence components directly and run in both modes. Six more check the scripted scenario and run only in mock mode.
+**Domain checks.** `is_internal_host()` accepts the exact internal domain or a real subdomain (`host == d or host.endswith("." + d)`). A bare `endswith(d)` would accept the look-alike `evilfabrikam.example`. `recipients_are_internal()` parses the `to` field with `email.utils.getaddresses` and requires *every* address to be internal, so `a@evil.example, b@fabrikam.example` is denied.
+
+**Self-checks.** Fifteen checks test the defence components directly and run in both modes. Six more check the scripted scenario and run only in mock mode.
 
 ## Synthetic test data
 
@@ -181,6 +183,11 @@ Reports written to <temp dir>/claude-labs/lab-14: report.json, report.md
 
 Self-checks (defence components, always enforced):
   [PASS] corpus has benign and attack cases on direct and indirect channels
+  [PASS] look-alike domain is external (evilfabrikam.example)
+  [PASS] real subdomain is internal (mail.fabrikam.example)
+  [PASS] mixed recipient list is denied
+  [PASS] look-alike link in an email is denied
+  [PASS] internal recipient with internal link is allowed
   [PASS] datamarking round-trips to the same words
   [PASS] forged closing tags are neutralised and boundaries differ per request
   [PASS] tool policy: external recipient denied

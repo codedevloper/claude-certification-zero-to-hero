@@ -54,10 +54,15 @@ class Catalog:
     def load(cls, data_dir: Path) -> "Catalog":
         tech = json.loads((data_dir / "attack_techniques.json").read_text(encoding="utf-8"))["techniques"]
         prot = json.loads((data_dir / "protected_assets.json").read_text(encoding="utf-8"))
-        return cls(tech, {k: set(prot.get(k, [])) for k in ("hosts", "users", "ips")})
+        return cls(tech, {k: {_norm(v) for v in prot.get(k, [])} for k in ("hosts", "users", "ips")})
 
     def is_protected(self, target: str) -> bool:
-        return any(target in values for values in self.protected.values())
+        # Host and account names are case-insensitive: "dc-01" is the same machine as "DC-01".
+        return any(_norm(target) in values for values in self.protected.values())
+
+
+def _norm(value: str) -> str:
+    return str(value).strip().casefold()
 
 
 @dataclass
@@ -129,7 +134,7 @@ def enforce(alert: SanitisedAlert, result: dict[str, Any], catalog: Catalog) -> 
         warnings.append("pre-screen found injected instructions that the model did not report")
         summary = "[Untrusted: the alert contains instruction-like text and the model did not flag it.] " + summary
 
-    allowed = alert.all_entities()
+    allowed = {_norm(e): e for e in alert.all_entities()}  # normalised -> the alert's own spelling
     actions: list[ProposedAction] = []
     seen: set[tuple[str, str]] = set()
     for a in result["next_actions"]:
@@ -137,9 +142,10 @@ def enforce(alert: SanitisedAlert, result: dict[str, Any], catalog: Catalog) -> 
         if key in seen:
             continue
         seen.add(key)
-        if a["target"] not in allowed:
+        if _norm(a["target"]) not in allowed:
             warnings.append(f"removed {a['action_type']} on {a['target']!r}: target is not an entity in this alert")
             continue
+        a = {**a, "target": allowed[_norm(a["target"])]}
         if a["action_type"] in CONTAINMENT_ACTIONS and catalog.is_protected(a["target"]):
             warnings.append(f"removed {a['action_type']} on protected asset {a['target']!r}; escalate to the incident manager")
             continue

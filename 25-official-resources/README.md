@@ -11,7 +11,7 @@ define. Each link was last checked on **2026-10-24**. See the [verification log]
 | [Partner Academy — certifications](https://anthropic-partners.skilljar.com/page/partner-certifications) | Official exam guides, terms and conditions, and exam policy |
 | [Partner Academy — certification FAQ](https://anthropic-partners.skilljar.com/page/faq-certifications) | Eligibility, registration and policies |
 | [Pearson VUE — Claude Certification Program](https://www.pearsonvue.com/us/en/anthropic.html) | Scheduling, accommodations and candidate support |
-| [Anthropic Academy](https://anthropic.skilljar.com/) | Free self-paced courses (certificates of completion) |
+| [Claude Academy](https://academy.claude.com/) | Anthropic's free courses and tutorials (certificates of completion). Older courses are also listed at [anthropic.skilljar.com](https://anthropic.skilljar.com/) |
 
 ## Product and platform documentation
 

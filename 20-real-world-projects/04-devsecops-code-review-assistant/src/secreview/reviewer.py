@@ -6,6 +6,8 @@ items are kept (with a reason) so you can measure the hallucination rate over ti
 """
 from __future__ import annotations
 
+import html
+
 import json
 import re
 from dataclasses import dataclass, field
@@ -91,7 +93,9 @@ def render_diff_for_prompt(files: list[FileDiff]) -> str:
         body = "\n".join(f"L{n:<4}{'+' if added else ' '}| {text}" for n, text, added in fd.lines)
         # Escape anything that could close our wrapper tags early.
         body = body.replace("</untrusted_diff>", "<\\/untrusted_diff>").replace("</file>", "<\\/file>")
-        parts.append(f'<file path="{fd.path}">\n{body}\n</file>')
+        # The path is attacker-controlled too (a file can be named "x\"></file></untrusted_diff>"),
+        # so escape it as an XML attribute value.
+        parts.append(f'<file path="{html.escape(fd.path, quote=True)}">\n{body}\n</file>')
     return "<untrusted_diff>\n" + "\n".join(parts) + "\n</untrusted_diff>"
 
 
@@ -145,6 +149,9 @@ def _check(raw: object, added: dict[str, dict[int, str]]) -> str | None:
     for key in ("file", "line", "cwe", "severity", "title", "description", "fix", "confidence"):
         if key not in raw:
             return f"missing field '{key}'"
+    for key in ("file", "cwe", "severity", "title", "description", "fix"):
+        if not isinstance(raw[key], str):
+            return f"field '{key}' is not a string"
     if not isinstance(raw["line"], int) or isinstance(raw["line"], bool):
         return "line is not an integer"
     if raw["file"] not in added:

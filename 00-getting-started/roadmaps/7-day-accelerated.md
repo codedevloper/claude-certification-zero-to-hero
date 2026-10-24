@@ -96,7 +96,7 @@ gantt
 |---|---|
 | **Objectives** | Consolidate; confirm readiness; prepare for exam day |
 | **Reading** | [Revision notes](../../16-certification-tracks/ccao-f/revision-notes.md) · [CCAO-F one-pager](../../22-cheat-sheets/ccao-f-one-pager.md) · [Exam-day guide](../../16-certification-tracks/ccao-f/exam-day.md) |
-| **Practical exercises** | Review the [CCAO-F flashcards](../../23-flashcards/decks/ccao-f.yaml). **Revision milestone:** a second full mock using a different form, then the [readiness assessment](../../16-certification-tracks/ccao-f/readiness-assessment.md) |
+| **Practical exercises** | Review the [CCAO-F flashcards](../../23-flashcards/README.md). **Revision milestone:** a second full mock using a different form, then the [readiness assessment](../../16-certification-tracks/ccao-f/readiness-assessment.md) |
 | **Estimated time** | 3.5 hours |
 | **Knowledge checkpoint** | Above 80% overall on the second mock with no domain below 70%, and a "ready" result on the readiness assessment. If not, extend by two or three days using the 15-day plan's revision days |
 

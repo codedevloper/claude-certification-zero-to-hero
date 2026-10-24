@@ -8,7 +8,7 @@ An open, original learning path that takes you from never having used Claude to 
 certification exams, and to building secure, production-grade AI systems.
 
 [![CI](https://img.shields.io/badge/CI-GitHub_Actions-blue)](.github/workflows/ci.yml)
-[![Content: CC BY 4.0](https://img.shields.io/badge/content-CC_BY_4.0-lightgrey)](LICENSE)
+[![Content: CC BY 4.0](https://img.shields.io/badge/content-CC_BY_4.0-lightgrey)](LICENSE-CONTENT.md)
 [![Code: MIT](https://img.shields.io/badge/code-MIT-green)](LICENSE)
 [![Exam guides verified](https://img.shields.io/badge/exam_guides_verified-2026--10--24-informational)](25-official-resources/verification-log.md)
 [![Unofficial](https://img.shields.io/badge/status-unofficial_study_resource-orange)](#disclaimer)
@@ -16,6 +16,8 @@ certification exams, and to building secure, production-grade AI systems.
 </div>
 
 ---
+
+**Start here:** [New to AI → Module 00](00-getting-started/README.md) · [Business user → CCAO-F track](16-certification-tracks/ccao-f/README.md) · [Architect or engineer → CCAR-P track](16-certification-tracks/ccar-p/README.md) · [Practise now → mock exams](18-mock-examinations/README.md)
 
 ## Why this repository exists
 
@@ -35,8 +37,8 @@ It is also designed to be a practical reference long after the exam.
 | You are… | Start here | Then |
 |---|---|---|
 | New to AI entirely | [00 Getting started](00-getting-started/README.md) → [01 AI & LLM fundamentals](01-ai-and-llm-fundamentals/README.md) | The 30- or 60-day roadmap |
-| A business or knowledge worker using Claude | [05 Products & models](05-claude-products-and-models/README.md) | The [CCAO-F track](16-certification-tracks/ccao-f/README.md) |
-| A software, DevOps or cloud engineer | [06 Claude API](06-claude-api/README.md) → [07 Tool use](07-tool-use-and-function-calling/README.md) | Labs 07–12 |
+| A business or knowledge worker using Claude | [03 Prompt engineering](03-prompt-engineering/README.md) → [05 Products & models](05-claude-products-and-models/README.md) | The [CCAO-F track](16-certification-tracks/ccao-f/README.md) |
+| A software, DevOps or cloud engineer | [03 Prompt engineering](03-prompt-engineering/README.md) → [04 Context](04-context-engineering/README.md) → [06 Claude API](06-claude-api/README.md) | Labs 07–12 |
 | A security or DevSecOps engineer | [12 AI security](12-ai-security/README.md) | Labs 13–15 and 18–20, projects 03–05 |
 | A solution or enterprise architect | [13 Enterprise AI architecture](13-enterprise-ai-architecture/README.md) | The [CCAR-P track](16-certification-tracks/ccar-p/README.md) |
 | A technical leader | [13 Architecture](13-enterprise-ai-architecture/README.md), [15 Production operations](15-production-operations/README.md) | [Interview & stakeholder prep](21-interview-preparation/README.md) |
@@ -51,6 +53,11 @@ Not sure? Take the two-minute [choose-your-path guide](00-getting-started/choose
 | Claude Certified Architect – Professional | CCAR-P | Architects delivering production systems | [Full track](16-certification-tracks/ccar-p/README.md) |
 | Claude Certified Architect – Foundations | CCAR-F | Developers building agentic systems | Planned ([roadmap](ROADMAP.md)) |
 | Claude Certified Developer – Foundations | CCDV-F | Developers building on the API | Planned ([roadmap](ROADMAP.md)) |
+
+> **Who can take the exams:** as of 2026-10-24, registration is open only to people at organisations in the
+> **Claude Partner Network** (you register with a partner work email). Anyone can use this repository and Anthropic's
+> free [Claude Academy](https://academy.claude.com/) courses to learn; check
+> [eligibility](25-official-resources/exam-facts.md) before planning to sit an exam.
 
 Exam formats, fees, eligibility and blueprints were verified against the official exam guides on 2026-10-24. See
 [exam facts](25-official-resources/exam-facts.md) and the machine-readable [registry](16-certification-tracks/registry.yaml).
@@ -82,13 +89,16 @@ flowchart LR
 
 ## Study plans
 
-| Plan | Suits | Link |
-|---|---|---|
-| 7-day accelerated introduction | Experienced engineers who want a fast overview | [7-day](00-getting-started/roadmaps/7-day-accelerated.md) |
-| 15-day preparation | People already using Claude who are preparing for CCAO-F | [15-day](00-getting-started/roadmaps/15-day-preparation.md) |
-| 30-day structured plan | Beginners with a few hours a week | [30-day](00-getting-started/roadmaps/30-day-structured.md) |
-| 60-day comprehensive plan | Engineers preparing for CCAR-P | [60-day](00-getting-started/roadmaps/60-day-comprehensive.md) |
-| 90-day enterprise AI engineering | Architects and security engineers building production capability | [90-day](00-getting-started/roadmaps/90-day-enterprise-engineering.md) |
+| Plan | Track | Assumes | Daily time | Link |
+|---|---|---|---|---|
+| 7-day accelerated | CCAO-F | Months of hands-on Claude use at work, including Projects | 3–4 h | [7-day](00-getting-started/roadmaps/7-day-accelerated.md) |
+| 15-day preparation | CCAO-F | Some hands-on use of Claude or a similar assistant; no coding | 2 h | [15-day](00-getting-started/roadmaps/15-day-preparation.md) |
+| 30-day structured | CCAO-F | Nothing beyond basic computer use: **best for complete beginners** | 1–1.5 h | [30-day](00-getting-started/roadmaps/30-day-structured.md) |
+| 60-day comprehensive | CCAR-P | Several years of software or systems experience; reads Python | 1.5–2 h | [60-day](00-getting-started/roadmaps/60-day-comprehensive.md) |
+| 90-day enterprise engineering | CCAR-P | Working developer, engineer or architect; no AI knowledge needed | 1.5–2 h + weekend labs | [90-day](00-getting-started/roadmaps/90-day-enterprise-engineering.md) |
+
+The [roadmaps guide](00-getting-started/roadmaps/README.md) explains how to pick a plan. Anthropic publishes updated exam guides on
+2026-11-17; plans will be refreshed after that (see [exam facts](25-official-resources/exam-facts.md)).
 
 ## Practise
 
@@ -220,7 +230,7 @@ The two non-negotiables: **original work only**, and **no real exam content, eve
 Use these as your source of truth: the
 [Anthropic Partner Academy certifications page](https://anthropic-partners.skilljar.com/page/partner-certifications)
 (exam guides and policies), [Pearson VUE](https://www.pearsonvue.com/us/en/anthropic.html) (scheduling),
-[Anthropic Academy](https://anthropic.skilljar.com/) (free courses), the [Claude docs](https://platform.claude.com/docs),
+[Claude Academy](https://academy.claude.com/) (free courses), the [Claude docs](https://platform.claude.com/docs),
 [Claude Code docs](https://code.claude.com/docs) and [modelcontextprotocol.io](https://modelcontextprotocol.io).
 More in [25 · Official resources](25-official-resources/README.md).
 
@@ -247,4 +257,5 @@ uses no Anthropic logos or artwork.
 
 ## Licence
 
-Code is released under the MIT License and educational content under CC BY 4.0. See [LICENSE](LICENSE).
+Code is released under the [MIT License](LICENSE) and educational content under CC BY 4.0. The certificate images are
+excluded from both. See [LICENSE-CONTENT.md](LICENSE-CONTENT.md) for the details, attribution wording and trademark notices.

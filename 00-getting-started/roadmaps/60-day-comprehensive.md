@@ -50,7 +50,7 @@ Focus: Domains 2 and 3 groundwork.
 | 4 | Make Messages API calls; handle stop reasons (3.3) | [Getting started with the API](../../06-claude-api/01-getting-started-with-the-api.md) · [Messages API](../../06-claude-api/02-messages-api.md) | [Lab 07: API integration](../../19-hands-on-labs/lab-07-api-integration/README.md), first half | 2 h | Write from memory a request with system prompt, messages and a stop_reason check |
 | 5 | Use streaming, handle errors and retries, count tokens (3.3, 4.5) | [Streaming](../../06-claude-api/03-streaming.md) · [Errors, rate limits, retries](../../06-claude-api/06-errors-rate-limits-retries.md) · [Token counting and cost](../../06-claude-api/08-token-counting-and-cost.md) | [Lab 07: API integration](../../19-hands-on-labs/lab-07-api-integration/README.md), second half | 2 h | Classify five API errors as retryable or not |
 | 6 | Use documents, citations and batches; know cloud platform differences (3.7) | [Vision, documents and citations](../../06-claude-api/04-vision-documents-and-citations.md) · [Batch processing](../../06-claude-api/05-batch-processing.md) · [Cloud platforms](../../06-claude-api/07-cloud-platforms.md) | Sketch when you would choose the Batch API and when a cloud platform; note feature-availability caveats | 1.5 h | Explain one advantage of each cloud platform option |
-| 7 | **Revision milestone 1** | Pages linked from any missed quiz this week | [Fundamentals flashcards](../../23-flashcards/decks/fundamentals.yaml); fundamentals set in the [mock exam engine](../../18-mock-examinations/README.md) | 1 h | 75% or more on the fundamentals set |
+| 7 | **Revision milestone 1** | Pages linked from any missed quiz this week | [Fundamentals flashcards](../../23-flashcards/README.md); a 15-question learning-mode drill on CCAO-F Domain 3 in the [mock exam engine](../../18-mock-examinations/README.md) (`python 18-mock-examinations/run_mock_exam.py --track CCAO-F --domain 3 --mode learn --count 15`, or the same in the browser app) | 1 h | 75% or more on the Domain 3 drill |
 
 ## Week 2 (days 8 to 14): prompting and context engineering
 
@@ -157,7 +157,7 @@ Focus: All domains.
 | Day | Objectives | Reading | Practical exercises | Time | Knowledge checkpoint |
 |---|---|---|---|---|---|
 | 57 | Consolidate key facts and trade-offs | [Revision notes](../../16-certification-tracks/ccar-p/revision-notes.md) · [CCAR-P one-pager](../../22-cheat-sheets/ccar-p-one-pager.md) · [Model selection cheat sheet](../../22-cheat-sheets/model-selection.md) · [AI security cheat sheet](../../22-cheat-sheets/ai-security.md) | Write a one-page summary of your own weak points | 1.5 h | Explain every item on your summary aloud |
-| 58 | Fix remaining misses | Pages linked from missed questions | [CCAR-P flashcards](../../23-flashcards/decks/ccar-p.yaml); retry missed questions (`--weak`) | 1.5 h | No repeated misses |
+| 58 | Fix remaining misses | Pages linked from missed questions | [CCAR-P flashcards](../../23-flashcards/README.md); retry missed questions (`--weak`) | 1.5 h | No repeated misses |
 | 59 | **Revision milestone 9: readiness** | [Readiness assessment](../../16-certification-tracks/ccar-p/readiness-assessment.md) | Third full mock (a different form); readiness assessment | 3 h | Above 80% overall with no domain below 70%, and "ready" |
 | 60 | Prepare for exam day | [Exam-day guide](../../16-certification-tracks/ccar-p/exam-day.md) | Light review only; rest | 0.5 h | Logistics confirmed |
 
@@ -165,7 +165,7 @@ Focus: All domains.
 
 | Day | Milestone | Pass bar |
 |---|---|---|
-| 7 | Fundamentals set | 75% |
+| 7 | CCAO-F Domain 3 drill (15 questions) | 75% |
 | 14 | Domain 2 questions | 80% |
 | 21 | Domain 3 (tools and MCP) questions | 75% |
 | 28 | Half-length mock, Domains 1 to 3 | 75% |

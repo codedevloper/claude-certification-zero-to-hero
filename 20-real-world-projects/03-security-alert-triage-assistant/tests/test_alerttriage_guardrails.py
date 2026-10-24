@@ -214,3 +214,10 @@ def test_cli_rejects_bad_alert_file(tmp_path):
     bad = tmp_path / "bad.json"
     bad.write_text(json.dumps({"alert_id": "nope"}))
     assert main(["--alert", str(bad)]) == 1
+
+
+def test_protected_assets_match_case_insensitively(catalog):
+    protected_host = next(iter(catalog.protected["hosts"]))
+    assert catalog.is_protected(protected_host.upper())
+    assert catalog.is_protected(protected_host.lower())
+    assert catalog.is_protected(f"  {protected_host.title()} ")

@@ -70,7 +70,7 @@ See also [`exam-facts.md`](../../25-official-resources/exam-facts.md) for all tr
 ## Registration and eligibility
 
 - **Eligibility:** certification exams are open to organisations in the **Claude Partner Network**. The free
-  Anthropic Academy courses are open to everyone but award completion certificates, not certifications.
+  Claude Academy courses are open to everyone but award completion certificates, not certifications.
 - **Registration path:** enrol through the Anthropic Partner Academy (Skilljar) certification page, then
   schedule with Pearson VUE. Your Pearson profile name must exactly match your government-issued ID
   (Latin characters only), according to the

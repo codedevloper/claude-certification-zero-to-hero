@@ -2,6 +2,10 @@
 
 > **Level:** Beginner · **Time:** ~20 min · **Exam relevance:** orientation for CCAO-F and CCAR-P
 
+> **Before you plan to sit an exam:** as of 2026-10-24, Anthropic's certification exams are open only to people at
+> organisations in the **Claude Partner Network**. Everything in this repository is free to use either way. See
+> [exam facts](../25-official-resources/exam-facts.md) for eligibility and registration.
+
 ## In plain English
 
 This repository supports two Anthropic certifications, and you can also use it without sitting any exam:
