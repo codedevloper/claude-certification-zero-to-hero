@@ -10,7 +10,7 @@ import sys
 
 import build_coverage
 import build_mock_forms
-import build_journey_svg
+import build_readme_visuals
 import build_page_nav
 import build_web_bundle
 import check_exam_claims
@@ -36,7 +36,7 @@ def main() -> int:
     results.append(build_coverage.main(check=True) == 0)
     results.append(build_mock_forms.main(check=True) == 0)
     results.append(build_page_nav.main(check=True) == 0)
-    results.append(build_journey_svg.main(check=True) == 0)
+    results.append(build_readme_visuals.main(check=True) == 0)
     results.append(build_web_bundle.main(check=True) == 0)
     if "--labs" in sys.argv:
         results.append(run_lab_smoke.main([]) == 0)

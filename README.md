@@ -1,8 +1,9 @@
 <div align="center">
 
-# Claude Certification: Zero to Hero (Unofficial)
-
-**From Your First Prompt to Production-Ready AI Architecture.**
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/readme-banner-dark.svg">
+  <img src="images/readme-banner-light.svg" width="100%" alt="Claude Certification Zero to Hero, an unofficial open-source study guide: from your first prompt to production-ready AI architecture. Modules, practice questions, flashcards, labs, projects and three exam tracks.">
+</picture>
 
 An open, original learning path that takes you from never having used Claude to preparing for Anthropic's
 certification exams, and to building secure, production-grade AI systems.
@@ -34,11 +35,16 @@ It is also designed to be a practical reference long after the exam.
 
 ## Who it's for
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/find-your-path-dark.svg">
+  <img src="images/find-your-path-light.svg" width="100%" alt="Find your path: new to AI, start with modules 00–02 and aim for CCAO-F; business or knowledge worker, modules 03–05 and CCAO-F; software or DevOps engineer, modules 03–06 and CCAR-F; security or DevSecOps engineer, module 12 and the skills path; solution or enterprise architect, module 13 and CCAR-P; technical leader, modules 13 and 15 and the skills path.">
+</picture>
+
 | You are… | Start here | Then |
 |---|---|---|
 | New to AI entirely | [00 Getting started](00-getting-started/README.md) → [01 AI & LLM fundamentals](01-ai-and-llm-fundamentals/README.md) | The 30- or 60-day roadmap |
 | A business or knowledge worker using Claude | [03 Prompt engineering](03-prompt-engineering/README.md) → [05 Products & models](05-claude-products-and-models/README.md) | The [CCAO-F track](16-certification-tracks/ccao-f/README.md) |
-| A software, DevOps or cloud engineer | [03 Prompt engineering](03-prompt-engineering/README.md) → [04 Context](04-context-engineering/README.md) → [06 Claude API](06-claude-api/README.md) | Labs 07–12 |
+| A software, DevOps or cloud engineer | [03 Prompt engineering](03-prompt-engineering/README.md) → [04 Context](04-context-engineering/README.md) → [06 Claude API](06-claude-api/README.md) | Labs 07–12, then the [CCAR-F track](16-certification-tracks/ccar-f/README.md) |
 | A security or DevSecOps engineer | [12 AI security](12-ai-security/README.md) | Labs 13–15 and 18–20, projects 03–05 |
 | A solution or enterprise architect | [13 Enterprise AI architecture](13-enterprise-ai-architecture/README.md) | The [CCAR-P track](16-certification-tracks/ccar-p/README.md) |
 | A technical leader | [13 Architecture](13-enterprise-ai-architecture/README.md), [15 Production operations](15-production-operations/README.md) | [Interview & stakeholder prep](21-interview-preparation/README.md) |
@@ -99,6 +105,11 @@ flowchart LR
 
 ## Study plans
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/study-plans-dark.svg">
+  <img src="images/study-plans-light.svg" width="100%" alt="Study plans compared as bars of 7, 15, 30, 60 and 90 days. The three CCAO-F plans total about 25, 30 and 38 hours; the 30-day plan is best for beginners. The two CCAR-P plans total about 110 and 170 hours.">
+</picture>
+
 | Plan | Track | Assumes | Daily time | Link |
 |---|---|---|---|---|
 | 7-day accelerated | CCAO-F | Months of hands-on Claude use at work, including Projects | 3–4 h | [7-day](00-getting-started/roadmaps/7-day-accelerated.md) |
@@ -111,6 +122,11 @@ The [roadmaps guide](00-getting-started/roadmaps/README.md) explains how to pick
 2026-11-17; plans will be refreshed after that (see [exam facts](25-official-resources/exam-facts.md)).
 
 ## Practise
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/mock-exam-demo-dark.svg">
+  <img src="images/mock-exam-demo-light.svg" width="100%" alt="Practice exam demo: a CCAR-F question is answered, the correct option turns green with an explanation, and a results panel shows the score, per-domain bars and the weakest domain to review next.">
+</picture>
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
@@ -147,6 +163,11 @@ python tools/build_site.py --serve      # http://127.0.0.1:8000
 
 ## Hands-on
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/lab-modes-dark.svg">
+  <img src="images/lab-modes-light.svg" width="100%" alt="Lab modes: mock mode is the default, needs no API key, costs nothing and runs offline; live mode uses your own API key, calls the real Claude and uses API credits.">
+</picture>
+
 - **[20 labs](19-hands-on-labs/README.md)**, from a first API call to a secure AI gateway. Every lab runs in free,
   offline **mock mode**, and in **live mode** with your own API key (clearly marked when it costs credits).
 - **[5 real-world projects](20-real-world-projects/README.md)** of increasing difficulty: a document summariser, a
@@ -174,6 +195,11 @@ python tools/build_site.py --serve      # http://127.0.0.1:8000
 Also: [Glossary](GLOSSARY.md) · [FAQ](FAQ.md) · [Roadmap](ROADMAP.md) · [Progress tracker](PROGRESS.md) · [Changelog](CHANGELOG.md)
 
 ## Quality and integrity
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/quality-pipeline-dark.svg">
+  <img src="images/quality-pipeline-light.svg" width="100%" alt="Quality pipeline: every pull request passes automated checks for questions, links, coverage, exam facts, labs and secrets before it is ready to merge.">
+</picture>
 
 Every pull request is checked automatically:
 
