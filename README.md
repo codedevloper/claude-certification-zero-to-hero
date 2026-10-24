@@ -65,6 +65,14 @@ Anthropic plans updated guides on 2026-11-17.
 
 ## The learning journey
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/learning-journey-dark.svg">
+  <img src="images/learning-journey-light.svg" width="100%" alt="Learning journey in seven stages: Foundations (modules 00–02), Prompting and context (03–05), Building (06–09), Systems (10–11), Secure and govern (12–13), Operate (14–15) and Certify (16–18). Labs 01–20 branch from Building and Projects 01–05 from Secure and govern.">
+</picture>
+
+<details>
+<summary>Text version of the diagram</summary>
+
 ```mermaid
 flowchart LR
   A["Foundations<br/>00–02"] --> B["Prompting &amp; context<br/>03–05"]
@@ -76,6 +84,8 @@ flowchart LR
   C -.-> L["Labs 01–20"]
   E -.-> P["Projects 01–05"]
 ```
+
+</details>
 
 | Stage | Modules | You'll be able to… |
 |---|---|---|
