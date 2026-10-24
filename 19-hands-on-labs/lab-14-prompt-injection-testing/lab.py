@@ -120,7 +120,7 @@ def is_internal_host(host: str | None) -> bool:
 
 
 def recipients_are_internal(to: str) -> bool:
-    """Every parsed address must be internal; 'a@evil.com, b@fabrikam.example' must not pass."""
+    """Every parsed address must be internal; 'a@evil.example, b@fabrikam.example' must not pass."""
     addresses = [addr for _, addr in getaddresses([to]) if addr]
     return bool(addresses) and all("@" in a and is_internal_host(a.rsplit("@", 1)[1]) for a in addresses)
 

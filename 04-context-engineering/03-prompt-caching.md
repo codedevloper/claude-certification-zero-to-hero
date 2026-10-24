@@ -17,8 +17,8 @@ start of the prompt up to the cache point. Change one character early on, and ev
 
 ## Why it matters
 
-- **Cost.** As of 2026-10-24, a cache read is billed at a small fraction of the normal input price: about 0.1x on most
-  models, and 0.05x on Claude Opus 5.5. Writing to the cache costs a premium (1.25x for the 5-minute lifetime, 2x for
+- **Cost.** As of 2026-10-25, a cache read is billed at a small fraction of the normal input price: 0.1x on Claude
+  Haiku 5.5, 0.05x on Claude Opus 5.5 and Sonnet 5.5, and 0.025x on Claude Fable 5.1. Writing to the cache costs a premium (1.25x for the 5-minute lifetime, 2x for
   the 1-hour lifetime). For prompts with a large shared prefix, savings are large. Always confirm current rates on the
   [pricing page](https://platform.claude.com/docs/en/about-claude/pricing).
 - **Latency.** Cached prefixes do not need to be processed again, which shortens time to first token.

@@ -17,6 +17,17 @@ from pathlib import Path
 from urllib.parse import unquote
 
 LINK = re.compile(r"(\]\()([^)\s]+)((?:\s+\"[^\"]*\")?\))")
+# README images use <picture> so GitHub can pick the light or dark file from the visitor's OS setting. The site has its
+# own theme switch, so each <picture> becomes two images that Material shows or hides with #only-light / #only-dark.
+PICTURE = re.compile(
+    r'<picture>\s*<source media="\(prefers-color-scheme: dark\)" srcset="([^"]+)">\s*<img src="([^"]+)"([^>]*)>\s*</picture>')
+# The Mermaid "text version" of the learning journey: the table beside it already gives the text, and Mermaid adds ~1 MB.
+JOURNEY_TEXT = re.compile(r"\n<details>\n<summary>Text version of the diagram</summary>.*?</details>\n", re.DOTALL)
+HOME_TITLE = "Claude Certification Study Guide: CCAO-F, CCAR-F and CCAR-P (Unofficial)"
+HOME_DESCRIPTION = ("Free, unofficial study guide for Anthropic's Claude certifications: CCAO-F, CCAR-F and CCAR-P tracks, "
+                    "410 original practice questions, mock exams, flashcards, offline labs and an AI security track.")
+# Long generated or reference pages that only add noise to search results.
+SEARCH_EXCLUDE = re.compile(r"(^CHANGELOG\.md$|/coverage-matrix\.md$|^PROGRESS\.md$|verification-log\.md$)")
 # The GitHub-only "Previous · Module overview · Next" footer; the site has its own footer.
 PAGE_NAV = re.compile(r"\n*<!-- page-nav:start -->.*?<!-- page-nav:end -->\n*", re.DOTALL)
 FENCE = re.compile(r"^\s*(```|~~~)")
@@ -125,6 +136,24 @@ def on_page_markdown(markdown: str, page, config, files, **_):
     if src == "README.md":
         # Website home page: replace the README's one-line "Start here" row with a card grid.
         text = re.sub(r"^\*\*Start here:\*\*.*$", HOME_CARDS, text, count=1, flags=re.MULTILINE)
+        text = JOURNEY_TEXT.sub("\n", text)
+        page.meta["title"] = HOME_TITLE
+        page.meta["description"] = HOME_DESCRIPTION
+
+    if SEARCH_EXCLUDE.search(src):
+        page.meta["search"] = {"exclude": True}
+
+    count = 0
+
+    def two_images(m: re.Match) -> str:
+        nonlocal count
+        dark, light, attrs = m.group(1), m.group(2), m.group(3)
+        lazy = ' loading="lazy"' if count else ""  # keep the first image (the banner) eager
+        count += 1
+        dark_attrs = re.sub(r'alt="[^"]*"', 'alt=""', attrs)
+        return f'<img src="{light}#only-light"{attrs}{lazy}><img src="{dark}#only-dark"{dark_attrs}{lazy}>'
+
+    text = PICTURE.sub(two_images, text)
 
     if src == "18-mock-examinations/README.md":
         button = (

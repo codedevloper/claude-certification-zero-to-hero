@@ -24,6 +24,11 @@
 | Retakes | Wait 14 days after the 1st failed attempt, 30 after the 2nd, 90 after the 3rd; at most 4 attempts per exam in a rolling 12 months |
 | Rescheduling | **Plan on 48 hours.** The v1.0 exam guides say 24 hours, but the Partner Academy FAQ and the Pearson VUE page (both checked 2026-10-24) say cancellations and reschedules must be made at least 48 hours ahead, or the fee is forfeited |
 | Conduct | NDA covering all exam content; no AI tools, notes or second monitor during the exam |
+| Registration email | A partner email address on a recognised company domain; personal addresses are rejected. Adding a new company domain takes 7–10 days |
+| Minimum age | 18, checked against your ID at check-in |
+| Partner pricing | Registered-tier partners pay list price; Select, Preferred and Global Premier partners get 50% off at checkout; Global Premier partners get 100% off through 2026-12-31 |
+| Registration validity | 5 years; a retake costs the full fee (your partner discount still applies) |
+| Where you can test | Holders of an ID from Belarus, Cuba, North Korea, Russia, Syria or restricted regions of Ukraine must use a test centre, not online proctoring. Pearson suspended delivery to residents of Iran from 2026-09-08 |
 
 > The free [Claude Academy](https://academy.claude.com/) courses are open to anyone, but they award
 > certificates of completion, not certifications.

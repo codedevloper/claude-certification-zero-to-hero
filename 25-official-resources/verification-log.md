@@ -13,6 +13,7 @@ re-verify something. Never update a fact without also adding a row here.
 | 2026-10-24 | Reschedule/cancel deadline | Exam guides v1.0 (24 h) vs [Partner Academy FAQ](https://anthropic-partners.skilljar.com/page/faq-certifications) and Pearson VUE (48 h) | Conflict recorded; learners told to plan on 48 h | Maintainer |
 | 2026-10-24 | Current model IDs, context windows, list prices and API behaviour rules | Anthropic API reference (models overview, pricing) | Dated in module 05, module 06 and the cheat sheets | Maintainer |
 | 2026-10-24 | Originality: repo text compared with all cited sources and the exam guides for verbatim overlaps of 12+ words | 256 source texts | 18 passages reworded; no copied prose remains; no exam-guide sample questions reused | Maintainer |
+| 2026-10-25 | Registration email and domains, minimum age, partner discounts, registration validity, retake pricing, online-proctoring and country restrictions | [Partner Academy certification FAQ](https://anthropic-partners.skilljar.com/page/faq-certifications); Pearson VUE page (last updated 2026-10-16) | Added to exam facts and the FAQ; no change to formats, fees or dates since 2026-10-24 | Maintainer |
 
 ## Next scheduled review
 

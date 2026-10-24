@@ -178,8 +178,8 @@ The order below follows dependencies, not domain numbers.
    [mock examinations](../../18-mock-examinations/README.md).
 9. **Final week.** Re-take the readiness assessment, remediate weak objectives, read [`exam-day.md`](exam-day.md).
 
-For calendar-based plans, see the [roadmaps](../../00-getting-started/roadmaps/README.md); the 30-day and
-60-day plans suit CCAR-F.
+For a calendar-based plan, follow Weeks 1 to 4 of the [60-day plan](../../00-getting-started/roadmaps/60-day-comprehensive.md)
+and add Module 09 (Claude Code); the [roadmaps guide](../../00-getting-started/roadmaps/README.md) explains why.
 
 ## Track contents
 
@@ -193,6 +193,7 @@ For calendar-based plans, see the [roadmaps](../../00-getting-started/roadmaps/R
 | [`decision-scenarios.md`](decision-scenarios.md) | Original configuration case studies with options analysis |
 | [`revision-notes.md`](revision-notes.md) | Condensed notes by domain |
 | [`common-misconceptions.md`](common-misconceptions.md) | Misconceptions and corrections |
+| [CCAR-F one-pager](../../22-cheat-sheets/ccar-f-one-pager.md) | Single-page cheat sheet |
 | [`exam-day.md`](exam-day.md) | Logistics, rules and pacing for a scenario-based exam |
 | [`readiness-assessment.md`](readiness-assessment.md) | Per-objective self-assessment and remediation |
 

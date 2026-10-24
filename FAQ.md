@@ -69,19 +69,38 @@ partner, you can still use this repository and Anthropic's free [Claude Academy]
 courses, which award certificates of completion rather than certifications. Check the official pages for any change to
 eligibility.
 
+### Can I register with a personal email address?
+
+No. Registration needs a partner email address on a recognised company domain; personal addresses are rejected. If your
+company's domain is not recognised yet, adding it takes 7 to 10 days, so ask your partner contact well before you plan
+to book. You must also be at least 18. See [exam facts](25-official-resources/exam-facts.md).
+
+### Is there a discount?
+
+It depends on your organisation's partner tier. Registered-tier partners pay the list price; Select, Preferred and
+Global Premier partners get 50% off at checkout, and Global Premier partners get 100% off through 2026-12-31. A retake
+costs the full fee, less your tier discount. Prices and tiers are set by Anthropic and can change: confirm at checkout.
+
+### Can I take the exam online from any country?
+
+Mostly. Candidates with an ID from Belarus, Cuba, North Korea, Russia, Syria or restricted regions of Ukraine must use a
+Pearson VUE test centre instead of online proctoring, and Pearson has suspended delivery to residents of Iran (from
+2026-09-08). Check the [Pearson VUE page](https://www.pearsonvue.com/us/en/anthropic.html) before you book.
+
 ### What are the format, fee and pass mark?
 
-| | CCAO-F | CCAR-P |
-|---|---|---|
-| Items | 60 (multiple-choice and multiple-response) | 63 (multiple-choice and multiple-response) |
-| Time | 120 minutes | 120 minutes |
-| Passing | Scaled score 720 on a 100–1,000 scale | Scaled score 720 on a 100–1,000 scale |
-| Fee (list price) | USD 99 | USD 175 |
-| Validity | 12 months | 12 months |
-| Delivery | Pearson VUE, online proctored or test centre | Pearson VUE, online proctored or test centre |
+| | CCAO-F | CCAR-F | CCAR-P |
+|---|---|---|---|
+| Items | 60 (multiple-choice and multiple-response) | 60, in 4 scenarios drawn from a published bank of 6 | 63 (multiple-choice and multiple-response) |
+| Time | 120 minutes | 120 minutes | 120 minutes |
+| Passing | Scaled score 720 on a 100–1,000 scale | Scaled score 720 on a 100–1,000 scale | Scaled score 720 on a 100–1,000 scale |
+| Fee (list price) | USD 99 | USD 125 | USD 175 |
+| Validity | 12 months | 12 months | 12 months |
+| Delivery | Pearson VUE, online proctored or test centre | Pearson VUE, online proctored or test centre | Pearson VUE, online proctored or test centre |
 
 Domain weights are in the registry, on [exam-facts.md](25-official-resources/exam-facts.md) and on the one-pagers for
-[CCAO-F](22-cheat-sheets/ccao-f-one-pager.md) and [CCAR-P](22-cheat-sheets/ccar-p-one-pager.md).
+[CCAO-F](22-cheat-sheets/ccao-f-one-pager.md), [CCAR-F](22-cheat-sheets/ccar-f-one-pager.md) and
+[CCAR-P](22-cheat-sheets/ccar-p-one-pager.md).
 
 ### What if I fail?
 

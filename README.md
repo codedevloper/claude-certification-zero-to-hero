@@ -53,6 +53,8 @@ It is also designed to be a practical reference long after the exam.
 
 Not sure? Take the two-minute [choose-your-path guide](00-getting-started/choose-your-path.md).
 
+If this guide helps you, a ⭐ on GitHub helps other learners find it.
+
 ## Certification tracks
 
 <picture>
@@ -319,7 +321,6 @@ uses no Anthropic logos or artwork.
 
 - The maintainer and contributors do not speak for Anthropic, and nothing here is official guidance or a promise about
   exam content or results.
-
 - All practice and mock-exam questions are **original and unofficial**. None comes from, or is reconstructed from, a
   real exam. Mock-exam percentages are **not** Anthropic scaled scores and do not predict official results.
 - Exam details can change. Always confirm with the official exam guide before you register or sit an exam.

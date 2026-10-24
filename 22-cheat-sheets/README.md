@@ -18,6 +18,7 @@ interview, or in the final week before an exam. Each sheet links back to the mod
 | [MCP](mcp.md) | Roles, primitives, transports, message shape, authorization, security checklist | Integrators, security reviewers |
 | [AI security](ai-security.md) | OWASP LLM Top 10 (2025), injection defences, agent controls, data protection, threat modelling | Security engineers, architects |
 | [CCAO-F one-pager](ccao-f-one-pager.md) | Associate exam format, domains, weights, key concepts per objective | CCAO-F candidates |
+| [CCAR-F one-pager](ccar-f-one-pager.md) | Architect Foundations exam format, scenarios, domains, weights, key concepts per objective | CCAR-F candidates |
 | [CCAR-P one-pager](ccar-p-one-pager.md) | Architect Professional exam format, domains, weights, key concepts per objective | CCAR-P candidates |
 
 Exam facts on the one-pagers come from [`registry.yaml`](../16-certification-tracks/registry.yaml); see also

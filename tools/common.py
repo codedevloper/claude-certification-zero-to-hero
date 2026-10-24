@@ -77,12 +77,16 @@ class Report:
     name: str
     errors: list[str] = field(default_factory=list)
     warnings: list[str] = field(default_factory=list)
+    notes: list[str] = field(default_factory=list)
 
     def error(self, msg: str) -> None:
         self.errors.append(msg)
 
     def warn(self, msg: str) -> None:
         self.warnings.append(msg)
+
+    def info(self, msg: str) -> None:
+        self.notes.append(msg)
 
     def print(self) -> None:
         status = "FAIL" if self.errors else "OK"
@@ -91,6 +95,8 @@ class Report:
             print(f"  ERROR  {e}")
         for w in self.warnings:
             print(f"  warn   {w}")
+        for n in self.notes:
+            print(f"  info   {n}")
 
     @property
     def ok(self) -> bool:

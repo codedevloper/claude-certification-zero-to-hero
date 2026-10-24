@@ -3,7 +3,13 @@
 {#- Link previews (Open Graph / Twitter cards) using the repository's social preview image. -#}
 {% block extrahead %}
   {{ super() }}
-  {%- set title = (page.title ~ " · " ~ config.site_name) if page and page.title and not page.is_homepage else config.site_name -%}
+  {%- if page and page.meta and page.meta.title -%}
+    {%- set title = page.meta.title -%}
+  {%- elif page and page.title and not page.is_homepage -%}
+    {%- set title = page.title ~ " · " ~ config.site_name -%}
+  {%- else -%}
+    {%- set title = config.site_name -%}
+  {%- endif -%}
   {%- set description = (page.meta.description if page and page.meta and page.meta.description else config.site_description) -%}
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="{{ config.site_name }}">

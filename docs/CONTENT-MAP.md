@@ -74,7 +74,7 @@ each with `README.md`, `src/`, `tests/`, `data/`.
 ## Reference sections
 
 - `21-interview-preparation/`: `README.md`, `conceptual-questions.md`, `system-design-questions.md`, `security-questions.md`, `stakeholder-and-behavioural.md`
-- `22-cheat-sheets/`: `README.md`, `claude-api.md`, `prompt-engineering.md`, `model-selection.md`, `claude-code.md`, `mcp.md`, `ai-security.md`, `ccao-f-one-pager.md`, `ccar-p-one-pager.md`
+- `22-cheat-sheets/`: `README.md`, `claude-api.md`, `prompt-engineering.md`, `model-selection.md`, `claude-code.md`, `mcp.md`, `ai-security.md`, `ccao-f-one-pager.md`, `ccar-f-one-pager.md`, `ccar-p-one-pager.md`
 - `24-troubleshooting/`: `README.md`, `api-errors.md`, `prompts-and-outputs.md`, `tools-and-agents.md`, `claude-code.md`, `mcp.md`, `rag.md`, `labs-and-repository.md`
 - `25-official-resources/`: `README.md`, `exam-facts.md`, `verification-log.md`
 - `website/`: `README.md`, `mkdocs.yml`, `hooks.py`, `assets/` (GitHub Pages site; built by `tools/build_site.py`)

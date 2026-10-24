@@ -9,6 +9,9 @@
   --md-primary-fg-color: #8f3f22;
   --md-accent-fg-color: #e0835f;
 }
+/* Link colours that pass WCAG AA (Material's deep orange on white is 2.8:1). */
+[data-md-color-scheme="default"] { --md-typeset-a-color: #a8432a; }
+[data-md-color-scheme="slate"] { --md-typeset-a-color: #f2a07c; }
 .md-typeset table:not([class]) { font-size: .72rem; }
 .md-typeset table:not([class]) th { white-space: nowrap; }
 .md-typeset blockquote { border-left-color: var(--md-accent-fg-color); }

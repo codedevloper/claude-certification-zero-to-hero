@@ -17,6 +17,17 @@ All notable changes to this project are documented here. The format follows
 ### Fixed
 
 - Practice app: links in answer feedback were hard to read in dark mode
+- Prompt-caching page: cache-read multipliers per model (0.1x Haiku 5.5, 0.05x Opus 5.5 and Sonnet 5.5, 0.025x Fable 5.1)
+- FAQ and mock-exam README now include CCAR-F; CCAR-F track points to the 60-day plan
+- Website: README images follow the site's light/dark switch, images below the banner load lazily, links pass WCAG AA
+  contrast, the home page has a descriptive title, and the practice app has a description and icon
+- Lab 14 example address uses a reserved `.example` domain
+
+### Added (launch preparation)
+
+- CCAR-F one-page cheat sheet
+- Registration facts from the official certification FAQ: company-domain email, minimum age, partner discounts,
+  registration validity, retake pricing and online-proctoring restrictions (exam facts, FAQ, verification log)
 
 ## [1.1.0] - 2026-10-24
 

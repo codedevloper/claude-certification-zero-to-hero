@@ -107,7 +107,7 @@ def validate() -> Report:
                 report.error(f"{id_a} and {id_b} are near-duplicates (>85% similar)")
 
     check_cueing(report)
-    report.warn(f"{len(seen)} questions checked") if seen else report.error("no questions found")
+    report.info(f"{len(seen)} questions checked") if seen else report.error("no questions found")
     return report
 
 
