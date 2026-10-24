@@ -9,9 +9,25 @@
   --md-primary-fg-color: #8f3f22;
   --md-accent-fg-color: #e0835f;
 }
-/* Link colours that pass WCAG AA (Material's deep orange on white is 2.8:1). */
-[data-md-color-scheme="default"] { --md-typeset-a-color: #a8432a; }
-[data-md-color-scheme="slate"] { --md-typeset-a-color: #f2a07c; }
+/* Accessible colours. Material sets its palette on <body> (data-md-color-*), so override there, not on :root. */
+[data-md-color-scheme="default"][data-md-color-primary] {
+  --md-primary-fg-color: #a8432a;          /* header bar: white text 6.0:1 */
+  --md-primary-fg-color--dark: #8f3f22;
+  --md-typeset-a-color: #a8432a;           /* links on white: 6.0:1 */
+  --md-accent-fg-color: #8f3f22;
+}
+[data-md-color-scheme="slate"][data-md-color-primary] {
+  --md-primary-fg-color: #8f3f22;
+  --md-typeset-a-color: #f2a07c;
+  --md-accent-fg-color: #f2a07c;
+}
+/* Links inside running text are underlined so they don't rely on colour alone. */
+.md-typeset p a, .md-typeset li a, .md-typeset td a { text-decoration: underline; text-underline-offset: .15em; }
+.md-typeset .grid.cards a { text-decoration: none; }
+/* Code comments and the footer copyright line pass 4.5:1. */
+[data-md-color-scheme="default"] .md-typeset .highlight :is(.c, .c1, .cm, .ch, .cs, .cp) { color: #57606a; }
+[data-md-color-scheme="slate"] .md-typeset .highlight :is(.c, .c1, .cm, .ch, .cs, .cp) { color: #a3acb9; }
+.md-copyright, .md-copyright__highlight { color: #d0d7de; }
 .md-typeset table:not([class]) { font-size: .72rem; }
 .md-typeset table:not([class]) th { white-space: nowrap; }
 .md-typeset blockquote { border-left-color: var(--md-accent-fg-color); }

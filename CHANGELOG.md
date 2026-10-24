@@ -21,6 +21,8 @@ All notable changes to this project are documented here. The format follows
 - FAQ and mock-exam README now include CCAR-F; CCAR-F track points to the 60-day plan
 - Website: README images follow the site's light/dark switch, images below the banner load lazily, links pass WCAG AA
   contrast, the home page has a descriptive title, and the practice app has a description and icon
+- Website performance and accessibility: system fonts instead of Google Fonts, no Mermaid bundle on the home page,
+  accessible header, code-comment and footer colours, underlined links in text, and a named search dialog
 - Lab 14 example address uses a reserved `.example` domain
 
 ### Added (launch preparation)

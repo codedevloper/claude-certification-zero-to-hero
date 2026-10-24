@@ -22,7 +22,7 @@ LINK = re.compile(r"(\]\()([^)\s]+)((?:\s+\"[^\"]*\")?\))")
 PICTURE = re.compile(
     r'<picture>\s*<source media="\(prefers-color-scheme: dark\)" srcset="([^"]+)">\s*<img src="([^"]+)"([^>]*)>\s*</picture>')
 # The Mermaid "text version" of the learning journey: the table beside it already gives the text, and Mermaid adds ~1 MB.
-JOURNEY_TEXT = re.compile(r"\n<details>\n<summary>Text version of the diagram</summary>.*?</details>\n", re.DOTALL)
+JOURNEY_TEXT = re.compile(r"\n<details(?: markdown)?>\n<summary>Text version of the diagram</summary>.*?</details>\n", re.DOTALL)
 HOME_TITLE = "Claude Certification Study Guide: CCAO-F, CCAR-F and CCAR-P (Unofficial)"
 HOME_DESCRIPTION = ("Free, unofficial study guide for Anthropic's Claude certifications: CCAO-F, CCAR-F and CCAR-P tracks, "
                     "410 original practice questions, mock exams, flashcards, offline labs and an AI security track.")
