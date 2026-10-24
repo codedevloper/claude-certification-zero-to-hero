@@ -70,6 +70,11 @@ ICONS = {
     "lock": '<rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>',
     "clock": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
     "laptop": '<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M2 19.5h20"/>',
+    "search": '<circle cx="11" cy="11" r="7"/><path d="M20.5 20.5l-4.5-4.5"/>',
+    "sun": '<circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    "moon": '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/>',
+    "fork": '<circle cx="6" cy="5" r="2.5"/><circle cx="18" cy="5" r="2.5"/><circle cx="12" cy="19" r="2.5"/><path d="M6 7.5v2a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-2M12 12.5v4"/>',
+    "merge": '<circle cx="6" cy="5" r="2.5"/><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="13" r="2.5"/><path d="M6 7.5v9M6 7.5c0 4 4 5.5 9.5 5.5"/>',
     "key": '<circle cx="7.5" cy="15.5" r="4"/><path d="M10.5 12.5L20 3M16 7l2.5 2.5M14 9l2 2"/>',
 }
 
@@ -666,6 +671,328 @@ def lab_modes(theme: str) -> str:
                   "and uses API credits.")
 
 
+# ================================================================== 8. certification tracks
+TRACK_AUDIENCE = {"CCAO-F": "Business users of the Claude apps",
+                  "CCAR-F": "Agent builders: Agent SDK, Claude Code, MCP",
+                  "CCAR-P": "Architects delivering production systems"}
+# Short domain labels for the bars; weights and order come from the registry.
+DOMAIN_SHORT = {
+    "CCAO-F": ["Prompting and tasks", "Output evaluation", "Product and model choice", "Workflow integration",
+               "Configuration and knowledge", "Governance and risk", "Troubleshooting"],
+    "CCAR-F": ["Agentic architecture", "Tool design and MCP", "Claude Code configuration", "Prompts and structured output",
+               "Context and reliability"],
+    "CCAR-P": ["Solution design", "Models, prompts and context", "Integration", "Evaluation and testing",
+               "Governance and safety", "Stakeholders and lifecycle", "Developer productivity"],
+}
+
+
+def tracks(theme: str) -> str:
+    cv = Canvas(theme, 1020, 430, 7.0)
+    c, b = cv.c, cv.body
+    order = ["CCAO-F", "CCAR-F", "CCAR-P"]
+    certs = {x["code"]: x for x in certifications()}
+    cw, gap, x0, y0, ch, hold = 322, 17, 10, 10, 342, 6.2
+    for k, code in enumerate(order):
+        cert, x = certs[code], x0 + k * (cw + gap)
+        t = 0.2 + 0.35 * k
+        n = cv.pop(f"k{k}", t, hold)
+        b.append(f'<g class="pop {n}">')
+        b.append(cv.card(x, y0, cw, ch, rx=18))
+        b.append(f'<rect x="{x}" y="{y0}" width="{cw}" height="6" rx="3" fill="url(#gt)"/>')
+        b.append(cv.icon("cap", x + 34, y0 + 26, ACCENT, 30))
+        b.append(cv.text(x + 62, y0 + 48, code, 24, 800))
+        b.append(cv.text(x + 22, y0 + 82, cert["name"].replace("Claude Certified ", ""), 14, 700))
+        b.append(cv.text(x + 22, y0 + 102, TRACK_AUDIENCE[code], 12, attrs=MUTED))
+        fmt = cert["format"]
+        facts = [f"{fmt['items']} items", f"{fmt['minutes']} min", f"{len(cert['domains'])} domains"]
+        if cert.get("scenarios"):
+            facts[2] = "4 of 6 scenarios"
+        fx = x + 22
+        for f in facts:
+            w = est_width(f, 12) + 20
+            b.append(f'<rect x="{fx:.1f}" y="{y0 + 116}" width="{w:.1f}" height="26" rx="13" fill="{c["tint"]}"/>'
+                     + cv.text(fx + w / 2, y0 + 133.5, f, 12, 700, "middle", f'style="fill:{c["tint_text"]}"'))
+            fx += w + 8
+        b.append('</g>')
+        top = max(d["weight"] for d in cert["domains"])
+        labels = DOMAIN_SHORT.get(code, [])
+        for j, d in enumerate(cert["domains"]):
+            y = y0 + 168 + j * 24
+            label = labels[j] if j < len(labels) else d["name"]
+            b.append(f'<g class="{cv.window(f"w{k}{j}", t + 0.35 + 0.06 * j, hold, 0.2)}">'
+                     + cv.text(x + 22, y, f"D{d['id']} {label}", 11.5, 600)
+                     + cv.text(x + cw - 22, y, f"{d['weight']:g}%", 11.5, 700, "end", MUTED) + '</g>')
+            b.append(f'<rect x="{x + 22}" y="{y + 5}" width="{cw - 44}" height="6" rx="3" fill="{c["track"]}"/>')
+            fill = 'url(#gt)' if d["weight"] == top else ORANGE[0]
+            op = "" if d["weight"] == top else ' opacity="0.55"'
+            b.append(f'<rect class="grow {cv.grow(f"g{k}{j}", t + 0.4 + 0.06 * j, hold)}" x="{x + 22}" y="{y + 5}" '
+                     f'width="{(cw - 44) * d["weight"] / 30:.1f}" height="6" rx="3" fill="{fill}"{op}/>')
+    planned = [x for x in certifications() if x["status"] != "supported"]
+    if planned:
+        cert = planned[0]
+        y = y0 + ch + 18
+        n = cv.pop("pl", 1.6, hold)
+        b.append(f'<g class="pop {n}"><rect x="{x0}" y="{y}" width="1000" height="48" rx="24" fill="none" '
+                 f'stroke="{c["edge"]}" stroke-width="1.5" stroke-dasharray="6 5"/>'
+                 + cv.icon("clock", x0 + 30, y + 12, c["muted"], 24)
+                 + cv.text(x0 + 54, y + 29, cert["code"], 15, 800, attrs=MUTED)
+                 + cv.text(x0 + 124, y + 29, f"{cert['name']} · {cert['format']['items']} items · "
+                           f"{len(cert['domains'])} domains · planned for a future release", 13, attrs=MUTED) + '</g>')
+    return cv.svg("Certification tracks. " + "; ".join(
+        f"{code}, {certs[code]['name']}: {certs[code]['format']['items']} items in {certs[code]['format']['minutes']} "
+        f"minutes, domain weights " + ", ".join(f"{d['weight']:g}%" for d in certs[code]["domains"]) for code in order)
+        + ". CCDV-F is planned.")
+
+
+# ================================================================== 9. certification timeline
+MILESTONES = [("Mar 2026", "Started preparing", "for the Claude exams", "book", False),
+              ("Sep 2026", "CCAO-F", "Associate – Foundations", "cap", True),
+              ("Sep 2026", "CCAR-F", "Architect – Foundations", "cap", True),
+              ("Oct 2026", "CCAR-P", "Architect – Professional", "trophy", True),
+              ("Oct 2026", "Guide goes public", "free for everyone to use", "rocket", False)]
+
+
+def timeline(theme: str) -> str:
+    cv = Canvas(theme, 1020, 260, 6.5)
+    c, back, front = cv.c, [], []
+    y, x_start, x_end, hold = 130, 112, 908, 5.6
+    t0, t1 = 0.3, 4.2
+    step = (x_end - x_start) / (len(MILESTONES) - 1)
+    back.append(f'<line x1="{x_start}" y1="{y}" x2="{x_end}" y2="{y}" stroke="{c["track"]}" stroke-width="6" stroke-linecap="round"/>')
+    back.append(f'<path class="dr {cv.draw("trk", t0, t1, hold)}" pathLength="100" d="M{x_start} {y}H{x_end}" '
+                f'stroke="url(#gt)" stroke-width="6" stroke-linecap="round" fill="none"/>')
+    cw, chh = 196, 76
+    for i, (when, title, sub, ic, cert) in enumerate(MILESTONES):
+        x = x_start + i * step
+        at = t0 + i * (t1 - t0) / (len(MILESTONES) - 1)
+        n = cv.pop(f"m{i}", at, hold)
+        above = i % 2 == 0
+        cy = y - 30 - chh if above else y + 30
+        cx = x - cw / 2
+        back.append(f'<line x1="{x}" y1="{y}" x2="{x}" y2="{cy + chh if above else cy}" stroke="{c["edge"]}" stroke-width="2" '
+                    f'stroke-dasharray="3 4"/>')
+        front.append(f'<circle cx="{x}" cy="{y}" r="9" fill="{c["card"]}" stroke="{c["edge"]}" stroke-width="2"/>')
+        front.append(f'<circle class="pop {n}" cx="{x}" cy="{y}" r="9" fill="url(#g)" stroke="#ffffff" stroke-width="2"/>')
+        front.append(cv.text(x, y + (-16 if not above else 26), when, 12, 700, "middle",
+                             f'class="{n}" style="fill:{ACCENT}"'))
+        fill = 'url(#g)' if cert else c["card"]
+        attrs, sub_attrs, colour = (WHITE, WHITE + ' opacity="0.9"', "#ffffff") if cert else ("", MUTED, ACCENT)
+        if cert:
+            front.append(f'<g class="{n}"><rect x="{cx - 3}" y="{cy - 3}" width="{cw + 6}" height="{chh + 6}" rx="18" '
+                         f'fill="{ORANGE[0]}" opacity="0.45" filter="url(#halo)"/></g>')
+        front.append(f'<g class="pop {n}"><rect x="{cx}" y="{cy}" width="{cw}" height="{chh}" rx="16" fill="{fill}" '
+                     f'stroke="{c["edge"] if not cert else "none"}" stroke-width="1.5" filter="url(#sh)"/>'
+                     + cv.icon(ic, cx + 30, cy + 16, colour, 26)
+                     + cv.text(cx + 54, cy + 34, title, 15 if cert else 13.5, 800, attrs=attrs)
+                     + cv.text(cx + 18, cy + 60, sub, 11.5, attrs=sub_attrs)
+                     + '</g>')
+    p = cv.pct
+    span = x_end - x_start
+    cv.css.append(
+        f"@keyframes run {{ 0%, {p(t0 - 0.1)} {{ transform: translateX(0); opacity: 0 }} {p(t0)} {{ transform: translateX(0); opacity: 1 }} "
+        f"{p(t1)} {{ transform: translateX({span:.0f}px); opacity: 1 }} {p(t1 + 0.4)}, 100% {{ transform: translateX({span:.0f}px); opacity: 0 }} }}")
+    cv.css.append(f".run {{ animation: run {cv.cycle}s linear infinite; opacity: 0; }}")
+    front.append(f'<g class="run"><circle cx="{x_start}" cy="{y}" r="13" fill="{ORANGE[0]}" opacity="0.8" filter="url(#glow)"/>'
+                 f'<circle cx="{x_start}" cy="{y}" r="5.5" fill="#ffffff"/></g>')
+    cv.body += back + front
+    return cv.svg("Certification timeline: " + "; ".join(f"{w}, {t}" for w, t, _, _, _ in MILESTONES) + ".")
+
+
+# ================================================================== 10. project ladder
+PROJECTS = [(("Document", "summarisation"), "Beginner", "Single call, structured output", "filecheck"),
+            (("Knowledge base", "Q&A assistant"), "Intermediate", "Retrieval-augmented generation", "chat"),
+            (("Security alert", "triage"), "Intermediate", "Validation and routing workflow", "shield"),
+            (("DevSecOps", "code review"), "Advanced", "LLM inside a CI pipeline", "code"),
+            (("Agentic", "investigation"), "Capstone", "Multi-agent, self-hosted loop", "nodes")]
+
+
+def ladder(theme: str) -> str:
+    cv = Canvas(theme, 1020, 310, 6.5)
+    c, back, front = cv.c, [], []
+    cw, gap, x0, chh, hold = 190, 12.5, 10, 112, 5.6
+    tops = [178 - i * 40 for i in range(len(PROJECTS))]
+    times = [0.3 + 0.8 * i for i in range(len(PROJECTS))]
+    for i, ((l1, l2), level, pattern, ic) in enumerate(PROJECTS):
+        x, y = x0 + i * (cw + gap), tops[i]
+        n = cv.pop(f"p{i}", times[i], hold)
+        back.append(f'<rect x="{x + 10}" y="{y + chh - 10}" width="{cw - 20}" height="{310 - y - chh}" rx="6" '
+                    f'fill="{c["track"]}" opacity="0.7"/>')
+        back.append(f'<g class="{n}"><rect x="{x + 10}" y="{y + chh - 10}" width="{cw - 20}" height="{310 - y - chh}" rx="6" '
+                    f'fill="url(#g)" opacity="{0.18 + 0.1 * i:.2f}"/></g>')
+        capstone = i == len(PROJECTS) - 1
+        if capstone:
+            front.append(f'<g class="{n}"><rect x="{x - 4}" y="{y - 4}" width="{cw + 8}" height="{chh + 8}" rx="20" '
+                         f'fill="{ORANGE[0]}" opacity="0.5" filter="url(#halo)"/></g>')
+        front.append(cv.card(x, y, cw, chh, rx=16))
+
+        def body(attrs: str, sub: str, colour: str) -> str:
+            return (cv.icon(ic, x + 28, y + 14, colour, 24)
+                    + cv.text(x + cw - 16, y + 30, f"{i + 1:02d}", 13, 800, "end", sub)
+                    + cv.text(x + 16, y + 60, l1, 14.5, 750, attrs=attrs)
+                    + cv.text(x + 16, y + 78, l2, 14.5, 750, attrs=attrs)
+                    + cv.text(x + 16, y + 99, pattern, 11, attrs=sub))
+        front.append(body("", MUTED, ACCENT))
+        front.append(f'<g class="pop {n}"><rect x="{x}" y="{y}" width="{cw}" height="{chh}" rx="16" fill="url(#g)"/>'
+                     + body(WHITE, WHITE + ' opacity="0.9"', "#ffffff") + '</g>')
+        tw = est_width(level, 11) + 18
+        front.append(f'<g class="pop {n}"><rect x="{x + 52}" y="{y + 14}" width="{tw:.1f}" height="22" rx="11" '
+                     f'fill="{c["card"]}"/>' + cv.text(x + 52 + tw / 2, y + 29, level, 11, 750, "middle",
+                                                       f'style="fill:{ACCENT}"') + '</g>')
+    # A climber hops from step to step.
+    p = cv.pct
+    px = [x0 + i * (cw + gap) + cw / 2 for i in range(len(PROJECTS))]
+    py = [tops[i] - 12 for i in range(len(PROJECTS))]
+    frames = [f"0%, {p(times[0] - 0.15)} {{ transform: translate(0px, 0px); opacity: 0 }}",
+              f"{p(times[0])} {{ transform: translate(0px, 0px); opacity: 1 }}"]
+    for i in range(1, len(PROJECTS)):
+        dx, dy = px[i] - px[0], py[i] - py[0]
+        mx, my = (px[i - 1] + px[i]) / 2 - px[0], min(py[i - 1], py[i]) - 34 - py[0]
+        frames.append(f"{p(times[i] - 0.4)} {{ transform: translate({mx:.0f}px, {my:.0f}px); opacity: 1 }}")
+        frames.append(f"{p(times[i] - 0.05)} {{ transform: translate({dx:.0f}px, {dy:.0f}px); opacity: 1 }}")
+    last = f"translate({px[-1] - px[0]:.0f}px, {py[-1] - py[0]:.0f}px)"
+    frames.append(f"{p(times[-1] + 0.6)} {{ transform: {last}; opacity: 1 }}")
+    frames.append(f"{p(times[-1] + 1.0)}, 100% {{ transform: {last}; opacity: 0 }}")
+    cv.css.append("@keyframes climb { " + " ".join(frames) + " }")
+    cv.css.append(f".climb {{ animation: climb {cv.cycle}s ease-in-out infinite; opacity: 0; }}")
+    front.append(f'<g class="climb"><circle cx="{px[0]}" cy="{py[0]}" r="12" fill="{ORANGE[0]}" opacity="0.8" '
+                 f'filter="url(#glow)"/><circle cx="{px[0]}" cy="{py[0]}" r="5.5" fill="#ffffff"/></g>')
+    cv.body += back + front
+    return cv.svg("Project ladder, from beginner to capstone: " + "; ".join(
+        f"{i + 1}. {' '.join(n)} ({lvl}): {pat}" for i, (n, lvl, pat, _) in enumerate(PROJECTS)) + ".")
+
+
+# ================================================================== 11. website preview
+SITE_NAV = ["Home", "Getting started", "Prompt engineering", "Claude API", "Model Context Protocol",
+            "Certification tracks", "Mock examinations", "Hands-on labs"]
+SITE_RESULTS = [("Tool use", "tool_choice: auto, any, tool and none"), ("CCAR-F study guide", "Domain 2: tool design and MCP"),
+                ("Cheat sheet", "Claude API quick reference")]
+PAGE = {"light": {"bg": "#ffffff", "side": "#f6f7f9", "text": "#1f2328", "muted": "#656d76", "line": "#e6e8eb",
+                  "card": "#ffffff", "edge": "#e1e4e8"},
+        "dark": {"bg": "#1e2129", "side": "#191c23", "text": "#e6edf3", "muted": "#9198a1", "line": "#2f3440",
+                 "card": "#252a33", "edge": "#363c47"}}
+
+
+def website(theme: str) -> str:
+    cv = Canvas(theme, 1020, 340, 7.0)
+    c, b = cv.c, cv.body
+    x0, y0, w, h = 10, 10, 1000, 320
+    query = "tool_choice"
+    cv.defs.append(f'<clipPath id="win"><rect x="{x0}" y="{y0}" width="{w}" height="{h}" rx="14"/></clipPath>')
+    cv.defs.append(f'<clipPath id="q"><rect class="type" x="694" y="64" width="{est_width(query, 13, False) + 4:.0f}" height="24"/></clipPath>')
+    p = cv.pct
+    cv.css += [
+        f"@keyframes type {{ 0%, {p(0.6)} {{ transform: scaleX(0) }} {p(1.5)}, {p(3.4)} {{ transform: scaleX(1) }} "
+        f"{p(3.5)}, 100% {{ transform: scaleX(0) }} }}",
+        f".type {{ transform-box: fill-box; transform-origin: left center; animation: type {cv.cycle}s steps({len(query)}, end) infinite; }}",
+        f"@keyframes knob {{ 0%, {p(3.7)} {{ transform: translateX(0) }} {p(4.0)}, {p(6.4)} {{ transform: translateX(20px) }} "
+        f"{p(6.7)}, 100% {{ transform: translateX(0) }} }}",
+        f".knob {{ animation: knob {cv.cycle}s ease-in-out infinite; }}",
+    ]
+
+    def page(pal: dict, mode: str) -> str:
+        out = [f'<rect x="{x0}" y="{y0 + 40}" width="{w}" height="{h - 40}" fill="{pal["bg"]}"/>',
+               f'<rect x="{x0}" y="{y0 + 92}" width="230" height="{h - 92}" fill="{pal["side"]}"/>']
+        for i, item in enumerate(SITE_NAV):
+            y = y0 + 122 + i * 26
+            if item == "Certification tracks":
+                out.append(f'<rect x="{x0 + 12}" y="{y - 17}" width="206" height="24" rx="6" fill="{ORANGE[0]}" opacity="0.18"/>')
+            out.append(cv.text(x0 + 26, y, item, 12.5, 650 if item == "Certification tracks" else 400,
+                               attrs=f'style="fill:{ACCENT if item == "Certification tracks" else pal["text"]}"'))
+        cx = x0 + 262
+        out.append(cv.text(cx, y0 + 132, "Certification tracks", 24, 800, attrs=f'style="fill:{pal["text"]}"'))
+        for i, ln in enumerate([640, 600, 660]):
+            out.append(f'<rect x="{cx}" y="{y0 + 148 + i * 16}" width="{ln}" height="8" rx="4" fill="{pal["line"]}"/>')
+        for k, code in enumerate(["CCAO-F", "CCAR-F", "CCAR-P"]):
+            bx = cx + k * 238
+            out.append(f'<rect x="{bx}" y="{y0 + 206}" width="222" height="96" rx="10" fill="{pal["card"]}" stroke="{pal["edge"]}"/>')
+            out.append(cv.icon("cap", bx + 26, y0 + 220, ACCENT, 22))
+            out.append(cv.text(bx + 46, y0 + 237, code, 15, 800, attrs=f'style="fill:{pal["text"]}"'))
+            out.append(f'<rect x="{bx + 16}" y="{y0 + 254}" width="180" height="7" rx="3.5" fill="{pal["line"]}"/>'
+                       f'<rect x="{bx + 16}" y="{y0 + 270}" width="140" height="7" rx="3.5" fill="{pal["line"]}"/>')
+        return "".join(out)
+
+    b.append(cv.card(x0, y0, w, h, rx=14))
+    b.append(f'<g clip-path="url(#win)">')
+    b.append(page(PAGE["light"], "light"))
+    b.append(f'<g class="{cv.window("dk", 4.0, 6.4, 0.3)}">{page(PAGE["dark"], "dark")}</g>')
+    # Browser chrome and the site header bar.
+    b.append(f'<rect x="{x0}" y="{y0}" width="{w}" height="40" fill="{c["track"]}"/>')
+    for i, col in enumerate(["#ff5f57", "#febc2e", "#28c840"]):
+        b.append(f'<circle cx="{x0 + 22 + i * 18}" cy="{y0 + 20}" r="6" fill="{col}"/>')
+    b.append(f'<rect x="{x0 + 90}" y="{y0 + 8}" width="520" height="24" rx="12" fill="{c["card"]}"/>')
+    b.append(cv.icon("lock", x0 + 108, y0 + 13, c["muted"], 14))
+    b.append(cv.text(x0 + 122, y0 + 25, "codedevloper.github.io/claude-certification-zero-to-hero", 12, attrs=MUTED))
+    b.append(f'<rect x="{x0}" y="{y0 + 40}" width="{w}" height="52" fill="url(#gt)"/>')
+    b.append(cv.icon("cap", x0 + 30, y0 + 54, "#ffffff", 24))
+    b.append(cv.text(x0 + 52, y0 + 72, "Claude Certification Zero to Hero", 16, 750, attrs=WHITE))
+    b.append(f'<rect x="672" y="{y0 + 52}" width="248" height="28" rx="6" fill="#ffffff" opacity="0.92"/>')
+    b.append(cv.icon("search", 688, y0 + 59, "#656d76", 15))
+    b.append(f'<g class="{cv.window("ph", 0.0, 0.55, 0.05)}">' + cv.text(700, y0 + 71, "Search", 13, attrs='style="fill:#8c959f"') + '</g>')
+    b.append(f'<g clip-path="url(#q)">' + cv.text(700, y0 + 71, query, 13, attrs='style="fill:#1f2328"') + '</g>')
+    # Theme toggle: sun, then moon.
+    b.append(f'<rect x="940" y="{y0 + 56}" width="44" height="20" rx="10" fill="#ffffff" opacity="0.35"/>')
+    b.append(f'<circle class="knob" cx="952" cy="{y0 + 66}" r="8" fill="#ffffff"/>')
+    b.append(f'<g class="{cv.window("sun", 0.0, 3.8, 0.2)}">' + cv.icon("sun", 952, y0 + 60, ACCENT, 12) + '</g>')
+    b.append(f'<g class="{cv.window("moon", 4.0, 6.4, 0.2)}" style="transform:translateX(20px)">'
+             + cv.icon("moon", 952, y0 + 60, "#3451c7", 12) + '</g>')
+    b.append('</g>')
+    # Search results drop-down.
+    res = cv.window("res", 1.7, 3.4, 0.2)
+    b.append(f'<g class="{res}"><rect x="672" y="{y0 + 84}" width="300" height="{len(SITE_RESULTS) * 44 + 12}" rx="10" '
+             f'fill="{c["card"]}" stroke="{c["edge"]}" filter="url(#sh)"/>')
+    for i, (title, sub) in enumerate(SITE_RESULTS):
+        y = y0 + 92 + i * 44
+        if i == 0:
+            b.append(f'<rect x="680" y="{y}" width="284" height="40" rx="8" fill="{c["tint"]}"/>')
+        b.append(cv.icon("book", 698, y + 10, ACCENT, 18))
+        b.append(cv.text(716, y + 17, title, 12.5, 700))
+        b.append(cv.text(716, y + 33, sub, 11.5, attrs=MUTED))
+    b.append('</g>')
+    return cv.svg("Website preview: the study guide as a searchable site. A search for tool_choice shows matching "
+                  "pages, then the theme switch flips the site from light to dark.")
+
+
+# ================================================================== 12. contribution flow
+CONTRIB = [("fork", "Fork", "your own copy"), ("code", "Write", "original content only"),
+           ("list", "Check", "validate_all.py --labs"), ("pr", "Pull request", "CI runs every check"),
+           ("merge", "Merged", "after maintainer review")]
+PURPLE = ("#a371f7", "#8250df")
+
+
+def contribute(theme: str) -> str:
+    cv = Canvas(theme, 1020, 170, 6.0)
+    c, back, front = cv.c, [], []
+    cv.defs.append(f'<linearGradient id="gp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="{PURPLE[0]}"/>'
+                   f'<stop offset="1" stop-color="{PURPLE[1]}"/></linearGradient>')
+    cw, gap, x0, y0, chh, hold = 180, 25, 10, 30, 100, 5.0
+    for i, (ic, title, sub) in enumerate(CONTRIB):
+        x, t = x0 + i * (cw + gap), 0.3 + 0.75 * i
+        n = cv.pop(f"c{i}", t, hold)
+        last = i == len(CONTRIB) - 1
+        if i:
+            ax1, ax2, ay = x - gap + 3, x - 5, y0 + chh / 2
+            back.append(f'<line x1="{ax1}" y1="{ay}" x2="{ax2}" y2="{ay}" stroke="{c["edge"]}" stroke-width="2"/>')
+            back.append(f'<g class="{cv.pop(f"a{i}", t - 0.3, hold)}"><line class="dash" x1="{ax1}" y1="{ay}" x2="{ax2}" '
+                        f'y2="{ay}" stroke="{ACCENT}" stroke-width="2.5"/><path d="M{ax2 - 1} {ay - 5}L{ax2 + 5} {ay}L{ax2 - 1} '
+                        f'{ay + 5}Z" fill="{ACCENT}"/></g>')
+        grad = "url(#gp)" if last else "url(#g)"
+        if last:
+            front.append(f'<g class="{n}"><rect x="{x - 3}" y="{y0 - 3}" width="{cw + 6}" height="{chh + 6}" rx="18" '
+                         f'fill="{PURPLE[0]}" opacity="0.5" filter="url(#halo)"/></g>')
+        front.append(cv.card(x, y0, cw, chh, rx=16))
+
+        def body(attrs: str, sub_attrs: str, colour: str) -> str:
+            return (cv.icon(ic, x + cw / 2, y0 + 14, colour, 28)
+                    + cv.text(x + cw / 2, y0 + 64, title, 15, 800, "middle", attrs)
+                    + cv.text(x + cw / 2, y0 + 84, sub, 11.5, anchor="middle", attrs=sub_attrs))
+        front.append(body("", MUTED, PURPLE[1] if last else ACCENT))
+        front.append(f'<g class="pop {n}"><rect x="{x}" y="{y0}" width="{cw}" height="{chh}" rx="16" fill="{grad}"/>'
+                     + body(WHITE, WHITE + ' opacity="0.9"', "#ffffff") + '</g>')
+        front.append(cv.text(x + 14, y0 - 10, f"STEP {i + 1}", 10.5, 750, attrs=f'{MUTED} letter-spacing="1"'))
+    cv.body += back + front
+    return cv.svg("How to contribute: " + "; ".join(f"{i + 1}. {t}, {s}" for i, (_, t, s) in enumerate(CONTRIB)) + ".")
+
+
 DIAGRAMS: dict[str, Callable[[str], str]] = {
     "readme-banner": banner,
     "learning-journey": journey,
@@ -674,6 +1001,11 @@ DIAGRAMS: dict[str, Callable[[str], str]] = {
     "quality-pipeline": pipeline,
     "study-plans": study_plans,
     "lab-modes": lab_modes,
+    "certification-tracks": tracks,
+    "certification-timeline": timeline,
+    "project-ladder": ladder,
+    "website-preview": website,
+    "contribution-flow": contribute,
 }
 
 

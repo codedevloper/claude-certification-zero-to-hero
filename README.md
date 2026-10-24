@@ -55,6 +55,11 @@ Not sure? Take the two-minute [choose-your-path guide](00-getting-started/choose
 
 ## Certification tracks
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/certification-tracks-dark.svg">
+  <img src="images/certification-tracks-light.svg" width="100%" alt="Three supported tracks with their exam format and domain weights: CCAO-F (60 items, 120 minutes, 7 domains), CCAR-F (60 items, 120 minutes, 4 of 6 scenarios across 5 domains) and CCAR-P (63 items, 120 minutes, 7 domains). CCDV-F is planned.">
+</picture>
+
 | Certification | Code | Audience | Track |
 |---|---|---|---|
 | Claude Certified Associate – Foundations | CCAO-F | Business users of the Claude apps | [Full track](16-certification-tracks/ccao-f/README.md) |
@@ -158,6 +163,11 @@ The real practice app, recorded in learning mode ([try it online](https://codede
 
 ## Read it as a website
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/website-preview-dark.svg">
+  <img src="images/website-preview-light.svg" width="100%" alt="Website preview: the study guide as a searchable site with navigation; a search for tool_choice shows matching pages, then the theme switch flips the site from light to dark.">
+</picture>
+
 Everything here is also published as a searchable website with light and dark themes and the interactive practice
 exam built in. The site is built from this repository with [MkDocs](https://www.mkdocs.org/) and
 [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/), and deployed to GitHub Pages on every push to `main`
@@ -182,6 +192,11 @@ python tools/build_site.py --serve      # http://127.0.0.1:8000
 - **[5 real-world projects](20-real-world-projects/README.md)** of increasing difficulty: a document summariser, a
   knowledge-base Q&A assistant, a security alert triage assistant, a DevSecOps code-review assistant and an agentic
   investigation assistant. Each has requirements, an architecture, security design, tests and cost estimates.
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/project-ladder-dark.svg">
+  <img src="images/project-ladder-light.svg" width="100%" alt="The five projects as a staircase from beginner to capstone: document summarisation, knowledge base Q&A assistant, security alert triage, DevSecOps code review and the agentic investigation assistant.">
+</picture>
 
 ## Repository map
 
@@ -239,6 +254,11 @@ Professional exam in a few weeks showed me how much there is to learn, and how m
 This repository is my way of paying that forward. It is the guide I wish I had had when I started. If it helps you pass
 an exam, or ship something you are proud of, it has done its job.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/certification-timeline-dark.svg">
+  <img src="images/certification-timeline-light.svg" width="100%" alt="Certification timeline: started preparing in March 2026; earned CCAO-F and CCAR-F in September 2026 and CCAR-P in October 2026; published this guide in October 2026.">
+</picture>
+
 <p align="center">
   <a href="https://www.credly.com/badges/b93e30a8-2195-4738-8eab-8d93bcea82da">
     <img src="images/certificates/ccao-f-certificate.png" alt="Claude Certified Associate – Foundations certificate issued to Amol Shivraj Bhure, September 2026" width="720">
@@ -271,6 +291,11 @@ an exam, or ship something you are proud of, it has done its job.
 > published exam guides.
 
 ## Contributing
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/contribution-flow-dark.svg">
+  <img src="images/contribution-flow-light.svg" width="100%" alt="How to contribute in five steps: fork the repository, write original content, run validate_all.py with labs, open a pull request where CI runs every check, and get merged after maintainer review.">
+</picture>
 
 Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [documentation standards](docs/STYLE.md).
 The two non-negotiables: **original work only**, and **no real exam content, ever**.
