@@ -8,7 +8,9 @@
 An open, original learning path that takes you from never having used Claude to preparing for Anthropic's
 certification exams, and to building secure, production-grade AI systems.
 
-[![CI](https://img.shields.io/badge/CI-GitHub_Actions-blue)](.github/workflows/ci.yml)
+[![CI](https://github.com/codedevloper/claude-certification-zero-to-hero/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/codedevloper/claude-certification-zero-to-hero/actions/workflows/ci.yml)
+[![Website](https://github.com/codedevloper/claude-certification-zero-to-hero/actions/workflows/pages.yml/badge.svg?branch=main)](https://codedevloper.github.io/claude-certification-zero-to-hero/)
+[![Release](https://img.shields.io/github/v/release/codedevloper/claude-certification-zero-to-hero)](https://github.com/codedevloper/claude-certification-zero-to-hero/releases)
 [![Content: CC BY 4.0](https://img.shields.io/badge/content-CC_BY_4.0-lightgrey)](LICENSE-CONTENT.md)
 [![Code: MIT](https://img.shields.io/badge/code-MIT-green)](LICENSE)
 [![Exam guides verified](https://img.shields.io/badge/exam_guides_verified-2026--10--24-informational)](25-official-resources/verification-log.md)
@@ -146,6 +148,13 @@ python 19-hands-on-labs/lab-01-first-claude-interaction/lab.py
 - **[Mock examinations](18-mock-examinations/README.md):** timed and learning modes, domain breakdowns, weak-area advice
 - **[Flashcards](23-flashcards/README.md):** YAML decks, exportable to Anki
 - **[Cheat sheets](22-cheat-sheets/README.md):** one-page summaries for the API, prompting, Claude Code, MCP, security and each exam
+
+The real practice app, recorded in learning mode ([try it online](https://codedevloper.github.io/claude-certification-zero-to-hero/18-mock-examinations/web/index.html)):
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/practice-app-dark.gif">
+  <img src="images/practice-app-light.gif" width="100%" alt="Recording of the practice app: setting up a five-question CCAR-F session in learning mode, answering one question correctly and one incorrectly with the explanation of every option, then the results page with per-domain scores and recommended study.">
+</picture>
 
 ## Read it as a website
 
