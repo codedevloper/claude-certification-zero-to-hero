@@ -179,28 +179,26 @@ Professional exam in a few weeks showed me how much there is to learn, and how m
 This repository is my way of paying that forward. It is the guide I wish I had had when I started. If it helps you pass
 an exam, or ship something you are proud of, it has done its job.
 
-<table>
-  <tr>
-    <td align="center" width="33%">
-      <a href="https://www.credly.com/badges/b93e30a8-2195-4738-8eab-8d93bcea82da">
-        <img src="images/certificates/ccao-f-certificate.png" alt="Claude Certified Associate – Foundations certificate issued to Amol Shivraj Bhure, September 2026" width="260">
-      </a><br>
-      <sub><b>Associate – Foundations</b><br>Sep 2026 · <a href="https://www.credly.com/badges/b93e30a8-2195-4738-8eab-8d93bcea82da">Verify on Credly</a></sub>
-    </td>
-    <td align="center" width="33%">
-      <a href="https://www.credly.com/badges/25fc6fd8-45c5-4d40-a4ac-ff4f3b10f8b5">
-        <img src="images/certificates/ccar-f-certificate.png" alt="Claude Certified Architect – Foundations certificate issued to Amol Shivraj Bhure, September 2026" width="260">
-      </a><br>
-      <sub><b>Architect – Foundations</b><br>Sep 2026 · <a href="https://www.credly.com/badges/25fc6fd8-45c5-4d40-a4ac-ff4f3b10f8b5">Verify on Credly</a></sub>
-    </td>
-    <td align="center" width="33%">
-      <a href="https://www.credly.com/badges/78ace069-21d1-4c34-8936-4ebf027374aa">
-        <img src="images/certificates/ccar-p-certificate.png" alt="Claude Certified Architect – Professional certificate issued to Amol Shivraj Bhure, October 2026" width="260">
-      </a><br>
-      <sub><b>Architect – Professional</b><br>Oct 2026 · <a href="https://www.credly.com/badges/78ace069-21d1-4c34-8936-4ebf027374aa">Verify on Credly</a></sub>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <a href="https://www.credly.com/badges/b93e30a8-2195-4738-8eab-8d93bcea82da">
+    <img src="images/certificates/ccao-f-certificate.png" alt="Claude Certified Associate – Foundations certificate issued to Amol Shivraj Bhure, September 2026" width="720">
+  </a><br>
+  <b>Claude Certified Associate – Foundations (CCAO-F)</b> · earned Sep 2026 · <a href="https://www.credly.com/badges/b93e30a8-2195-4738-8eab-8d93bcea82da">Verify on Credly</a>
+</p>
+
+<p align="center">
+  <a href="https://www.credly.com/badges/25fc6fd8-45c5-4d40-a4ac-ff4f3b10f8b5">
+    <img src="images/certificates/ccar-f-certificate.png" alt="Claude Certified Architect – Foundations certificate issued to Amol Shivraj Bhure, September 2026" width="720">
+  </a><br>
+  <b>Claude Certified Architect – Foundations (CCAR-F)</b> · earned Sep 2026 · <a href="https://www.credly.com/badges/25fc6fd8-45c5-4d40-a4ac-ff4f3b10f8b5">Verify on Credly</a>
+</p>
+
+<p align="center">
+  <a href="https://www.credly.com/badges/78ace069-21d1-4c34-8936-4ebf027374aa">
+    <img src="images/certificates/ccar-p-certificate.png" alt="Claude Certified Architect – Professional certificate issued to Amol Shivraj Bhure, October 2026" width="720">
+  </a><br>
+  <b>Claude Certified Architect – Professional (CCAR-P)</b> · earned Oct 2026 · <a href="https://www.credly.com/badges/78ace069-21d1-4c34-8936-4ebf027374aa">Verify on Credly</a>
+</p>
 
 | Certification | Code | Earned | Valid until | Verify |
 |---|---|---|---|---|
