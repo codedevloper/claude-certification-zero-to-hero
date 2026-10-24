@@ -5,6 +5,32 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-24
+
+### Added
+
+- Full CCAR-F (Claude Certified Architect – Foundations) track: overview, the six exam scenarios, five domain study
+  guides, practical exercises, decision scenarios, misconceptions, revision notes, readiness assessment and exam-day
+  guide, with an objective map and a generated coverage matrix (30/30 objectives)
+- 131 CCAR-F practice questions, each tagged with one of the six exam scenarios (`scenario_set`), and three CCAR-F mock
+  forms that mirror the exam's "4 of 6 scenarios" structure
+- CCAR-F flashcard deck (133 cards)
+- Independent answer-key review of the new CCAR-F bank: no wrong keys; two ambiguous items, one over-broad
+  explanation and several near-duplicate or template-like items rewritten
+- Six Domain 7 questions on Claude Code operations (`.mcp.json` scope, worktrees, hook matchers) for CCAO-F and CCAR-P
+- Website: a card grid of starting points on the home page, and link-preview (Open Graph and Twitter) metadata using
+  the social preview image
+
+### Changed
+
+- Sonnet 5.5 cache-read price corrected to $0.10 per million tokens (labs 17 and 19, metrics and ROI examples)
+- Data-residency guidance: `inference_geo` accepts only `us` and `global`; pinning another region uses a cloud
+  platform's regional endpoint (question CCAR-P-D5-016 and three module pages)
+- Answer-key review fixes to CCAR-P questions D2-006, D5-016, D7-001 and D7-003
+- MCP cheat sheet uses `MCPServer` (MCP Python SDK v2); 16 `Unverified` notes re-checked: 13 confirmed or corrected, 3 still open
+- `tools/shuffle_options.py` now requires `--check`, `--ids` or `--all`, so a stray argument cannot reshuffle every bank
+- Getting-started pages, roadmaps, FAQ, exam facts and the social preview now cover three supported tracks
+
 ## [1.0.0] - 2026-10-24
 
 ### Changed (full repository review, 2026-10-24)

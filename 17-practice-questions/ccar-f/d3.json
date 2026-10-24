@@ -1,0 +1,801 @@
+{
+  "schema_version": 1,
+  "track": "CCAR-F",
+  "domain": 3,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAR-F-D3-001",
+      "objective": "CCAR-F-3.1",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "troubleshooting",
+      "scenario": "At Marrowstone Bank, the platform lead wrote the team's review rules (no raw SQL in handlers, every endpoint needs an audit log call) into `~/.claude/CLAUDE.md` on her laptop. Her local reviews follow the rules, but reviews from the CI job and from teammates' machines ignore them.",
+      "question": "What is the best fix?",
+      "options": {
+        "A": "Bake a copy of her `~/.claude/CLAUDE.md` into the CI runner image so that pipeline runs pick up the same rules",
+        "B": "Move the rules into the project's CLAUDE.md and commit it, so every clone and the CI checkout load them",
+        "C": "Paste the rules into the prompt string of the CI workflow and ask teammates to paste them into their sessions",
+        "D": "Ask each teammate to add an `@import` in their own user file pointing to the path of the lead's personal file"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "User-level CLAUDE.md applies only to that user on that machine and is not shared through version control. Rules the whole team and CI must follow belong in project-level memory (root CLAUDE.md or .claude/CLAUDE.md), committed with the code so every checkout gets them.",
+      "why_incorrect": {
+        "A": "This covers CI only, leaves teammates without the rules, and creates a second copy that drifts from the lead's file.",
+        "C": "Duplicating rules into prompts and manual pastes is error-prone and leaves no single versioned source of truth.",
+        "D": "The lead's home-directory path does not exist on other machines or runners, so the import cannot resolve there."
+      },
+      "module": "09-claude-code/03-claude-md-and-memory.md",
+      "references": [
+        "https://code.claude.com/docs/en/memory"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-002",
+      "objective": "CCAR-F-3.1",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Halcyon Grid keeps a payments service and embedded firmware in one monorepo. Its root CLAUDE.md has grown to about 1,800 lines mixing payments rules (idempotency keys, PCI logging limits) with firmware rules (no heap allocation in interrupt handlers). CI reviews of firmware pull requests sometimes cite payments rules, and the maintainers of each area want to own their own standards.",
+      "question": "Which organisation of project memory best fits these needs?",
+      "options": {
+        "A": "Keep a short root CLAUDE.md with repo-wide rules, and give each package a CLAUDE.md that uses `@import` to pull in its own standards files",
+        "B": "Keep the single root file but add a line at the top telling Claude to ignore any rules that do not apply to the package being reviewed",
+        "C": "Move every standard into one large review skill that the CI job invokes on each run, and delete the root CLAUDE.md entirely",
+        "D": "Split the monorepo into two repositories so that each one has its own root CLAUDE.md, owned by the relevant team"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "A modular hierarchy keeps universal standards at the root and lets each package's CLAUDE.md import the standards files its maintainers choose. Package-level files load when Claude works in that directory, so firmware reviews see firmware rules, and each team can own its imported files.",
+      "why_incorrect": {
+        "B": "All 1,800 lines still load on every run, and an instruction to ignore some of them does not reliably stop cross-contamination.",
+        "C": "A single skill bundles both domains again and drops the always-loaded repository-wide conventions that belong in CLAUDE.md.",
+        "D": "Restructuring repositories is a large, disruptive change to solve what memory organisation already handles."
+      },
+      "module": "09-claude-code/03-claude-md-and-memory.md",
+      "references": [
+        "https://code.claude.com/docs/en/memory"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-003",
+      "objective": "CCAR-F-3.1",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "At Tidewell Insurance, payments/CLAUDE.md holds conventions for the payments package. A developer starts Claude Code at the repository root, asks a general design question about payments, and the answer ignores those conventions. Running /context lists the root CLAUDE.md under Memory files but not payments/CLAUDE.md. Teammates say the conventions apply once Claude edits payment code.",
+      "question": "What is the most accurate diagnosis?",
+      "options": {
+        "A": "The external-import approval dialog was declined earlier, which disables every nested CLAUDE.md file in the project for this user",
+        "B": "Nested CLAUDE.md files are honoured only when Claude Code is started from inside that directory, so she must relaunch from payments/",
+        "C": "The file needs YAML frontmatter with a paths field before Claude Code will recognise it as an instruction file for that directory",
+        "D": "Subdirectory CLAUDE.md files load on demand, when Claude reads or edits a file in that directory, so the file is not listed at launch"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "CLAUDE.md files above the working directory load at launch. Files in subdirectories load only when Claude reads, writes or edits a file in that subdirectory, so they do not appear under Memory files in /context at startup. Having Claude open a payments file first, or moving conventions that apply everywhere up a level, fixes the gap.",
+      "why_incorrect": {
+        "A": "The approval dialog covers imports that resolve outside the working directory. It does not switch off nested CLAUDE.md files.",
+        "B": "Launching from payments/ would load the file at startup, but it is not required. The file already loads on demand during a root-level session.",
+        "C": "Only rule files in .claude/rules/ use paths frontmatter. CLAUDE.md files need none, and teammates already see the file take effect."
+      },
+      "module": "09-claude-code/03-claude-md-and-memory.md",
+      "references": [
+        "https://code.claude.com/docs/en/memory"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-004",
+      "objective": "CCAR-F-3.1",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "A Fernhill Education developer added notes for her own setup (her local database port, her preferred test-watch command) to the repository's CLAUDE.md. Teammates complain that Claude now suggests her port and command in their sessions. She wants the notes to apply only to her, and only in this repository.",
+      "question": "What is the most effective fix?",
+      "options": {
+        "A": "Move the notes to CLAUDE.local.md at the repository root and keep that file out of version control with .gitignore",
+        "B": "Move the notes to her ~/.claude/CLAUDE.md, so they load for her in every session on her laptop and nowhere else",
+        "C": "Move the notes from the root CLAUDE.md into .claude/CLAUDE.md, so they sit apart from the team's shared instructions",
+        "D": "Move the notes to a new CLAUDE.md inside the src/ directory, so they load only when Claude opens files under src/"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "CLAUDE.local.md is the place for personal, project-specific instructions: it loads alongside the project's CLAUDE.md for her sessions in this repository, and because it is gitignored it never reaches teammates. The shared project CLAUDE.md should hold only what the whole team needs.",
+      "why_incorrect": {
+        "B": "User-level memory applies to all of her projects, so a port and command specific to this repository would leak into unrelated work.",
+        "C": ".claude/CLAUDE.md is still project memory that is committed and shared, so teammates keep getting her notes.",
+        "D": "A subdirectory CLAUDE.md is still committed and shared, and it loads for anyone whose session touches src/."
+      },
+      "module": "09-claude-code/03-claude-md-and-memory.md",
+      "references": [
+        "https://code.claude.com/docs/en/memory"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-005",
+      "objective": "CCAR-F-3.1",
+      "scenario_set": "code-generation",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Copperline Energy's monorepo contains billing/, telemetry/ and ui-kit/ packages. The root CLAUDE.md has grown to 900 lines, adherence is slipping, and each package's maintainers want only the standards relevant to their package to apply.",
+      "question": "Which TWO changes best restructure the instructions? (Choose 2.)",
+      "options": {
+        "A": "Move the guidance into every developer's ~/.claude/CLAUDE.md so the repository file shrinks and each person keeps only the parts they need",
+        "B": "Convert the 900 lines into @imports from the root CLAUDE.md, because imported files load only when Claude decides to follow the reference",
+        "C": "Keep only universal facts in the root CLAUDE.md, and let each package's own CLAUDE.md @import the shared standards files its maintainers choose",
+        "D": "Move topic guidance into files under .claude/rules/, giving package-specific files a paths field so they load only when Claude works on matching files",
+        "E": "Replace the file with one skill holding every standard, marked disable-model-invocation so it costs no context unless someone types it"
+      },
+      "answer": [
+        "C",
+        "D"
+      ],
+      "explanation": "Path-scoped rules in .claude/rules/ load only when Claude touches matching files, which cuts irrelevant context. Package-level CLAUDE.md files with selective @imports let maintainers choose which shared standards apply to their package, while the root file keeps only what every session needs.",
+      "why_incorrect": {
+        "A": "User-level files are not version-controlled, so the team loses a shared source of truth and new members receive nothing.",
+        "B": "Imported files are expanded and loaded together with the CLAUDE.md that imports them. Imports help organisation but do not reduce context cost.",
+        "E": "With disable-model-invocation, Claude never loads the skill on its own. Standards that should apply to every edit would then be absent unless someone remembered to type the command."
+      },
+      "module": "09-claude-code/03-claude-md-and-memory.md",
+      "references": [
+        "https://code.claude.com/docs/en/memory",
+        "https://code.claude.com/docs/en/skills"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-006",
+      "objective": "CCAR-F-3.2",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Pinecrest University's research software team built a 'deep review' workflow that maps call graphs across the codebase before judging a change. They want developers to run it on demand from their sessions and the CI job to run the identical workflow. Developers complain that when they try it, the long call-graph output floods their working session.",
+      "question": "How should the team package this workflow?",
+      "options": {
+        "A": "As a personal skill under `~/.claude/skills/` on each developer laptop, with the CI job carrying its own copy of the steps",
+        "B": "As a project skill in `.claude/skills/` with `context: fork`, committed to the repo and run in CI by putting `/deep-review` in the `-p` prompt",
+        "C": "As a section of the root CLAUDE.md, so that the workflow is always loaded and available in every session and CI run",
+        "D": "As a project skill without forking, ending with an instruction to summarise the call graph once the review is complete"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "A project skill is shared through version control, so developers and CI use the same definition. `context: fork` runs the skill in its own subagent context, keeping the verbose analysis out of the developer's main conversation. In print mode, putting `/skill-name` in the prompt invokes the skill.",
+      "why_incorrect": {
+        "A": "Personal skills are not shared, so developers and CI would maintain separate copies that drift apart.",
+        "C": "CLAUDE.md is for always-loaded standards; putting a long task workflow there spends context on every session that does not need it.",
+        "D": "Without forking, the full call-graph output still lands in the main session before any summary is written."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/skills",
+        "https://code.claude.com/docs/en/headless"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-007",
+      "objective": "CCAR-F-3.2",
+      "scenario_set": "code-generation",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "At Halyard Bank, an engineer wants a terser variant of the team's project skill release-notes for her own use, without changing what teammates get. Separately, the team wants its db-reset skill never to start unless a person explicitly types it.",
+      "question": "Which TWO actions meet these needs? (Choose 2.)",
+      "options": {
+        "A": "Create ~/.claude/skills/release-notes-terse/SKILL.md, a personal skill with a different name that sits beside the team's version",
+        "B": "Add a CLAUDE.md line asking Claude never to run db-reset unless an engineer explicitly asks it to in the prompt",
+        "C": "Set disable-model-invocation: true in db-reset's SKILL.md so only a person typing /db-reset can start that skill",
+        "D": "Set user-invocable: false on db-reset so it disappears from the slash menu and therefore cannot start by itself",
+        "E": "Add a 'terse mode' paragraph to the committed release-notes SKILL.md, since only she will ever ask for that mode"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanation": "A personal skill in ~/.claude/skills/ with a distinct name gives her a variant without touching the shared file or shadowing the team version. disable-model-invocation: true removes Claude's ability to invoke db-reset, so only a typed /db-reset can run it.",
+      "why_incorrect": {
+        "B": "A CLAUDE.md instruction is guidance Claude usually follows, not a control. disable-model-invocation removes the possibility entirely.",
+        "D": "user-invocable: false does the opposite of what is needed. It hides the skill from people while still letting Claude invoke it.",
+        "E": "Editing the committed skill changes the shared definition and the context every teammate loads with it."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/skills"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-008",
+      "objective": "CCAR-F-3.2",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "cost-performance",
+      "scenario": "Ashgrove Pharma's team has a dependency-audit skill that walks the lockfile and prints every transitive package with its licence. After an engineer runs it, the main conversation is full of package listings and Claude's later answers about the feature in progress get vaguer.",
+      "question": "Which change to the skill best addresses this?",
+      "options": {
+        "A": "Set disable-model-invocation: true so the skill runs only when an engineer types it, keeping the listings out of the session",
+        "B": "Add context: fork to the skill's frontmatter so it runs in a subagent and only its summary returns to the main conversation",
+        "C": "Add allowed-tools: Read so the skill cannot run shell commands, which keeps the size of each package listing much smaller",
+        "D": "Set user-invocable: false so the skill is hidden from the slash menu and can only be triggered when Claude judges it is needed"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "context: fork runs the skill in an isolated subagent context. The verbose package walk stays inside that context and the main conversation receives only the result, so the working session is not crowded out.",
+      "why_incorrect": {
+        "A": "This controls who can invoke the skill, not where its output goes. A manual run would still flood the main conversation.",
+        "C": "allowed-tools pre-approves tools for the skill's turn; it does not shrink output. The listing would be just as long.",
+        "D": "This changes who can invoke the skill, not where its output lands, so the main context still fills up."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/skills"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-009",
+      "objective": "CCAR-F-3.2",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Larkspur Games' release manager finds that about a third of the changelog entries Claude Code drafts for the game-server repository have no ticket reference. Engineers paste an ad-hoc prompt from a wiki page into their sessions, and many skip its ticket field.",
+      "question": "What should the team set up?",
+      "options": {
+        "A": "Copy the wiki prompt into each engineer's ~/.claude/CLAUDE.md, adding a line that says a ticket ID is always required",
+        "B": "Expose a changelog-entry prompt from an MCP server that each engineer registers with claude mcp add, using the default scope",
+        "C": "Add a CLAUDE.md section telling Claude that when someone types /changelog-entry it should ask for the ticket ID and draft",
+        "D": "Commit .claude/skills/changelog-entry/SKILL.md with argument-hint [ticket-id], $ARGUMENTS, and a rule to ask if none given"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "A project skill in .claude/skills/ is shared through version control, replacing the copy-paste prompt with one versioned command. argument-hint shows the expected ticket ID in autocomplete, $ARGUMENTS places what the engineer typed into the instructions, and an explicit instruction to ask for the ID when none is given closes the gap that produced entries without a ticket.",
+      "why_incorrect": {
+        "A": "Personal files drift between machines, need a manual copy for every engineer, and load into every unrelated session rather than defining a command.",
+        "B": "The default scope of claude mcp add is local, which is private to one user and project, so it is not shared with the team. It also adds a server where a file would do.",
+        "C": "CLAUDE.md is always-loaded guidance, not a command definition. Typing an undefined slash command does not invoke anything reliably."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/skills"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-010",
+      "objective": "CCAR-F-3.3",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Corvid Labs added .claude/rules/terraform.md. Its frontmatter is the single line paths: [terraform/**/*.tf, with the closing bracket missing, between --- markers. Engineers notice the Terraform conventions are in context even while Claude edits Python services.",
+      "question": "What explains this behaviour?",
+      "options": {
+        "A": "Path-scoped rules load at launch for every session and only become active once a matching file is opened",
+        "B": "The root CLAUDE.md mentions `terraform.md` inside backticks, which imports the rule file for every session",
+        "C": "Path scoping applies only to the Edit tool, so Read calls on any file still bring every rule into the context",
+        "D": "The YAML does not parse, so Claude Code ignores the frontmatter and loads the rule as though it had no paths"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "When the frontmatter YAML fails to parse, Claude Code ignores it and treats the file as an unconditional rule, which loads at launch. Fixing the list syntax restores path scoping, and claude --debug shows the parse error.",
+      "why_incorrect": {
+        "A": "A correctly scoped rule is not loaded at launch at all. It loads when Claude reads, writes or edits a matching file.",
+        "B": "Import parsing skips Markdown code spans, so a path wrapped in backticks stays literal text and imports nothing.",
+        "C": "Path-scoped rules load on Read as well as Write and Edit of a matching file. Reading Python files would not match terraform/**/*.tf."
+      },
+      "module": "09-claude-code/03-claude-md-and-memory.md",
+      "references": [
+        "https://code.claude.com/docs/en/memory"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-011",
+      "objective": "CCAR-F-3.3",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Saltmarsh Robotics' root CLAUDE.md has grown to 900 lines, a third of it SQL migration conventions (reversible steps, no column renames in place). Migrations live in services/*/db/migrations/, and few sessions touch them. The team reports that Claude follows the general rules less reliably as the file grows.",
+      "question": "What is the best way to restructure these conventions?",
+      "options": {
+        "A": "Move them to .claude/rules/migrations.md with paths: [\"services/*/db/migrations/**\"] in its frontmatter",
+        "B": "Move them to a separate file and reference it with an @import from the root CLAUDE.md, so that the root file reads shorter",
+        "C": "Move them into a CLAUDE.md inside services/, so they load only when Claude works on files somewhere under that directory",
+        "D": "Package them as a skill whose description says to use it for database work, and rely on Claude to invoke it when needed"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "A path-scoped rule in .claude/rules/ with a glob loads only when Claude works with matching files. That takes the migration conventions out of every session's context, which shortens the always-loaded instructions, while still applying them every time a migration file is touched.",
+      "why_incorrect": {
+        "B": "Imported files are expanded and loaded at launch, so the conventions still use context in every session.",
+        "C": "A subdirectory CLAUDE.md loads for any file under services/, which is most service work, not only migrations.",
+        "D": "Auto-invocation depends on Claude judging the skill relevant. A path-scoped rule loads automatically when a matching file is touched."
+      },
+      "module": "09-claude-code/03-claude-md-and-memory.md",
+      "references": [
+        "https://code.claude.com/docs/en/memory"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-012",
+      "objective": "CCAR-F-3.3",
+      "scenario_set": "code-generation",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "concept",
+      "scenario": "Orchard Analytics wants SQL migration conventions to load only when Claude works on files matching db/migrations/**/*.sql. The rule lives in the project's .claude/rules/migrations.md.",
+      "question": "Which TWO statements about how this rule behaves are correct? (Choose 2.)",
+      "options": {
+        "A": "The rule loads at session start whenever at least one matching file exists anywhere in the repository, so it is present from the first prompt",
+        "B": "The rule loads when Claude uses Read, Write or Edit on a matching file, and when it views one with a single-file command such as cat",
+        "C": "Scoping is declared with an applies_to key, because paths is reserved for skill frontmatter and is ignored inside rule files",
+        "D": "Adding a description field to the rule's frontmatter helps Claude decide when the rule is relevant enough to load",
+        "E": "The rule's patterns resolve relative to the directory that contains the project's .claude folder, so they target the repository's migrations"
+      },
+      "answer": [
+        "B",
+        "E"
+      ],
+      "explanation": "A path-scoped rule loads when Claude reads, writes or edits a matching file, including a single-file view through Bash that counts as a read. Patterns in project rules resolve relative to the directory containing the rule's .claude folder.",
+      "why_incorrect": {
+        "A": "Loading depends on Claude touching a matching file, not on matching files existing somewhere in the repository.",
+        "C": "paths is the documented field for rules. Claude Code reads no other frontmatter field in a rule file.",
+        "D": "paths is the only field Claude Code reads from a rule. Other fields, description included, are ignored."
+      },
+      "module": "09-claude-code/03-claude-md-and-memory.md",
+      "references": [
+        "https://code.claude.com/docs/en/memory",
+        "https://code.claude.com/docs/en/tools-reference"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-013",
+      "objective": "CCAR-F-3.4",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Juniper Rail wants to retire a home-grown date library used in about 60 files. Two approaches are on the table: wrap the new library behind an adapter, or replace calls directly. Each has different testing and rollout costs.",
+      "question": "How should the engineer run this task in Claude Code?",
+      "options": {
+        "A": "Start in plan mode so Claude explores call sites and compares both approaches, review and edit the plan, then approve it to begin editing",
+        "B": "Use acceptEdits from the start, since the change is mechanical and Claude can correct mistakes as it moves from one file to the next",
+        "C": "Have Claude convert one file directly, then ask it to repeat the same edit across the remaining files using that file as the pattern",
+        "D": "Open about 60 short direct-execution sessions, one per file, so that each change stays small and the history is easy to review"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Large, multi-file changes with more than one valid approach and an architectural choice are where plan mode pays off. Claude explores read-only, proposes a plan you can edit (Ctrl+G opens it in your editor), and edits begin only after approval, which avoids costly rework.",
+      "why_incorrect": {
+        "B": "Editing immediately commits to an approach before the call sites and trade-offs are understood, which is the rework plan mode prevents.",
+        "C": "One file is not a representative sample. Edge cases in other call sites, and the adapter-versus-direct decision, stay unexamined.",
+        "D": "Per-file sessions lose the shared view needed to choose between approaches and keep the migration consistent."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/permission-modes",
+        "https://www.anthropic.com/engineering/claude-code-best-practices"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-014",
+      "objective": "CCAR-F-3.4",
+      "scenario_set": "code-generation",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Basalt Systems is moving its services from one message-queue client to another. There are two integration options with different infrastructure needs. On a previous attempt, the discovery of every producer and consumer filled the context window before any design was agreed.",
+      "question": "Which TWO practices should the team combine? (Choose 2.)",
+      "options": {
+        "A": "Skip planning and use acceptEdits so Claude can try both integrations in place and keep whichever passes tests",
+        "B": "Ask the Plan subagent to edit the files in parallel while the main session is still writing up the plan",
+        "C": "Use plan mode to investigate and choose the approach, then approve the plan and implement it in an editing mode",
+        "D": "Delegate the verbose producer and consumer discovery to the Explore subagent so only a summary returns",
+        "E": "Run all discovery in the main conversation in plan mode, which keeps tool output out of the context window"
+      },
+      "answer": [
+        "C",
+        "D"
+      ],
+      "explanation": "Plan mode handles the design decision before any edits, and the approved plan then drives implementation. Sending verbose discovery to the Explore subagent keeps the main context for the design work, because only a summary comes back.",
+      "why_incorrect": {
+        "A": "Trying both integrations by editing in place is the costly rework that planning is meant to avoid, especially with infrastructure differences.",
+        "B": "The built-in Plan subagent is read-only, with Write and Edit denied, so it cannot make edits.",
+        "E": "Plan mode blocks edits, but tool output from exploration still accumulates in the main context, which is the problem seen last time."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/permission-modes",
+        "https://code.claude.com/docs/en/sub-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-015",
+      "objective": "CCAR-F-3.4",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "A failing test at Wren Retail produces a stack trace pointing to an off-by-one error in a single paginate() function. The fix is clearly confined to that function and its test file.",
+      "question": "Which way of working is most appropriate?",
+      "options": {
+        "A": "Enter plan mode and have Claude produce a written plan for approval before it changes paginate()",
+        "B": "Ask Claude directly to fix the off-by-one using the stack trace, then run the failing test to confirm",
+        "C": "Spawn an Explore subagent to map the codebase's pagination patterns before any fix is attempted",
+        "D": "Set defaultMode to plan in the project settings so that every bug fix goes through a reviewed plan"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Direct execution suits a small, well-scoped change with a clear diagnosis. Planning or wide exploration adds overhead without lowering risk, and the test gives immediate verification.",
+      "why_incorrect": {
+        "A": "A formal plan for a one-function fix with a known cause adds a step without reducing any meaningful risk.",
+        "C": "The stack trace has already located the defect. Mapping the wider codebase spends time and context on nothing.",
+        "D": "Making plan mode the project default slows every small fix, which is the wrong trade-off for well-understood changes."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/permission-modes",
+        "https://www.anthropic.com/engineering/claude-code-best-practices"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-016",
+      "objective": "CCAR-F-3.5",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Vellum Analytics uses Claude Code in CI to generate tests for a utility that parses user-entered durations. The prompt says the tests should 'cover edge cases properly'. Each run picks different cases, and none of them so far has checked empty strings, null input or values such as '1h 90m'.",
+      "question": "What is the most effective refinement?",
+      "options": {
+        "A": "Expand the prose description of edge cases into a longer paragraph that explains why careful edge-case testing matters",
+        "B": "Run test generation three times per change and keep only the test cases that appear in at least two of the three runs",
+        "C": "Raise the effort level so Claude reasons more carefully about which edge cases deserve tests before writing any of them",
+        "D": "Give two or three concrete inputs with their expected outputs, including empty, null and overflowing minute values"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "When prose is interpreted inconsistently, concrete input and expected-output examples communicate the requirement far more precisely. Naming the exact edge cases with their expected results removes guesswork and makes later runs consistent.",
+      "why_incorrect": {
+        "A": "More prose about importance still leaves the actual cases unspecified, so different runs keep making different choices.",
+        "B": "Voting across runs triples cost and still cannot produce cases that none of the runs thought of.",
+        "C": "Deeper reasoning does not tell Claude which specific behaviours the team expects for these inputs."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/multishot-prompting",
+        "https://code.claude.com/docs/en/headless"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-017",
+      "objective": "CCAR-F-3.5",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Marlowe Publishing asks Claude to write a function that converts legacy citation strings into a structured record. After three rounds of prose explanation, the output still varies: sometimes the year is parsed as a volume number and sometimes editors are dropped.",
+      "question": "What is the most effective next step?",
+      "options": {
+        "A": "Give two or three concrete input strings with the exact expected records, including one with editors and a volume",
+        "B": "Rewrite the explanation in more detail with the key rules in capitals so the requirements stand out more clearly",
+        "C": "Ask Claude to keep regenerating the function until two consecutive attempts produce the same parsed output",
+        "D": "Switch to plan mode so that Claude writes out its parsing approach in detail before it attempts the code again"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "When prose descriptions are interpreted inconsistently, a few concrete input/output pairs remove the ambiguity. Pairs that cover the confusing cases (year versus volume, editors) pin down the transformation precisely and double as test cases.",
+      "why_incorrect": {
+        "B": "More emphatic prose keeps the ambiguity that caused the variation. Examples state the expected mapping directly.",
+        "C": "Two matching outputs show consistency, not correctness. Both attempts can share the same misreading.",
+        "D": "A written plan restates the same prose understanding. Without examples the year and volume ambiguity remains."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://www.anthropic.com/engineering/claude-code-best-practices"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-018",
+      "objective": "CCAR-F-3.5",
+      "scenario_set": "code-generation",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Northgate Telecom's engineers are adding a cache in front of a pricing service. Nobody on the team has designed cache invalidation before, and they want Claude to improve the solution in steps rather than produce one big untested change.",
+      "question": "Which TWO techniques best support this? (Choose 2.)",
+      "options": {
+        "A": "Have Claude interview the engineer about invalidation triggers, acceptable staleness and failure modes before any code is written",
+        "B": "Fix each failing test in a brand-new session so that earlier attempts cannot bias how Claude approaches the next one",
+        "C": "Write tests for expected behaviour, edge cases and the latency budget first, then iterate by sharing the specific failures",
+        "D": "Ask for the complete implementation at once, then reply that it still does not feel right until the design settles down",
+        "E": "Let Claude pick an invalidation strategy on its own and document the assumptions it made after the code is merged"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanation": "The interview pattern surfaces considerations the team has not anticipated, such as invalidation events and failure behaviour, before implementation. Test-first iteration then gives concrete, shareable failures that drive each refinement.",
+      "why_incorrect": {
+        "B": "Fresh sessions throw away useful context about the design and earlier failures, which slows convergence.",
+        "D": "Vague feedback gives Claude nothing specific to correct, so iterations wander instead of converging.",
+        "E": "Unexamined assumptions in an unfamiliar domain are what lead to stale-data bugs. Documenting them after merge is too late."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://www.anthropic.com/engineering/claude-code-best-practices"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-019",
+      "objective": "CCAR-F-3.6",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Saltmarsh Payments added `--bare` to its `claude -p` review step so runs behave the same on every runner. Since the change, reviews no longer enforce the rules in the repository's root CLAUDE.md, such as 'monetary amounts must use Decimal, never float'. Nothing else in the job changed.",
+      "question": "What explains the change, and what is the best fix?",
+      "options": {
+        "A": "Bare mode removes the file read tool, so Claude cannot open CLAUDE.md; add `--allowedTools \"Read\"` to restore access to the file",
+        "B": "Bare mode skips CLAUDE.md discovery, so pass the review rules explicitly, for example with `--append-system-prompt-file`",
+        "C": "CLAUDE.md is only read in interactive sessions, so move the review rules into `.claude/settings.json` where print mode reads them",
+        "D": "Bare mode switches to a smaller default model that follows instructions less closely, so pin a larger model with `--model`"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "`--bare` skips auto-discovery of hooks, skills, plugins, MCP servers, auto memory and CLAUDE.md, which is what makes runs reproducible. Context the job needs must then be passed explicitly, for example with `--append-system-prompt-file` pointing at a committed rules file. Without `--bare`, `claude -p` does load CLAUDE.md as an interactive session would.",
+      "why_incorrect": {
+        "A": "In bare mode Claude still has the Bash, file read and file edit tools; the rules are missing because CLAUDE.md is not auto-loaded, not because files cannot be read.",
+        "C": "Print mode without `--bare` does load CLAUDE.md, and settings.json holds configuration such as permissions, not review instructions.",
+        "D": "The documented effect of bare mode is on what is discovered and loaded, not on model selection, so pinning a model leaves the rules missing."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/headless",
+        "https://code.claude.com/docs/en/cli-reference"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-020",
+      "objective": "CCAR-F-3.6",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Brackenridge Logistics posts review findings with `jq '.structured_output.findings[]'` after a `claude -p --output-format json --json-schema ...` step. Most runs work, but a few each week end with a jq error about iterating over null, and the job then reports 'no findings' on the pull request. In one failing run the result text shows Claude declined part of the request.",
+      "question": "What is the most appropriate fix in the pipeline?",
+      "options": {
+        "A": "Check that `structured_output` exists before posting, and report a missing field as a failed review instead of as zero findings",
+        "B": "Make every property in the findings schema optional so that whatever Claude returns always validates and the field is filled",
+        "C": "Raise `--max-turns` for the review step so that Claude has enough turns left to produce output that matches the schema",
+        "D": "When the field is missing, fall back to scanning the `result` text with a regular expression and post whatever findings it can recover"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "When a run ends without valid structured output, for example because Claude declined, the JSON result has no `structured_output` field. Scripts should check for the field before using it. Treating its absence as success is the real defect: a pull request is told it is clean when no review happened. Surfacing it as a failed review keeps the signal honest.",
+      "why_incorrect": {
+        "B": "Loosening the schema does not make the field appear when the run produced no structured output, and it weakens the guarantees the posting script relies on.",
+        "C": "Nothing indicates the run hit a turn limit; the evidence points to a declined request, which more turns would not change.",
+        "D": "This reintroduces the fragile text parsing the schema was meant to remove, and may post partial or garbled findings from a run that did not finish properly."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/headless"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-021",
+      "objective": "CCAR-F-3.6",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Larkspur Legal added `anthropics/claude-code-action@v1` to a workflow triggered on pull_request events. The workflow passes a plain-text `prompt` input asking Claude to run `npm ls --all` and flag dependencies with disallowed licences. Every run finishes with Claude explaining that it was not able to run the command.",
+      "question": "What is the most likely cause?",
+      "options": {
+        "A": "With a plain-text prompt, Claude has no shell access until the needed tools are granted with `--allowedTools` in `claude_args`",
+        "B": "The action only responds to @claude mentions in comments, so a `prompt` input on a pull_request event is ignored",
+        "C": "Shell access needs a Claude subscription token, so the workflow must use `claude_code_oauth_token` instead of an API key",
+        "D": "The checkout step must run after the action, because the action resets the working directory when it starts up"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "With a `prompt` input the action runs in automation mode on any event. For a plain-text prompt, Claude has no shell or GitHub API access until the workflow grants the tools it needs, through `--allowedTools` in `claude_args` or a `permissions.allow` rule in the `settings` input. Adding a scoped rule such as `Bash(npm ls *)` fixes the run.",
+      "why_incorrect": {
+        "B": "Interactive @claude mode applies when no `prompt` is given; with a prompt, the action runs automatically on the configured event.",
+        "C": "Both authentication methods are supported, and the choice of credential does not control which tools Claude may use.",
+        "D": "Checkout has to happen before the action so the code is present; moving it after would make things worse, not fix tool access."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/github-actions"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-022",
+      "objective": "CCAR-F-3.6",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Quillfeather Labs runs Claude Code in its pipeline to review pull requests. A Python script turns the review into inline PR comments and needs the file, line, severity and message for every finding. Today the script runs a regular expression over Claude's free-text answer, and it breaks whenever the wording or layout of the review changes.",
+      "question": "Which change gives the posting script reliable input?",
+      "options": {
+        "A": "Keep text output, add a strict instruction to print one finding per line as file:line:severity:message, and harden the regular expression against stray whitespace",
+        "B": "Add `--output-format json` with a `--json-schema` describing the findings array, and read the findings from the `structured_output` field",
+        "C": "Use `--output-format stream-json` and rebuild the review by joining the text deltas, then parse the joined text once the final result event arrives",
+        "D": "Ask Claude to write its findings to a findings.json file in the workspace, and have the posting script load that file once the run exits"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "In print mode, `--output-format json` together with `--json-schema` returns schema-conforming data in the `structured_output` field of the result, alongside session metadata. The posting script then reads typed fields instead of guessing at prose, so wording changes no longer break it. This is the documented way to get machine-parseable findings from a CI run.",
+      "why_incorrect": {
+        "A": "A format instruction makes the layout more likely but not guaranteed, so the script still depends on a regular expression that fails on the next unexpected variation.",
+        "C": "Streaming changes how the text arrives, not what it is; the script would still be parsing free text after reassembling it.",
+        "D": "A file written by the model has no schema check, and needs file-write permission in the job; malformed or missing files remain possible."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/headless",
+        "https://code.claude.com/docs/en/cli-reference"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-023",
+      "objective": "CCAR-F-3.6",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Orchid Freight's pipeline uses one `claude -p` session to write a database migration, then runs `claude -p --continue` with 'Now review the changes you just made for bugs'. The review step almost never reports problems, yet human reviewers keep finding several issues per migration.",
+      "question": "Which change is most likely to make the automated review catch more issues?",
+      "options": {
+        "A": "Ask the continued session to review the migration twice in a row and merge the findings of both passes into one list",
+        "B": "Run the review as a separate `claude -p` invocation that receives the diff and review criteria but not the generator's history",
+        "C": "Keep `--continue` and raise the effort level for the review turn so that Claude reasons longer about its changes",
+        "D": "Keep `--continue` but add 'review critically, as if a different engineer wrote this code' to the review prompt"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "A session that generated the code carries its own reasoning and assumptions, which makes it less likely to question its decisions. A fresh instance that sees only the diff and the review criteria has no such anchoring and catches more subtle problems. Session isolation between generation and review is the design principle.",
+      "why_incorrect": {
+        "A": "Repeating the review in the same anchored context tends to repeat the same blind spots, while doubling cost.",
+        "C": "Longer reasoning inside the same session still starts from the generator's own justification for each choice.",
+        "D": "A role instruction does not remove the generator's reasoning from context, so the same assumptions still shape the review."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/headless",
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-024",
+      "objective": "CCAR-F-3.6",
+      "scenario_set": "ci-integration",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Kestrel Robotics runs an automated Claude Code review on every push to an open pull request. Developers complain that after each push the bot posts the same nine comments again, including ones about code they have already fixed, so long pull requests fill with duplicates.",
+      "question": "Which two changes best address this? (Select 2)",
+      "options": {
+        "A": "Raise the severity threshold on later pushes so that only critical findings are posted after the first review",
+        "B": "Pass the findings from the previous review run, with their locations, into the context of the new review run",
+        "C": "Run the review only on the first push of each pull request and skip it for every push that comes after",
+        "D": "Instruct Claude to report only issues that are new or still unaddressed, and to mark earlier findings as resolved",
+        "E": "Delete every earlier bot comment before posting so that each pull request shows only the latest full set of findings"
+      },
+      "answer": [
+        "B",
+        "D"
+      ],
+      "explanation": "Each CI run starts without memory of earlier runs, so the reviewer cannot know what it already said. Supplying the prior findings and asking for only new or still-open issues lets it compare against history, which removes duplicates while still catching problems introduced by the new commits.",
+      "why_incorrect": {
+        "A": "This hides important non-critical issues introduced later and does not stop critical findings from being repeated.",
+        "C": "Later commits can introduce new defects, so skipping them removes review coverage exactly where the code is changing.",
+        "E": "Deleting comments throws away discussion threads and still reposts fixed issues, so noise moves rather than disappears."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/headless",
+        "https://code.claude.com/docs/en/github-actions"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-025",
+      "objective": "CCAR-F-3.6",
+      "scenario_set": "ci-integration",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Ferngrove Pharma's nightly job asks Claude Code to propose unit tests for recently changed modules. Reviewers reject most proposals: many repeat scenarios already in the test suite, others test trivial getters, and several build their own fake database instead of using the shared fixtures the team maintains.",
+      "question": "Which two changes would most improve the generated tests? (Select 2)",
+      "options": {
+        "A": "Add the sentence 'generate only high-quality tests that do not duplicate existing ones' to the start of the prompt",
+        "B": "Document the testing standards, what makes a test valuable, and the available fixtures in the project CLAUDE.md",
+        "C": "Ask for twice as many tests per run and keep only the ones that raise line coverage when the suite is executed",
+        "D": "Raise `--max-turns` so Claude has more turns to explore the repository before it writes any new tests",
+        "E": "Include the module's existing test files in the context so Claude can see which scenarios are already covered"
+      },
+      "answer": [
+        "B",
+        "E"
+      ],
+      "explanation": "Duplicate scenarios come from Claude not seeing the existing tests, so putting them in context fixes that directly. Low-value tests and home-made fakes come from missing team knowledge; CLAUDE.md is the mechanism for giving CI-invoked Claude Code persistent project context such as testing standards and fixture conventions.",
+      "why_incorrect": {
+        "A": "A general quality instruction gives no information about which tests exist or which fixtures to use, so the same failures recur.",
+        "C": "Coverage gain rewards tests that touch lines, not tests that check meaningful behaviour, and doubling output doubles cost and review load.",
+        "D": "More turns may help exploration, but nothing tells Claude what counts as valuable or which fixtures are expected, so output quality does not reliably improve."
+      },
+      "module": "09-claude-code/03-claude-md-and-memory.md",
+      "references": [
+        "https://code.claude.com/docs/en/memory",
+        "https://code.claude.com/docs/en/headless"
+      ]
+    },
+    {
+      "id": "CCAR-F-D3-026",
+      "objective": "CCAR-F-3.6",
+      "scenario_set": "ci-integration",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Tidewater Insurance is hardening its `claude -p` pull-request review job. The job should only read the code and the diff and report findings. It must never edit files or run arbitrary commands, and finance wants a hard ceiling on what a single run can spend.",
+      "question": "Which two configuration choices best meet these requirements? (Select 2)",
+      "options": {
+        "A": "Pass `--allowedTools \"Bash\"` so git commands and any helper scripts run without prompting in the unattended job",
+        "B": "Set `--max-budget-usd` on the review step so the run stops once its estimated spend reaches the agreed cap",
+        "C": "Rely on a prompt line saying 'do not modify files or run commands' as the main control, since review prompts are trusted",
+        "D": "Pass `--permission-mode acceptEdits` so the job never stalls on an edit approval while it is running unattended",
+        "E": "List only the needed tools, such as `Read` and `Bash(git diff *)`, and run with `--permission-mode dontAsk` so other calls are denied"
+      },
+      "answer": [
+        "B",
+        "E"
+      ],
+      "explanation": "Scoped `--allowedTools` entries pre-approve only what the review needs, and `dontAsk` denies every call that would otherwise need approval, which suits locked-down CI. `--max-budget-usd` stops a print-mode run once estimated spend reaches the cap; it is an estimate and can be slightly exceeded, so leave headroom.",
+      "why_incorrect": {
+        "A": "A bare `Bash` allow rule approves any shell command, including destructive ones, which breaks the never-run-arbitrary-commands requirement.",
+        "C": "Prompt instructions guide behaviour but are not an enforcement boundary; permission settings are what actually block disallowed calls.",
+        "D": "acceptEdits auto-approves file writes, which is the opposite of what a read-only review job needs."
+      },
+      "module": "09-claude-code/04-permissions-and-settings.md",
+      "references": [
+        "https://code.claude.com/docs/en/headless",
+        "https://code.claude.com/docs/en/cli-reference",
+        "https://code.claude.com/docs/en/permission-modes"
+      ]
+    }
+  ]
+}

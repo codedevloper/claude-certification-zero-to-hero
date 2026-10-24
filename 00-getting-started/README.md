@@ -18,7 +18,7 @@ After completing this module you will be able to:
 
 1. Explain how the repository is organised and how modules, labs, practice questions, mock exams and flashcards fit together.
 2. Set up a working environment that runs every lab offline at no cost, and optionally against the real Claude API.
-3. Choose between the two supported certification tracks, CCAO-F for business users and CCAR-P for architects, or a non-exam learning path.
+3. Choose between the three supported certification tracks, CCAO-F for business users, CCAR-F for builders and CCAR-P for architects, or a non-exam learning path.
 4. Pick a study roadmap that matches your experience and the time you have, from 7 to 90 days.
 
 ## Page order

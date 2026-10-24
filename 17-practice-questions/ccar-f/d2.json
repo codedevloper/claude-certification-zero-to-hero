@@ -1,0 +1,675 @@
+{
+  "schema_version": 1,
+  "track": "CCAR-F",
+  "domain": 2,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAR-F-D2-001",
+      "objective": "CCAR-F-2.1",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Copperline Energy's code assistant has clear tool descriptions. Its system prompt includes: 'Whenever the user mentions documentation, call search_api_docs first.' Requests such as 'update the README documentation for the CLI flags' now trigger irrelevant API searches before Claude edits the file.",
+      "question": "What should the team change first?",
+      "options": {
+        "A": "Reword the keyword-triggered instruction to state when an API search is needed, not to fire on a word",
+        "B": "Remove search_api_docs from the tool set, since the editing tools already cover most documentation work",
+        "C": "Lengthen the search_api_docs description so that it clearly states the tool is unrelated to README edits",
+        "D": "Add a PreToolUse hook that blocks search_api_docs whenever the user's request mentions the README file"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Keyword-sensitive system prompt instructions can override well-written tool descriptions and create unintended tool associations. The fix is to rewrite the instruction around the real condition (an API question) rather than a trigger word.",
+      "why_incorrect": {
+        "B": "Removing the tool loses a capability that real API questions still need.",
+        "C": "The description is already clear. The system prompt's keyword rule overrides it, so a longer description treats the symptom.",
+        "D": "A hook keyed on another keyword repeats the original mistake and leaves the faulty instruction in place."
+      },
+      "module": "07-tool-use-and-function-calling/05-tool-design-best-practices.md",
+      "references": [
+        "https://www.anthropic.com/engineering/writing-tools-for-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-002",
+      "objective": "CCAR-F-2.1",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Wren Retail's engineering assistant has two custom tools: lookup ('Looks up information') and find_info ('Finds information'). One returns the code owners for a path; the other searches internal API documentation. The agent often calls the wrong one.",
+      "question": "Which change most directly fixes the misrouting?",
+      "options": {
+        "A": "Merge them into one tool with a mode parameter, keeping the description short so it uses fewer tokens",
+        "B": "Rename them get_code_owners and search_api_docs, each describing its inputs, outputs and when to use it",
+        "C": "Add a system-prompt paragraph listing a few example requests that belong with each of the two tools",
+        "D": "Remove find_info and let the agent answer API documentation questions from its general knowledge"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Near-identical names and descriptions give Claude nothing to choose by. Purpose-specific names, plus descriptions that state inputs, outputs and when to use each tool rather than the other, remove the overlap at its source.",
+      "why_incorrect": {
+        "A": "A merged tool with a terse description moves the ambiguity into the mode parameter. Selection stays unreliable.",
+        "C": "Examples in the system prompt help a little, but the tool definitions stay ambiguous everywhere else they are used.",
+        "D": "Dropping a needed capability trades misrouting for wrong or invented API answers."
+      },
+      "module": "07-tool-use-and-function-calling/05-tool-design-best-practices.md",
+      "references": [
+        "https://www.anthropic.com/engineering/writing-tools-for-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-003",
+      "objective": "CCAR-F-2.1",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Sorrel Partners' coordinator has well-described tools for its internal document library and for web search. Its system prompt says 'Always search for the latest data before answering.' When users ask about reports already in the library, the coordinator still runs web searches and sometimes cites outdated press coverage instead of the report itself.",
+      "question": "What should the architect change first?",
+      "options": {
+        "A": "Narrow the 'always search' instruction to questions that need current external data, so library questions go to the document tools",
+        "B": "Lengthen the document tools' descriptions further, so they outweigh the system prompt instruction about searching",
+        "C": "Remove the web-search tool from the coordinator, so the document tools become the only option for every question",
+        "D": "Add a PreToolUse hook that denies every web search whenever the user has uploaded at least one document to the library, for the rest of the session"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "System prompt wording can override good tool descriptions. A broad, keyword-like instruction ('always search') creates an unintended association with the web-search tool. Reviewing and narrowing that instruction lets the tool descriptions do their job.",
+      "why_incorrect": {
+        "B": "The descriptions are already good; the conflicting instruction remains and keeps pulling the model towards search.",
+        "C": "This fixes library questions but breaks every question that genuinely needs current external information.",
+        "D": "A blanket rule blocks legitimate searches for any user with documents, and hides the real cause in the prompt."
+      },
+      "module": "07-tool-use-and-function-calling/05-tool-design-best-practices.md",
+      "references": [
+        "https://www.anthropic.com/engineering/writing-tools-for-agents",
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-004",
+      "objective": "CCAR-F-2.1",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Orrin Analytics' research system has one generic analyze_document tool that is used to extract figures, summarise sections and check whether a source supports a claim. Its output shape varies with how the model phrases the request, and the synthesis step often cannot tell which kind of result it received.",
+      "question": "What should the team do?",
+      "options": {
+        "A": "Keep one tool and add a free-text 'mode' string, with no output schema, that the model fills in itself",
+        "B": "Split it into tools for extracting data points, summarising content and checking a claim against a source, each with an output schema",
+        "C": "Keep one tool and lengthen its description with a paragraph covering each of the three uses and the output shape that each one returns",
+        "D": "Keep one tool and have the synthesis agent post-process its output with patterns that guess which task was run"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Splitting a generic tool into purpose-specific tools gives each a clear purpose and a defined input/output contract. Selection gets easier, and downstream agents receive predictable, typed results they can rely on. Consolidating into one tool with an enum action parameter can also work, but the distractor's free-text mode and missing output contract keep results unpredictable; separate tools with defined output schemas give the synthesis step typed results.",
+      "why_incorrect": {
+        "A": "A free-text mode recreates the ambiguity inside an argument, and with no output schema the result shape still varies from call to call.",
+        "C": "Better text helps selection, but one tool still returns differently shaped results that downstream steps must guess at.",
+        "D": "Guessing after the fact is brittle and pushes a tool-design problem onto every consumer."
+      },
+      "module": "07-tool-use-and-function-calling/05-tool-design-best-practices.md",
+      "references": [
+        "https://www.anthropic.com/engineering/writing-tools-for-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-005",
+      "objective": "CCAR-F-2.1",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Brightwater Outfitters' support agent calls a create_return tool whose input schema declares reason and items as plain strings with no further detail. The warehouse API rejects about one call in ten because the reason is free text such as 'too small' instead of a known code, or the items are not in the SKU:quantity format it expects.",
+      "question": "What is the best fix?",
+      "options": {
+        "A": "Add a few-shot example of a correct return to the system prompt, and leave the tool's input schema as it is today",
+        "B": "Retry each rejected call with the API's error message appended, until the warehouse API finally accepts the request",
+        "C": "Make reason an enum of the API's codes, items an array of {sku, quantity} objects, and set strict: true on the tool",
+        "D": "Add a system prompt line listing the valid return codes, and keep the reason field in the schema as a free-text string"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "The schema is the tool's input contract. Declaring the allowed reason codes as an enum, giving items a typed structure, and setting strict: true (with required fields and additionalProperties: false) means every tool_use input validates against that contract, so malformed calls stop at the source instead of reaching the warehouse API.",
+      "why_incorrect": {
+        "A": "One example helps on similar cases, but the loose schema still permits any string, so malformed calls continue.",
+        "B": "Retries treat the symptom, add latency and cost, and may still fail; the schema keeps allowing invalid input.",
+        "D": "Prompt guidance lowers the error rate, but a free-text field still lets invalid codes through some of the time."
+      },
+      "module": "07-tool-use-and-function-calling/05-tool-design-best-practices.md",
+      "references": [
+        "https://www.anthropic.com/engineering/writing-tools-for-agents",
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-006",
+      "objective": "CCAR-F-2.2",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "concept",
+      "scenario": "Ashgrove Research's document-store MCP server exposes load_filings, which takes a filing_date. The analysis subagent sometimes sends '14/03/2026' instead of the required YYYY-MM-DD format.",
+      "question": "How should the server respond to this input?",
+      "options": {
+        "A": "Silently convert the date to the nearest valid value and return the filings, noting nothing about the change",
+        "B": "Return a JSON-RPC invalid-params error, since protocol errors are the intended channel for any problem with a tool call's arguments",
+        "C": "Return a tool result with isError true that names the bad field and the expected date format, so the model can fix it and retry",
+        "D": "Return an empty filing list with isError false, so the coordinator treats the request as a query with no matches"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "The MCP specification separates protocol errors (unknown tool, request that does not match the call schema, server errors) from tool execution errors (API failures, input validation errors such as a wrongly formatted date, business logic errors). Tool execution errors are returned with isError true and actionable text so the model can self-correct.",
+      "why_incorrect": {
+        "A": "Silent coercion can return the wrong filings while the agent believes it got exactly what it asked for.",
+        "B": "The specification reserves protocol errors for unknown tools and malformed requests; argument validation failures belong in tool results.",
+        "D": "This disguises a bad request as a valid empty result and misleads the coordinator about the evidence."
+      },
+      "module": "08-model-context-protocol/03-building-an-mcp-server.md",
+      "references": [
+        "https://modelcontextprotocol.io/specification/latest/server/tools"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-007",
+      "objective": "CCAR-F-2.2",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Kestrel Home Goods' MCP tool issue_store_credit returns isError true with the text 'Operation failed' for every failure: backend timeouts, malformed order IDs, orders past the 90-day credit window and agents lacking permission. The support agent retries policy failures again and again and tells customers to 'try again later'.",
+      "question": "How should the tool report failures?",
+      "options": {
+        "A": "Keep the generic message but add a system prompt rule capping retries at three, so repeated attempts on the same failure stop sooner",
+        "B": "Raise a JSON-RPC protocol error for every failure, so the client stops the call before the model ever sees the failure",
+        "C": "Return isError with a category (transient, validation, business, permission), a retryable flag and a short explanation to relay",
+        "D": "Return policy failures as successful results with an empty body, so the agent stops retrying and moves on to the next step"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "MCP tool execution errors are reported in the result with isError true so the model can act on them. A uniform message stops the agent from choosing the right recovery. Structured metadata (error category, whether retrying can help, and a human-readable explanation) lets it retry transient faults, fix bad input, and explain policy limits instead of retrying them.",
+      "why_incorrect": {
+        "A": "The agent still cannot tell retryable failures from final ones or explain the actual rule to the customer.",
+        "B": "MCP treats business and validation failures as tool execution errors that the model should see so it can respond.",
+        "D": "Reporting a failure as success hides it; the agent may tell the customer the credit was issued."
+      },
+      "module": "08-model-context-protocol/03-building-an-mcp-server.md",
+      "references": [
+        "https://modelcontextprotocol.io/specification/latest/server/tools"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-008",
+      "objective": "CCAR-F-2.2",
+      "scenario_set": "support-agent",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Fernvale Mobile's find_account MCP tool looks up customers by email. Two situations keep causing confusion: the CRM sometimes times out, and some emails genuinely match no account.",
+      "question": "Which TWO responses should the tool return? (Choose 2.)",
+      "options": {
+        "A": "When an email matches no account, return isError true marked transient, so the agent retries the same lookup a few more times before giving up",
+        "B": "When an email matches no account, return a normal result stating zero matches, so the agent can ask for another identifier",
+        "C": "When the agent sends a malformed email, return a JSON-RPC protocol error, so the model never has to see the failure",
+        "D": "When the CRM times out, return isError true marked transient and retryable, so the agent can retry before telling the customer",
+        "E": "When the CRM times out, return an empty result list, so the agent's flow continues without needing an error branch"
+      },
+      "answer": [
+        "B",
+        "D"
+      ],
+      "explanation": "An access failure (timeout) and a valid empty result mean different things and need different recovery: the first may be retried, the second means the lookup worked and the agent should ask for a different identifier. Returning each honestly, with retryability metadata on the error, prevents both wasted retries and false 'no account' answers.",
+      "why_incorrect": {
+        "A": "A query that ran and found nothing is a valid result; retrying it wastes calls and delays asking for another identifier.",
+        "C": "Input validation problems should come back as tool execution errors so the model can correct the argument and retry.",
+        "E": "This makes a failed lookup look like 'no such customer', so the agent may wrongly tell a real customer they have no account."
+      },
+      "module": "08-model-context-protocol/03-building-an-mcp-server.md",
+      "references": [
+        "https://modelcontextprotocol.io/specification/latest/server/tools"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-009",
+      "objective": "CCAR-F-2.3",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "In Brackenfield Insights' research system, the synthesis subagent has only its drafting tools. While writing, it sends dozens of requests back through the coordinator to confirm single figures in sources the search subagents already collected. Each request starts a new search subagent, and report latency has tripled. Requests that need genuinely new research are rare.",
+      "question": "What tool distribution should the architect adopt?",
+      "options": {
+        "A": "Give synthesis a read-only lookup tool over already-collected sources; keep new research with the coordinator",
+        "B": "Give the synthesis agent the full web-search and fetch toolset, so that it never needs to involve the coordinator again",
+        "C": "Have the synthesis agent queue its questions and send them to the coordinator in one batch at the end of each section",
+        "D": "Tell the synthesis agent in its system prompt to stop confirming figures and to trust the numbers in its own draft"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "The frequent need is a cheap lookup in material the system already gathered, not new research. A narrowly scoped, read-only tool over the collected sources lets the synthesis agent resolve those checks itself without new searches, while anything that needs fresh sources still goes through the coordinator, which keeps control of scope and source quality.",
+      "why_incorrect": {
+        "B": "A full search toolset invites the synthesis agent to start its own research, duplicating work and citing pages no other agent checked.",
+        "C": "Batching cuts the number of round trips but still launches searches for facts that are already on hand, and it stalls drafting.",
+        "D": "This trades latency for accuracy; figures go into the report unchecked."
+      },
+      "module": "07-tool-use-and-function-calling/05-tool-design-best-practices.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/subagents",
+        "https://www.anthropic.com/engineering/multi-agent-research-system"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-010",
+      "objective": "CCAR-F-2.3",
+      "scenario_set": "support-agent",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Thornbury Telecom's support agent now has 22 tools covering billing, shipping, loyalty points and internal admin tasks such as bulk account merges. Since the last few tools were added, the agent picks the wrong tool more often.",
+      "question": "Which TWO changes are most likely to improve tool selection? (Choose 2.)",
+      "options": {
+        "A": "Split the work so a billing agent and a shipping agent each get only the handful of tools their role needs",
+        "B": "Combine all 22 tools into one generic action tool that takes an operation name and a free-form payload",
+        "C": "Remove admin tools that support never needs, such as bulk account merges, from the agent's tool set entirely",
+        "D": "Keep all 22 tools and reorder them so the most frequently used ones appear first in the list sent to the model",
+        "E": "Keep all 22 tools and set tool_choice to any, so the model always picks a tool instead of replying with text"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanation": "Selection reliability drops as the number of tools grows. Scoping each agent to the few tools its role needs, and removing tools that the role should never use, cuts decision complexity and also limits the damage a wrong choice can do.",
+      "why_incorrect": {
+        "B": "This hides the choice inside an argument, removes per-tool schemas and makes misuse harder to detect.",
+        "D": "Order does not reduce the number of similar options the model must choose between.",
+        "E": "Forcing some tool call does not help the model pick the right one, and many current models reject forced tool_choice."
+      },
+      "module": "07-tool-use-and-function-calling/05-tool-design-best-practices.md",
+      "references": [
+        "https://www.anthropic.com/engineering/writing-tools-for-agents",
+        "https://code.claude.com/docs/en/agent-sdk/subagents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-011",
+      "objective": "CCAR-F-2.3",
+      "scenario_set": "support-agent",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Larchmont Utilities' triage step ran on Claude Haiku 5.5 with tool_choice {\"type\": \"tool\", \"name\": \"classify_ticket\"} so classification always came first. After moving the step to Claude Sonnet 5.5, every request fails with a 400 error about tool_choice.",
+      "question": "Which TWO changes restore reliable classification on Claude Sonnet 5.5? (Choose 2.)",
+      "options": {
+        "A": "Switch to tool_choice any, which still guarantees a tool call on Claude Sonnet 5.5 without naming one particular tool",
+        "B": "Keep the forced tool_choice and add an assistant prefill that begins the classify_ticket call on the model's behalf",
+        "C": "If the forced call only existed to get JSON back, drop the tool and request the classification through structured outputs",
+        "D": "Keep the forced tool_choice and catch the 400 error, retrying the same request until the model accepts the call",
+        "E": "Use tool_choice auto, tell the model in the prompt to call classify_ticket first, and set strict true on that tool"
+      },
+      "answer": [
+        "C",
+        "E"
+      ],
+      "explanation": "On Claude Opus 5.5, Claude Sonnet 5.5, Claude Fable 5.1 and Claude Mythos 5.1, forced tool use (tool_choice \"any\" or \"tool\") returns a 400; Claude Haiku 5.5 still accepts it. The replacements are tool_choice auto with a clear instruction naming the tool (plus strict true for schema-valid arguments), or structured outputs when the call only existed to obtain JSON.",
+      "why_incorrect": {
+        "A": "Claude Sonnet 5.5 rejects both forced forms, \"any\" and \"tool\", with a 400.",
+        "B": "The forced tool_choice still returns a 400, and assistant prefill is also rejected on this model family.",
+        "D": "The rejection is deterministic for this model, so retries fail every time and only add latency."
+      },
+      "module": "07-tool-use-and-function-calling/02-defining-tools.md",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use",
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-012",
+      "objective": "CCAR-F-2.4",
+      "scenario_set": "code-generation",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "security",
+      "scenario": "Every Quillon Media engineer should get the team's error-tracking MCP server automatically in the web-platform repository. The server needs a per-user API token that must never be committed.",
+      "question": "Which TWO configuration choices together meet these requirements? (Choose 2.)",
+      "options": {
+        "A": "Define the server in a project-scoped .mcp.json at the repository root and commit that file",
+        "B": "Write the header as \"Authorization\": \"Bearer ${TRACKER_TOKEN}\" so each user's environment supplies it",
+        "C": "Commit .mcp.json with the token written in literally, given that the repository is private to the company",
+        "D": "Have every engineer run claude mcp add for the server with the default scope on their own machine",
+        "E": "Register the server at user scope through an onboarding script so it lands in each user's ~/.claude.json"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "Project scope (.mcp.json) is the version-controlled way to share a server with the team. Environment-variable expansion in fields such as headers lets each developer supply their own token without committing it.",
+      "why_incorrect": {
+        "C": "Committing a secret exposes it to everyone with repository access and to its history, whether or not the repository is private.",
+        "D": "The default scope is local, which is private to that user and project. Nothing is shared, so each engineer must repeat the setup.",
+        "E": "User scope is stored outside the repository, so the setup is not versioned with the project and drifts across machines."
+      },
+      "module": "09-claude-code/07-mcp-in-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/mcp"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-013",
+      "objective": "CCAR-F-2.4",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Tallis Travel's engineering agent has a code-search MCP tool, search_symbols, that resolves symbols across 30 repositories using a semantic index. Its description reads only 'Searches code.' The agent almost always uses Grep in the local checkout instead and misses cross-repository callers.",
+      "question": "What is the most effective first fix?",
+      "options": {
+        "A": "Expand the MCP tool's description to explain cross-repo coverage, inputs, outputs and when to prefer it",
+        "B": "Remove Grep from the agent's tools so that the MCP search tool is the only search option left to use",
+        "C": "Rename the MCP tool to grep_all_repos so that its name looks like a more capable version of Grep",
+        "D": "Add a system-prompt line telling the agent to use the MCP tools whenever it would otherwise search code"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Tool descriptions are the main signal Claude uses to choose between tools. A two-word description cannot compete with a familiar built-in. Stating the tool's unique coverage, its inputs and outputs, and when to choose it over Grep fixes the selection problem at its source.",
+      "why_incorrect": {
+        "B": "Grep is still the right tool for literal text in the local checkout. Removing it trades one blind spot for another.",
+        "C": "A new name alone gives little information about capabilities and may suggest the tool behaves like Grep.",
+        "D": "A blanket instruction pushes all searches to the MCP tool, including the local literal searches that Grep handles better."
+      },
+      "module": "09-claude-code/07-mcp-in-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/mcp",
+        "https://www.anthropic.com/engineering/writing-tools-for-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-014",
+      "objective": "CCAR-F-2.4",
+      "scenario_set": "developer-productivity",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Ironbark Logistics wants its developer-productivity agent to read and update Jira issues, and to query an in-house deploy-ledger service that records which build is running in each environment.",
+      "question": "Which TWO integration decisions are most appropriate? (Choose 2.)",
+      "options": {
+        "A": "Have the agent use WebFetch on the Jira web UI to avoid adding another MCP server",
+        "B": "Adopt an existing, maintained MCP server for Jira rather than writing a new one",
+        "C": "Skip MCP and have the agent call both systems with curl through Bash, tokens in prompts",
+        "D": "Build a small custom MCP server for the deploy ledger with the team's own operations",
+        "E": "Write custom servers for both systems so that auth and tool naming are consistent"
+      },
+      "answer": [
+        "B",
+        "D"
+      ],
+      "explanation": "Standard integrations such as Jira are well served by existing MCP servers, which saves building and maintaining one. Custom servers are best kept for team-specific systems like the deploy ledger, where no ready-made server exists.",
+      "why_incorrect": {
+        "A": "Scraping a web UI is brittle, may break authentication flows, and gives unstructured results compared with a proper integration.",
+        "C": "Tokens in prompts leak credentials into context and logs, and raw curl gives no typed tool contract.",
+        "E": "Rebuilding a standard integration costs effort and upkeep for little gain. Consistency does not justify maintaining a second Jira client."
+      },
+      "module": "08-model-context-protocol/04-using-mcp-with-claude.md",
+      "references": [
+        "https://code.claude.com/docs/en/mcp"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-015",
+      "objective": "CCAR-F-2.4",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "cost-performance",
+      "scenario": "Silvergate Utilities' data-explorer agent connects to an MCP server for a warehouse with about 400 tables. Before answering most questions, the agent makes dozens of list_tables and describe_table calls just to find out what data exists.",
+      "question": "Which change most directly reduces these exploratory calls?",
+      "options": {
+        "A": "Add a PostToolUse hook that caches describe_table results so that repeated calls return immediately",
+        "B": "Paste the definitions of all 400 tables into the system prompt so the agent never needs to discover them",
+        "C": "Have the server expose its schema catalog as MCP resources so the agent can see what data is available",
+        "D": "Raise MAX_MCP_OUTPUT_TOKENS so that list_tables can return every table definition in a single call"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "MCP resources let a server expose content catalogs, such as schemas, that the client can list and read. This gives the agent visibility into the available data without probing through repeated tool calls.",
+      "why_incorrect": {
+        "A": "Caching speeds up repeated calls, but the agent still makes the same exploratory calls to learn what exists.",
+        "B": "Loading every definition up front spends a large share of context on every request, including those that touch two tables.",
+        "D": "A larger output limit allows bigger responses but still relies on exploratory tool calls, and it adds bulk to the context."
+      },
+      "module": "08-model-context-protocol/04-using-mcp-with-claude.md",
+      "references": [
+        "https://code.claude.com/docs/en/mcp"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-016",
+      "objective": "CCAR-F-2.4",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "An engineer at Marlowe Publishing wants to try an experimental MCP server that indexes her personal engineering notes. She wants it in every project on her laptop, and teammates should never see it.",
+      "question": "Which configuration fits best?",
+      "options": {
+        "A": "Run claude mcp add with --scope user, which stores it in ~/.claude.json for all of her projects",
+        "B": "Commit it to every repository's .mcp.json and ask teammates to disable it in their own settings",
+        "C": "Run claude mcp add with no --scope flag inside each repository she works in, one project at a time",
+        "D": "Add it to each repository's .mcp.json and list that file in .gitignore so it is never committed"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "User scope makes a server available in all of one person's projects and stores it in ~/.claude.json, outside any repository, which suits a personal or experimental server.",
+      "why_incorrect": {
+        "B": "Committing a personal server pushes it onto everyone and puts the burden of opting out on teammates.",
+        "C": "The default local scope applies to one project only, so she would repeat the setup per repository and still miss new ones.",
+        "D": "Gitignoring .mcp.json in each repository is per-project setup, and it blocks the team from sharing project servers through that file."
+      },
+      "module": "09-claude-code/07-mcp-in-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/mcp"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-017",
+      "objective": "CCAR-F-2.5",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Claude is changing one return null; statement inside parseHeader() in a 2,400-line file. The Edit call fails because return null; appears seven times in the file.",
+      "question": "What should Claude do next?",
+      "options": {
+        "A": "Retry Edit with replace_all: true so that every occurrence is updated and the uniqueness check is satisfied",
+        "B": "Read the file and then Write the full 2,400 lines back with the one change applied somewhere in the middle",
+        "C": "Use Bash to run sed -i with a regular expression that targets the statement by its approximate line number",
+        "D": "Retry Edit with an old_string that includes the surrounding lines of parseHeader() so that it matches once"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Edit requires old_string to match exactly once. Adding enough surrounding context from parseHeader() makes the match unique and keeps the change targeted. replace_all is only for changing every occurrence.",
+      "why_incorrect": {
+        "A": "replace_all would change all seven statements when only one should change.",
+        "B": "Rewriting a large file to change one line risks unintended changes. A full Write is a fallback when no unique anchor can be found, and here one can.",
+        "C": "Line-number regex edits are fragile and skip the exact-match safety check that Edit provides."
+      },
+      "module": "09-claude-code/01-what-is-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/tools-reference"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-018",
+      "objective": "CCAR-F-2.5",
+      "scenario_set": "code-generation",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "concept",
+      "scenario": "Claude needs to create a new file config/feature-flags.ts and add one import line to the import block of an existing 1,500-line module, src/app.ts, which it has already read.",
+      "question": "Which TWO tool choices are most appropriate? (Choose 2.)",
+      "options": {
+        "A": "Use Write on src/app.ts, regenerating all 1,500 lines with the import added in place",
+        "B": "Use Write to create config/feature-flags.ts with its full contents",
+        "C": "Use Edit with replace_all: true on the word import to add the line after each import",
+        "D": "Use Edit on src/app.ts with an old_string that uniquely anchors the import block",
+        "E": "Use Bash to append the import with echo >> src/app.ts after the module's last line"
+      },
+      "answer": [
+        "B",
+        "D"
+      ],
+      "explanation": "Write creates new files or replaces whole files. Edit makes targeted changes to existing files by exact, unique string replacement, which suits a one-line insertion into a large module.",
+      "why_incorrect": {
+        "A": "Regenerating a 1,500-line file for a one-line change risks accidental changes. Edit is designed for partial changes.",
+        "C": "replace_all would insert the line after every occurrence of import, corrupting the module.",
+        "E": "Appending puts the import at the end of the file rather than in the import block, and it bypasses Edit's exact-match checks."
+      },
+      "module": "09-claude-code/01-what-is-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/tools-reference"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-019",
+      "objective": "CCAR-F-2.5",
+      "scenario_set": "developer-productivity",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "At Saltmarsh Robotics, legacy/index.js re-exports a dozen motor-control functions, several under aliases (for example, export { setTorqueV2 as setTorque }). An engineer asks the agent to find every place that uses any of these functions.",
+      "question": "Which TWO steps produce the most complete result? (Choose 2.)",
+      "options": {
+        "A": "Grep only for the original function names, since every alias resolves to the same symbol",
+        "B": "Grep the codebase for each exported alias as well as for the original function names",
+        "C": "Read legacy/index.js to list every name and alias that the wrapper module exports",
+        "D": "Glob for files whose names match the original function names in the legacy folder",
+        "E": "Read every file under src/ up front so that no indirect reference to them can be missed"
+      },
+      "answer": [
+        "B",
+        "C"
+      ],
+      "explanation": "Tracing usage through a wrapper starts with the full set of exported names, aliases included. Each name then needs its own content search, because callers use whichever name they imported.",
+      "why_incorrect": {
+        "A": "Callers that import the alias never write the original name, so those call sites would be missed.",
+        "D": "File names do not show where a function is called. Usage is a content question.",
+        "E": "Reading everything up front is costly and fills context. Targeted searches find the same references more efficiently."
+      },
+      "module": "09-claude-code/01-what-is-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/tools-reference"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-020",
+      "objective": "CCAR-F-2.5",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "A new engineer at Juniper Rail asks the onboarding agent (Read, Grep, Glob and Bash available) to explain how a ticket-refund request travels through an unfamiliar 1,800-file service.",
+      "question": "Which exploration strategy should the agent follow?",
+      "options": {
+        "A": "Read every file in the service first, so that its explanation rests on complete knowledge of the code",
+        "B": "Glob all source files and infer the request flow from the directory names and the file names alone",
+        "C": "Grep for the refund route registration, Read that handler, then follow its imports step by step",
+        "D": "Ask the engineer to point out the relevant files first, since the agent cannot rank them on its own"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Incremental exploration scales. Use Grep to find an entry point, Read it, then follow imports and calls only as far as the flow requires. This builds an accurate picture without filling the context.",
+      "why_incorrect": {
+        "A": "Reading 1,800 files up front exhausts context and buries the relevant path among unrelated code.",
+        "B": "Names suggest structure but do not show the actual call flow, so the explanation would be guesswork.",
+        "D": "The agent's search tools exist precisely to locate entry points. Handing that back to a newcomer defeats the purpose."
+      },
+      "module": "09-claude-code/01-what-is-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/tools-reference",
+        "https://www.anthropic.com/engineering/claude-code-best-practices"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-021",
+      "objective": "CCAR-F-2.5",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "An engineer at Pinecrest Freight asks the codebase assistant (Read, Write, Edit, Bash, Grep and Glob enabled) to list every place that calls computeLateFee( so she can judge the impact of a signature change.",
+      "question": "Which tool is the best first choice?",
+      "options": {
+        "A": "Write, saving a list of likely callers to review",
+        "B": "Read, opening every file under billing/ one by one",
+        "C": "Glob, with the pattern **/*computeLateFee*",
+        "D": "Grep, searching file contents for computeLateFee\\("
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Finding call sites is a content search, which is what Grep does. Content mode returns the matching lines with file paths and line numbers. Because Grep uses ripgrep regex syntax, the parenthesis is escaped.",
+      "why_incorrect": {
+        "A": "Writing a guessed list produces no evidence. The callers have to be found in the code.",
+        "B": "Reading files one by one is slow and spends context, and callers outside billing/ would be missed.",
+        "C": "Glob matches file names, not file contents. Callers live in files with unrelated names."
+      },
+      "module": "09-claude-code/01-what-is-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/tools-reference"
+      ]
+    },
+    {
+      "id": "CCAR-F-D2-022",
+      "objective": "CCAR-F-2.5",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "An Agent SDK tool at Orchard Analytics has Read, Write, Edit, Bash, Grep and Glob enabled. An engineer asks it to find every Gherkin file in the repository; they are all named *.feature.yaml and spread across many directories.",
+      "question": "Which tool should the agent use first?",
+      "options": {
+        "A": "Grep, searching file contents for the word Feature",
+        "B": "Bash, running ls -R and reading through the listing",
+        "C": "Glob, with the pattern **/*.feature.yaml",
+        "D": "Read, pointed at the repository root directory"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Glob finds files by name pattern, and ** matches at any depth. That is exactly a search by naming convention.",
+      "why_incorrect": {
+        "A": "Grep searches inside files. It would match unrelated files that contain the word and could miss feature files that do not.",
+        "B": "A recursive listing returns a large volume of irrelevant output that the agent must then filter.",
+        "D": "Read reads files, not directories, so it cannot list the repository."
+      },
+      "module": "09-claude-code/01-what-is-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/tools-reference"
+      ]
+    }
+  ]
+}

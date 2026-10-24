@@ -27,15 +27,15 @@ add it here as well.
 
 ## Certification tracks (16) — one folder per supported certification
 
-`16-certification-tracks/README.md`, `registry.yaml`, and for each `<slug>` in {`ccao-f`, `ccar-p`}:
+`16-certification-tracks/README.md`, `registry.yaml`, and for each `<slug>` in {`ccao-f`, `ccar-f`, `ccar-p`}:
 `README.md` (exam overview), `objective-map.yaml`, `coverage-matrix.md` (generated), `study-guide/domain-1.md` … `study-guide/domain-7.md`,
-`practical-exercises.md`, `decision-scenarios.md`, `revision-notes.md`, `common-misconceptions.md`, `exam-day.md`, `readiness-assessment.md`.
+`practical-exercises.md`, `decision-scenarios.md`, (`ccar-f` only) `scenarios.md`, `revision-notes.md`, `common-misconceptions.md`, `exam-day.md`, `readiness-assessment.md`.
 
 ## Practice, mock exams, flashcards
 
-- `17-practice-questions/README.md`, `schema/question-bank.schema.json`, `<slug>/d1.json` … `<slug>/d7.json`
+- `17-practice-questions/README.md`, `schema/question-bank.schema.json`, `<slug>/d1.json` … `<slug>/d7.json` (CCAR-F has `d1` … `d5`)
 - `18-mock-examinations/README.md`, `run_mock_exam.py`, `engine/`, `forms/<slug>-form-<n>.json`, `web/`
-- `23-flashcards/README.md`, `decks/fundamentals.yaml`, `decks/ccao-f.yaml`, `decks/ccar-p.yaml`
+- `23-flashcards/README.md`, `decks/fundamentals.yaml`, `decks/ccao-f.yaml`, `decks/ccar-f.yaml`, `decks/ccar-p.yaml`
 
 ## Hands-on labs (19)
 

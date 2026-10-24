@@ -31,11 +31,10 @@ Anthropic has announced updated exam guides for **2026-11-17**, with updated exa
 
 The registry already records verified facts for both exams below, so adding them needs no restructuring.
 
-- [ ] **CCAR-F**: Claude Certified Architect – Foundations (agentic architecture, tool design and MCP, Claude Code,
-      prompt engineering and structured output, context management)
+- [x] **CCAR-F**: Claude Certified Architect – Foundations (agentic architecture, tool design and MCP, Claude Code,
+      prompt engineering and structured output, context management), the maintainer's third certification
 - [ ] **CCDV-F**: Claude Certified Developer – Foundations (applications and integration, model selection, agents,
       tools and MCP, prompt and context engineering, security)
-- [ ] CCAR-F is also the maintainer's third certification, so it is the first planned track to build
 
 ## Later ideas
 

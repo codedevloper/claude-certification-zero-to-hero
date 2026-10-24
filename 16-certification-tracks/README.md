@@ -9,24 +9,8 @@ objective** to learning modules, hands-on labs and practice questions. Facts com
 |---|---|---|---|
 | **CCAO-F** — Claude Certified Associate – Foundations | Business and knowledge workers using the Claude apps | 60 / 120 min | [Start the CCAO-F track](ccao-f/README.md) |
 | **CCAR-P** — Claude Certified Architect – Professional | Architects and senior engineers delivering production systems | 63 / 120 min | [Start the CCAR-P track](ccar-p/README.md) |
-| CCAR-F — Claude Certified Architect – Foundations | Developers building agentic systems | 60 / 120 min | Planned: facts recorded in the registry |
+| **CCAR-F** — Claude Certified Architect – Foundations | Developers building agentic systems with the Agent SDK, Claude Code and MCP | 60 / 120 min, 4 of 6 scenarios | [Start the CCAR-F track](ccar-f/README.md) |
 | CCDV-F — Claude Certified Developer – Foundations | Developers building on the API | 53 / 120 min | Planned: facts recorded in the registry |
-
-## Preparing for CCAR-F before its track exists
-
-CCAR-F (Claude Certified Architect – Foundations) has no dedicated track yet; it is the first one planned (see the
-[roadmap](../ROADMAP.md)). Until then, the existing modules cover its five domains well:
-
-| CCAR-F domain (weight) | Study these modules | Practise with |
-|---|---|---|
-| Agentic Architecture & Orchestration (27%) | [10 Agentic AI](../10-agentic-ai/README.md), [13 Architecture patterns](../13-enterprise-ai-architecture/02-architecture-patterns.md) | Labs [12](../19-hands-on-labs/lab-12-agentic-task-execution/README.md), [13](../19-hands-on-labs/lab-13-human-in-the-loop/README.md); [project 05](../20-real-world-projects/05-agentic-investigation-assistant/README.md) |
-| Tool Design & MCP Integration (18%) | [07 Tool use](../07-tool-use-and-function-calling/README.md), [08 MCP](../08-model-context-protocol/README.md) | Labs [08](../19-hands-on-labs/lab-08-tool-invocation/README.md), [09](../19-hands-on-labs/lab-09-mcp-fundamentals/README.md) |
-| Claude Code Configuration & Workflows (20%) | [09 Claude Code](../09-claude-code/README.md) | Lab [10](../19-hands-on-labs/lab-10-claude-code-workflows/README.md) |
-| Prompt Engineering & Structured Output (20%) | [03 Prompt engineering](../03-prompt-engineering/README.md) | Labs [02](../19-hands-on-labs/lab-02-prompt-improvement/README.md), [03](../19-hands-on-labs/lab-03-structured-outputs/README.md) |
-| Context Management & Reliability (15%) | [04 Context engineering](../04-context-engineering/README.md), [15 Reliability](../15-production-operations/05-reliability-engineering.md) | Labs [05](../19-hands-on-labs/lab-05-context-management/README.md), [18](../19-hands-on-labs/lab-18-reliability-engineering/README.md) |
-
-The CCAR-P practice questions in domains 1–3 are the closest available practice. Weights are from the official CCAR-F
-exam guide v1.0 recorded in [`registry.yaml`](registry.yaml).
 
 ## What every track contains
 
@@ -36,6 +20,7 @@ exam guide v1.0 recorded in [`registry.yaml`](registry.yaml).
 | `objective-map.yaml` | Each official objective mapped to modules and labs (the input to the coverage matrix) |
 | `coverage-matrix.md` | **Generated:** objective → module → lab → practice questions |
 | `study-guide/domain-N.md` | Detailed domain-by-domain notes |
+| `scenarios.md` | CCAR-F only: a study guide for each of the six published exam scenarios |
 | `practical-exercises.md` | Hands-on exercises with success criteria |
 | `decision-scenarios.md` | Worked decision-making case studies |
 | `revision-notes.md` | Condensed notes for the final week |

@@ -50,16 +50,16 @@ and the [Pearson VUE Claude Certification Program page](https://www.pearsonvue.c
 
 ### Which certifications does this repository prepare me for?
 
-Two full tracks:
+Three full tracks:
 
 | Exam | Code | Audience | Track |
 |---|---|---|---|
 | Claude Certified Associate – Foundations | CCAO-F | Business and knowledge workers using Claude as a productivity tool | [CCAO-F track](16-certification-tracks/ccao-f/README.md) |
+| Claude Certified Architect – Foundations | CCAR-F | Architects and developers building agentic systems with the Agent SDK, Claude Code and MCP | [CCAR-F track](16-certification-tracks/ccar-f/README.md) |
 | Claude Certified Architect – Professional | CCAR-P | Mid- to senior-level architects and engineers delivering production Claude solutions | [CCAR-P track](16-certification-tracks/ccar-p/README.md) |
 
-Facts for two further exams, Claude Certified Architect – Foundations (CCAR-F) and Claude Certified Developer –
-Foundations (CCDV-F), are recorded in the registry; their tracks are planned. The modules already cover much of their
-material.
+Facts for one further exam, Claude Certified Developer – Foundations (CCDV-F), are recorded in the registry, but there
+is no track for it. The modules already cover much of its material.
 
 ### Who can take the exams?
 

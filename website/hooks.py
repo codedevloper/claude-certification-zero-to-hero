@@ -23,6 +23,58 @@ FENCE = re.compile(r"^\s*(```|~~~)")
 SCHEME = re.compile(r"^[a-z][a-z0-9+.-]*:", re.IGNORECASE)
 BRANCH = "main"
 
+HOME_CARDS = """<div class="grid cards" markdown>
+
+-   **New to AI?**
+
+    ---
+
+    Start from zero: what LLMs are, how Claude works, and how to use this guide.
+
+    [Start with Module 00 →](00-getting-started/README.md)
+
+-   **Business user: CCAO-F**
+
+    ---
+
+    Claude Certified Associate – Foundations, for people who use the Claude apps at work.
+
+    [Open the CCAO-F track →](16-certification-tracks/ccao-f/README.md)
+
+-   **Builder: CCAR-F**
+
+    ---
+
+    Claude Certified Architect – Foundations: agents, the Agent SDK, Claude Code and MCP.
+
+    [Open the CCAR-F track →](16-certification-tracks/ccar-f/README.md)
+
+-   **Architect: CCAR-P**
+
+    ---
+
+    Claude Certified Architect – Professional, for production and enterprise designs.
+
+    [Open the CCAR-P track →](16-certification-tracks/ccar-p/README.md)
+
+-   **Practise now**
+
+    ---
+
+    Timed or learning-mode mock exams in your browser, with domain breakdowns.
+
+    [Open the practice app →](18-mock-examinations/web/index.html)
+
+-   **Build something**
+
+    ---
+
+    Twenty hands-on labs that run free and offline, and five real-world projects.
+
+    [Browse the labs →](19-hands-on-labs/README.md)
+
+</div>"""
+
 _repo_root: Path | None = None
 _repo_url = ""
 
@@ -69,6 +121,10 @@ def on_page_markdown(markdown: str, page, config, files, **_):
             line = LINK.sub(lambda m: m.group(1) + _rewrite(m.group(2), src, files) + m.group(3), line)
         out.append(line)
     text = "\n".join(out)
+
+    if src == "README.md":
+        # Website home page: replace the README's one-line "Start here" row with a card grid.
+        text = re.sub(r"^\*\*Start here:\*\*.*$", HOME_CARDS, text, count=1, flags=re.MULTILINE)
 
     if src == "18-mock-examinations/README.md":
         button = (

@@ -34,7 +34,7 @@
 |---|---|---|---|---|---|
 | Claude Certified Associate – Foundations | CCAO-F | 60 | 120 min | $99 | Full track: [ccao-f](../16-certification-tracks/ccao-f/README.md) |
 | Claude Certified Architect – Professional | CCAR-P | 63 | 120 min | $175 | Full track: [ccar-p](../16-certification-tracks/ccar-p/README.md) |
-| Claude Certified Architect – Foundations | CCAR-F | 60 | 120 min | $125 | Facts recorded; track planned |
+| Claude Certified Architect – Foundations | CCAR-F | 60 (4 of 6 scenarios) | 120 min | $125 | Full track: [ccar-f](../16-certification-tracks/ccar-f/README.md) |
 | Claude Certified Developer – Foundations | CCDV-F | 53 | 120 min | $125 | Facts recorded; track planned |
 
 Fees are list prices from the exam guides; the checkout price can reflect a partner-tier discount.
@@ -71,7 +71,12 @@ For mid- to senior-level architects and engineers delivering production Claude s
 | 6 | Stakeholder Communication & Lifecycle Management | 14% |
 | 7 | Developer Productivity & Operational Enablement | 7% |
 
-### CCAR-F — Claude Certified Architect – Foundations (track planned)
+### CCAR-F — Claude Certified Architect – Foundations
+
+For solution architects building production applications with the Claude Agent SDK, Claude Code and MCP. Recommended (not
+required): 6+ months of hands-on experience. The exam is scenario-based: each sitting presents **4 scenarios drawn at random
+from a published bank of 6** (customer support agent, code generation with Claude Code, multi-agent research, developer
+productivity, Claude Code in CI, structured data extraction).
 
 | # | Domain | Weight |
 |---|---|---|

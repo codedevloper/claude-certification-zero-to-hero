@@ -1,0 +1,723 @@
+# CCAR-F flashcards. Unofficial; original wording. Objectives from 16-certification-tracks/registry.yaml.
+# Product and API facts are as of 2026-10-24. Validate with: python tools/flashcards.py
+deck: ccar-f
+title: CCAR-F — Claude Certified Architect Foundations
+cards:
+- id: CCAR-F-FC-001
+  objective: CCAR-F-1.1
+  front: Which stop_reason value means the agent loop should run tools and call the model again?
+  back: tool_use. Run every requested tool, append the assistant turn and all tool_result blocks (in one user message), then
+    send the next request.
+  module: 10-agentic-ai/03-the-agent-loop.md
+- id: CCAR-F-FC-002
+  objective: CCAR-F-1.1
+  front: Which stop_reason value ends an agent loop normally?
+  back: end_turn. Other values such as max_tokens, pause_turn and refusal need explicit handling rather than being treated
+    as success.
+  module: 10-agentic-ai/03-the-agent-loop.md
+- id: CCAR-F-FC-003
+  objective: CCAR-F-1.1
+  front: Name three agent-loop termination anti-patterns.
+  back: Ending when the reply contains any text, parsing phrases like 'done' from the prose, and using an iteration cap as
+    the main stopping mechanism.
+  module: 07-tool-use-and-function-calling/03-the-tool-use-loop.md
+- id: CCAR-F-FC-004
+  objective: CCAR-F-1.1
+  front: Why must tool results go back into the conversation before the next request?
+  back: The Messages API is stateless; Claude can only reason about a tool's output if the tool_result is in the history it
+    receives.
+  module: 07-tool-use-and-function-calling/03-the-tool-use-loop.md
+- id: CCAR-F-FC-005
+  objective: CCAR-F-1.1
+  front: What is the role of max_turns or a budget cap in an agent loop?
+  back: A safety net against runaway loops, not the normal way the loop ends; the normal end is end_turn.
+  module: 10-agentic-ai/03-the-agent-loop.md
+- id: CCAR-F-FC-006
+  objective: CCAR-F-1.2
+  front: What is hub-and-spoke orchestration?
+  back: All subagents report to a coordinator, which routes information, handles errors and checks results; subagents do not
+    talk to each other directly.
+  module: 10-agentic-ai/04-multi-agent-architecture.md
+- id: CCAR-F-FC-007
+  objective: CCAR-F-1.2
+  front: Why should a coordinator not invoke every subagent for every request?
+  back: Fan-out multiplies tokens and latency; a simple question should use only the subagents it needs.
+  module: 10-agentic-ai/04-multi-agent-architecture.md
+- id: CCAR-F-FC-008
+  objective: CCAR-F-1.2
+  front: What risk comes from a coordinator splitting a broad topic too narrowly?
+  back: 'Gaps: whatever falls between the narrow sub-questions is never researched, so the final output is incomplete.'
+  module: 10-agentic-ai/02-workflow-patterns.md
+- id: CCAR-F-FC-009
+  objective: CCAR-F-1.2
+  front: How does a coordinator run an iterative refinement loop?
+  back: It compares the synthesis with the goal, sends targeted follow-up work for gaps to the right subagents, and re-synthesises
+    until coverage is sufficient or the budget is spent.
+  module: 10-agentic-ai/04-multi-agent-architecture.md
+- id: CCAR-F-FC-010
+  objective: CCAR-F-1.3
+  front: Which tool does Claude use to spawn subagents in the current Agent SDK?
+  back: The Agent tool, called Task in the v1.0 exam guide. tool_use blocks show 'Agent'; the system:init tool list still
+    shows 'Task'.
+  module: 10-agentic-ai/06-managed-agents-and-agent-sdk.md
+- id: CCAR-F-FC-011
+  objective: CCAR-F-1.3
+  front: Does listing tools in allowed_tools restrict an SDK agent to those tools?
+  back: No. allowed_tools (allowedTools) auto-approves the listed tools. Restrict with AgentDefinition.tools, disallowed_tools
+    or deny rules.
+  module: 10-agentic-ai/06-managed-agents-and-agent-sdk.md
+- id: CCAR-F-FC-012
+  objective: CCAR-F-1.3
+  front: Which two AgentDefinition fields are required?
+  back: description (when to use the subagent; Claude reads it to decide) and prompt (the subagent's system prompt).
+  module: 10-agentic-ai/06-managed-agents-and-agent-sdk.md
+- id: CCAR-F-FC-013
+  objective: CCAR-F-1.3
+  front: What does a non-fork subagent receive from its parent?
+  back: Only the Agent tool's prompt string (plus its own system prompt, tool definitions and project CLAUDE.md); not the
+    parent's history, tool results or system prompt.
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-F-FC-014
+  objective: CCAR-F-1.3
+  front: How do you make a coordinator run subagents in parallel?
+  back: Have it emit several Agent tool calls in a single response; calls spread over separate turns run sequentially.
+  module: 10-agentic-ai/04-multi-agent-architecture.md
+- id: CCAR-F-FC-015
+  objective: CCAR-F-1.4
+  front: Why is a prompt instruction insufficient for a compliance-critical step order?
+  back: Prompt guidance is followed most of the time but has a non-zero failure rate; a programmatic gate enforces the order
+    every time.
+  module: 10-agentic-ai/05-human-in-the-loop.md
+- id: CCAR-F-FC-016
+  objective: CCAR-F-1.4
+  front: What is a programmatic prerequisite gate?
+  back: Code (for example a PreToolUse hook) that blocks a dependent tool until a prerequisite tool has succeeded in the same
+    session, with state kept outside the model.
+  module: 10-agentic-ai/07-agent-reliability.md
+- id: CCAR-F-FC-017
+  objective: CCAR-F-1.4
+  front: What belongs in a structured hand-off to a human agent?
+  back: Customer or case identifiers, each issue with evidence, actions already taken, recommended action with amounts, why
+    it was escalated and what the customer expects.
+  module: 10-agentic-ai/05-human-in-the-loop.md
+- id: CCAR-F-FC-018
+  objective: CCAR-F-1.4
+  front: How should an agent handle one message containing several unrelated issues?
+  back: Split it into separate items, investigate each (in parallel where independent), track each item's status, then give
+    one combined reply.
+  module: 10-agentic-ai/07-agent-reliability.md
+- id: CCAR-F-FC-019
+  objective: CCAR-F-1.5
+  front: Which hook event can block a tool call before it runs?
+  back: PreToolUse, by returning hookSpecificOutput.permissionDecision 'deny' with a permissionDecisionReason.
+  module: 09-claude-code/06-hooks.md
+- id: CCAR-F-FC-020
+  objective: CCAR-F-1.5
+  front: How can a PostToolUse hook change what Claude sees from a tool?
+  back: Return updatedToolOutput to replace the result, or additionalContext to append information.
+  module: 09-claude-code/06-hooks.md
+- id: CCAR-F-FC-021
+  objective: CCAR-F-1.5
+  front: When several PreToolUse hooks return different decisions, which wins?
+  back: 'The most restrictive: deny beats defer, which beats ask, which beats allow.'
+  module: 09-claude-code/06-hooks.md
+- id: CCAR-F-FC-022
+  objective: CCAR-F-1.5
+  front: What do tool-hook matchers match against?
+  back: The tool name (for example 'Write|Edit' or '^mcp__'), not file paths; check tool_input inside the callback for path-based
+    rules.
+  module: 09-claude-code/06-hooks.md
+- id: CCAR-F-FC-023
+  objective: CCAR-F-1.5
+  front: Give a typical PostToolUse normalisation use case.
+  back: Converting different timestamp formats or status codes from several MCP backends into one format, and trimming unused
+    fields, before the agent reasons over them.
+  module: 10-agentic-ai/06-managed-agents-and-agent-sdk.md
+- id: CCAR-F-FC-024
+  objective: CCAR-F-1.6
+  front: When is fixed prompt chaining the right decomposition?
+  back: When the steps are predictable and each benefits from focus, for example per-file review followed by a cross-file
+    pass.
+  module: 03-prompt-engineering/05-task-decomposition-and-chaining.md
+- id: CCAR-F-FC-025
+  objective: CCAR-F-1.6
+  front: When is dynamic (adaptive) decomposition better?
+  back: For open-ended investigations where the next step depends on what is found, such as getting a legacy codebase under
+    test.
+  module: 10-agentic-ai/02-workflow-patterns.md
+- id: CCAR-F-FC-026
+  objective: CCAR-F-1.6
+  front: Why split a large code review into per-file passes plus an integration pass?
+  back: One pass over many files dilutes attention and can contradict itself; focused passes catch local issues and the integration
+    pass looks only at cross-file interactions.
+  module: 03-prompt-engineering/05-task-decomposition-and-chaining.md
+- id: CCAR-F-FC-027
+  objective: CCAR-F-1.6
+  front: What is a sensible first step when decomposing an open-ended engineering task?
+  back: Map the structure and identify high-impact areas, then make a prioritised plan that is revised as dependencies are
+    discovered.
+  module: 10-agentic-ai/02-workflow-patterns.md
+- id: CCAR-F-FC-028
+  objective: CCAR-F-1.7
+  front: How do you resume a specific named Claude Code session?
+  back: claude --resume <name-or-id> (or -r). Name sessions with claude -n "name" or /rename.
+  module: 09-claude-code/09-headless-ci-and-agent-sdk.md
+- id: CCAR-F-FC-029
+  objective: CCAR-F-1.7
+  front: What does fork_session (forkSession, --fork-session) do?
+  back: Creates a new session with a copy of the original history and its own ID, leaving the original unchanged so both branches
+    can be resumed.
+  module: 09-claude-code/09-headless-ci-and-agent-sdk.md
+- id: CCAR-F-FC-030
+  objective: CCAR-F-1.7
+  front: When should you start a new session with a summary instead of resuming?
+  back: When much of the earlier tool output is stale (big refactor, data refreshed), so the old reads would mislead the agent.
+  module: 04-context-engineering/04-memory-and-persistence.md
+- id: CCAR-F-FC-031
+  objective: CCAR-F-1.7
+  front: What should you tell a resumed agent after a few files changed?
+  back: Exactly which files changed, so it re-reads those instead of trusting stale results or re-exploring everything.
+  module: 04-context-engineering/04-memory-and-persistence.md
+- id: CCAR-F-FC-032
+  objective: CCAR-F-1.7
+  front: Does forking a session branch the filesystem?
+  back: No. Sessions store conversation, not files; a fork that edits files changes the real files. Use git or file checkpointing
+    to branch code.
+  module: 09-claude-code/09-headless-ci-and-agent-sdk.md
+- id: CCAR-F-FC-033
+  objective: CCAR-F-2.1
+  front: What is the primary signal Claude uses to choose between tools?
+  back: The tool descriptions (with names and schemas). Minimal or overlapping descriptions cause unreliable selection.
+  module: 07-tool-use-and-function-calling/05-tool-design-best-practices.md
+- id: CCAR-F-FC-034
+  objective: CCAR-F-2.1
+  front: List five things a strong tool description states.
+  back: What it does, when to use it versus similar tools, input formats with an example, what it returns (including empty
+    results), and limits or side effects.
+  module: 07-tool-use-and-function-calling/05-tool-design-best-practices.md
+- id: CCAR-F-FC-035
+  objective: CCAR-F-2.1
+  front: Two tools have near-identical descriptions and Claude mixes them up. What is the fix?
+  back: Rename them to reflect the real difference and rewrite each description to say when to use it and when to use the
+    other.
+  module: 07-tool-use-and-function-calling/02-defining-tools.md
+- id: CCAR-F-FC-036
+  objective: CCAR-F-2.1
+  front: How can a system prompt undermine good tool descriptions?
+  back: Keyword-driven instructions (for example 'always search first') create unintended tool associations that override
+    the descriptions.
+  module: 07-tool-use-and-function-calling/05-tool-design-best-practices.md
+- id: CCAR-F-FC-037
+  objective: CCAR-F-2.2
+  front: How does an MCP tool report an error the model could act on?
+  back: 'As a normal tool result with isError: true and explanatory content, not as a JSON-RPC protocol error.'
+  module: 08-model-context-protocol/03-building-an-mcp-server.md
+- id: CCAR-F-FC-038
+  objective: CCAR-F-2.2
+  front: Which failures are MCP protocol errors?
+  back: Unknown tools, malformed requests and server errors, returned as JSON-RPC error objects.
+  module: 08-model-context-protocol/02-architecture.md
+- id: CCAR-F-FC-039
+  objective: CCAR-F-2.2
+  front: Are errorCategory and isRetryable part of the MCP specification?
+  back: No. Only isError is; category, retryable flag and messages are a payload convention you design so the agent can choose
+    a recovery path.
+  module: 08-model-context-protocol/03-building-an-mcp-server.md
+- id: CCAR-F-FC-040
+  objective: CCAR-F-2.2
+  front: Why is a generic 'Operation failed' error harmful?
+  back: The agent cannot tell a transient failure (retry) from a validation error (fix input), a business rule (explain) or
+    a permission error (escalate).
+  module: 07-tool-use-and-function-calling/03-the-tool-use-loop.md
+- id: CCAR-F-FC-041
+  objective: CCAR-F-2.2
+  front: How should a search tool report that a valid query matched nothing?
+  back: As a successful result with an empty list, not as an error; an access failure such as a timeout is the error case.
+  module: 08-model-context-protocol/03-building-an-mcp-server.md
+- id: CCAR-F-FC-042
+  objective: CCAR-F-2.3
+  front: Why give each agent only four or five role-specific tools?
+  back: More tools make selection less reliable, and tools outside an agent's role tend to be misused.
+  module: 12-ai-security/05-tool-misuse-and-excessive-agency.md
+- id: CCAR-F-FC-043
+  objective: CCAR-F-2.3
+  front: 'What does tool_choice {"type": "any"} return on Claude Opus 5.5?'
+  back: A 400 error. Forced tool use (any or a named tool) is rejected on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1;
+    Haiku 5.5 accepts it.
+  module: 07-tool-use-and-function-calling/02-defining-tools.md
+- id: CCAR-F-FC-044
+  objective: CCAR-F-2.3
+  front: What replaces forced tool_choice on models that reject it?
+  back: 'tool_choice auto plus an explicit instruction naming the tool, strict: true on the tool, and a check that the call
+    happened; or output_config.format if only JSON is needed.'
+  module: 07-tool-use-and-function-calling/02-defining-tools.md
+- id: CCAR-F-FC-045
+  objective: CCAR-F-2.3
+  front: What is a constrained replacement for a general-purpose tool?
+  back: A narrow tool with a validated input, for example get_supplier(supplier_id) instead of an open run_sql(query).
+  module: 12-ai-security/05-tool-misuse-and-excessive-agency.md
+- id: CCAR-F-FC-046
+  objective: CCAR-F-2.3
+  front: What are the four tool_choice types?
+  back: auto (Claude decides), none (no tools), any (must call some tool) and tool (must call a named tool).
+  module: 07-tool-use-and-function-calling/02-defining-tools.md
+- id: CCAR-F-FC-047
+  objective: CCAR-F-2.4
+  front: Which MCP scope shares a server with the team through git?
+  back: project scope, stored in .mcp.json at the repository root.
+  module: 09-claude-code/07-mcp-in-claude-code.md
+- id: CCAR-F-FC-048
+  objective: CCAR-F-2.4
+  front: Where are local- and user-scoped MCP servers stored, and which is the default scope?
+  back: Both in ~/.claude.json (local under the project's path); local is the default scope.
+  module: 09-claude-code/07-mcp-in-claude-code.md
+- id: CCAR-F-FC-049
+  objective: CCAR-F-2.4
+  front: How do you keep an MCP token out of a committed .mcp.json?
+  back: 'Environment variable expansion: ${TOKEN} or ${TOKEN:-default} in command, args, env, url or headers.'
+  module: 09-claude-code/07-mcp-in-claude-code.md
+- id: CCAR-F-FC-050
+  objective: CCAR-F-2.4
+  front: What is an MCP resource good for in an agent workflow?
+  back: Exposing read-only content catalogues (schemas, ticket lists, docs indexes) so the agent sees what exists without
+    exploratory tool calls.
+  module: 08-model-context-protocol/04-using-mcp-with-claude.md
+- id: CCAR-F-FC-051
+  objective: CCAR-F-2.4
+  front: How do you reference an MCP resource in a Claude Code prompt?
+  back: With an @ mention in the form @server:protocol://resource/path.
+  module: 09-claude-code/07-mcp-in-claude-code.md
+- id: CCAR-F-FC-052
+  objective: CCAR-F-2.5
+  front: 'Glob or Grep: which finds files by name pattern?'
+  back: Glob, for example **/*.spec.ts. Grep searches file contents.
+  module: 09-claude-code/01-what-is-claude-code.md
+- id: CCAR-F-FC-053
+  objective: CCAR-F-2.5
+  front: Why does an Edit fail, and what are the recovery options?
+  back: Its target text is not unique. Add surrounding context, use replace-all if every occurrence should change, or Read
+    the file and Write the corrected version.
+  module: 09-claude-code/01-what-is-claude-code.md
+- id: CCAR-F-FC-054
+  objective: CCAR-F-2.5
+  front: What is the efficient way to build understanding of an unfamiliar codebase?
+  back: Grep or Glob to find entry points, Read only the relevant files, and follow imports outward, instead of reading everything
+    up front.
+  module: 09-claude-code/04-permissions-and-settings.md
+- id: CCAR-F-FC-055
+  objective: CCAR-F-2.5
+  front: How do you trace a function used through wrapper modules?
+  back: Find every name it is exported or re-exported under, then search the codebase for each name.
+  module: 09-claude-code/01-what-is-claude-code.md
+- id: CCAR-F-FC-056
+  objective: CCAR-F-3.1
+  front: A new teammate's Claude Code ignores team conventions. Likely cause?
+  back: The conventions are in someone's ~/.claude/CLAUDE.md, which is personal and not in git. Move them to the project CLAUDE.md
+    or .claude/rules/.
+  module: 09-claude-code/03-claude-md-and-memory.md
+- id: CCAR-F-FC-057
+  objective: CCAR-F-3.1
+  front: Where can a project CLAUDE.md live?
+  back: ./CLAUDE.md or ./.claude/CLAUDE.md. Personal project notes go in ./CLAUDE.local.md (git-ignored).
+  module: 09-claude-code/03-claude-md-and-memory.md
+- id: CCAR-F-FC-058
+  objective: CCAR-F-3.1
+  front: Do nearer CLAUDE.md files override broader ones?
+  back: No. Files from the root down to the working directory are concatenated; conflicting instructions should be removed.
+  module: 09-claude-code/03-claude-md-and-memory.md
+- id: CCAR-F-FC-059
+  objective: CCAR-F-3.1
+  front: How do @imports in CLAUDE.md resolve?
+  back: '@path/to/file is expanded into context; relative paths resolve from the importing file, with up to four hops of nesting.'
+  module: 09-claude-code/03-claude-md-and-memory.md
+- id: CCAR-F-FC-060
+  objective: CCAR-F-3.1
+  front: Which command shows and edits the memory files in use?
+  back: /memory (and /context shows what loaded at launch).
+  module: 09-claude-code/08-team-rollout.md
+- id: CCAR-F-FC-061
+  objective: CCAR-F-3.2
+  front: Where do project skills and personal skills live?
+  back: .claude/skills/<name>/SKILL.md (project, shared via git) and ~/.claude/skills/<name>/SKILL.md (personal).
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-F-FC-062
+  objective: CCAR-F-3.2
+  front: 'What does context: fork do in a skill''s frontmatter?'
+  back: Runs the skill as a subagent with a clean context so its verbose output stays out of the main conversation; only the
+    result returns.
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-F-FC-063
+  objective: CCAR-F-3.2
+  front: Does allowed-tools in a skill restrict the tools it can use?
+  back: No. It pre-approves the listed tools for the invoking turn. disallowed-tools removes tools while the skill is active.
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-F-FC-064
+  objective: CCAR-F-3.2
+  front: What does argument-hint do?
+  back: Shows an autocomplete hint for the skill's expected arguments, such as [ticket-id] [environment].
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-F-FC-065
+  objective: CCAR-F-3.2
+  front: What happens if .claude/commands/deploy.md and .claude/skills/deploy/SKILL.md both exist?
+  back: Both would create /deploy; the skill wins. Commands are merged into the skills system and still work.
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-F-FC-066
+  objective: CCAR-F-3.2
+  front: Skill or CLAUDE.md for a task-specific procedure?
+  back: 'A skill: it loads on demand. CLAUDE.md is for standards that apply to almost every session.'
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-F-FC-067
+  objective: CCAR-F-3.3
+  front: How do you make a rule load only for Terraform files?
+  back: 'A .claude/rules/ file with YAML frontmatter paths: ["infra/**/*.tf"] (glob patterns).'
+  module: 09-claude-code/03-claude-md-and-memory.md
+- id: CCAR-F-FC-068
+  objective: CCAR-F-3.3
+  front: When does a path-scoped rule load?
+  back: When Claude reads, writes or edits a matching file (including a single-file read through Bash). Rules without paths
+    load at launch.
+  module: 09-claude-code/03-claude-md-and-memory.md
+- id: CCAR-F-FC-069
+  objective: CCAR-F-3.3
+  front: Why prefer a glob rule over subdirectory CLAUDE.md files for test conventions?
+  back: Test files are spread across many directories; one rule with **/*.test.ts covers them all and loads only when relevant.
+  module: 09-claude-code/08-team-rollout.md
+- id: CCAR-F-FC-070
+  objective: CCAR-F-3.3
+  front: What is the benefit of path-scoped rules for context?
+  back: Irrelevant conventions stay out of context, saving tokens and reducing noise.
+  module: 09-claude-code/03-claude-md-and-memory.md
+- id: CCAR-F-FC-071
+  objective: CCAR-F-3.4
+  front: Name three signals that a task needs plan mode.
+  back: Many files or services affected, several valid approaches, architectural or infrastructure consequences, or an unfamiliar
+    codebase.
+  module: 09-claude-code/02-setup-and-first-session.md
+- id: CCAR-F-FC-072
+  objective: CCAR-F-3.4
+  front: When is direct execution appropriate?
+  back: For small, well-scoped changes with an obvious fix, such as a single-function bug with a clear stack trace.
+  module: 09-claude-code/02-setup-and-first-session.md
+- id: CCAR-F-FC-073
+  objective: CCAR-F-3.4
+  front: What can Claude do in plan mode?
+  back: Read, explore and propose a plan; it cannot edit source files until you approve the plan.
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-F-FC-074
+  objective: CCAR-F-3.4
+  front: What is the Explore subagent for?
+  back: Read-only, search-heavy discovery that keeps verbose output out of the main conversation and returns a summary.
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-F-FC-075
+  objective: CCAR-F-3.5
+  front: What works best when prose descriptions of a transformation are misread?
+  back: Two or three concrete input/output examples, including an edge case.
+  module: 03-prompt-engineering/08-iterating-on-prompts.md
+- id: CCAR-F-FC-076
+  objective: CCAR-F-3.5
+  front: What is test-driven iteration with Claude?
+  back: Write tests for expected behaviour and edge cases first, ask Claude to make them pass, and feed back the failures.
+  module: 03-prompt-engineering/08-iterating-on-prompts.md
+- id: CCAR-F-FC-077
+  objective: CCAR-F-3.5
+  front: What is the interview pattern?
+  back: Asking Claude to question you about requirements and failure modes before implementing, to surface considerations
+    you missed.
+  module: 03-prompt-engineering/03-examples-few-shot.md
+- id: CCAR-F-FC-078
+  objective: CCAR-F-3.5
+  front: Combined message or sequential fixes?
+  back: Combined when the problems interact; sequential when they are independent.
+  module: 03-prompt-engineering/08-iterating-on-prompts.md
+- id: CCAR-F-FC-079
+  objective: CCAR-F-3.6
+  front: Which flag runs Claude Code non-interactively in CI?
+  back: '-p (--print): it runs the task and exits instead of waiting for input.'
+  module: 09-claude-code/09-headless-ci-and-agent-sdk.md
+- id: CCAR-F-FC-080
+  objective: CCAR-F-3.6
+  front: How do you get schema-validated JSON from claude -p?
+  back: --output-format json with --json-schema; the validated object is in the structured_output field (check it exists).
+  module: 09-claude-code/09-headless-ci-and-agent-sdk.md
+- id: CCAR-F-FC-081
+  objective: CCAR-F-3.6
+  front: Why review code in a separate Claude invocation from the one that wrote it?
+  back: The generating session carries its own reasoning and is less likely to question its decisions; an independent instance
+    catches more.
+  module: 09-claude-code/09-headless-ci-and-agent-sdk.md
+- id: CCAR-F-FC-082
+  objective: CCAR-F-3.6
+  front: How do you avoid duplicate PR comments when re-running review after new commits?
+  back: Pass the previous findings and instruct Claude to report only new or still-unaddressed issues.
+  module: 09-claude-code/08-team-rollout.md
+- id: CCAR-F-FC-083
+  objective: CCAR-F-3.6
+  front: What does --bare do, and what must you then supply?
+  back: Skips auto-discovery of hooks, skills, plugins, MCP servers and CLAUDE.md for reproducible runs; supply context explicitly,
+    for example with --append-system-prompt-file.
+  module: 09-claude-code/09-headless-ci-and-agent-sdk.md
+- id: CCAR-F-FC-084
+  objective: CCAR-F-4.1
+  front: Why does 'only report high-confidence findings' rarely cut false positives?
+  back: The model has no definition of what counts; explicit report and skip criteria change behaviour, confidence adjectives
+    do not.
+  module: 03-prompt-engineering/01-clear-direct-instructions.md
+- id: CCAR-F-FC-085
+  objective: CCAR-F-4.1
+  front: How do false positives in one category affect a review tool?
+  back: Developers learn to ignore it and then distrust accurate categories too; disable the noisy category while you fix
+    its criteria.
+  module: 14-evaluation-and-testing/02-metrics.md
+- id: CCAR-F-FC-086
+  objective: CCAR-F-4.1
+  front: How do you get consistent severity labels?
+  back: Define each severity level explicitly with a concrete code example for each.
+  module: 03-prompt-engineering/01-clear-direct-instructions.md
+- id: CCAR-F-FC-087
+  objective: CCAR-F-4.1
+  front: Give an example of a precise criterion for comment accuracy.
+  back: Report a comment only when it describes behaviour the code does not have, such as a docstring claiming retries that
+    do not happen.
+  module: 03-prompt-engineering/01-clear-direct-instructions.md
+- id: CCAR-F-FC-088
+  objective: CCAR-F-4.2
+  front: When are few-shot examples most valuable?
+  back: When instructions alone give inconsistent format or judgement, especially on ambiguous cases.
+  module: 03-prompt-engineering/03-examples-few-shot.md
+- id: CCAR-F-FC-089
+  objective: CCAR-F-4.2
+  front: What should few-shot examples for ambiguous cases include?
+  back: Two to four borderline cases with a short explanation of why one action was chosen over a plausible alternative.
+  module: 03-prompt-engineering/03-examples-few-shot.md
+- id: CCAR-F-FC-090
+  objective: CCAR-F-4.2
+  front: How can few-shot examples reduce invented values in extraction?
+  back: Include a document missing a field whose output shows null, and examples of different layouts so values are found
+    where they really are.
+  module: 03-prompt-engineering/03-examples-few-shot.md
+- id: CCAR-F-FC-091
+  objective: CCAR-F-4.2
+  front: Why prefer diverse examples over near-copies?
+  back: Diverse examples teach a principle that generalises to new cases; near-copies teach surface patterns.
+  module: 03-prompt-engineering/03-examples-few-shot.md
+- id: CCAR-F-FC-092
+  objective: CCAR-F-4.3
+  front: What does output_config.format with a JSON schema guarantee?
+  back: Syntactically valid JSON matching the schema's shape; it does not guarantee the values are correct.
+  module: 03-prompt-engineering/06-structured-output.md
+- id: CCAR-F-FC-093
+  objective: CCAR-F-4.3
+  front: 'What does strict: true on a tool guarantee?'
+  back: That tool_use.input always matches the tool's input_schema (it is a top-level field on the tool, not part of tool_choice).
+  module: 07-tool-use-and-function-calling/02-defining-tools.md
+- id: CCAR-F-FC-094
+  objective: CCAR-F-4.3
+  front: How do you stop a model inventing a value for a field the document may lack?
+  back: Make the field nullable, instruct 'use null when absent', and show an example with the field missing.
+  module: 03-prompt-engineering/06-structured-output.md
+- id: CCAR-F-FC-095
+  objective: CCAR-F-4.3
+  front: How do you design an extensible category field?
+  back: An enum with an 'other' value plus a free-text detail field, and an 'unclear' value for ambiguous cases.
+  module: 03-prompt-engineering/06-structured-output.md
+- id: CCAR-F-FC-096
+  objective: CCAR-F-4.3
+  front: Name two features structured outputs cannot be combined with.
+  back: Citations (returns a 400) and assistant prefill.
+  module: 03-prompt-engineering/06-structured-output.md
+- id: CCAR-F-FC-097
+  objective: CCAR-F-4.4
+  front: What should a retry request for a failed extraction contain?
+  back: The original document, the failed output and the specific validation errors, so the model can correct them.
+  module: 03-prompt-engineering/06-structured-output.md
+- id: CCAR-F-FC-098
+  objective: CCAR-F-4.4
+  front: When will retrying an extraction not help?
+  back: When the information is absent from the source (for example it lives in another document); route to review or fetch
+    the source instead.
+  module: 14-evaluation-and-testing/06-diagnosing-failures.md
+- id: CCAR-F-FC-099
+  objective: CCAR-F-4.4
+  front: What is the difference between syntax and semantic errors in extraction?
+  back: Syntax errors (invalid JSON, wrong types) are removed by schemas; semantic errors (totals that do not add up, values
+    in the wrong field) need validation in code.
+  module: 03-prompt-engineering/06-structured-output.md
+- id: CCAR-F-FC-100
+  objective: CCAR-F-4.4
+  front: Why record which rule produced each review finding?
+  back: So dismissed findings can be analysed by rule to find and fix the sources of false positives.
+  module: 14-evaluation-and-testing/06-diagnosing-failures.md
+- id: CCAR-F-FC-101
+  objective: CCAR-F-4.5
+  front: What are the Message Batches API's price and time window?
+  back: 50% of standard token prices; most batches finish within an hour and all within 24 hours, with no latency guarantee.
+  module: 06-claude-api/05-batch-processing.md
+- id: CCAR-F-FC-102
+  objective: CCAR-F-4.5
+  front: How do you match batch results to requests?
+  back: By custom_id; results can arrive in any order.
+  module: 06-claude-api/05-batch-processing.md
+- id: CCAR-F-FC-103
+  objective: CCAR-F-4.5
+  front: 'Which review workload belongs on the Batches API: pre-merge check or nightly audit?'
+  back: The nightly audit. A pre-merge check blocks developers and needs the synchronous API.
+  module: 06-claude-api/05-batch-processing.md
+- id: CCAR-F-FC-104
+  objective: CCAR-F-4.5
+  front: Results are needed within 40 hours and a batch can take 24. How often must you submit?
+  back: At least every 16 hours (40 minus 24), with some margin for retries.
+  module: 06-claude-api/05-batch-processing.md
+- id: CCAR-F-FC-105
+  objective: CCAR-F-4.5
+  front: How should batch failures be handled?
+  back: Re-submit only the failed custom_ids, modified as needed (for example split an over-long document); tune the prompt
+    on a sample before large runs.
+  module: 06-claude-api/05-batch-processing.md
+- id: CCAR-F-FC-106
+  objective: CCAR-F-4.6
+  front: Why is self-review in the same session weak?
+  back: The model keeps its generation reasoning in context and tends to confirm its own decisions.
+  module: 14-evaluation-and-testing/04-grading-methods.md
+- id: CCAR-F-FC-107
+  objective: CCAR-F-4.6
+  front: What is a multi-pass review architecture?
+  back: Per-file passes for local issues, then a separate integration pass for cross-file problems such as data flow.
+  module: 14-evaluation-and-testing/04-grading-methods.md
+- id: CCAR-F-FC-108
+  objective: CCAR-F-4.6
+  front: What is an independent review instance?
+  back: A separate request or session that sees the artefact and criteria but not the generator's reasoning.
+  module: 10-agentic-ai/02-workflow-patterns.md
+- id: CCAR-F-FC-109
+  objective: CCAR-F-4.6
+  front: How should reviewer confidence scores be used?
+  back: Attach one to each finding, calibrate thresholds on a labelled set, then use them to route findings for human attention.
+  module: 14-evaluation-and-testing/04-grading-methods.md
+- id: CCAR-F-FC-110
+  objective: CCAR-F-5.1
+  front: What is a case-facts block?
+  back: A persistent section of amounts, dates, IDs, statuses and promises included in every request, outside summarised history.
+  module: 04-context-engineering/02-managing-long-context.md
+- id: CCAR-F-FC-111
+  objective: CCAR-F-5.1
+  front: What detail does progressive summarisation tend to lose?
+  back: Exact numbers, percentages, dates and customer-stated expectations.
+  module: 04-context-engineering/05-compaction-and-context-editing.md
+- id: CCAR-F-FC-112
+  objective: CCAR-F-5.1
+  front: How do you mitigate 'lost in the middle' effects in long inputs?
+  back: Put a key-findings summary at the start and organise detail under clear section headers.
+  module: 04-context-engineering/02-managing-long-context.md
+- id: CCAR-F-FC-113
+  objective: CCAR-F-5.1
+  front: What should you do with a 60-field tool result when the agent needs six fields?
+  back: Trim it to the relevant fields before it enters context, in the tool or a PostToolUse hook.
+  module: 04-context-engineering/02-managing-long-context.md
+- id: CCAR-F-FC-114
+  objective: CCAR-F-5.2
+  front: A customer explicitly asks for a human. What should the agent do?
+  back: Honour the request promptly without first insisting on investigating.
+  module: 10-agentic-ai/05-human-in-the-loop.md
+- id: CCAR-F-FC-115
+  objective: CCAR-F-5.2
+  front: Why are sentiment and self-reported confidence poor escalation triggers?
+  back: Neither reliably reflects case complexity; frustrated customers often have simple problems and uncalibrated confidence
+    misleads.
+  module: 12-ai-security/13-human-oversight.md
+- id: CCAR-F-FC-116
+  objective: CCAR-F-5.2
+  front: A lookup returns three matching customers. What next?
+  back: Ask for another identifier; never pick one by heuristic.
+  module: 10-agentic-ai/05-human-in-the-loop.md
+- id: CCAR-F-FC-117
+  objective: CCAR-F-5.2
+  front: Is a policy gap a reason to escalate?
+  back: Yes. When policy is silent or ambiguous on the request, escalate rather than improvise.
+  module: 12-ai-security/13-human-oversight.md
+- id: CCAR-F-FC-118
+  objective: CCAR-F-5.3
+  front: What should a subagent's error report contain?
+  back: Failure type, what was attempted, partial results and possible alternatives, so the coordinator can decide how to
+    recover.
+  module: 10-agentic-ai/07-agent-reliability.md
+- id: CCAR-F-FC-119
+  objective: CCAR-F-5.3
+  front: Name two error-propagation anti-patterns.
+  back: Silently returning empty results as success after a failure, and terminating the whole workflow on one subagent's
+    failure.
+  module: 15-production-operations/05-reliability-engineering.md
+- id: CCAR-F-FC-120
+  objective: CCAR-F-5.3
+  front: Which errors should subagents handle locally?
+  back: Transient ones (retry, alternative source); only unresolved errors go to the coordinator, with context.
+  module: 10-agentic-ai/07-agent-reliability.md
+- id: CCAR-F-FC-121
+  objective: CCAR-F-5.3
+  front: What are coverage annotations?
+  back: Notes in the final output marking which findings are well supported and which areas have gaps because sources were
+    unavailable.
+  module: 10-agentic-ai/07-agent-reliability.md
+- id: CCAR-F-FC-122
+  objective: CCAR-F-5.4
+  front: What are signs of context degradation in a long exploration session?
+  back: Inconsistent answers and references to 'typical patterns' instead of the specific classes found earlier.
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-F-FC-123
+  objective: CCAR-F-5.4
+  front: How do scratchpad files help long explorations?
+  back: Key findings are written to a file and re-read later, so they survive compaction and new sessions.
+  module: 04-context-engineering/05-compaction-and-context-editing.md
+- id: CCAR-F-FC-124
+  objective: CCAR-F-5.4
+  front: What does /compact do in Claude Code?
+  back: Summarises a long session to free context; the project-root CLAUDE.md is re-read afterwards, but conversation-only
+    detail can be lost.
+  module: 04-context-engineering/05-compaction-and-context-editing.md
+- id: CCAR-F-FC-125
+  objective: CCAR-F-5.4
+  front: How do you design crash recovery for a multi-agent run?
+  back: Each agent exports state to a known location, the coordinator keeps a manifest, and on restart it loads the manifest
+    and passes each agent its saved state.
+  module: 04-context-engineering/02-managing-long-context.md
+- id: CCAR-F-FC-126
+  objective: CCAR-F-5.5
+  front: Why can 96% overall accuracy be misleading?
+  back: It can hide much lower accuracy on particular document types or fields; measure by segment before reducing review.
+  module: 14-evaluation-and-testing/04-grading-methods.md
+- id: CCAR-F-FC-127
+  objective: CCAR-F-5.5
+  front: What is stratified random sampling used for in review?
+  back: Continuously measuring error rates in high-confidence output by type and field, and spotting new error patterns.
+  module: 12-ai-security/13-human-oversight.md
+- id: CCAR-F-FC-128
+  objective: CCAR-F-5.5
+  front: How do you calibrate field-level confidence scores?
+  back: Compare model scores with a labelled validation set and set thresholds where measured precision meets the target.
+  module: 14-evaluation-and-testing/04-grading-methods.md
+- id: CCAR-F-FC-129
+  objective: CCAR-F-5.5
+  front: Which extractions should go to reviewers first?
+  back: Low-confidence fields, contradictory or ambiguous source documents, and categories with weak measured accuracy.
+  module: 12-ai-security/13-human-oversight.md
+- id: CCAR-F-FC-130
+  objective: CCAR-F-5.6
+  front: How do you keep attribution through multi-agent summarisation?
+  back: Require structured claim-source records (claim, source, location, excerpt, date) that every downstream agent preserves
+    and merges.
+  module: 11-rag-and-knowledge-systems/05-grounding-and-citations.md
+- id: CCAR-F-FC-131
+  objective: CCAR-F-5.6
+  front: Two credible sources give different figures. What should the synthesis do?
+  back: Report both with their sources and context, rather than silently choosing one.
+  module: 11-rag-and-knowledge-systems/05-grounding-and-citations.md
+- id: CCAR-F-FC-132
+  objective: CCAR-F-5.6
+  front: Why require publication or collection dates in findings?
+  back: So figures from different times are not mistaken for contradictions.
+  module: 10-agentic-ai/04-multi-agent-architecture.md
+- id: CCAR-F-FC-133
+  objective: CCAR-F-5.6
+  front: How should different content types appear in a synthesised report?
+  back: 'In fitting formats: financial data as tables, narrative as prose, technical findings as structured lists, with established
+    and contested findings separated.'
+  module: 11-rag-and-knowledge-systems/05-grounding-and-citations.md

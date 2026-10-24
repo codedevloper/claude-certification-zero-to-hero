@@ -143,6 +143,7 @@ def write_config() -> Path:
         "docs_dir": "docs",
         "site_dir": "../site",
         "hooks": ["../website/hooks.py"],
+        "theme": {"name": "material", "custom_dir": "../website/overrides"},
         "nav": build_nav(),
     }
     if os.environ.get("SITE_URL"):

@@ -1,0 +1,684 @@
+{
+  "schema_version": 1,
+  "track": "CCAR-F",
+  "domain": 5,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAR-F-D5-001",
+      "objective": "CCAR-F-5.1",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Tidewater Insurance uses a long-running extraction agent that works through a 300-page claim file over many turns, summarising history as it goes. By the end, its summary says 'several repair invoices of varying amounts', and the final report is missing invoice numbers, amounts and the date the claimant said repairs started.",
+      "question": "What is the best fix?",
+      "options": {
+        "A": "Summarise history less often, so that each summary covers more turns and keeps more of the original wording",
+        "B": "Keep a structured case-facts block of invoice numbers, amounts and dates outside the summary, included in every turn",
+        "C": "Ask the summariser to be thorough and to keep every important detail whenever it condenses earlier turns",
+        "D": "Increase `max_tokens` on the final report request so the agent has room to list all of the invoices it saw"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Progressive summarisation tends to blur exact numbers, dates and stated expectations into vague prose. Extracting transactional facts into a persistent structured block that is included in every prompt, outside the summarised history, preserves them for the whole session.",
+      "why_incorrect": {
+        "A": "Less frequent summarisation delays the loss but still compresses specifics into prose eventually.",
+        "C": "A general instruction does not define which facts must survive, so compression still drops them.",
+        "D": "Output length is not the problem; the facts are no longer in context when the report is written."
+      },
+      "module": "04-context-engineering/02-managing-long-context.md",
+      "references": [
+        "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-002",
+      "objective": "CCAR-F-5.1",
+      "scenario_set": "data-extraction",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Ashgrove Wholesale extracts 60 supplier contracts separately, then sends all 60 full extraction records, each with about 45 fields, to a final step that reconciles pricing terms. The reconciliation reliably covers the first and last contracts but often omits contracts from the middle of the input.",
+      "question": "Which two changes best improve coverage in the reconciliation step? (Select 2)",
+      "options": {
+        "A": "Move the contracts with the highest annual spend into the middle of the input where attention is lowest",
+        "B": "Raise `max_tokens` on the reconciliation request so the model has room to write about every contract",
+        "C": "Sort the contracts alphabetically by supplier name so the order of the input is predictable for the model",
+        "D": "Put a summary of the key findings at the start of the input and give each contract its own labelled section",
+        "E": "Trim each extraction record to the pricing fields the reconciliation needs before combining all of them"
+      },
+      "answer": [
+        "D",
+        "E"
+      ],
+      "explanation": "Long aggregated inputs suffer from position effects, with middle sections more likely to be missed. A key-findings summary at the start and clear section headers make every contract easy to locate, and trimming records to relevant fields cuts the volume that dilutes attention.",
+      "why_incorrect": {
+        "A": "Putting the most important contracts where attention is weakest would make the most costly omissions more likely.",
+        "B": "The model is omitting content it was given, not running out of output space.",
+        "C": "Alphabetical order does not change the length or structure that causes the middle to be missed."
+      },
+      "module": "04-context-engineering/02-managing-long-context.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/long-context-tips",
+        "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-003",
+      "objective": "CCAR-F-5.1",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Pinecrest Pharmacy Online is adding a case-facts block to its support agent. The block is kept outside the summarised history and sent with every request, so that long chats do not lose what was agreed with the customer.",
+      "question": "What should the case-facts block contain?",
+      "options": {
+        "A": "The verbatim transcript of the latest twenty turns, so that nothing the customer said recently can be lost again",
+        "B": "The model's running notes on the customer's mood and likely intent, refreshed after every turn of the conversation",
+        "C": "A prose recap of the whole conversation so far, rewritten by the summariser in full each time history is condensed",
+        "D": "Order numbers, agreed amounts, promised dates and open commitments, each stored as an exact, labelled value"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "The case-facts block exists to keep transactional facts exact while the narrative history is condensed. It should hold compact, structured values such as identifiers, amounts, dates and commitments, updated as they change, rather than prose or raw transcript, which is exactly what summarisation blurs or what grows without limit.",
+      "why_incorrect": {
+        "A": "Raw turns grow the block without limit and bury the few exact facts among everything else said.",
+        "B": "Impressions are interpretive and change often; they do not protect the exact figures and promises that were lost.",
+        "C": "A prose recap is another summary, so exact amounts and dates get blurred in the same way as the history."
+      },
+      "module": "04-context-engineering/02-managing-long-context.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-004",
+      "objective": "CCAR-F-5.1",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "cost-performance",
+      "scenario": "Brightwater Outfitters' fetch_order_history tool returns about 45 fields per order, and a typical returns conversation loads 20 orders. Context fills quickly, cost per conversation has doubled, and the agent sometimes overlooks the delivery date it needs for return eligibility.",
+      "question": "What is the most effective change?",
+      "options": {
+        "A": "Return order results as compressed base64, so each lookup uses fewer tokens while still keeping every field",
+        "B": "Ask the agent in the system prompt to ignore irrelevant fields whenever it reads an order lookup result",
+        "C": "Move to a model with a larger context window, so all 45 fields of every order fit in context comfortably",
+        "D": "Trim each order result to the fields the returns flow uses, such as status, delivery date and amount, before it enters context"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Tool results accumulate in context and can use tokens far out of proportion to their relevance. Trimming verbose outputs to the fields the task needs (in the tool itself or with a PostToolUse hook) cuts cost and keeps the key facts easy for the model to find.",
+      "why_incorrect": {
+        "A": "Encoded data is hard for the model to read reliably and does not remove the irrelevant content.",
+        "B": "The tokens are still consumed, and the relevant fields remain buried among the irrelevant ones.",
+        "C": "More room does not make irrelevant fields less distracting, and cost keeps rising with every lookup."
+      },
+      "module": "04-context-engineering/02-managing-long-context.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+        "https://code.claude.com/docs/en/agent-sdk/hooks"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-005",
+      "objective": "CCAR-F-5.2",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Marrowstone Bank's CI job asks Claude Code to generate tests for changed functions. For `close_account`, the docstring says it returns None when the account has a pending transfer, but the code raises `PendingTransferError`. The job runs unattended and posts its tests as a pull request.",
+      "question": "How should the job be instructed to handle cases like this?",
+      "options": {
+        "A": "Treat the code as the source of truth and write tests that expect the exception, since the code is what runs in production",
+        "B": "Test the unambiguous behaviour, and flag the contradiction in the pull request as a question rather than encoding either answer",
+        "C": "Skip any function whose documentation and code disagree, so that the generated suite only contains reliable tests",
+        "D": "Treat the docstring as the specification and write tests expecting None, letting the failing tests reveal the bug"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "When the specification is ambiguous, the agent should not resolve it by guessing. Encoding either behaviour as the expected result either locks in a possible bug or breaks the build. Testing what is clear and surfacing the conflict to a human gets the decision made by someone who knows the intent.",
+      "why_incorrect": {
+        "A": "If the code is the bug, the tests now lock it in and make the wrong behaviour harder to change.",
+        "C": "Silently skipping hides the discrepancy, so nobody learns that the docs or the code need fixing.",
+        "D": "Deliberately failing tests break the pipeline on a guess about intent that may be wrong."
+      },
+      "module": "10-agentic-ai/05-human-in-the-loop.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-006",
+      "objective": "CCAR-F-5.2",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Halcyon Grid's invoice pipeline looks up each extracted supplier name in the vendor master. For 'Northwind Services', the lookup returns three records in different regions. The current code picks the record with the most recent invoice, and finance has found payments posted to the wrong legal entity.",
+      "question": "How should the pipeline handle multiple matches?",
+      "options": {
+        "A": "Have the model choose the most likely record based on the invoice's wording and its knowledge of each region",
+        "B": "Keep the most-recent-invoice rule, but log every case in which more than one candidate record matched the name",
+        "C": "Match on further identifiers from the invoice, such as tax ID or remittance account, and route to review if none decide it",
+        "D": "Pick the record whose region matches the region of the purchasing site that raised the original order"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Multiple matches need disambiguation from additional identifiers, not a heuristic choice. The invoice usually carries a tax ID or bank details that identify the entity; if it does not, a person should decide, because a wrong legal entity has financial consequences.",
+      "why_incorrect": {
+        "A": "A model guess is still a heuristic and cannot be relied on to identify the correct legal entity.",
+        "B": "Logging records the problem but still posts payments to a guessed entity.",
+        "D": "This is another heuristic; suppliers often invoice from a regional entity that differs from the purchasing site."
+      },
+      "module": "10-agentic-ai/05-human-in-the-loop.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-007",
+      "objective": "CCAR-F-5.2",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "A Fernvale Mobile customer opens a chat with: 'I just want to speak to a person, please.' Their underlying request is a simple billing address change that the agent could complete in seconds.",
+      "question": "How should the agent respond?",
+      "options": {
+        "A": "Check the customer's sentiment score and hand off only if it shows strong frustration rather than a mild preference",
+        "B": "Hand off to a person straight away with a structured summary, without first trying to resolve the address change",
+        "C": "Make the address change first, since it takes seconds, then offer a human if the customer still wants to speak to one",
+        "D": "Acknowledge the request, explain that the agent can do it faster, and escalate only if the customer asks a second time"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "An explicit request for a human is an escalation trigger in its own right and should be honoured immediately, with a handoff summary so the person does not start from scratch. Offering to resolve first is appropriate when a customer is frustrated but has not asked for a human.",
+      "why_incorrect": {
+        "A": "Sentiment is an unreliable escalation proxy, and the customer's explicit request already settles the question.",
+        "C": "This overrides an explicit request; customers who ask for a person should not be made to go through the agent first.",
+        "D": "Offering to help first suits a frustrated customer who has not asked for a person; an explicit request should be honoured at once."
+      },
+      "module": "10-agentic-ai/05-human-in-the-loop.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-008",
+      "objective": "CCAR-F-5.2",
+      "scenario_set": "support-agent",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Kestrel Home Goods is writing explicit escalation criteria, with examples, for its support agent's system prompt.",
+      "question": "Which TWO situations should lead the agent to escalate to a human? (Choose 2.)",
+      "options": {
+        "A": "The customer wants a refund paid to another retailer's gift card, and the refund policy says nothing about third-party cards",
+        "B": "The agent's self-rated confidence in its own answer falls below 0.7 on a routine customer question about delivery tracking",
+        "C": "A name lookup returns three possible accounts, so the agent escalates rather than asking for a postcode or order number",
+        "D": "The customer writes in capitals and uses angry language about a late delivery that the agent is able to rebook",
+        "E": "After several attempts the order system keeps returning conflicting statuses, and the agent cannot make further progress"
+      },
+      "answer": [
+        "A",
+        "E"
+      ],
+      "explanation": "Good escalation triggers include explicit requests for a human, policy gaps or exceptions (the policy is silent on the request), and being unable to make meaningful progress. Sentiment and self-rated confidence are unreliable proxies, and ambiguous matches should be resolved by asking for more identifiers.",
+      "why_incorrect": {
+        "B": "Self-reported confidence is a poor proxy for real complexity, and a routine tracking question does not need a human.",
+        "C": "Several matches call for more identifiers from the customer, not escalation or a guess.",
+        "D": "Anger alone is not a trigger when the issue is within the agent's ability; it should acknowledge the frustration and offer the fix."
+      },
+      "module": "10-agentic-ai/05-human-in-the-loop.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-009",
+      "objective": "CCAR-F-5.3",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Linwood Capital's document-analysis subagent uses an OCR service that intermittently returns HTTP 503. When 4 of 15 scanned filings fail, the subagent reports only {\"status\": \"analysis unavailable\"}, and the coordinator abandons the whole report.",
+      "question": "How should the failure be handled?",
+      "options": {
+        "A": "Return the eleven successful analyses marked as complete, and leave out any mention of the four filings that failed",
+        "B": "Abort the whole research run whenever any subagent fails, so no report is ever built on incomplete evidence",
+        "C": "Have the coordinator re-run the full document-analysis subagent from scratch up to five times whenever it reports any kind of failure",
+        "D": "Retry transient failures in the subagent, then return the failure type, files tried, partial results and alternatives for the rest"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Subagents should recover locally from transient faults, and propagate only what they cannot resolve, with structured context: what failed and why, what was attempted, the partial results, and possible alternatives. That lets the coordinator decide to retry, use another source or proceed with clear caveats, instead of seeing a generic status that hides everything.",
+      "why_incorrect": {
+        "A": "Silently dropping failures makes the report look complete when a quarter of the evidence is missing.",
+        "B": "Ending the whole workflow on one recoverable failure wastes the successful work and leaves the user with nothing.",
+        "C": "Blind full retries repeat work that succeeded and ignore whether the failure is transient or not."
+      },
+      "module": "10-agentic-ai/07-agent-reliability.md",
+      "references": [
+        "https://www.anthropic.com/engineering/multi-agent-research-system",
+        "https://modelcontextprotocol.io/specification/latest/server/tools"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-010",
+      "objective": "CCAR-F-5.3",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "For a question on battery-recycling patents, Sorrel Partners' web-search subagent queried a patent database that returned no matches, while a trade-news archive returned HTTP 403. Both were reported as 'no results', and the report concluded that there was 'no evidence of recent activity'.",
+      "question": "How should the subagent report these two outcomes?",
+      "options": {
+        "A": "Report both as errors, so the coordinator re-runs every query that came back without any matching documents",
+        "B": "Drop both sources from the subagent's output, so the coordinator only sees the sources that returned documents",
+        "C": "Report both as successful empty results, so the report is not delayed by sources that turned up nothing useful",
+        "D": "Report the query that ran and found nothing as a successful empty result, and the 403 as an access failure with what was attempted"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "An access failure and a valid empty result mean different things. A successful query with no matches is evidence; a 403 means that source was never searched. Reporting them distinctly, with what was attempted, lets the coordinator retry or substitute the inaccessible source and avoid claiming absence of evidence.",
+      "why_incorrect": {
+        "A": "A query that ran correctly and found nothing is valid evidence; treating it as an error wastes retries.",
+        "B": "Hiding both outcomes removes the coordinator's ability to judge coverage or try another route into the archive.",
+        "C": "This is what produced the false conclusion: an unread source is not evidence of absence."
+      },
+      "module": "10-agentic-ai/07-agent-reliability.md",
+      "references": [
+        "https://www.anthropic.com/engineering/multi-agent-research-system"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-011",
+      "objective": "CCAR-F-5.3",
+      "scenario_set": "research-system",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Meridian Public Health Observatory's report on clinic waiting times draws on six regional data portals. Two portals were unavailable for the whole run, despite retries, and the subagents returned structured failure details for them.",
+      "question": "Which TWO behaviours should the system show? (Choose 2.)",
+      "options": {
+        "A": "Fill the two missing regions with estimates from neighbouring regions, so the published report has no visible gaps",
+        "B": "Annotate the report's coverage, marking which findings are well supported and which regions have gaps from unavailable sources",
+        "C": "Keep the gaps out of the report text, but list the failed portals in an internal log that engineers can review",
+        "D": "Withhold the whole report until every one of the six regional portals is available again, however long that outage turns out to last",
+        "E": "Have the coordinator decide from the failure details whether to try an alternative source for those regions or proceed with partial data"
+      },
+      "answer": [
+        "B",
+        "E"
+      ],
+      "explanation": "When some sources stay unavailable, the coordinator should use the structured error context to choose a recovery path, and the output should carry coverage annotations so readers can see which findings are solid and where gaps exist. Hiding gaps, inventing data or halting everything are all worse outcomes.",
+      "why_incorrect": {
+        "A": "Invented estimates presented as findings mislead readers about what the evidence actually shows.",
+        "C": "Readers then cannot tell which conclusions rest on complete evidence and which do not.",
+        "D": "Blocking all output on a partial failure throws away well-supported findings for the other four regions."
+      },
+      "module": "10-agentic-ai/07-agent-reliability.md",
+      "references": [
+        "https://www.anthropic.com/engineering/multi-agent-research-system"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-012",
+      "objective": "CCAR-F-5.4",
+      "scenario_set": "code-generation",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Two hours into exploring a 3,000-file codebase at Meridian Freight, Claude's answers have become generic. It now refers to 'the typical repository pattern' instead of naming the specific classes it found earlier, and the context is full of search output.",
+      "question": "Which TWO actions best restore precise answers while keeping the work done so far? (Choose 2.)",
+      "options": {
+        "A": "Switch the session into plan mode, which drops earlier exploration output from the context window",
+        "B": "Have Claude record key findings such as class names, file paths and flows in a notes file it can refer back to",
+        "C": "Repeat each question with the instruction 'be specific' in capitals until the class names reappear",
+        "D": "Paste the earlier tool output back into the conversation so that the original details are fresh again",
+        "E": "Run /compact to shrink the accumulated search output and keep working from a condensed context"
+      },
+      "answer": [
+        "B",
+        "E"
+      ],
+      "explanation": "Context degradation in long exploration shows up as answers drifting to generic patterns. A scratchpad file keeps key findings outside the context window, and /compact reduces the verbose discovery output so the session can continue with the essentials.",
+      "why_incorrect": {
+        "A": "Plan mode restricts edits. It does not remove existing tool output from the context.",
+        "C": "Emphasis does not bring back details that have become hard to attend to in an overloaded context.",
+        "D": "Re-pasting output makes the context problem worse, adding more tokens to an already crowded window."
+      },
+      "module": "04-context-engineering/02-managing-long-context.md",
+      "references": [
+        "https://code.claude.com/docs/en/context-window",
+        "https://www.anthropic.com/engineering/claude-code-best-practices"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-013",
+      "objective": "CCAR-F-5.4",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "A developer at Larkspur Outfitters asks Claude Code to find every place a legacy billing module is used across a monorepo of 40 packages. Earlier attempts filled the main session with hundreds of lines of search output before any code was changed.",
+      "question": "Before changing how invoices are rounded, how should the developer run this discovery step so the main session stays focused?",
+      "options": {
+        "A": "Delegate the search to a subagent that explores in its own context and returns a short list of call sites with file paths",
+        "B": "Run the search in the main session with a larger output limit so that every match is visible at once",
+        "C": "Ask Claude to read every file in the billing packages first so that it has the full picture loaded",
+        "D": "Start a fresh session for every package and copy the results between them by hand"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "A subagent does the verbose exploration in a separate context window and hands back only a summary, so the main session keeps room for the actual change. This is the standard way to keep exploration output from crowding the working context.",
+      "why_incorrect": {
+        "B": "More output in the main session is exactly what crowded the context in earlier attempts.",
+        "C": "Reading every file up front fills the context with material that is mostly irrelevant to the change.",
+        "D": "Manual copying across sessions is slow and error-prone, and it loses the link between findings."
+      },
+      "module": "04-context-engineering/02-managing-long-context.md",
+      "references": [
+        "https://code.claude.com/docs/en/sub-agents",
+        "https://code.claude.com/docs/en/context-window"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-014",
+      "objective": "CCAR-F-5.4",
+      "scenario_set": "developer-productivity",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Ashgrove Pharma's Agent SDK explorer maps 14 services using one subagent per service. Halfway through a run the process crashed. Restarting began from zero, and the coordinator's context had already been close to full before the crash.",
+      "question": "Which TWO design changes best address recovery and context pressure? (Choose 2.)",
+      "options": {
+        "A": "On restart, resume the crashed session's ID and ask the coordinator to work out where it left off from history",
+        "B": "Have each subagent write its findings to a known per-service state file, with a manifest tracking which services are done",
+        "C": "Return every subagent's full exploration transcript to the coordinator so that nothing is lost if a crash recurs",
+        "D": "On restart, have the coordinator load the manifest and pass the relevant summaries into new subagents' prompts",
+        "E": "Raise maxTurns on every subagent so each service is mapped in one longer run that is less likely to stop early"
+      },
+      "answer": [
+        "B",
+        "D"
+      ],
+      "explanation": "Structured state exports to a known location, tracked by a manifest, let the coordinator see what is done after a crash. Loading the manifest and injecting only the needed summaries into new subagent prompts recovers progress without refilling the coordinator's context.",
+      "why_incorrect": {
+        "A": "Resuming relies on a transcript that may end mid-operation and brings the near-full context straight back.",
+        "C": "Full transcripts in the coordinator are what crowd its context. Summaries and state files are the point of delegation.",
+        "E": "Longer runs do not prevent process crashes and make each lost run more expensive."
+      },
+      "module": "04-context-engineering/04-memory-and-persistence.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/subagents",
+        "https://code.claude.com/docs/en/agent-sdk/sessions"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-015",
+      "objective": "CCAR-F-5.5",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Cobaltline Clinical's extraction of consent forms reaches 97% field-level accuracy on a validation set. The operations director wants to remove human review for all extractions next month. The validation set includes typed forms, scanned forms and handwritten site amendments.",
+      "question": "What should happen before human review is reduced?",
+      "options": {
+        "A": "Measure accuracy by document type and by field, and reduce review only for the segments that meet the bar",
+        "B": "Keep review for every extraction until the model reaches 99% overall accuracy on the existing validation set",
+        "C": "Expand the validation set to ten times its size and remove review if the overall figure stays at 97% or higher",
+        "D": "Remove review now, since 97% overall accuracy is above the 95% target agreed with the clinical operations team"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "An aggregate figure can hide poor performance in a segment, such as handwritten amendments or a specific consent field. Breaking accuracy down by document type and field shows where automation is safe and where review must stay.",
+      "why_incorrect": {
+        "B": "A higher overall target keeps the same blind spot and may hold back segments that are already safe to automate.",
+        "C": "A bigger sample tightens the overall estimate but still masks weak segments.",
+        "D": "A 97% average can include a segment performing far below target, which removing review would let through unchecked."
+      },
+      "module": "14-evaluation-and-testing/02-metrics.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-016",
+      "objective": "CCAR-F-5.5",
+      "scenario_set": "data-extraction",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Orchid Freight auto-approves customs declarations when the extractor's field-level confidence is high, and sends the rest to a small review team. It wants to keep measuring the error rate of auto-approved records and to notice new kinds of error early.",
+      "question": "Which two practices should it adopt? (Select 2)",
+      "options": {
+        "A": "Audit the first 100 records processed each day, as a simple and consistent sample of the day's extraction traffic",
+        "B": "Audit only low-confidence records, since high-confidence records are by design the ones least likely to be wrong",
+        "C": "Audit a stratified random sample of high-confidence records across document types and fields on an ongoing basis",
+        "D": "Calibrate the confidence thresholds against a labelled validation set, and recalibrate as the document mix changes",
+        "E": "Use 0.9 as the auto-approval threshold for every field, since it is a widely used default in extraction systems"
+      },
+      "answer": [
+        "C",
+        "D"
+      ],
+      "explanation": "Stratified random sampling of high-confidence output measures the real error rate of auto-approved records and surfaces new error patterns across segments. Confidence scores are only useful for routing when thresholds are calibrated against labelled data and kept current.",
+      "why_incorrect": {
+        "A": "The first records of each day are not representative of document types or later traffic, so the sample is biased.",
+        "B": "Low-confidence records already get review; auditing only them never measures errors in what is auto-approved.",
+        "E": "An uncalibrated default threshold may be far too lenient or strict for particular fields."
+      },
+      "module": "14-evaluation-and-testing/03-building-eval-datasets.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-017",
+      "objective": "CCAR-F-5.5",
+      "scenario_set": "research-system",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Brackenfield Insights' research pipeline extracts claims from sources and attaches a confidence score to each. Analysts have time to review about 15% of extracted claims before reports are published.",
+      "question": "Which TWO practices make the best use of reviewer time? (Choose 2.)",
+      "options": {
+        "A": "Calibrate the routing threshold against a labelled set of claims, so the score used for routing reflects observed accuracy",
+        "B": "Stop reviewing high-confidence claims entirely once the first month of reviews shows few errors among them",
+        "C": "Send low-confidence claims, and claims whose sources contradict each other, to analysts ahead of other claims",
+        "D": "Spread analyst time at random across all claims, ignoring confidence, so reviewers always see a representative mix",
+        "E": "Route claims to analysts only when the model's raw confidence is below 0.5, without checking how scores relate to accuracy"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanation": "Confidence scores are useful for routing only once calibrated against labelled data. Limited reviewer capacity should go first to low-confidence items and items with ambiguous or contradictory sources, while a smaller random sample of high-confidence items keeps measuring error rates.",
+      "why_incorrect": {
+        "B": "Without ongoing sampling, new error patterns in high-confidence claims would go unnoticed.",
+        "D": "Random sampling is useful for measuring error rates, but as the main routing rule it wastes scarce reviewer time.",
+        "E": "An uncalibrated score may not track real accuracy, so the threshold could miss many errors or waste review time."
+      },
+      "module": "14-evaluation-and-testing/02-metrics.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-018",
+      "objective": "CCAR-F-5.5",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Lumenwise Telecom's agent proposes refund decisions that human reviewers approve. Over three months, reviewers agreed with 96% of proposals. Leadership plans to stop reviewing proposals the model marks as high confidence. Damaged-goods claims are 8% of volume.",
+      "question": "What should happen before review is reduced?",
+      "options": {
+        "A": "Stop review for all proposals, and ask customers to report wrong decisions, using complaints as the error signal",
+        "B": "Measure agreement separately for each claim type and amount band, and keep sampling approved cases after review is reduced",
+        "C": "Keep reviewing every proposal indefinitely, because any automation of refund decisions carries an unacceptable risk",
+        "D": "Stop review for every high-confidence proposal now, because 96% overall agreement already meets the quality target"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Aggregate accuracy can mask weak performance in specific segments. Accuracy should be checked by claim type and amount before automating, and stratified random sampling of automated decisions should continue afterwards to measure error rates and catch new failure patterns.",
+      "why_incorrect": {
+        "A": "Complaints are a biased, delayed signal; many wrong decisions, especially in the company's favour, never get reported.",
+        "C": "This ignores the evidence; segment-level validation plus ongoing sampling can safely free reviewer capacity.",
+        "D": "An aggregate figure can hide poor accuracy in smaller segments such as damaged-goods claims."
+      },
+      "module": "14-evaluation-and-testing/02-metrics.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-019",
+      "objective": "CCAR-F-5.6",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Larkspur Legal's pipeline extracts claims from dozens of case documents, summarises them per matter, then synthesises a matter brief. Partners cannot trace statements in the brief back to a document or page, because the summary step drops that information. The extraction step uses structured outputs with a JSON schema.",
+      "question": "Which design best preserves provenance through to the brief?",
+      "options": {
+        "A": "Make every extracted claim carry its document name, page and excerpt, and require each later step to keep and merge them",
+        "B": "Instruct the synthesis step to cite sources where possible, using document names it remembers from the summaries",
+        "C": "Turn on the Citations feature for the documents while keeping `output_config.format`, so each JSON field gets a citation",
+        "D": "Add a list of all source documents at the end of the brief so partners know which files were used to write it"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Attribution is lost when summarisation compresses claims without their sources. Structured claim-source mappings created at extraction time, which every later step must carry forward and merge, keep each statement traceable to its document, page and excerpt.",
+      "why_incorrect": {
+        "B": "The summaries no longer contain source details, so the synthesis step can only guess at citations.",
+        "C": "The Citations feature cannot be combined with `output_config.format`; the request returns a 400, so this design does not work as described.",
+        "D": "A bibliography shows which files were used but not which statement came from where."
+      },
+      "module": "11-rag-and-knowledge-systems/05-grounding-and-citations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/citations",
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-020",
+      "objective": "CCAR-F-5.6",
+      "scenario_set": "data-extraction",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Kestrel Robotics builds supplier risk profiles by extracting facts from filings and press releases. For one supplier, an annual report gives a headcount of 4,200 and an investor presentation gives 3,650. The current pipeline keeps whichever value it extracted last.",
+      "question": "Which two changes best handle this? (Select 2)",
+      "options": {
+        "A": "Require each extracted figure to carry its publication or data-collection date along with the source document",
+        "B": "Keep both values in the profile, each annotated with its source, and flag the conflict for the reconciliation step",
+        "C": "Keep the more recent document's value and discard the other, since newer documents supersede older ones",
+        "D": "Store the average of the two values as the supplier's headcount, since the true figure is probably between them",
+        "E": "Keep the value from the source with the higher authority and drop the other one so that the profile stays clean"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "Conflicting figures from credible sources should be preserved with attribution and flagged so a later step or person decides how to reconcile them. Recording dates matters because many apparent contradictions are just figures from different periods.",
+      "why_incorrect": {
+        "C": "Newer documents can report older periods; without collection dates, recency of publication is an unreliable tiebreaker.",
+        "D": "An average is a number no source reported and loses both originals.",
+        "E": "Dropping a credible value hides the conflict and the evidence a reviewer needs to judge it."
+      },
+      "module": "11-rag-and-knowledge-systems/05-grounding-and-citations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations",
+        "https://www.anthropic.com/engineering/multi-agent-research-system"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-021",
+      "objective": "CCAR-F-5.6",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Halvard Policy Institute's research system finds two credible surveys on remote work in public agencies: one reports 31% of staff working remotely, the other 44%. The synthesis agent has been choosing one figure, or labelling the pair a contradiction. The surveys were collected in 2023 and 2025.",
+      "question": "How should the system handle the two figures?",
+      "options": {
+        "A": "Report only the more recent figure, since newer data always supersedes older data in any research report",
+        "B": "Report the figure from the source with higher domain authority, and drop the other one to avoid confusing readers",
+        "C": "Keep both figures with sources and dates, present the gap as a likely change over time, and note method differences",
+        "D": "Average the two figures and cite both sources, so the report gives its readers one single number they can use directly"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Subagents should carry publication or collection dates so temporal differences are not misread as contradictions. Here the 2023 and 2025 dates likely explain the gap, so the report should present both figures with attribution as a probable change over time. Dates often explain apparent contradictions, but comparability still has to be checked: differences in sampling, definitions of 'remote' or agency mix should be noted rather than hidden.",
+      "why_incorrect": {
+        "A": "Dropping the earlier figure loses the trend and hides that a second credible source exists.",
+        "B": "Picking one credible source arbitrarily discards evidence and may hide a real change over time.",
+        "D": "Averaging measurements from different years produces a number that neither survey supports."
+      },
+      "module": "11-rag-and-knowledge-systems/05-grounding-and-citations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAR-F-D5-022",
+      "objective": "CCAR-F-5.6",
+      "scenario_set": "research-system",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Ashgrove Research's subagents return polished prose summaries. By the time the synthesis and report steps finish, many statements in the final report carry no citation, and some citations point to the wrong source.",
+      "question": "Which TWO changes best preserve provenance through the pipeline? (Choose 2.)",
+      "options": {
+        "A": "Have the synthesis agent cite the subagent that supplied each claim, since that subagent's logs show where it came from",
+        "B": "Keep prose summaries but list every source consulted in a bibliography at the end of the final report",
+        "C": "Require synthesis to keep those claim-source links when merging, combining sources when several subagents report the same claim",
+        "D": "Have subagents return each claim with its source URL, a supporting excerpt and the publication date, as structured records",
+        "E": "Have the report agent add citations at the end by searching the web for pages that appear to support each sentence of the draft"
+      },
+      "answer": [
+        "C",
+        "D"
+      ],
+      "explanation": "Attribution is lost when findings are compressed into prose without claim-to-source mappings. Structured claim records (claim, URL or document, excerpt, date) from subagents, preserved and merged through synthesis, keep every statement traceable to the evidence behind it.",
+      "why_incorrect": {
+        "A": "An internal agent name is not a source; readers need the original document, and logs are not part of the report.",
+        "B": "A bibliography does not show which source supports which claim, so readers cannot check individual statements.",
+        "E": "Retrofitting citations may attach sources that were never consulted and do not support the claim as stated."
+      },
+      "module": "11-rag-and-knowledge-systems/05-grounding-and-citations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/citations",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    }
+  ]
+}

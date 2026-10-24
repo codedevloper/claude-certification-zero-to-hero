@@ -9,6 +9,7 @@
 | Track | Folder | Files |
 |---|---|---|
 | CCAO-F — Claude Certified Associate – Foundations | [`ccao-f/`](ccao-f/) | `d1.json` … `d7.json`, one per exam domain |
+| CCAR-F — Claude Certified Architect – Foundations | [`ccar-f/`](ccar-f/) | `d1.json` … `d5.json`, one per exam domain; each question is tagged with one of the six exam scenarios |
 | CCAR-P — Claude Certified Architect – Professional | [`ccar-p/`](ccar-p/) | `d1.json` … `d7.json`, one per exam domain |
 
 Question counts per domain roughly follow the official blueprint weights in
@@ -62,7 +63,8 @@ Each domain file validates against [`schema/question-bank.schema.json`](schema/q
 | `category` | `concept`, `scenario`, `architecture`, `troubleshooting`, `security` or `cost-performance` |
 | `why_incorrect` | One rationale for every distractor, and only for distractors |
 | `module` | A learning page that teaches the concept (must exist) |
-| `references` | Official documentation URLs |
+| `references` | Official `https://` documentation URLs |
+| `scenario_set` | Scenario-based exams only (CCAR-F): one of the scenario IDs in the registry, such as `support-agent` or `data-extraction` |
 
 ## Quality rules
 

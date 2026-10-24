@@ -14,7 +14,7 @@ import re
 import sys
 from difflib import SequenceMatcher
 
-from common import ROOT, SCHEMA_PATH, Report, objective_index, question_files
+from common import ROOT, SCHEMA_PATH, Report, certifications, objective_index, question_files
 
 try:
     import jsonschema
@@ -34,6 +34,7 @@ def validate() -> Report:
 
     seen: dict[str, str] = {}
     stems: list[tuple[str, str]] = []
+    scenarios = {c["code"]: {s["id"] for s in c.get("scenarios", [])} for c in certifications()}
 
     for path in question_files():
         rel = path.relative_to(ROOT)
@@ -82,6 +83,12 @@ def validate() -> Report:
             for claimed in CORRECT_CLAIM.findall(q.get("explanation", "")):
                 if claimed.upper() not in answer:
                     report.error(f"{where}: explanation claims {claimed} is correct but key is {answer}")
+
+            if scenarios.get(track):
+                if q.get("scenario_set") not in scenarios[track]:
+                    report.error(f"{where}: scenario_set must be one of {sorted(scenarios[track])}")
+            elif "scenario_set" in q:
+                report.error(f"{where}: {track} is not a scenario-based exam; remove scenario_set")
 
             module = q.get("module", "")
             if module and not (ROOT / module.split("#")[0]).exists():

@@ -18,7 +18,7 @@ Pick the plan that matches **your experience** and **the track you are taking**,
 | [60-day comprehensive](60-day-comprehensive.md) | CCAR-P | **No** | Several years of software, systems or platform experience; Python reading ability; ideally some LLM project work | 1.5 to 2 h | ~110 h |
 | [90-day enterprise engineering](90-day-enterprise-engineering.md) | CCAR-P (with an optional CCAO-F milestone on the way) | **Yes for AI, no for technology**: no AI knowledge needed, but you should be a working developer, engineer or architect | Programming and systems fundamentals | 1.5 to 2 h on weekdays, plus some weekend lab time | ~170 h |
 
-### Mapping plans to the two supported tracks
+### Mapping plans to the supported tracks
 
 ```mermaid
 flowchart LR
@@ -41,6 +41,7 @@ flowchart LR
 
 - **CCAO-F** (Claude Certified Associate – Foundations) is aimed at business and knowledge workers who use Claude as a productivity tool and build Claude Projects. It is not aimed at API developers. The 7-, 15- and 30-day plans target it.
 - **CCAR-P** (Claude Certified Architect – Professional) is for experienced architects, AI engineers, tech leads and senior developers who take Claude systems into production. The 60- and 90-day plans target it.
+- **CCAR-F** (Claude Certified Architect – Foundations) is for builders who work with the Agent SDK, Claude Code and MCP. There is no dedicated plan yet: follow Weeks 1 to 4 of the 60-day plan (API, prompting, tools and MCP, agents), add Module 09 (Claude Code), then switch to the [CCAR-F track](../../16-certification-tracks/ccar-f/README.md) study guides and its scenario-based mock exams.
 
 If you are unsure, read [Choose your path](../choose-your-path.md) first.
 

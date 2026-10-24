@@ -3,27 +3,28 @@
 Status of the repository build. "Complete" means written, checked by the automated validators, and with no
 placeholders. It does not mean every sentence has had expert human review; see [Known gaps](#known-gaps).
 
-**Last updated:** 2026-10-24 · **Release:** v1.0 (unreleased; local only)
+**Last updated:** 2026-10-24 · **Release:** v1.1.0
 
 ## Summary
 
 | Area | Status | Size | Verified by |
 |---|---|---|---|
-| Certification registry | Complete | 2 supported tracks, 2 planned | Official v1.0 exam guides (2026-10-24) |
+| Certification registry | Complete | 3 supported tracks, 1 planned | Official v1.0 exam guides (2026-10-24) |
 | Learning modules 00–15 | Complete | 16 modules, 139 pages, ~262k words | Link check, exam-claims check, snippet compile/run by authors |
 | AI security track (module 12) | Complete | 16 pages, OWASP LLM Top 10 2025 and agentic mapping | Sources checked 2026-10-24 |
 | CCAO-F track | Complete | Overview, 7 domain guides, exercises, scenarios, revision, readiness | Coverage matrix: 30/30 objectives |
+| CCAR-F track | Complete | Overview, 6 exam scenarios, 5 domain guides, exercises, revision, readiness | Coverage matrix: 30/30 objectives |
 | CCAR-P track | Complete | Overview, 7 domain guides, exercises, scenarios, revision, readiness | Coverage matrix: 38/38 objectives |
-| Practice questions | Complete | 132 CCAO-F + 141 CCAR-P = **273** | Schema, keys, distractors, near-duplicates, answer-cueing limits |
-| Mock exams | Complete | Terminal + browser engines, 6 fixed forms | Unit tests, scripted CLI run, in-browser test |
+| Practice questions | Complete | 135 CCAO-F + 131 CCAR-F + 144 CCAR-P = **410** | Schema, keys, distractors, near-duplicates, answer-cueing limits |
+| Mock exams | Complete | Terminal + browser engines, 9 fixed forms (CCAR-F forms use 4 of the 6 scenarios) | Unit tests, scripted CLI run, in-browser test |
 | Hands-on labs | Complete | **20** labs | All 20 pass in mock mode (`tools/run_lab_smoke.py`) |
 | Real-world projects | Complete | **5** projects | 173 offline tests passing |
 | Learning roadmaps | Complete | 7, 15, 30, 60 and 90-day plans | Link check |
-| Flashcards | Complete | 106 CCAO-F + 147 CCAR-P + 94 fundamentals = **347** | `tools/flashcards.py` |
+| Flashcards | Complete | 106 CCAO-F + 133 CCAR-F + 147 CCAR-P + 94 fundamentals = **480** | `tools/flashcards.py` |
 | Interview prep, cheat sheets, troubleshooting | Complete | 22 files | Link check |
 | Glossary and FAQ | Complete | 167 glossary terms | Link check |
 | Governance files, templates, CI | Complete | 3 workflows, 4 issue templates, PR template | Local equivalents of every CI job pass |
-| GitHub Pages website | Complete, not yet deployed | MkDocs + Material, 236 pages, search, interactive practice exam | Strict build with 0 warnings; 3,411 internal links crawled; browser-tested locally |
+| GitHub Pages website | Complete, deployed | MkDocs + Material, 251 pages, search, interactive practice exam | Strict build with 0 warnings; 4,354 internal links checked; browser-tested |
 
 ## Quality gates (local run, 2026-10-24)
 
@@ -57,9 +58,10 @@ These are honest limitations of v1.0. None is hidden as "complete".
 3. **Facts labelled `Unverified`.** Search the repository for `Unverified:` to list them. Most concern plan-specific
    features, regional or compliance attestations (FedRAMP, HIPAA eligibility per offering), and a few beta details.
    Each needs confirming against an official page or with Anthropic.
-4. **Planned tracks:** CCAR-F and CCDV-F have verified facts in the registry but no track content. CCAR-F is the maintainer's third certification and the first planned track; a stop-gap study map is in the certification tracks README.
+4. **Planned track:** CCDV-F has verified facts in the registry but no track content yet.
 5. **Expert review:** content was written to strict standards and machine-checked, but a human subject-matter review of
-   each module (especially practice-question answer keys) is still recommended before public release.
+   each module (especially practice-question answer keys) is still recommended. Independent AI reviews of all three
+   banks' answer keys ran on 2026-10-24 and their fixes are applied.
 6. **External links:** some pages (claude.ai, hhs.gov, iso.org) block automated checks and were not machine-verified.
 
 ## Next steps

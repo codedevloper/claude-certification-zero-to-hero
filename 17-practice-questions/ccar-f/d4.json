@@ -1,0 +1,798 @@
+{
+  "schema_version": 1,
+  "track": "CCAR-F",
+  "domain": 4,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAR-F-D4-001",
+      "objective": "CCAR-F-4.1",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Saltmarsh Payments' review bot classifies findings as critical, major or minor. The same unchecked null dereference in a refund handler was rated critical on Monday and minor on Thursday. The prompt currently says 'assign an appropriate severity to each finding'.",
+      "question": "What change will most improve severity consistency?",
+      "options": {
+        "A": "Have the model output a confidence score for each finding and derive the severity level from that score in code",
+        "B": "Run each review three times and keep the severity that appears most often across the three runs for each finding",
+        "C": "Define each severity level with explicit criteria and a concrete code example of a finding that belongs at that level",
+        "D": "Add a reminder to the prompt that severity ratings must be consistent across pull requests and over time"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Inconsistent classification comes from undefined criteria. Spelling out what makes a finding critical, major or minor, and anchoring each level with a concrete code example, gives the model a stable rubric to apply across reviews.",
+      "why_incorrect": {
+        "A": "Confidence measures how sure the model is that something is a problem, not how severe the problem is, so it cannot stand in for severity.",
+        "B": "Majority voting triples cost and can still be inconsistent, because the underlying rubric is unchanged.",
+        "D": "Asking for consistency without saying what each level means leaves the same subjective judgment in place."
+      },
+      "module": "03-prompt-engineering/01-clear-direct-instructions.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-002",
+      "objective": "CCAR-F-4.1",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Vellum Analytics' review bot has an instruction 'Check that code comments are accurate.' It now posts comment-related findings on 40% of pull requests, mostly about grammar, outdated TODO wording and stylistic phrasing. Developers have started ignoring the bot.",
+      "question": "Which rewrite of the instruction will best reduce false positives?",
+      "options": {
+        "A": "Be conservative with comment findings and report only the comment issues that you are highly confident about",
+        "B": "Flag a comment only when the behaviour it describes contradicts what the code does; skip grammar, wording and TODO style",
+        "C": "Rate every comment for accuracy on a scale of one to ten and report only those comments that score below four",
+        "D": "Check comment accuracy only on public API functions, because internal comments matter less to most readers"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Explicit categorical criteria tell the model exactly what to report and what to skip. 'Contradicts actual behaviour' targets the comments that mislead readers, and naming the excluded categories removes the noise. General instructions such as 'be conservative' do not improve precision because they do not define what counts as an issue.",
+      "why_incorrect": {
+        "A": "Confidence wording does not define what an issue is, so the model remains confident about stylistic findings.",
+        "C": "A numeric score without criteria just moves the same subjective judgment into a number with an arbitrary cut-off.",
+        "D": "Narrowing scope cuts volume but still reports grammar and wording on public functions, and misses misleading internal comments."
+      },
+      "module": "03-prompt-engineering/01-clear-direct-instructions.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-003",
+      "objective": "CCAR-F-4.1",
+      "scenario_set": "ci-integration",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Norvale Health Records' automated reviewer reports in three categories: security, logic bugs and style. Telemetry shows developers dismiss 70% of style findings, while security findings are accurate. Engineers now say they skim past all bot comments, including security ones.",
+      "question": "Which two actions should the team take? (Select 2)",
+      "options": {
+        "A": "Temporarily stop posting style findings while the criteria for that category are rewritten and tested",
+        "B": "Label style findings as optional in their text but keep posting them inline beside the other two categories",
+        "C": "Add an instruction to report only findings that the model is at least 90% confident about in every category",
+        "D": "Rewrite the prompt with explicit criteria for what to report and what to skip, such as patterns used consistently in the repo",
+        "E": "Collect all findings into one summary comment at the end so that they seem less noisy on the pull request"
+      },
+      "answer": [
+        "A",
+        "D"
+      ],
+      "explanation": "A high false-positive category erodes trust in accurate categories too. Disabling it temporarily restores trust in security and bug findings, and explicit report-or-skip criteria are what actually raise precision when the category returns. Confidence thresholds expressed in prose do not.",
+      "why_incorrect": {
+        "B": "Developers still see the noisy findings inline, so the habit of skimming past bot comments continues.",
+        "C": "Self-stated confidence thresholds are a general instruction and do not reliably separate valid findings from noise.",
+        "E": "Bundling the same noisy findings changes presentation, not accuracy, and makes the valuable security findings harder to spot."
+      },
+      "module": "03-prompt-engineering/01-clear-direct-instructions.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-004",
+      "objective": "CCAR-F-4.1",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Cobaltline Clinical extracts adverse events from trial site notes into a safety database. The prompt says 'extract all adverse events'. Safety reviewers find that a third of extracted events are wrong: phrases such as 'denies chest pain', 'history of migraine' and 'mother had seizures' are all being recorded as events.",
+      "question": "Which prompt change will most improve precision?",
+      "options": {
+        "A": "Tell the model to extract only adverse events that it is sure about, and to leave out anything it is uncertain of",
+        "B": "Record an event only when the note says it occurred in the participant after first dose; exclude negated, historical and family mentions",
+        "C": "Ask the model to give each extracted event a confidence score and keep only events whose score is above 0.8",
+        "D": "Shorten each note to its assessment section before extraction so that fewer incidental mentions reach the model"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "The errors fall into identifiable categories, so explicit inclusion and exclusion criteria fix them directly. Defining an adverse event as something that happened to the participant after dosing, and naming negation, history and family history as exclusions, removes the false positives without relying on vague confidence wording.",
+      "why_incorrect": {
+        "A": "The model is confident that 'denies chest pain' mentions chest pain; without criteria, certainty does not filter these cases.",
+        "C": "Uncalibrated confidence scores do not encode the negation and history rules, so the same errors can score highly.",
+        "D": "Events are often recorded outside the assessment section, so truncation loses real events and still keeps negated ones."
+      },
+      "module": "03-prompt-engineering/01-clear-direct-instructions.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-005",
+      "objective": "CCAR-F-4.2",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Kestrel Robotics' review job posts a markdown summary for human readers. The prompt already lists, in detail, that every finding needs a location, the issue, a severity and a suggested fix. Output still varies: some findings omit the location, and suggested fixes are often vague, such as 'consider refactoring this'.",
+      "question": "What is the most effective next step?",
+      "options": {
+        "A": "Add two or three complete example findings that show a precise location, a clear issue, a severity and a concrete fix",
+        "B": "Restate the formatting rules in capital letters at both the start and the end of the prompt so they are harder to miss",
+        "C": "Filter out incomplete findings in a post-processing script so that only well-formed ones reach the pull request",
+        "D": "Move the review job to a larger model, on the basis that a stronger model follows long instructions more consistently"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "When detailed instructions alone produce inconsistent results, a few well-chosen examples are the most effective way to show the exact output expected. Examples also demonstrate what an actionable fix looks like, which prose struggles to convey.",
+      "why_incorrect": {
+        "B": "Emphasis repeats the same instructions the model already has without showing what a good finding looks like.",
+        "C": "Dropping incomplete findings hides real issues rather than making the model produce complete ones.",
+        "D": "A larger model costs more and may still vary in format; the gap is a missing demonstration, not model capability."
+      },
+      "module": "03-prompt-engineering/03-examples-few-shot.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/multishot-prompting"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-006",
+      "objective": "CCAR-F-4.2",
+      "scenario_set": "ci-integration",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Brackenridge Logistics' codebase wraps raw SQL in helpers named `unsafe_query_*`, but every call site validates inputs with a shared guard first. The review bot flags each of these calls as SQL injection. The team wants these false positives to stop while the bot still catches genuinely unsafe queries, including new patterns no one has listed.",
+      "question": "Which two prompt changes best achieve this? (Select 2)",
+      "options": {
+        "A": "State the criterion: flag raw SQL only when untrusted input can reach it without passing the shared guard",
+        "B": "Add examples contrasting a guarded `unsafe_query_*` call with an unguarded variant, each with a short rationale",
+        "C": "Add dozens of examples, one for each helper name in the codebase, so the model memorises every acceptable call",
+        "D": "Add a list of file paths where SQL injection findings are suppressed, covering every file that uses these helpers",
+        "E": "Instruct the model not to raise security findings on any code that calls an internal helper function"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "Two changes work together but each stands on its own. An explicit reporting criterion tells the model what actually makes a call unsafe (untrusted input reaching the query without the guard), so it can judge new patterns no one has listed. Few-shot examples that contrast a guarded call with an unguarded one, with a short rationale, show that distinction in practice. Both teach the model to reason about the guard rather than react to the helper's name.",
+      "why_incorrect": {
+        "C": "Exhaustive name lists encourage pattern matching on names instead of reasoning about guards, and cost context on every run.",
+        "D": "Path suppression hides every injection finding in those files, including a future call that skips the guard.",
+        "E": "A blanket exemption removes coverage for exactly the helpers that execute raw SQL."
+      },
+      "module": "03-prompt-engineering/03-examples-few-shot.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/multishot-prompting"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-007",
+      "objective": "CCAR-F-4.2",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Ashgrove Wholesale extracts supplier invoices from many layouts. Tabular invoices extract well, but for letter-style invoices the model returns null for `due_date` and `payment_terms`, even though a human can see sentences such as 'Settlement is expected by the 14th of the month after delivery'.",
+      "question": "What is the most effective fix?",
+      "options": {
+        "A": "Make `due_date` and `payment_terms` required in the schema so that the model always has to return a value for both",
+        "B": "Add a paragraph explaining that payment terms can appear in prose, and that the model should read prose carefully",
+        "C": "Add few-shot examples that show correct extraction from a letter-style invoice alongside a tabular one",
+        "D": "Run OCR on every invoice and convert it into a table before it is sent to the model for extraction"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Empty or null extraction of fields that are present usually means the model has not seen how those fields look in that format. Few-shot examples demonstrating correct extraction from varied document structures, including prose-style terms, are the most effective way to close that gap.",
+      "why_incorrect": {
+        "A": "Forcing required fields pushes the model to invent values on invoices where the terms really are absent.",
+        "B": "General prose guidance helps less than a concrete demonstration of what to extract from a letter-style invoice.",
+        "D": "Converting letters to tables does not turn a sentence about settlement into a structured field, and adds a lossy step."
+      },
+      "module": "03-prompt-engineering/03-examples-few-shot.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/multishot-prompting"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-008",
+      "objective": "CCAR-F-4.2",
+      "scenario_set": "data-extraction",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Orchid Freight extracts cargo quantities from shippers' free-text booking emails. Many quantities are informal, such as 'roughly half a container', 'approx 3t' or 'two pallets-ish'. The current extraction returns exact-looking numbers like 14,500 kg for 'half a container', which then drive load planning.",
+      "question": "Which two changes best reduce these fabricated values? (Select 2)",
+      "options": {
+        "A": "Add few-shot examples showing informal quantities recorded with the original wording, an approximate flag and a value only when stated",
+        "B": "Give the schema a nullable normalised value plus fields for the raw phrase and whether the quantity is approximate",
+        "C": "Add a lookup table that converts every informal phrase into kilograms using the average weight of past shipments",
+        "D": "Make the quantity field a required number, so that every booking yields a value usable by the load planner",
+        "E": "Tell the model to round informal quantities to the nearest thousand kilograms so that false precision is avoided"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "Few-shot examples are effective at reducing hallucination for informal measurements because they demonstrate exactly how to treat them. A schema that keeps the raw phrase, marks approximation and allows a null normalised value gives the model a valid place to put uncertainty instead of inventing a precise figure.",
+      "why_incorrect": {
+        "C": "Average-based conversions manufacture precision from history and can be badly wrong for a specific booking.",
+        "D": "A required number forces a value even when the email only implies one, which is the cause of the fabrication.",
+        "E": "Rounding a guessed number still presents a guess as data, and hides that the source was informal."
+      },
+      "module": "03-prompt-engineering/03-examples-few-shot.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/multishot-prompting",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-009",
+      "objective": "CCAR-F-4.3",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Tidewater Insurance extracts policy data with structured outputs. The schema marks `policy_end_date` as a required string. Auditors find that open-ended rolling policies, which have no end date, come back with plausible but invented dates such as the first anniversary of the start date.",
+      "question": "What is the best schema change?",
+      "options": {
+        "A": "Keep the field required and add a prompt rule that rolling policies should use the end date 9999-12-31",
+        "B": "Make `policy_end_date` nullable, and instruct the model to return null when the document gives no end date",
+        "C": "Remove `policy_end_date` from the schema and compute it later in code from the start date and policy type",
+        "D": "Keep the field required but add a `format: date` constraint so that any value returned must at least be a valid date"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Required fields pressure the model to produce a value even when the source has none. Making the field nullable and stating when to use null gives the model an honest option, which prevents fabrication while keeping the field for policies that do have an end date.",
+      "why_incorrect": {
+        "A": "A sentinel date is easy to mistake for real data downstream, and it hides missing information in a date field.",
+        "C": "Fixed-term policies state their end dates; deriving them in code ignores the document and can be wrong.",
+        "D": "A date format constraint still requires a value, so invented dates remain valid output."
+      },
+      "module": "03-prompt-engineering/06-structured-output.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-010",
+      "objective": "CCAR-F-4.3",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Ironbark Media's contract pipeline runs on Claude Haiku 5.5. Its first step uses `tool_choice: {\"type\": \"tool\", \"name\": \"extract_metadata\"}` so metadata is always extracted before enrichment, and it works. The team is moving this step to Claude Sonnet 5.5 for better accuracy on complex contracts.",
+      "question": "What must the team change in this step?",
+      "options": {
+        "A": "Replace forced tool choice, for example with `output_config.format` using the metadata schema, since Sonnet 5.5 returns a 400",
+        "B": "Nothing, because forcing a named tool behaves the same on every current model, so the step moves over unchanged",
+        "C": "Add a beta header that re-enables forced tool choice on Sonnet 5.5, keeping the rest of the request as it is now",
+        "D": "Change `tool_choice` to `{\"type\": \"any\"}`, which still guarantees a tool call on Sonnet 5.5 where naming a tool does not"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Claude Haiku 5.5 accepts forced tool choice, but Claude Sonnet 5.5 returns a 400 for both `any` and a named `tool`. When the forced call only existed to get schema-shaped data, structured outputs with `output_config.format` is the direct replacement; `auto` plus a `strict: true` tool and an explicit instruction is another option.",
+      "why_incorrect": {
+        "B": "Forced tool choice behaves differently across current models; Sonnet 5.5 rejects it.",
+        "C": "No documented beta header restores forced tool choice on this model; the supported paths are auto with strict tools or structured outputs.",
+        "D": "`any` is also rejected on Claude Sonnet 5.5, so the step would still fail."
+      },
+      "module": "07-tool-use-and-function-calling/02-defining-tools.md",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use",
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-011",
+      "objective": "CCAR-F-4.3",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Larkspur Legal categorises expense lines from client disbursement reports into an enum: travel, court_fees, expert_fees, courier, printing. New kinds of expense keep appearing, such as translation and e-discovery hosting, and the model squeezes them into the closest category. Some lines are also too vague to classify.",
+      "question": "Which schema design best handles this?",
+      "options": {
+        "A": "Replace the enum with a free-text category string so the model can name any category it sees in the report",
+        "B": "Add every newly observed category to the enum each month, and re-run extraction on reports from the past month",
+        "C": "Add `other` with a `category_detail` string for new kinds, plus `unclear` for lines too vague to classify",
+        "D": "Keep the enum unchanged and instruct the model to pick the closest category whenever a line does not fit"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "An `other` value with a detail string keeps the category set controlled while capturing new kinds of expense for later review, and an `unclear` value lets the model say a line is ambiguous instead of guessing. Both keep downstream reporting clean.",
+      "why_incorrect": {
+        "A": "Free text produces many spellings of the same category and breaks reporting that relies on fixed values.",
+        "B": "Constant enum churn and re-runs are costly, and lines arriving between updates are still miscategorised.",
+        "D": "This is the current behaviour that silently miscategorises new expense types."
+      },
+      "module": "03-prompt-engineering/06-structured-output.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-012",
+      "objective": "CCAR-F-4.3",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "Cobaltline Clinical moved its lab-invoice extraction from free-text JSON to structured outputs with a strict schema. JSON parse errors dropped to zero. A manager now proposes removing the downstream checks that compare line items with the invoice total, arguing that the schema guarantees correct data.",
+      "question": "Which statement about this proposal is accurate?",
+      "options": {
+        "A": "The proposal is sound, because strict schemas stop the model from returning numbers that are inconsistent with each other",
+        "B": "Keep the checks, because the schema guarantees shape and types, not that values are correct or consistent",
+        "C": "The checks are needed only on models without strict mode, so they can be removed once the current model is in use",
+        "D": "Keep the checks only for invoices above a value threshold, since low-value invoices are rarely extracted wrongly"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Structured outputs and strict tools guarantee that output matches the schema, which removes syntax errors. They do not guarantee semantic correctness: line items can still fail to sum to the total, or values can land in the wrong field. Business-rule validation stays necessary.",
+      "why_incorrect": {
+        "A": "A schema cannot express that line items must sum to a total, so inconsistent numbers remain possible.",
+        "C": "Semantic errors are independent of model or strict mode; constrained decoding governs shape only.",
+        "D": "Error rates are not known to depend on invoice value, and the checks are cheap compared with silent bad data."
+      },
+      "module": "03-prompt-engineering/06-structured-output.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-013",
+      "objective": "CCAR-F-4.3",
+      "scenario_set": "data-extraction",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Ashgrove Wholesale's invoice pipeline runs on Claude Haiku 5.5 with adaptive thinking and `tool_choice: {\"type\": \"tool\", \"name\": \"extract_invoice\"}`. Requests succeed, but on messy multi-currency invoices the extracted totals are often wrong, and the responses contain no thinking block at all.",
+      "question": "Which two changes let the model reason before extracting while keeping schema-valid output? (Select 2)",
+      "options": {
+        "A": "Use `tool_choice` auto with `strict: true` on the tool, and instruct the model to call extract_invoice once per document",
+        "B": "Drop the tool and request the invoice through structured outputs, with `output_config.format` set to the invoice schema",
+        "C": "Keep the forced tool choice and raise effort to `max`, so that the model spends more thinking on each forced extraction call",
+        "D": "Switch to `tool_choice: {\"type\": \"any\"}`, which lets the model think first and then choose a tool, unlike naming the tool",
+        "E": "Keep the forced tool choice and add an assistant prefill containing a worked reasoning step before the extract_invoice call"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "Claude Haiku 5.5 accepts forced tool choice, even with thinking on, but a forced call makes the response start with the tool call and skip thinking. Using `auto` with a clear instruction (and `strict: true` for schema-valid arguments) lets the model think before calling the tool; structured outputs via `output_config.format` also keep a schema guarantee while letting the model think before it writes the JSON.",
+      "why_incorrect": {
+        "C": "Effort cannot add thinking to a forced call, because the response still opens directly with the tool call.",
+        "D": "`any` is also forced tool use, so the response still starts with a tool call and skips thinking.",
+        "E": "Assistant prefill returns a 400 on Claude Haiku 5.5, and it would not change how a forced call behaves."
+      },
+      "module": "07-tool-use-and-function-calling/02-defining-tools.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-014",
+      "objective": "CCAR-F-4.4",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Ironbark Media's reviewer posts structured findings, and developers can dismiss each one. About a quarter are dismissed. The team wants to learn systematically which code constructs cause false positives so it can fix the prompt rather than guess.",
+      "question": "Which change gives the team the data it needs?",
+      "options": {
+        "A": "Replace dismissals with a thumbs-up or thumbs-down vote, and track the overall approval rate of the bot over time",
+        "B": "Add a `detected_pattern` field to each finding and log dismissals against it, then compare dismissal rates by pattern",
+        "C": "Lower the number of findings posted per pull request until the dismissal rate drops below ten percent",
+        "D": "Ask developers to type a free-text reason whenever they dismiss a finding, and read through those reasons each month"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Recording which construct triggered each finding turns dismissals into analysable data: dismissal rates per pattern show exactly which detections are noisy. That points prompt changes at specific patterns instead of overall volume.",
+      "why_incorrect": {
+        "A": "An overall approval rate says the bot is noisy but not which detections are responsible.",
+        "C": "Cutting volume hides the symptom without showing which constructs cause the false positives.",
+        "D": "Free-text reasons are inconsistent and patchy, so systematic analysis by construct is hard."
+      },
+      "module": "14-evaluation-and-testing/06-diagnosing-failures.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-015",
+      "objective": "CCAR-F-4.4",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Ashgrove Wholesale validates each extracted invoice in code. About 5% fail: dates are in DD/MM/YYYY instead of ISO 8601, or tax amounts are placed in the discount field. On failure, the pipeline simply sends the identical request again, and most retries fail the same way.",
+      "question": "How should the retry be redesigned?",
+      "options": {
+        "A": "Retry the identical request up to five times instead of once, and keep the first attempt that passes validation",
+        "B": "Send a follow-up with the original document, the failed extraction and the specific validation errors to correct",
+        "C": "Send failing invoices straight to manual entry, since a model that erred once is likely to repeat the same mistake",
+        "D": "Retry with a shorter prompt that removes the general instructions, so the model concentrates on the fields themselves"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Retry with error feedback works because it tells the model exactly what was wrong. Including the source document, the failed output and the concrete validation errors lets the model correct format and placement mistakes, which are the kind of errors retries fix well.",
+      "why_incorrect": {
+        "A": "An identical request carries no new information, so the same errors tend to recur while cost grows.",
+        "C": "These are correctable format and placement errors; sending them all to people wastes reviewer capacity.",
+        "D": "Removing instructions gives the model less guidance, not information about what failed."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/chain-prompts",
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-016",
+      "objective": "CCAR-F-4.4",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Cobaltline Clinical extracts lab invoices where the printed total sometimes does not match the line items, because of supplier errors or unprinted surcharges. In testing, the model sometimes 'fixes' the total to match the lines, and finance loses the evidence of supplier errors.",
+      "question": "Which extraction design best supports self-correction while preserving evidence?",
+      "options": {
+        "A": "Reject any invoice whose total does not match its lines and ask the supplier to send a corrected document",
+        "B": "Instruct the model to always trust the printed total and adjust line items as needed so that both agree",
+        "C": "Extract the printed total as `stated_total`, the line sum as `calculated_total`, and a `conflict_detected` flag",
+        "D": "Extract only the line items and compute the total in code, discarding the printed total entirely from the record"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Capturing both the stated and calculated totals, plus an explicit conflict flag, lets validation detect discrepancies without the model silently resolving them. Finance keeps the evidence and can route conflicts for review.",
+      "why_incorrect": {
+        "A": "Many mismatches have legitimate explanations; blanket rejection delays payment and does not record the conflict.",
+        "B": "Adjusting line items to fit the total fabricates data and hides real discrepancies.",
+        "D": "Discarding the printed total removes exactly the evidence finance needs to detect supplier errors."
+      },
+      "module": "03-prompt-engineering/06-structured-output.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-017",
+      "objective": "CCAR-F-4.4",
+      "scenario_set": "data-extraction",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Halcyon Grid extracts supply contracts. For about 8% of purchase orders, `payment_terms` fails validation three times in a row. Each of these orders says only 'terms as per Master Supply Agreement MSA-2291', and the agreement itself is not part of the input.",
+      "question": "Which two actions are most appropriate? (Select 2)",
+      "options": {
+        "A": "Route the record to fetch the referenced agreement, or to a reviewer, with the reason and the reference recorded",
+        "B": "Retry at a higher effort level, since deeper reasoning may let the model infer the most likely terms in the agreement",
+        "C": "Append the validation error to the prompt and retry up to three more times, since error feedback fixes most failures",
+        "D": "Make `payment_terms` required so that the model has to produce terms rather than returning null for these orders",
+        "E": "Classify these as information-absent failures and stop retrying them once the external reference is detected"
+      },
+      "answer": [
+        "A",
+        "E"
+      ],
+      "explanation": "Retries help with format and structural errors, but not when the information is missing from the input. Recognising that case stops wasted retries, and routing the record to obtain the referenced document, or to a person with the reason, is the only way to get correct terms.",
+      "why_incorrect": {
+        "B": "More reasoning produces a better guess at most, and a guess about contract terms is not acceptable data.",
+        "C": "Error feedback cannot supply terms that exist only in a document the model has not seen.",
+        "D": "Requiring the field pushes the model to fabricate plausible terms, which is worse than an honest null."
+      },
+      "module": "14-evaluation-and-testing/06-diagnosing-failures.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-018",
+      "objective": "CCAR-F-4.4",
+      "scenario_set": "data-extraction",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Tidewater Insurance is deciding which validation failures to send back to the model with error feedback, and which to route elsewhere. It reviews five failure examples from claim-form extraction.",
+      "question": "Which two failures are most likely to be fixed by a retry that includes the specific validation error? (Select 2)",
+      "options": {
+        "A": "The form never states when the claimant first reported the loss to the insurer's call centre",
+        "B": "The policy number appears only in a separate cover letter that was not sent with the form",
+        "C": "Page three of the scanned form is blank apart from a smudge, so the witness section is missing",
+        "D": "The incident date was returned as 03/04/2026 when the schema rules require ISO 8601 format",
+        "E": "Repair-cost line items were placed in the `deductibles` array instead of the `repairs` array"
+      },
+      "answer": [
+        "D",
+        "E"
+      ],
+      "explanation": "Format mismatches and structural placement errors are correctable when the model is told what went wrong, because the information is present in the source. Failures caused by information that is absent, illegible or held in another document cannot be fixed by retrying.",
+      "why_incorrect": {
+        "A": "The fact is not in the form at all; retrying invites fabrication rather than correction.",
+        "B": "The value is in a document the model never saw, so a retry can only guess or return null again.",
+        "C": "The missing section is not legible in the source, so no amount of feedback can recover it."
+      },
+      "module": "14-evaluation-and-testing/06-diagnosing-failures.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-019",
+      "objective": "CCAR-F-4.5",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Quillfeather Labs runs a nightly test-gap analysis with `claude -p`, letting Claude read source and test files with tools as it goes. To halve the cost, the team plans to move the job to the Message Batches API, one request per module, with results needed by the next morning.",
+      "question": "What must the team change for the batch version to work?",
+      "options": {
+        "A": "Order the requests by module name so results come back in the same order and can be matched to modules by position",
+        "B": "Split the work into batches of one module each so every request completes within a few minutes of submission",
+        "C": "Nothing structural; batch requests run the same agentic tool loop as Claude Code, only at a lower price per token",
+        "D": "Put each module's source and existing tests in the request itself, since a batch cannot run your own file tools"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "A batch request is processed as a single Messages call: it cannot pause to run your client-side tools (such as reading source files) and feed their results back to the model. Server tools such as code execution can still run inside a request, but they cannot see Quillfeather's repository, so everything the model needs, here each module's source and tests, has to be included up front. Batches cost 50% less, complete within 24 hours, and return results in any order keyed by `custom_id`.",
+      "why_incorrect": {
+        "A": "Batch results can arrive in any order and must be matched by `custom_id`, never by position.",
+        "B": "Batch latency is not guaranteed for small batches, and many tiny batches add overhead without solving the tool issue.",
+        "C": "A batch request cannot pause to run client-side tools such as Claude Code's file reads and feed the results back, so a job that depends on them will not work unchanged."
+      },
+      "module": "06-claude-api/05-batch-processing.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-020",
+      "objective": "CCAR-F-4.5",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "cost-performance",
+      "scenario": "Ferngrove Pharma is about to batch-extract 250,000 archived supplier certificates in a new format that nobody has tried before. Last year a similar job was submitted in full, then corrected and resubmitted twice after systematic errors were discovered, nearly tripling its cost.",
+      "question": "What is the best way to plan this run?",
+      "options": {
+        "A": "Submit all 250,000 at once to secure the batch discount, then fix systematic errors by resubmitting the affected documents",
+        "B": "Refine the prompt on a representative sample until it meets the quality bar, then submit the full volume as a batch",
+        "C": "Process every certificate through the synchronous API instead, so errors are visible immediately as each one returns",
+        "D": "Split the full volume into twenty batches and submit them all at the same time to finish sooner and spot errors earlier"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Testing and refining the prompt on a representative sample before batch-processing large volumes maximises first-pass success and avoids paying for repeated resubmissions. The batch discount applies only to work that does not have to be redone.",
+      "why_incorrect": {
+        "A": "This repeats last year's pattern, paying for a full run before systematic errors are found.",
+        "C": "Synchronous processing gives up the 50% batch discount on 250,000 documents without improving the prompt.",
+        "D": "Submitting every batch at once still processes all documents before anyone checks quality."
+      },
+      "module": "06-claude-api/05-batch-processing.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/batch-processing",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-021",
+      "objective": "CCAR-F-4.5",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "cost-performance",
+      "scenario": "Marrowstone Bank must extract data from mortgage documents within 32 hours of arrival. It plans to use the Message Batches API, which can take up to 24 hours to finish a batch. After results arrive, validation and loading take up to 2 hours. Documents arrive continuously through the day.",
+      "question": "What is the longest interval between batch submissions that still guarantees the 32-hour deadline?",
+      "options": {
+        "A": "Every 8 hours",
+        "B": "Every 6 hours",
+        "C": "Every 30 hours",
+        "D": "Every 12 hours"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "A document that arrives just after a submission waits a full interval before it is batched, then up to 24 hours for processing, then up to 2 hours for validation. The interval plus 26 hours must not exceed 32 hours, so the interval can be at most 6 hours.",
+      "why_incorrect": {
+        "A": "8 + 24 + 2 = 34 hours, which misses the deadline for documents that arrive just after a submission.",
+        "C": "This treats the deadline as if only the submission interval mattered and ignores batch processing time.",
+        "D": "12 + 24 + 2 = 38 hours; this ignores both the worst-case wait and the validation time."
+      },
+      "module": "06-claude-api/05-batch-processing.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-022",
+      "objective": "CCAR-F-4.5",
+      "scenario_set": "data-extraction",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Larkspur Legal submitted a batch of 40,000 discovery documents for extraction. When it ended, 39,620 had succeeded, 310 had errored (many because the document exceeded the context limit) and 70 had expired. The team's loader currently writes results into the database by their position in the results stream.",
+      "question": "Which two changes should the team make? (Select 2)",
+      "options": {
+        "A": "Resubmit only the errored and expired `custom_id`s, chunking the oversized documents before resubmission",
+        "B": "Match every result to its document by `custom_id`, because results can come back in any order",
+        "C": "Keep position-based loading but sort the submitted requests first so that results come back sorted too",
+        "D": "Resubmit the entire batch of 40,000 so that every result comes from the same run and the same prompt",
+        "E": "Send the 380 failed documents unchanged through the synchronous API, one at a time, to get faster results"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "Batch results are returned in any order, so `custom_id` is the only reliable link back to the source document. Failures should be handled by resubmitting just those IDs, with fixes such as chunking where the cause was size, rather than reprocessing everything.",
+      "why_incorrect": {
+        "C": "Sorting requests does not make results arrive in order; position-based matching stays unsafe.",
+        "D": "Reprocessing 39,620 successful documents doubles cost for no benefit.",
+        "E": "Oversized documents will fail again unchanged, and synchronous calls give up the batch discount."
+      },
+      "module": "06-claude-api/05-batch-processing.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/batch-processing"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-023",
+      "objective": "CCAR-F-4.6",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Norvale Health Records now reviews pull requests with an independent Claude instance. Precision is better, but some findings are still wrong, and the team does not want to drop real issues just to cut noise. Reviewers have six months of history showing which findings were accepted or dismissed.",
+      "question": "Which design best routes reviewer attention?",
+      "options": {
+        "A": "Have the reviewing instance post only its first five findings per pull request, ordered by the severity it assigns them",
+        "B": "Add a verification pass that rechecks each finding against the code and reports confidence, with thresholds tuned on the history",
+        "C": "Have the generating session confirm or reject each finding before posting, since it knows the intent behind the code",
+        "D": "Post every finding inline but sort them so that the ones the reviewer rated as most severe appear at the top of the thread"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "A verification pass that reports confidence per finding enables routing: high-confidence findings go inline, low-confidence ones to a summary for triage. Calibrating the thresholds against labelled outcomes (accepted versus dismissed) makes the confidence values meaningful rather than raw self-assessment.",
+      "why_incorrect": {
+        "A": "A fixed cap drops real issues on large pull requests and does nothing about wrong findings in the top five.",
+        "C": "The generator is anchored by its own reasoning and is likely to reject valid criticism of its choices.",
+        "D": "Sorting changes order but every wrong finding is still posted inline, so noise remains."
+      },
+      "module": "14-evaluation-and-testing/04-grading-methods.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests",
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-024",
+      "objective": "CCAR-F-4.6",
+      "scenario_set": "ci-integration",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Ironbark Media reviews a 38-file refactor of its subscription billing code in a single Claude pass. The output contradicts itself: one comment says `prorate_credit` is now unused, another flags a bug in a caller of that function. Files near the end of the diff get only superficial comments.",
+      "question": "Which review architecture best addresses these problems?",
+      "options": {
+        "A": "Keep a single pass but first ask Claude to summarise the whole diff, then review all 38 files with that summary in context",
+        "B": "Split the files into random groups of ten and review each group independently, then concatenate all of the findings",
+        "C": "Run focused per-file passes for local issues, then a separate integration pass that checks data flow across files",
+        "D": "Move to a model with a larger context window so the whole diff fits comfortably in a single review pass"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Attention dilutes across a very large review, producing shallow coverage and contradictions. Per-file passes give each file focused attention, and a dedicated integration pass handles cross-file questions such as whether a function is still called, so local and cross-file findings stay consistent.",
+      "why_incorrect": {
+        "A": "A summary helps orientation but the review is still one diluted pass over all files.",
+        "B": "Random grouping splits related files apart and has no step that reasons about interactions across groups.",
+        "D": "Fitting in the context window is not the problem; attention spread across many files is, and it persists in a larger window."
+      },
+      "module": "10-agentic-ai/02-workflow-patterns.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-025",
+      "objective": "CCAR-F-4.6",
+      "scenario_set": "ci-integration",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Ferngrove Pharma lets Claude Code open pull requests for routine dependency and lint fixes. Leadership wants automated review of these AI-generated pull requests to catch subtle problems before a human looks at them.",
+      "question": "Which two architectural choices most improve detection of subtle issues? (Select 2)",
+      "options": {
+        "A": "For large changes, run per-file passes for local issues and a separate pass for cross-file interactions",
+        "B": "Review with a second, independent Claude instance that sees the diff but not the generator's reasoning",
+        "C": "Have the generator write a detailed rationale into the pull request description for reviewers to trust",
+        "D": "Run the generating session at maximum effort and ask it to double-check every change that it makes",
+        "E": "Instruct the generating session to critique its own work thoroughly before it opens the pull request"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "Independent review without the generator's context avoids the anchoring that makes self-review weak, and splitting large reviews into local and integration passes avoids attention dilution. Together they catch more subtle issues than self-critique within the generating session.",
+      "why_incorrect": {
+        "C": "A rationale may help humans, but it can make reviewers more likely to accept flawed reasoning rather than detect it.",
+        "D": "More effort in the generator improves generation somewhat, but its checking remains anchored to its own reasoning.",
+        "E": "Self-critique in the same session inherits the generator's assumptions and is less likely to question them."
+      },
+      "module": "10-agentic-ai/02-workflow-patterns.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D4-026",
+      "objective": "CCAR-F-4.6",
+      "scenario_set": "data-extraction",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Saltmarsh Payments extracts obligations from 120-page merchant agreements in one request. Clauses in the middle of the document are often missed, and the output sometimes lists a fee that a later amendment schedule removed. Definitions in section 1 change the meaning of covenants in section 14.",
+      "question": "Which extraction architecture best addresses these problems?",
+      "options": {
+        "A": "Split the agreement into fixed 20-page chunks, extract each chunk independently, and append all of the results together",
+        "B": "Run one extraction pass but repeat the most important instructions at both the start and the end of the long prompt",
+        "C": "Extract section by section in focused passes, then run an integration pass that applies definitions and amendments",
+        "D": "Ask the model to self-review its single-pass output in the same conversation and add anything that it missed"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Focused per-section passes give each part of a long document full attention, which addresses missed middle clauses. A separate integration pass handles cross-section relationships such as definitions and amendments, which per-section passes cannot see on their own.",
+      "why_incorrect": {
+        "A": "Fixed chunks cut through clauses and have no step that applies definitions or amendments across chunks.",
+        "B": "Prompt placement helps a little but the single pass still spreads attention over 120 pages.",
+        "D": "Self-review in the same context is anchored to the first pass and tends to repeat its omissions."
+      },
+      "module": "10-agentic-ai/02-workflow-patterns.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/long-context-tips"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1053 @@
+{
+  "schema_version": 1,
+  "track": "CCAR-F",
+  "domain": 1,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAR-F-D1-001",
+      "objective": "CCAR-F-1.1",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "concept",
+      "scenario": "Orrin Analytics runs its research coordinator with the Agent SDK's query() function. An engineer proposes ending the run when the coordinator writes 'REPORT COMPLETE' in its text, so the service can return quickly. Runs sometimes stop because of the configured turn or spend limits.",
+      "question": "How should the service decide that a run has ended and whether it succeeded?",
+      "options": {
+        "A": "Treat the run as ended when the SDK yields the ResultMessage, and branch on its subtype to tell success from a turn or budget limit",
+        "B": "Set maxTurns to ten and treat reaching that limit as completion, since a cited report rarely needs more than ten tool-use turns to finish",
+        "C": "Watch the output directory and treat the run as complete once a report file appears, then cancel the query to save tokens",
+        "D": "Tell the coordinator to finish with 'REPORT COMPLETE', and stop reading the stream as soon as that phrase appears in its text"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "In the Agent SDK the loop runs until Claude produces a response with no tool calls, then the SDK yields a ResultMessage. Its subtype says whether the run succeeded or stopped on error_max_turns, error_max_budget_usd or an execution error, and it carries cost and session_id for resumption. Text markers, iteration counts and side effects are unreliable proxies for that signal.",
+      "why_incorrect": {
+        "B": "Hitting maxTurns ends the run with an error_max_turns result; it signals an unfinished task, not a completed one.",
+        "C": "A file can appear before the agent has finished revising it, and cancelling loses the final result, its status and the session ID needed to resume.",
+        "D": "Parsing natural-language markers is fragile, and stopping early discards the ResultMessage with its subtype, cost and session ID."
+      },
+      "module": "10-agentic-ai/03-the-agent-loop.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/agent-loop"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-002",
+      "objective": "CCAR-F-1.1",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Kestrel Home Goods runs a support agent on a hand-written Messages API loop. The loop ends as soon as a response contains a text block. Customers often see the agent say 'Let me pull up that order for you' and then nothing further happens, even though the same response also requested an order-lookup tool.",
+      "question": "How should the loop's control flow be changed?",
+      "options": {
+        "A": "Keep the text check, and add a system prompt rule telling the model never to write any text before it calls a tool",
+        "B": "Cap the loop at eight iterations, and also stop early whenever the reply text includes a closing phrase such as 'anything else'",
+        "C": "Drive the loop from stop_reason: run the requested tools and send their results back while it is \"tool_use\", and finish on \"end_turn\"",
+        "D": "Strip text blocks from any response that also has tool_use blocks, so the text-based exit condition only fires on genuine final answers"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "A response can contain explanatory text and a tool_use block together. The reliable signal is stop_reason: while it is \"tool_use\" the loop executes every requested tool, appends the results as tool_result blocks, and calls the model again; \"end_turn\" means the model has finished. Checking for text, matching phrases or capping iterations are the anti-patterns that cause exactly this stall.",
+      "why_incorrect": {
+        "A": "The model can still write text alongside a tool call, and a prompt rule only lowers the rate; the exit condition itself remains wrong.",
+        "B": "Iteration caps and phrase matching are both proxies; neither tells the loop that the model has asked for a tool and is waiting for its result.",
+        "D": "This still keys termination on content shape instead of stop_reason, drops the model's own words from history, and ignores cases such as max_tokens."
+      },
+      "module": "07-tool-use-and-function-calling/03-the-tool-use-loop.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons",
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-003",
+      "objective": "CCAR-F-1.1",
+      "scenario_set": "support-agent",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Larchmont Utilities is building a billing-support agent on the Messages API with its own loop. The model often requests two or three lookups in one response (meter reads, payment history, tariff), and the payments backend occasionally throws exceptions.",
+      "question": "Which TWO loop behaviours should the team implement? (Choose 2.)",
+      "options": {
+        "A": "Send each parallel tool result back in its own user message, in completion order, so the model reasons about one result at a time",
+        "B": "When a tool throws, return a tool_result with is_error set and the failure detail, so the model can decide what to do next",
+        "C": "When a tool throws, remove that tool_use block from the history and resend the request, so the model can try again from a clean state",
+        "D": "Return each result as a tool_result block that references its tool_use_id, with all results from one turn in a single user message",
+        "E": "Use a hard cap of three iterations as the main stopping rule, because most billing questions are answered in a few tool calls"
+      },
+      "answer": [
+        "B",
+        "D"
+      ],
+      "explanation": "Tool results are how the model learns what happened, so each requested call needs a matching tool_result (linked by tool_use_id), and all results for one assistant turn go back together in a single user message. A failed tool should still produce a result, flagged with is_error and a useful message, so the model can retry, choose another route or tell the customer. Hiding failures or capping iterations removes information the model needs.",
+      "why_incorrect": {
+        "A": "Results from one turn belong in one user message; splitting them breaks the expected structure and discourages the model from making parallel calls.",
+        "C": "Editing the model's own turn out of history hides the failure from the model and leaves it unable to reason about or explain what went wrong.",
+        "E": "A fixed cap is a safety net, not the stopping mechanism; it cuts off legitimate longer investigations and says nothing about whether the model finished."
+      },
+      "module": "07-tool-use-and-function-calling/03-the-tool-use-loop.md",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/implement-tool-use",
+        "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-004",
+      "objective": "CCAR-F-1.2",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "cost-performance",
+      "scenario": "The Meridian Public Health Observatory's research coordinator sends every query through web search, document analysis, synthesis and report subagents. Many queries are simple, such as 'Which year does our stored regional survey cover?', and the answer is already in one indexed document. Cost per query is three times the budget.",
+      "question": "What change best reduces cost without weakening complex research?",
+      "options": {
+        "A": "Keep the full pipeline for every query but move each subagent to the cheapest model tier, so simple questions cost less",
+        "B": "Merge the four subagents into one generalist agent with every tool, so simple questions finish inside a single context",
+        "C": "Put a keyword router in front of the coordinator that sends questions containing 'year' or 'who' down a cheap single-call answer path",
+        "D": "Have the coordinator judge what each query needs and invoke only those subagents, with descriptions that say when each one applies"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "A coordinator should analyse each request and decide which subagents to invoke, rather than always running the whole pipeline. Clear subagent descriptions help it match tasks to agents. Simple lookups then use one subagent (or none), while complex questions still get the full decomposition.",
+      "why_incorrect": {
+        "A": "This still pays for four agents on trivial questions and degrades the quality of the complex research that needs stronger models.",
+        "B": "Collapsing roles removes the context isolation and specialised tool sets that keep complex research reliable.",
+        "C": "Keyword routing misclassifies easily and bypasses the coordinator's judgement about what a question actually needs."
+      },
+      "module": "10-agentic-ai/04-multi-agent-architecture.md",
+      "references": [
+        "https://www.anthropic.com/engineering/multi-agent-research-system",
+        "https://code.claude.com/docs/en/agent-sdk/subagents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-005",
+      "objective": "CCAR-F-1.2",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "In Brackenfield Insights' research system, the document-analysis subagent sends its findings straight to the report subagent, and the report subagent asks the web-search subagent for extra sources directly. When a hand-off fails, the coordinator never learns of it, and engineers cannot trace which findings reached the report.",
+      "question": "What should the architect change?",
+      "options": {
+        "A": "Route every hand-off through the coordinator, which receives each result, handles failures and decides what to pass on next",
+        "B": "Add a shared message bus that every subagent writes to and reads from, so hand-offs stay direct but leave a trace",
+        "C": "Keep the direct calls between subagents but require each one to append its outgoing payload to a central log file for later audit",
+        "D": "Merge document analysis and report writing into one subagent, so the particular hand-off that loses errors disappears"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "A hub-and-spoke design makes the coordinator the only route between subagents. That gives one place for observability, consistent error handling and controlled information flow, and it lets the coordinator decide what each subagent receives.",
+      "why_incorrect": {
+        "B": "A bus adds logging but still lets subagents act on each other's output with no single place handling errors or deciding routing.",
+        "C": "After-the-fact logs help forensics but do not let anything react to failures or control what information flows where.",
+        "D": "This removes one failure point but leaves the other direct links and loses the separation between analysis and writing."
+      },
+      "module": "10-agentic-ai/04-multi-agent-architecture.md",
+      "references": [
+        "https://www.anthropic.com/engineering/multi-agent-research-system",
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-006",
+      "objective": "CCAR-F-1.2",
+      "scenario_set": "research-system",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Halvard Policy Institute's clients send a written scope checklist with each research request, for example costs, staffing impact, legal constraints and international comparisons. The coordinator fans the work out and passes subagent results to synthesis. A client audit finds that about a third of briefings silently omit one checklist item, usually one where a subagent came back with nothing useful.",
+      "question": "Which TWO changes address the root cause? (Choose 2.)",
+      "options": {
+        "A": "Have the coordinator check results against the checklist before synthesis and re-delegate any item with no findings",
+        "B": "Raise every subagent's turn limit, so each one is more likely to find at least something for every checklist item",
+        "C": "Ask the synthesis agent for a longer report, so that each section of the client's checklist has more room in the text",
+        "D": "Have the briefing mark each checklist item as covered, partial or not found, so gaps are stated, not dropped",
+        "E": "Let subagents message one another directly to divide up the checklist items among themselves without the coordinator"
+      },
+      "answer": [
+        "A",
+        "D"
+      ],
+      "explanation": "The coordinator holds the client's checklist, so it is the place to evaluate coverage: comparing returned results with each item before synthesis and re-delegating targeted work for empty items catches the gap early. Where a gap remains after a retry, the briefing should state it explicitly per item rather than leave it out, so the client sees what was not found instead of an incomplete report that looks complete.",
+      "why_incorrect": {
+        "B": "More turns do not make anyone check coverage; an item can still come back empty and be dropped without notice.",
+        "C": "Length does not create findings. An item with no results still has nothing to say, and the omission stays silent.",
+        "E": "Peer-to-peer coordination bypasses the hub that holds the checklist and weakens observability, so no one owns the coverage check."
+      },
+      "module": "10-agentic-ai/04-multi-agent-architecture.md",
+      "references": [
+        "https://www.anthropic.com/engineering/multi-agent-research-system"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-007",
+      "objective": "CCAR-F-1.3",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "During a schema change at Pinecrest Freight, the main Claude Code conversation spends an hour discussing which three tables are altered and why. It then delegates to a custom migration-checker subagent with the prompt 'verify the migration is safe'. The subagent reports no issues after checking unrelated tables.",
+      "question": "What is the best fix?",
+      "options": {
+        "A": "Write the delegation prompt with the migration file path, the three tables and the safety criteria to check",
+        "B": "Tell the subagent in its prompt to review the main conversation, since subagents can read the parent's history",
+        "C": "Set memory: project on the subagent so it inherits the main conversation's discussion of the altered tables",
+        "D": "Set model: inherit on the subagent so that it shares the main conversation's model and its context window"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "A non-fork subagent starts with a fresh context and none of the parent conversation. The delegation prompt is the channel for task context, so it must carry the specific files, tables and acceptance criteria.",
+      "why_incorrect": {
+        "B": "A subagent cannot read the parent's conversation history; it starts with a fresh context, so an instruction to review it has nothing to point at.",
+        "C": "The memory field gives the subagent its own persistent memory directory. It does not pass the parent conversation into the subagent.",
+        "D": "model: inherit selects the model only. The subagent still starts with its own fresh context."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/sub-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-008",
+      "objective": "CCAR-F-1.3",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Ironbark Logistics built a headless Agent SDK tool that explores legacy code. The options set allowedTools to [\"Read\", \"Grep\", \"Glob\"] and define a call-graph-tracer agent in agents. Logs show the main agent's attempts to call the Agent tool being refused, while Read and Grep calls succeed.",
+      "question": "What change most directly fixes this?",
+      "options": {
+        "A": "Add \"Agent\" to each AgentDefinition's tools list so that each subagent is allowed to be spawned by others",
+        "B": "Add \"Agent\" to the main query's allowedTools so subagent invocations are approved in the headless run",
+        "C": "Set permissionMode to \"acceptEdits\" so that the Agent tool is approved together with file edits",
+        "D": "Move the agent definitions into .claude/agents/ files, since programmatic agents need interactive approval"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Claude invokes subagents through the Agent tool (formerly Task). In a headless run, that tool must be approved, and listing \"Agent\" in the main query's allowedTools does this, as the SDK examples show.",
+      "why_incorrect": {
+        "A": "A subagent's tools list governs what that subagent can do, not whether the main agent may call the Agent tool.",
+        "C": "acceptEdits auto-approves file edits and common filesystem commands. It does not cover the Agent tool.",
+        "D": "Programmatic definitions are the recommended SDK approach and take precedence over files with the same name. The issue is permission to call the tool."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/subagents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-009",
+      "objective": "CCAR-F-1.3",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "In an Agent SDK pipeline at Ironbark Logistics, a dependency-scanner subagent finds risky library calls. A separate report-writer subagent then produces the engineer-facing report. Reviewers complain that the report's claims cannot be traced: file paths, line numbers and commit hashes are missing.",
+      "question": "What is the best fix?",
+      "options": {
+        "A": "Tell the report-writer to read the scanner's transcript, since subagents in one session share their memory",
+        "B": "Give the report-writer the scanner's tools so it can re-scan the repository and collect locations for itself",
+        "C": "Have the coordinator pass the scanner's full findings to the report-writer as records with separate location fields",
+        "D": "Add 'always cite your sources' to the report-writer's prompt so that it includes file paths and line numbers"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Subagents receive only what the coordinator puts in their prompt. Passing complete findings in a structured form that keeps content apart from metadata (file, line, commit) lets the report-writer keep attribution intact.",
+      "why_incorrect": {
+        "A": "Non-fork subagents start with fresh context and do not share memory or transcripts with sibling subagents.",
+        "B": "Re-scanning duplicates work and cost, and the two scans may disagree. The scanner already produced the data.",
+        "D": "An instruction cannot conjure locations the report-writer never received. The data has to be passed in."
+      },
+      "module": "10-agentic-ai/04-multi-agent-architecture.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/subagents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-010",
+      "objective": "CCAR-F-1.3",
+      "scenario_set": "developer-productivity",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "An exploration agent at Fernhill Education needs four independent analyses of a legacy repository: HTTP endpoints, database access, feature flags and scheduled jobs. Today the coordinator spawns one subagent, waits, then spawns the next. The subagents also follow rigid step lists and fail when a directory layout is unusual.",
+      "question": "Which TWO changes improve this design? (Choose 2.)",
+      "options": {
+        "A": "Give each subagent the goal and what a complete answer must contain, instead of a fixed step list",
+        "B": "Merge the four analyses into one general-purpose subagent with a combined checklist to cut overhead",
+        "C": "Emit all four Agent tool calls in a single coordinator response so the subagents run concurrently",
+        "D": "Fork the coordinator's conversation into each subagent so that every one can watch the others' progress",
+        "E": "Specify exact search commands and directory order in each prompt so that the results are deterministic"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanation": "Independent subtasks should be launched together, as multiple Agent calls in one response, so they run in parallel. Prompts that state goals and quality criteria let each subagent adapt to the repository's real layout.",
+      "why_incorrect": {
+        "B": "One combined subagent loses both parallelism and context isolation, and its context fills with four unrelated investigations.",
+        "D": "A fork copies the conversation at that moment. It does not give live visibility into sibling subagents, and it adds context each analysis does not need.",
+        "E": "More rigid procedures make the layout-sensitivity problem worse rather than better."
+      },
+      "module": "10-agentic-ai/04-multi-agent-architecture.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/subagents",
+        "https://code.claude.com/docs/en/sub-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-011",
+      "objective": "CCAR-F-1.3",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "cost-performance",
+      "scenario": "For a market-entry study, Sorrel Partners' coordinator needs web research on five independent regions. Logs show it spawns the first regional search subagent, waits for its report, then spawns the next, so the study takes five times as long as one search.",
+      "question": "What change shortens the run most directly?",
+      "options": {
+        "A": "Have the coordinator launch all five independent regional searches in one turn, then combine their reports",
+        "B": "Lower each search subagent's turn limit, so every sequential run finishes sooner and the total wall-clock time drops",
+        "C": "Move the regional searches into the coordinator itself, so no time is spent starting a subagent between regions",
+        "D": "Merge the five regions into one web-search subagent prompt, so a single subagent covers every region during one run"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Subagents can run concurrently, so independent subtasks finish in roughly the time of the slowest one rather than the sum. The coordinator should start all independent subagents together (multiple subagent calls in one response) and aggregate their reports, rather than serialising work that has no dependency between parts.",
+      "why_incorrect": {
+        "B": "Shorter runs cut research depth and may end searches unfinished, while the serial structure that causes the delay remains.",
+        "C": "Start-up time is not the bottleneck, and doing the searches inline floods the coordinator's context with raw results.",
+        "D": "One subagent works through the regions serially in one context, so the run stays slow and the context fills with all five regions' material."
+      },
+      "module": "10-agentic-ai/04-multi-agent-architecture.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/subagents",
+        "https://www.anthropic.com/engineering/multi-agent-research-system"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-012",
+      "objective": "CCAR-F-1.3",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Ashgrove Research's coordinator spawns a synthesis subagent with the prompt 'Synthesise the findings from the analysis we just did into a cited summary.' The summary that comes back is generic and cites none of the twelve documents the analysis subagent processed earlier in the run.",
+      "question": "What is the most effective fix?",
+      "options": {
+        "A": "Set the synthesis subagent's model to 'inherit', so it shares the coordinator's context and sees the earlier analysis",
+        "B": "Move the synthesis instructions into the coordinator's system prompt, so the subagent picks them up when it is spawned",
+        "C": "Pass the analysis and search findings, with their source metadata, in the prompt used to spawn the synthesis subagent",
+        "D": "Give the synthesis subagent web-search tools, so it can find the sources again when the earlier findings are missing"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "A (non-fork) subagent starts with a fresh context: its own system prompt plus the prompt string the parent passes when spawning it. It does not see the parent's conversation history or earlier tool results, so 'the analysis we just did' refers to nothing. The coordinator must pass the findings, ideally structured with source URLs and document names, directly in that prompt.",
+      "why_incorrect": {
+        "A": "The model setting only chooses which model runs; it does not give the subagent the parent's conversation history.",
+        "B": "Subagents do not receive the parent's system prompt, and instructions are not the missing piece; the findings are.",
+        "D": "This repeats work, may find different sources, and gives the synthesis role tools outside its specialisation."
+      },
+      "module": "10-agentic-ai/04-multi-agent-architecture.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/subagents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-013",
+      "objective": "CCAR-F-1.3",
+      "scenario_set": "research-system",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Orrin Analytics is defining AgentDefinition entries for its document-analysis, web-search and synthesis subagents. Shared citation rules apply to all three, and the document-analysis subagent must never reach the web.",
+      "question": "Which TWO configuration choices are correct? (Choose 2.)",
+      "options": {
+        "A": "Give the document-analysis subagent a tools list with only its document tools; tools left out are simply not in its session",
+        "B": "Omit the tools field on the synthesis subagent to make it read-only, because a subagent with no tools listed gets none",
+        "C": "Rely on subagents inheriting the coordinator's system prompt, so the shared citation rules only need to be written once there",
+        "D": "Put the current research brief in each subagent's prompt field, so every run automatically receives the user's latest query",
+        "E": "Write each subagent's description to say when to use it, because the coordinator matches tasks to subagents using those descriptions"
+      },
+      "answer": [
+        "A",
+        "E"
+      ],
+      "explanation": "AgentDefinition's description tells the coordinator when to delegate to that subagent, and the tools list restricts what it can do: a tool not listed is not in its session at all. Omitting tools gives broad access, the prompt field is a fixed system prompt rather than a per-task brief, and the parent's system prompt is not inherited.",
+      "why_incorrect": {
+        "B": "Omitting tools gives the subagent every tool available to subagents; restriction requires an explicit list.",
+        "C": "Subagents do not receive the parent's system prompt, so the citation rules must be in each subagent's own prompt or another loaded source.",
+        "D": "The prompt field is the subagent's standing system prompt; per-task details are passed in the prompt string when it is spawned."
+      },
+      "module": "10-agentic-ai/04-multi-agent-architecture.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/subagents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-014",
+      "objective": "CCAR-F-1.4",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Fernvale Mobile's support agent escalates billing disputes to a human queue. Human agents work in a separate ticketing tool and cannot see the AI conversation. Today's handoff note usually reads 'Customer unhappy about bill, please assist', and humans spend several minutes re-asking questions.",
+      "question": "What should the handoff contain?",
+      "options": {
+        "A": "The agent's confidence score and the customer's sentiment rating, so the human queue can sort incoming tickets by urgency and by doubt",
+        "B": "A short note in the customer's own words, so the human hears the complaint without the agent's interpretation",
+        "C": "A structured summary with account ID, disputed charges, root cause found, actions already taken and a recommended resolution",
+        "D": "The full raw transcript attached to the ticket, so the human can read everything the customer and agent said"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Because the human cannot see the conversation, the handoff must carry what they need to act at once: identifiers, the verified facts and root cause, what the agent has done, and its recommended next step. A structured summary avoids repeated questions and gives the human a clear place to start.",
+      "why_incorrect": {
+        "A": "Scores may help sorting but tell the human nothing about the account, the charges or what has been tried.",
+        "B": "It omits the IDs, findings and actions the agent already has, so the human still has to repeat the investigation.",
+        "D": "The transcript has the facts but makes the human dig for them, and it gives no verified root cause or recommendation."
+      },
+      "module": "10-agentic-ai/05-human-in-the-loop.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-015",
+      "objective": "CCAR-F-1.4",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Pinecrest Pharmacy Online's support agent can book routine refills with schedule_refill, but policy says refills of controlled medicines must go to a pharmacist through escalate_to_pharmacist. The system prompt states this. Reviews show the agent occasionally books a controlled refill itself when a customer pushes hard for speed.",
+      "question": "What should the team implement?",
+      "options": {
+        "A": "A PreToolUse hook on schedule_refill that denies controlled drugs and points the model to escalate_to_pharmacist",
+        "B": "Removal of schedule_refill from the agent, so that a pharmacist has to handle every refill request, routine or controlled",
+        "C": "A nightly job that cancels any controlled refill booked without pharmacist sign-off and emails the affected customers",
+        "D": "Few-shot examples of pushy customers being escalated, placed at the very top of the system prompt in capital letters"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "A policy that must hold every time needs a deterministic gate, not stronger wording. A PreToolUse hook can check the requested drug against the formulary and return a deny decision with a reason that points the model to escalate_to_pharmacist, so controlled refills are blocked and handed off correctly while routine refills still flow.",
+      "why_incorrect": {
+        "B": "This enforces the rule by removing a capability routine refills legitimately need, pushing every request onto pharmacists.",
+        "C": "After-the-fact cancellation lets the wrong booking happen first and creates a worse customer experience than prevention.",
+        "D": "Prompt changes may lower the failure rate, but compliance stays probabilistic for a rule that must hold every time."
+      },
+      "module": "09-claude-code/06-hooks.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/hooks"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-016",
+      "objective": "CCAR-F-1.4",
+      "scenario_set": "support-agent",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "A Kestrel Home Goods customer writes: 'I was charged twice for order 5521, the lamp in order 5530 arrived cracked, and can you change the delivery address on order 5547 before it ships?'",
+      "question": "Which TWO design choices handle this message best? (Choose 2.)",
+      "options": {
+        "A": "Resolve the first issue the customer mentioned, then ask them to open a new conversation for each of the remaining issues",
+        "B": "Keep one shared case record of account, orders and amounts that each issue's investigation reads and updates",
+        "C": "Escalate every message with several issues to a human, since multiple concerns in one message indicate a complex case",
+        "D": "Split the message into separate issues, investigate each with the right tools, then send one reply that resolves all three",
+        "E": "Handle the issues in order of the amount involved, closing each with its own separate reply before starting the next"
+      },
+      "answer": [
+        "B",
+        "D"
+      ],
+      "explanation": "Multi-concern requests should be decomposed into distinct items, investigated (in parallel where they are independent) against a shared set of case facts, and then answered in one unified resolution. The shared record keeps amounts and order IDs consistent across the three investigations.",
+      "why_incorrect": {
+        "A": "This pushes work back to the customer and ignores two problems the agent could handle in the same conversation.",
+        "C": "Several routine issues are not a policy exception or a blocked case; escalating them all wastes human capacity.",
+        "E": "Sequential replies fragment the conversation, and ordering by amount ignores the time-sensitive address change."
+      },
+      "module": "10-agentic-ai/02-workflow-patterns.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-017",
+      "objective": "CCAR-F-1.5",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Kestrel Payments' incident-explorer agent gets timeline data from three MCP servers. One returns Unix epoch seconds, one ISO 8601, and one DD/MM/YYYY strings. The agent sometimes orders events wrongly when it merges them.",
+      "question": "What is the most reliable fix?",
+      "options": {
+        "A": "Add a PostToolUse hook for those MCP tools that converts every timestamp to ISO 8601 with updatedToolOutput",
+        "B": "Add a PreToolUse hook that appends a format=iso parameter to every call made to the three MCP servers",
+        "C": "Ask the agent to write and run a small conversion script through Bash each time it merges the timelines",
+        "D": "Add a system-prompt section explaining the three formats and asking the agent to convert them before sorting"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "A PostToolUse hook runs deterministic code on tool results before the model sees them. Normalising timestamps there removes the chance of misreading a format, rather than relying on the model to convert correctly each time.",
+      "why_incorrect": {
+        "B": "Adding a parameter the servers may not support does not guarantee consistent output, and it may cause tool errors.",
+        "C": "Generating a script on each run adds variability and cost. The normalisation belongs in fixed code on the result path.",
+        "D": "Prompt guidance is probabilistic. Mixed formats keep causing occasional misreads, which is the failure being seen."
+      },
+      "module": "09-claude-code/06-hooks.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/hooks"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-018",
+      "objective": "CCAR-F-1.5",
+      "scenario_set": "developer-productivity",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Kestrel Payments' boilerplate-generator agent writes scaffolding files. The team wants every Write to land under ./generated/, and wants every MCP tool call logged to an audit service without slowing the agent.",
+      "question": "Which TWO hook designs are correct? (Choose 2.)",
+      "options": {
+        "A": "A PostToolUse hook on Write returns updatedInput, which moves the file into ./generated/ after it has been written",
+        "B": "An audit hook with matcher ^mcp__ returns an async output, so the agent continues without waiting for the logging call",
+        "C": "A PreToolUse hook on Write returns updatedInput with the rewritten file_path, with an allow decision or normal permission checks",
+        "D": "The audit hook returns a systemMessage for each call, because that field is how hooks give Claude context",
+        "E": "When PreToolUse hooks disagree the first registered decision wins, so register the audit hook after the others"
+      },
+      "answer": [
+        "B",
+        "C"
+      ],
+      "explanation": "PreToolUse can modify a tool's input through updatedInput before execution, either auto-approved with allow or passed through normal permission evaluation. Hooks used only for side effects such as logging can return async output so the agent does not wait for them.",
+      "why_incorrect": {
+        "A": "updatedInput applies to PreToolUse, before the call runs. A PostToolUse hook cannot change where a file was already written.",
+        "D": "systemMessage is shown to the user, not the model. additionalContext is the field that passes context to Claude.",
+        "E": "Matching hooks run in parallel and the most restrictive decision applies (deny before defer, ask and allow). Registration order does not decide it."
+      },
+      "module": "09-claude-code/06-hooks.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/hooks"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-019",
+      "objective": "CCAR-F-1.5",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Brightwater Logistics' platform agent can run Bash to help engineers with infrastructure chores. Policy says it must never run terraform apply or kubectl delete against production contexts. A system-prompt instruction already says this, but in one run the agent ran terraform apply anyway.",
+      "question": "Which control should the team add?",
+      "options": {
+        "A": "A PreToolUse hook with matcher \"terraform apply|kubectl delete\" that returns a deny decision for each call",
+        "B": "A rewritten system prompt that states the production rule first, in capitals, with three refusal examples",
+        "C": "A PreToolUse hook on Bash that inspects the command and returns deny with a reason that points to the change process",
+        "D": "A PostToolUse hook on Bash that spots production-changing commands after they run and asks the agent to revert"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "A PreToolUse hook blocks the call before it executes, which gives a deterministic guarantee where prompts only make compliance likely. Matching the Bash tool and checking tool_input.command inside the callback finds the forbidden commands, and the deny reason tells the agent what to do instead.",
+      "why_incorrect": {
+        "A": "Matchers match the tool name, not its arguments, so this pattern never matches a Bash call. The command must be checked inside the callback.",
+        "B": "Prompt wording makes compliance more likely, but the team has already seen it fail. A hard rule needs enforcement in code.",
+        "D": "PostToolUse fires after the command has run, which is too late to stop a production change."
+      },
+      "module": "09-claude-code/06-hooks.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/hooks"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-020",
+      "objective": "CCAR-F-1.5",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Silvergate Utilities' schema-helper agent generates database migrations. Any migration that drops a column must go to a human DBA for review instead of being written to the migrations folder. The agent can open review tickets through an MCP tool.",
+      "question": "Which design enforces this most reliably?",
+      "options": {
+        "A": "A PostToolUse hook that adds additionalContext reminding the agent of the review policy after each migration is written",
+        "B": "A Stop hook that scans the working tree when the run finishes and deletes any migration containing a DROP COLUMN",
+        "C": "A system-prompt rule telling the agent never to drop columns itself and to open a review ticket in such cases",
+        "D": "A PreToolUse hook on Write|Edit that denies DROP COLUMN content, with a reason directing the agent to file a review ticket"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Intercepting the write before it happens enforces the policy deterministically. The deny reason redirects the agent to the approved alternative, opening a review ticket, so the workflow continues correctly instead of just failing.",
+      "why_incorrect": {
+        "A": "By the time PostToolUse fires, the migration is already in the folder. A reminder does not undo the write.",
+        "B": "Deleting files at the end is destructive clean-up, and the review request may never be filed.",
+        "C": "Prompt instructions make compliance likely but not certain. A rule with a mandatory human review needs enforcement in code."
+      },
+      "module": "09-claude-code/06-hooks.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/hooks"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-021",
+      "objective": "CCAR-F-1.5",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Brightwater Outfitters' support agent reads customer records through a vendor's MCP server, which returns full card numbers and dates of birth. Compliance requires that these values never enter the model's context or the stored transcripts. The team cannot change the vendor's server.",
+      "question": "What is the most reliable way to meet this requirement?",
+      "options": {
+        "A": "A PostToolUse hook on the CRM tools that masks card numbers and birth dates in each result before the model reads it",
+        "B": "A PreToolUse hook that blocks any CRM lookup until the customer has confirmed their identity earlier in the chat",
+        "C": "A system prompt rule telling the agent never to repeat card numbers or birth dates it sees in tool results to customers",
+        "D": "A Stop hook that scans each final reply and removes any card numbers or birth dates before the customer sees the message"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "A PostToolUse hook runs in the application after a tool returns and can replace an MCP tool's output before Claude sees it. Masking sensitive fields there is deterministic: the full values never reach the model's context or the transcript, regardless of what the model would do with them.",
+      "why_incorrect": {
+        "B": "Identity checks control who can trigger a lookup, but the full values still flow into context once the lookup runs.",
+        "C": "The data is already in context and the transcript; the rule only limits what the model repeats, and only probabilistically.",
+        "D": "By the time the reply is checked, the values have been in context and stored in the transcript, which is what compliance forbids."
+      },
+      "module": "09-claude-code/06-hooks.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/hooks"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-022",
+      "objective": "CCAR-F-1.5",
+      "scenario_set": "support-agent",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Thornbury Telecom's account-lookup MCP tool (on a server configured as 'billing') returns full card numbers that the model never needs. Compliance also wants an audit record of every MCP tool call the support agent makes.",
+      "question": "Which TWO hook configurations meet these needs? (Choose 2.)",
+      "options": {
+        "A": "A PreToolUse hook with a matcher such as \"^mcp__\" that logs each MCP tool call's name and input to the audit store",
+        "B": "A hook whose matcher is just \"billing\", relying on the server's name matching the full names of its tools",
+        "C": "A PreToolUse hook matched to the account-lookup tool that removes card numbers from the result before the model sees it",
+        "D": "A PostToolUse hook matched to the account-lookup tool that returns a redacted replacement of the tool output",
+        "E": "A UserPromptSubmit hook that strips card numbers from customer messages, which also covers data returned by tools"
+      },
+      "answer": [
+        "A",
+        "D"
+      ],
+      "explanation": "PostToolUse hooks can replace a tool's output before Claude processes it, which makes them the right place to redact sensitive fields. PreToolUse hooks see every outgoing call with its input, and a matcher like ^mcp__ selects all MCP tools, so they suit audit logging. Hook matchers compare against tool names, and MCP tools are named mcp__<server>__<action>.",
+      "why_incorrect": {
+        "B": "MCP tool names follow the mcp__<server>__<action> pattern, so a bare server name does not match them as an exact name.",
+        "C": "PreToolUse runs before the tool executes, so there is no result yet to redact.",
+        "E": "UserPromptSubmit sees submitted prompts, not tool results, so card numbers from the lookup would still reach the model."
+      },
+      "module": "09-claude-code/06-hooks.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/hooks"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-023",
+      "objective": "CCAR-F-1.5",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Thornbury Telecom's policy says any account credit above $300 needs human approval. The support agent's prompt states the limit, but last month it issued four credits above $300 while trying to calm angry customers.",
+      "question": "Which control best enforces the policy?",
+      "options": {
+        "A": "A system prompt rule stating the $300 limit, backed by few-shot examples of the agent escalating larger requests",
+        "B": "A Stop hook that scans the finished conversation and alerts a supervisor whenever a credit above $300 was issued",
+        "C": "A PreToolUse hook on the credit tool that denies amounts above $300 and gives a reason telling the agent to open a handoff instead",
+        "D": "A PostToolUse hook on the credit tool that flags any credit above $300 for a supervisor to review and reverse the next day"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "A PreToolUse hook intercepts the outgoing call before it runs. Returning a deny decision blocks the credit deterministically, and the reason text lets the model redirect to the escalation workflow. Prompt rules and after-the-fact checks cannot guarantee compliance.",
+      "why_incorrect": {
+        "A": "This is what failed already: prompt guidance is probabilistic, and the rule must hold every time.",
+        "B": "It detects violations only after the conversation ends, when the money has already moved.",
+        "D": "PostToolUse runs after the credit is issued, so the policy is breached first and fixed later."
+      },
+      "module": "09-claude-code/06-hooks.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/hooks"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-024",
+      "objective": "CCAR-F-1.6",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Wren Retail asks Claude Code to 'add comprehensive tests' to a 200,000-line legacy order service with about 5% coverage. Some modules are heavily changed each sprint, others have not been touched in years, and dependencies between them are poorly documented.",
+      "question": "Which decomposition strategy is most appropriate?",
+      "options": {
+        "A": "Split the top-level directories evenly across parallel subagents straight away and merge whatever tests they return",
+        "B": "Issue a single prompt asking for tests across the whole service so that Claude can judge coverage holistically",
+        "C": "Map the structure and dependencies first, rank high-risk modules, then follow a prioritised plan that adapts as you learn",
+        "D": "Work through the source files in alphabetical order, writing one test file per source file in a fixed sequence"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "An open-ended task with unknown dependencies calls for adaptive decomposition. Map the structure, find where tests reduce the most risk, and let the plan change as dependencies and test seams emerge.",
+      "why_incorrect": {
+        "A": "Splitting before mapping assigns work blindly. Directory size says nothing about where coverage matters most.",
+        "B": "One prompt over 200,000 lines cannot hold the detail needed and gives no way to prioritise or check progress.",
+        "D": "A fixed order ignores risk and dependencies, so effort goes to stable code while fragile, high-churn modules wait."
+      },
+      "module": "03-prompt-engineering/05-task-decomposition-and-chaining.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents",
+        "https://www.anthropic.com/engineering/claude-code-best-practices"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-025",
+      "objective": "CCAR-F-1.6",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Quillon Media used Claude Code to review a 30-file refactoring pull request in one pass. The review left shallow comments on each file and missed that two files now disagree on a shared event payload's field names.",
+      "question": "Which restructuring of the review is most likely to fix both problems?",
+      "options": {
+        "A": "Review the files twice in different random orders and keep the union of the comments from both runs",
+        "B": "Run the same single-pass review again with a longer, more detailed checklist so that nothing gets skipped",
+        "C": "Skip per-file analysis and run one integration pass over a summary of the diff, since that is where the bugs are",
+        "D": "Run a focused pass per file, then a separate integration pass over each file's interfaces and shared contracts"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Splitting the review into per-file passes gives each file full attention. A separate integration pass that compares interfaces and contracts across files then catches mismatches that a diluted single pass misses.",
+      "why_incorrect": {
+        "A": "Repeating a diluted pass in another order does not deepen per-file analysis or make cross-file checks systematic.",
+        "B": "A longer checklist adds to the same attention dilution across 30 files and does not create a cross-file comparison step.",
+        "C": "Dropping per-file analysis gives up the local defects, and a diff summary may leave out the field names that conflict."
+      },
+      "module": "03-prompt-engineering/05-task-decomposition-and-chaining.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-026",
+      "objective": "CCAR-F-1.6",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Ironbark Logistics' boilerplate tool must create 12 new event consumers from the team's standard template. Each consumer goes through the same steps: scaffold the code, add configuration, generate tests, write the README. Each step's output can be checked before the next starts.",
+      "question": "Which decomposition strategy is the best fit?",
+      "options": {
+        "A": "An autonomous agent that decides for each consumer which steps it needs and in what order it should run them",
+        "B": "A fixed sequential chain for each consumer, with a validation check between steps before the next step starts",
+        "C": "A single prompt that generates all 12 consumers' code, configuration, tests and documentation in one response",
+        "D": "Dynamic decomposition, where the agent rebuilds the plan for every consumer from what it discovers on the way"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "When the steps are known and identical every time, prompt chaining is predictable, cheap and easy to test. Gates between steps catch problems early. Adaptive planning adds variability without benefit here.",
+      "why_incorrect": {
+        "A": "Autonomy suits open-ended work. Here it adds cost and inconsistency to a fixed, well-understood procedure.",
+        "C": "One huge response removes the checkpoints, so a template error spreads into all 12 consumers before anyone sees it.",
+        "D": "Re-planning per consumer when the plan never changes adds variability and makes outputs harder to compare and validate."
+      },
+      "module": "03-prompt-engineering/05-task-decomposition-and-chaining.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-027",
+      "objective": "CCAR-F-1.6",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "An engineer at Halyard Bank asks the team's codebase assistant: 'Why does the nightly reconciliation job sometimes post the same transaction twice?' Nobody on the team knows the job's code well.",
+      "question": "Which task decomposition strategy fits this request best?",
+      "options": {
+        "A": "Parallel subagents, one per top-level directory, each asked the same question, with the answers merged",
+        "B": "One large prompt containing the whole reconciliation package so Claude can reason over everything at once",
+        "C": "A fixed chain: list every file in the repository, summarise each in turn, then answer from the summaries",
+        "D": "Investigate adaptively from the job's entry point and logs, choosing each next subtask from what turns up"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Open-ended debugging calls for dynamic decomposition. Each finding, such as a retry wrapper, suggests the next question, such as whether posting is idempotent. A fixed plan cannot anticipate that path.",
+      "why_incorrect": {
+        "A": "Most directories have nothing to do with the bug, and identical questions without shared findings cannot follow a trail across components.",
+        "B": "Bulk context dilutes attention and does not reach the runtime evidence (logs, retries) that guides the investigation.",
+        "C": "Summarising everything in a fixed order spends most effort on irrelevant code and delays following the actual evidence."
+      },
+      "module": "10-agentic-ai/02-workflow-patterns.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-028",
+      "objective": "CCAR-F-1.6",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Linwood Capital's document-analysis subagent receives forty quarterly filings, about 300 pages in total, in one request and is asked to extract key metrics and flag inconsistencies between filings. Reviewers find missed per-filing details and missed cross-filing contradictions.",
+      "question": "How should the task be decomposed?",
+      "options": {
+        "A": "Send all forty filings in one request with a longer instruction that lists every field and every comparison to be made",
+        "B": "Analyse each filing in its own pass with a fixed checklist, then run a separate pass comparing the per-filing results",
+        "C": "Split the filings into four batches of ten and join the four batch summaries by concatenation at the end of the run",
+        "D": "Analyse only the twelve most-cited filings in depth and sample the rest, because those filings drive most conclusions"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Large multi-document reviews benefit from a local pass per document (focused attention, consistent checklist) followed by a separate integration pass over the structured per-document results to find cross-document issues. That avoids attention dilution while still catching contradictions between documents.",
+      "why_incorrect": {
+        "A": "More instructions do not fix attention spread across 300 pages; the same details and comparisons will still be missed.",
+        "C": "Batching helps local detail, but concatenating summaries never compares filings across batches, so cross-filing contradictions are lost.",
+        "D": "Sampling leaves most filings unexamined and cannot find inconsistencies involving the ones that were skipped."
+      },
+      "module": "10-agentic-ai/02-workflow-patterns.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-029",
+      "objective": "CCAR-F-1.6",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Meridian Public Health Observatory has two workloads: a weekly digest that always fetches regulator feeds, extracts changes, summarises them and formats a bulletin; and ad hoc investigations such as 'Why did childhood vaccine uptake fall in one district this year?'",
+      "question": "Which decomposition strategy fits these workloads?",
+      "options": {
+        "A": "A fixed prompt chain for both, with each investigation's steps drafted in advance by an analyst before the run starts",
+        "B": "An adaptive coordinator for both, so the weekly digest can also add steps whenever a regulator publishes something unusual",
+        "C": "A fixed prompt chain for the weekly digest, and an adaptive plan for investigations that adds subtasks as findings emerge",
+        "D": "An adaptive plan for the digest, since the feeds change weekly, and a fixed chain for investigations to keep them auditable"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Prompt chaining suits predictable work whose steps are known in advance; it is cheap, testable and consistent. Dynamic decomposition suits open-ended investigation, where the next subtask depends on intermediate findings, so the plan must adapt as evidence comes in.",
+      "why_incorrect": {
+        "A": "Open-ended investigations cannot be fully planned up front; what to look at next depends on what is found.",
+        "B": "The digest's steps are known and stable; dynamic planning adds cost and variability without benefit.",
+        "D": "This inverts the fit: changing content does not make the digest's steps change, and fixed chains suit the investigation least."
+      },
+      "module": "10-agentic-ai/02-workflow-patterns.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-030",
+      "objective": "CCAR-F-1.7",
+      "scenario_set": "code-generation",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Yesterday an engineer at Tallis Travel started a session with claude -n ledger-refactor and spent hours analysing the ledger module. Overnight a colleague merged changes to two of the files that session had read.",
+      "question": "What is the best way to continue today?",
+      "options": {
+        "A": "Start a new unnamed session and repeat the full analysis of the ledger module from scratch to be completely safe",
+        "B": "Run claude --resume ledger-refactor, then name the two changed files and ask Claude to re-read them before continuing",
+        "C": "Run claude --continue so the most recent conversation in the directory reloads, and carry on from the last step",
+        "D": "Resume the named session and carry on as before, since a resumed session re-reads the files it used automatically"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Resuming the named session keeps the still-valid analysis. Because sessions persist the conversation, not the filesystem, Claude must be told which files changed so it re-reads only those instead of relying on stale tool results.",
+      "why_incorrect": {
+        "A": "Repeating hours of analysis throws away context that is mostly still valid. Targeted re-reading is enough here.",
+        "C": "--continue picks the most recent conversation in the directory, which may not be ledger-refactor, and it still leaves the stale file contents unaddressed.",
+        "D": "A resumed session restores the conversation, including old tool results. Files are not re-read automatically."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/cli-reference",
+        "https://code.claude.com/docs/en/agent-sdk/sessions"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-031",
+      "objective": "CCAR-F-1.7",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "An Agent SDK session at Copperline Energy has finished a detailed analysis of a legacy billing module. The team wants to compare two refactoring strategies, a strangler adapter and an in-place rewrite, starting from that same analysis without either line of work contaminating the other.",
+      "question": "What is the best approach?",
+      "options": {
+        "A": "Resume the analysis session twice in a row, first exploring the adapter strategy and then the rewrite",
+        "B": "Use continue: true for both runs so each one picks up the most recent session and its full analysis",
+        "C": "Start two fresh sessions and repeat the full analysis in each, so the two strategies share no history",
+        "D": "Fork the analysis session once per strategy, giving each fork its own working copy for any file edits"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Resuming with fork_session (forkSession in TypeScript) creates a new session that starts from a copy of the original history, which stays unchanged. Forks branch the conversation, not the filesystem, so separate working copies keep each strategy's edits apart.",
+      "why_incorrect": {
+        "A": "Sequential resumes put both strategies in one history, so the second is influenced by the first.",
+        "B": "continue picks the most recent session. The second run would continue the first strategy's thread instead of the clean baseline.",
+        "C": "Repeating the analysis wastes the work already done and may produce a different baseline for each strategy."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/sessions"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-032",
+      "objective": "CCAR-F-1.7",
+      "scenario_set": "developer-productivity",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "A week ago an engineer at Basalt Systems ran a long analysis session over the order service. Since then a large merge has rewritten about 40% of its modules. She wants to pick the investigation back up.",
+      "question": "What is the most reliable way to continue?",
+      "options": {
+        "A": "Resume the session and ask Claude to refresh its memory of the codebase before it answers anything else",
+        "B": "Fork the old session so that the stale analysis stays preserved while the fork continues the investigation",
+        "C": "Start a new session seeded with a structured summary of still-valid conclusions, then re-explore the changes",
+        "D": "Resume the session as it is, since the earlier tool results still describe how most of the service behaves"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "When many earlier tool results are stale, resuming brings outdated file contents back into context as if they were current. A fresh session seeded with a curated summary of conclusions that still hold, followed by targeted re-exploration, is more reliable.",
+      "why_incorrect": {
+        "A": "A vague refresh request does not say what changed, so Claude may re-read nothing or everything, and stale results remain in context.",
+        "B": "A fork inherits the same stale history, so it has the same problem as resuming.",
+        "D": "With 40% of modules rewritten, stale results would mislead the analysis. Resuming suits cases where prior context is mostly valid."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/sessions"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-033",
+      "objective": "CCAR-F-1.7",
+      "scenario_set": "research-system",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Ashgrove Research finished a costly analysis session on regional energy prices. The director wants two drafts from it, a short policy brief and a technical appendix, explored independently, keeping the analysis intact for later questions. Both drafts are written to the project's working directory.",
+      "question": "How should the team run the two drafts?",
+      "options": {
+        "A": "Fork the analysis session once per draft and let both branches write report.md, since each fork has its own file snapshot",
+        "B": "Fork the analysis session once per draft and have each branch write to its own output file, because forks share the filesystem",
+        "C": "Start two new sessions and have each one repeat the full search and document analysis before it drafts its own version of the report",
+        "D": "Resume the analysis session, write the policy brief, then ask the same session to rewrite it as a technical appendix"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Forking creates a new session that starts with a copy of the original history; the original stays unchanged and each branch can be resumed separately. Forks do not branch the filesystem, though: file edits are real and shared, so parallel branches need separate output paths (or file checkpointing).",
+      "why_incorrect": {
+        "A": "Forking branches the conversation, not the filesystem, so the two drafts would overwrite each other's file.",
+        "C": "This throws away the costly analysis and may produce two inconsistent evidence bases.",
+        "D": "The second draft is shaped by the first, and the original analysis session is changed instead of kept intact."
+      },
+      "module": "10-agentic-ai/06-managed-agents-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/sessions"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-034",
+      "objective": "CCAR-F-1.7",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Lumenwise Telecom's support service, built on the Agent SDK, handles thousands of customers at once. When a customer returns the next day to the same open ticket, the agent should continue with full knowledge of the earlier conversation.",
+      "question": "How should the service continue the conversation?",
+      "options": {
+        "A": "Start a new session and replay the stored transcript as one large user message containing the entire earlier conversation",
+        "B": "Use the continue option, which returns to the most recent session, so the returning customer picks up where they left off",
+        "C": "Store each ticket's session ID when the result arrives, and pass it to the resume option when that customer comes back",
+        "D": "Fork the most recent session for every returning customer, so the original history stays unchanged for auditors"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Resume takes a specific session ID and restores that session's full context. Continue finds the most recent session in the current directory, which only works when one conversation runs at a time. Multi-user services should capture session_id from the result message and store it against the ticket.",
+      "why_incorrect": {
+        "A": "This loses the structure of the earlier tool calls and results and costs more than resuming the existing session.",
+        "B": "Continue picks the most recent session in the directory, which in a multi-user service is probably someone else's conversation.",
+        "D": "Forking the most recent session copies the wrong conversation, and forking is for exploring alternatives, not routine continuation."
+      },
+      "module": "10-agentic-ai/06-managed-agents-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/sessions"
+      ]
+    },
+    {
+      "id": "CCAR-F-D1-035",
+      "objective": "CCAR-F-1.7",
+      "scenario_set": "support-agent",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "A Lumenwise Telecom customer paused a chat for twenty minutes to find the serial number on her router. Nothing on the account changed in that time. The saved session holds the order and line-status lookups and the troubleshooting steps already agreed with her.",
+      "question": "What is the best way to continue the case?",
+      "options": {
+        "A": "Start a new session seeded with a summary of the case, and have the agent re-fetch all order and line data first",
+        "B": "Fork the saved session so the original is kept as a backup, then add the customer's reply only in the new fork",
+        "C": "Resume the saved session and carry on, since its lookups and the agreed troubleshooting steps are still current",
+        "D": "Start an empty session and ask the customer to describe the problem again, so the agent works only from fresh input"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Resuming is the right choice when the prior context is still valid: the session restores the full history, including tool results and agreed steps, at no extra cost. A fresh start with a summary is worth it when earlier tool results have gone stale; forking suits exploring an alternative approach while keeping the original line intact.",
+      "why_incorrect": {
+        "A": "Nothing has changed, so re-fetching and summarising adds cost and can drop detail from the agreed steps for no benefit.",
+        "B": "There is no alternative path to explore; forking only creates a second copy of the same valid conversation.",
+        "D": "Discarding valid context makes the customer repeat herself and throws away lookups that are still correct."
+      },
+      "module": "10-agentic-ai/06-managed-agents-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/agent-sdk/sessions"
+      ]
+    }
+  ]
+}

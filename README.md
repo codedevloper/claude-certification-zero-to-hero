@@ -17,7 +17,7 @@ certification exams, and to building secure, production-grade AI systems.
 
 ---
 
-**Start here:** [New to AI → Module 00](00-getting-started/README.md) · [Business user → CCAO-F track](16-certification-tracks/ccao-f/README.md) · [Architect or engineer → CCAR-P track](16-certification-tracks/ccar-p/README.md) · [Practise now → mock exams](18-mock-examinations/README.md)
+**Start here:** [New to AI → Module 00](00-getting-started/README.md) · [Business user → CCAO-F track](16-certification-tracks/ccao-f/README.md) · [Agent builder → CCAR-F track](16-certification-tracks/ccar-f/README.md) · [Architect or engineer → CCAR-P track](16-certification-tracks/ccar-p/README.md) · [Practise now → mock exams](18-mock-examinations/README.md)
 
 ## Why this repository exists
 
@@ -51,7 +51,7 @@ Not sure? Take the two-minute [choose-your-path guide](00-getting-started/choose
 |---|---|---|---|
 | Claude Certified Associate – Foundations | CCAO-F | Business users of the Claude apps | [Full track](16-certification-tracks/ccao-f/README.md) |
 | Claude Certified Architect – Professional | CCAR-P | Architects delivering production systems | [Full track](16-certification-tracks/ccar-p/README.md) |
-| Claude Certified Architect – Foundations | CCAR-F | Developers building agentic systems | Planned ([roadmap](ROADMAP.md)) |
+| Claude Certified Architect – Foundations | CCAR-F | Developers building agentic systems with the Agent SDK, Claude Code and MCP | [Full track](16-certification-tracks/ccar-f/README.md) |
 | Claude Certified Developer – Foundations | CCDV-F | Developers building on the API | Planned ([roadmap](ROADMAP.md)) |
 
 > **Who can take the exams:** as of 2026-10-24, registration is open only to people at organisations in the

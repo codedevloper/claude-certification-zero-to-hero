@@ -28,6 +28,7 @@
       ],
       "properties": {
         "id": {"type": "string", "pattern": "^[A-Z]{4}-[A-Z]-D[0-9]-[0-9]{3}$", "description": "TRACK-D<domain>-<nnn>, e.g. CCAO-F-D2-004"},
+        "scenario_set": {"type": "string", "pattern": "^[a-z][a-z-]+$", "description": "Scenario ID from the registry, for scenario-based exams such as CCAR-F"},
         "objective": {"type": "string", "pattern": "^[A-Z]{4}-[A-Z]-[0-9]+\\.[0-9]+$", "description": "Objective ID from 16-certification-tracks/registry.yaml"},
         "type": {"enum": ["single", "multiple"]},
         "select": {"type": "integer", "minimum": 2, "description": "Required for type=multiple: how many options to choose"},

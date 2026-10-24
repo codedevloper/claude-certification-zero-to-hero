@@ -1,6 +1,6 @@
 # Choose Your Path
 
-> **Level:** Beginner · **Time:** ~20 min · **Exam relevance:** orientation for CCAO-F and CCAR-P
+> **Level:** Beginner · **Time:** ~20 min · **Exam relevance:** orientation for CCAO-F, CCAR-F and CCAR-P
 
 > **Before you plan to sit an exam:** as of 2026-10-24, Anthropic's certification exams are open only to people at
 > organisations in the **Claude Partner Network**. Everything in this repository is free to use either way. See
@@ -8,39 +8,42 @@
 
 ## In plain English
 
-This repository supports two Anthropic certifications, and you can also use it without sitting any exam:
+This repository supports three Anthropic certifications, and you can also use it without sitting any exam:
 
 | Path | In one sentence |
 |---|---|
 | **CCAO-F**, Claude Certified Associate – Foundations | For people who *use* Claude at work and set up Claude Projects: prompting, judging outputs, choosing features and models, configuring Projects, and using AI responsibly |
+| **CCAR-F**, Claude Certified Architect – Foundations | For people who *build* applications and agents with Claude: the Agent SDK, tool and MCP design, Claude Code configuration, structured output and reliable context handling |
 | **CCAR-P**, Claude Certified Architect – Professional | For people who *design and deliver* production systems with Claude: architecture, models and context, integration, evaluation, governance, stakeholders and developer tooling |
 | **Learn without an exam** | Pick the modules that match your role and skip the exam preparation |
 
-If you are not a developer, CCAO-F is almost certainly your path. If you design systems for a living, CCAR-P is. If you are a developer who is new to AI, start with CCAO-F content (it is the foundation for everything) and continue to CCAR-P.
+If you are not a developer, CCAO-F is almost certainly your path. If you build with the Claude API, the Agent SDK, Claude Code or MCP, CCAR-F is. If you design production systems for a living, CCAR-P is. If you are a developer who is new to AI, start with CCAO-F content (it is the foundation for everything) and continue to CCAR-F.
 
 ## Why it matters
 
-The two exams test different skills. CCAO-F does not expect you to write code. CCAR-P assumes several years of systems experience and hands-on work with LLMs in production. Studying the wrong material wastes weeks.
+The three exams test different skills. CCAO-F does not expect you to write code. CCAR-F expects hands-on building experience with Claude's developer tools. CCAR-P assumes several years of systems experience and hands-on work with LLMs in production. Studying the wrong material wastes weeks.
 
 ## How it works
 
-### The two tracks compared
+### The three tracks compared
 
 All exam facts below come from [`registry.yaml`](../16-certification-tracks/registry.yaml), verified on 2026-10-24 against the official v1.0 exam guides. See [Exam facts](../25-official-resources/exam-facts.md) for sources, retake rules and the change scheduled for later in 2026.
 
-| | CCAO-F | CCAR-P |
-|---|---|---|
-| Audience | Business and knowledge workers: operations, marketing, project management, education, communications | Mid- to senior-level solution architects, AI/ML engineers, technical leads, senior software engineers |
-| Prerequisites | None mandatory; regular hands-on Claude use recommended | None mandatory; recommended 3+ years in systems architecture or platform engineering and 6+ months hands-on with Claude or comparable LLM systems in production |
-| Format | 60 items, multiple-choice and multiple-response, 120 minutes | 63 items, multiple-choice and multiple-response, 120 minutes |
-| Coding required? | No | Not in the exam itself, but the knowledge assumes technical depth |
-| Track overview | [CCAO-F](../16-certification-tracks/ccao-f/README.md) | [CCAR-P](../16-certification-tracks/ccar-p/README.md) |
+| | CCAO-F | CCAR-F | CCAR-P |
+|---|---|---|---|
+| Audience | Business and knowledge workers: operations, marketing, project management, education, communications | Solution architects and developers who build production applications with the Agent SDK, Claude Code and MCP | Mid- to senior-level solution architects, AI/ML engineers, technical leads, senior software engineers |
+| Prerequisites | None mandatory; regular hands-on Claude use recommended | None mandatory; recommended 6+ months building with the Claude API, Agent SDK, Claude Code and MCP | None mandatory; recommended 3+ years in systems architecture or platform engineering and 6+ months hands-on with Claude or comparable LLM systems in production |
+| Format | 60 items, multiple-choice and multiple-response, 120 minutes | 60 items in 4 scenarios drawn from a published bank of 6, 120 minutes | 63 items, multiple-choice and multiple-response, 120 minutes |
+| Coding required? | No | Not in the exam itself, but questions assume you have built with the tools | Not in the exam itself, but the knowledge assumes technical depth |
+| Track overview | [CCAO-F](../16-certification-tracks/ccao-f/README.md) | [CCAR-F](../16-certification-tracks/ccar-f/README.md) | [CCAR-P](../16-certification-tracks/ccar-p/README.md) |
 
 Fees, pass marks and validity periods are recorded in the registry; check them there and on the official pages before booking.
 
 ### Domains at a glance
 
 **CCAO-F domains:** 1 Prompting and Task Execution · 2 Output Evaluation and Validation · 3 Product and Model Selection · 4 Workflow Integration and Solution Design · 5 Configuration and Knowledge Management · 6 Governance, Risk, and Responsible Use · 7 Troubleshooting and Optimization.
+
+**CCAR-F domains:** 1 Agentic Architecture & Orchestration · 2 Tool Design & MCP Integration · 3 Claude Code Configuration & Workflows · 4 Prompt Engineering & Structured Output · 5 Context Management & Reliability.
 
 **CCAR-P domains:** 1 Solution Design & Architecture · 2 Claude Models, Prompting & Context Engineering · 3 Integration · 4 Evaluation, Testing & Optimization · 5 Governance, Safety & Risk Management · 6 Stakeholder Communication & Lifecycle Management · 7 Developer Productivity & Operational Enablement.
 
@@ -56,10 +59,14 @@ flowchart TD
     C -- Just curious --> L[Learn without an exam: Modules 00 to 05]
     B -- Yes --> D{Several years of architecture or platform experience, and some hands-on LLM work?}
     D -- Yes --> P[CCAR-P path]
-    D -- Not yet --> E[Start with CCAO-F content, then continue to CCAR-P]
+    D -- Not yet --> G{Do you build with the Claude API, Agent SDK, Claude Code or MCP?}
+    G -- Yes --> R[CCAR-F path]
+    G -- Not yet --> E[Start with CCAO-F content, then continue to CCAR-F]
 ```
 
 ### Modules by path
+
+For CCAR-F, follow the CCAR-P column for Modules 00 to 10 and 19, and use Modules 11 to 15 as optional depth; the [CCAR-F objective map](../16-certification-tracks/ccar-f/objective-map.yaml) lists the exact pages per objective.
 
 | Module | CCAO-F | CCAR-P | Notes |
 |---|---|---|---|
@@ -120,7 +127,7 @@ Both tracks test governance and responsible use. Whatever your path, read [Respo
 
 | Situation | Suggestion |
 |---|---|
-| Unsure between the two tracks | Take the CCAO-F [readiness assessment](../16-certification-tracks/ccao-f/readiness-assessment.md); if you score well easily, look at CCAR-P |
+| Unsure which track | Take the CCAO-F [readiness assessment](../16-certification-tracks/ccao-f/readiness-assessment.md); if you score well easily, try the [CCAR-F](../16-certification-tracks/ccar-f/readiness-assessment.md) or CCAR-P one |
 | Your organisation is not yet in a position to register you | Exam eligibility and registration are described in [Exam facts](../25-official-resources/exam-facts.md); you can still follow the learning path |
 | You want a certification this repository does not cover | Check the registry for its status; supported tracks are marked `supported` |
 
