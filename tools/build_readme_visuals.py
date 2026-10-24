@@ -192,47 +192,111 @@ def repo_counts() -> list[str]:
             f"{projects} projects", f"{tracks} exam tracks"]
 
 
+# Floating particles in the banner's right half: (x, y, radius, seconds, delay).
+PARTICLES = [(620, 270, 3, 5.5, 0.0), (680, 250, 2, 6.5, 1.8), (735, 280, 4, 7.0, 3.1), (790, 262, 2.5, 5.0, 0.9),
+             (845, 285, 3, 6.0, 2.6), (905, 268, 2, 5.5, 4.0), (955, 280, 3.5, 7.5, 1.2), (1000, 255, 2, 6.0, 3.5),
+             (700, 210, 2, 6.8, 5.0), (980, 215, 2.5, 5.2, 4.6), (640, 200, 2, 6.2, 2.2), (870, 230, 2, 5.8, 0.4)]
+TWINKLES = [(655, 70, 16, 0.0), (790, 150, 12, 1.1), (1000, 120, 14, 2.2), (760, 40, 10, 0.6), (980, 210, 11, 1.7)]
+
+
 def banner(theme: str) -> str:
-    cv = Canvas(theme, 1020, 290, 6.0)
+    cv = Canvas(theme, 1020, 290, 8.0)
     c, b = cv.c, cv.body
+    tile_x, tile_y, tile = 856, 56, 108
+    ox, oy = tile_x + tile / 2, tile_y + tile / 2
+    tagline = "From your first prompt to production-ready AI architecture"
     cv.defs.append('<clipPath id="clip"><rect x="1" y="1" width="1018" height="288" rx="22"/></clipPath>')
+    cv.defs.append('<clipPath id="tag"><rect class="type" x="44" y="184" width="600" height="32"/></clipPath>')
+    cv.defs.append(f'<clipPath id="hero"><text x="46" y="168" font-size="48" font-weight="800" '
+                   f'style="font-family:{FONT}">Zero to Hero</text></clipPath>')
     cv.defs.append(f'<linearGradient id="shine" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" '
                    f'stop-opacity="0"/><stop offset="0.5" stop-color="#ffffff" stop-opacity="{c["shine"]}"/>'
                    f'<stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>')
+    # A repeating orange-pink-orange band that slides through the "Zero to Hero" letters.
+    cv.defs.append('<linearGradient id="flow" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="640" y2="0" '
+                   'spreadMethod="repeat"><stop offset="0" stop-color="#f0915f"/><stop offset="0.35" stop-color="#c4452f"/>'
+                   '<stop offset="0.65" stop-color="#e2557a"/><stop offset="1" stop-color="#f0915f"/></linearGradient>')
+    p = cv.pct
     cv.css += [
-        f"@keyframes sweep {{ 0% {{ transform: translateX(-260px) skewX(-20deg) }} {cv.pct(1.6)}, 100% "
+        f"@keyframes sweep {{ 0% {{ transform: translateX(-260px) skewX(-20deg) }} {p(1.8)}, 100% "
         f"{{ transform: translateX(1250px) skewX(-20deg) }} }}",
-        f".sweep {{ animation: sweep {cv.cycle}s ease-in-out infinite; }}",
-        "@keyframes breathe { 0%, 100% { opacity: 0.35; transform: scale(0.96) } 50% { opacity: 0.8; transform: scale(1.04) } }",
-        ".breathe { animation: breathe 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }",
+        f".sweep {{ animation: sweep {cv.cycle / 2}s ease-in-out infinite; }}",
+        "@keyframes breathe { 0%, 100% { opacity: 0.35; transform: scale(0.96) } 50% { opacity: 0.85; transform: scale(1.08) } }",
+        ".breathe { animation: breathe 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }",
+        "@keyframes bob { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }",
+        ".bob { animation: bob 2.6s ease-in-out infinite; }",
+        "@keyframes spin { to { transform: rotate(360deg) } }",
+        f".orbit {{ transform-box: view-box; transform-origin: {ox}px {oy}px; animation: spin 9s linear infinite; }}",
+        f".orbit2 {{ transform-box: view-box; transform-origin: {ox}px {oy}px; animation: spin 14s linear infinite reverse; }}",
+        "@keyframes slide { to { transform: translateX(640px) } }",
+        ".slide { animation: slide 3s linear infinite; }",
+        "@keyframes drift { 0%, 100% { transform: translate(0, 0) } 50% { transform: translate(-26px, 14px) } }",
+        ".drift { animation: drift 9s ease-in-out infinite; }",
+        "@keyframes drift2 { 0%, 100% { transform: translate(0, 0) } 50% { transform: translate(18px, -16px) } }",
+        ".drift2 { animation: drift2 7s ease-in-out infinite; }",
+        "@keyframes float { 0% { transform: translateY(0); opacity: 0 } 15% { opacity: 0.9 } 85% { opacity: 0.6 } "
+        "100% { transform: translateY(-150px); opacity: 0 } }",
+        ".float { animation: float 6s ease-in infinite both; }",
+        "@keyframes twinkle { 0%, 100% { opacity: 0.15; transform: scale(0.6) rotate(0deg) } "
+        "50% { opacity: 1; transform: scale(1.15) rotate(15deg) } }",
+        ".tw { animation: twinkle 2.4s ease-in-out infinite both; transform-box: fill-box; transform-origin: center; }",
+        f"@keyframes type {{ 0% {{ transform: scaleX(0) }} {p(2.0)}, {p(7.2)} {{ transform: scaleX(1) }} "
+        f"{p(7.7)}, 100% {{ transform: scaleX(0) }} }}",
+        f".type {{ transform-box: fill-box; transform-origin: left center; animation: type {cv.cycle}s steps(40, end) infinite; }}",
         "@keyframes chipin { from { opacity: 0; transform: translateY(10px) scale(0.9) } to { opacity: 1; transform: none } }",
         ".chip { animation: chipin 0.5s cubic-bezier(.2,.8,.2,1) both; transform-box: fill-box; transform-origin: center; }",
+        "@keyframes wave { 0%, 100% { transform: translateY(0) } 6% { transform: translateY(-6px) } 12% { transform: translateY(0) } }",
+        f".wave {{ animation: wave {cv.cycle / 2}s ease-in-out infinite both; }}",
+        "@keyframes hl { 0%, 100% { opacity: 0 } 6% { opacity: 1 } 14% { opacity: 0 } }",
+        f".hl {{ animation: hl {cv.cycle / 2}s ease-in-out infinite both; }}",
         "@keyframes rise { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: none } }",
         ".rise { animation: rise 0.7s ease-out both; }",
     ]
-    b.append(f'<g clip-path="url(#clip)">')
+    # Background, drifting shapes, particles and the shine sweep, all clipped to the card.
+    b.append('<g clip-path="url(#clip)">')
     b.append(cv.card(1, 1, 1018, 288, rx=22, shadow=False))
-    b.append(f'<circle cx="960" cy="40" r="210" fill="{c["deco"]}"/><circle cx="1010" cy="300" r="90" '
-             f'fill="{c["deco"]}" opacity="0.7"/>')
+    b.append(f'<g class="drift"><circle cx="960" cy="40" r="210" fill="{c["deco"]}"/></g>')
+    b.append(f'<g class="drift2"><circle cx="1010" cy="300" r="90" fill="{c["deco"]}" opacity="0.8"/>'
+             f'<circle cx="600" cy="-30" r="70" fill="{c["deco"]}" opacity="0.6"/></g>')
+    for x, y, r, dur, delay in PARTICLES:
+        b.append(f'<circle class="float" cx="{x}" cy="{y}" r="{r}" fill="{ORANGE[0]}" '
+                 f'style="animation-duration:{dur}s;animation-delay:-{delay}s"/>')
+    for x, y, s, delay in TWINKLES:
+        b.append(f'<path class="tw" style="animation-delay:-{delay}s" d="M{x} {y - s / 2}L{x + s * 0.13:.1f} {y - s * 0.13:.1f}'
+                 f'L{x + s / 2} {y}L{x + s * 0.13:.1f} {y + s * 0.13:.1f}L{x} {y + s / 2}L{x - s * 0.13:.1f} {y + s * 0.13:.1f}'
+                 f'L{x - s / 2} {y}L{x - s * 0.13:.1f} {y - s * 0.13:.1f}Z" fill="{ACCENT}"/>')
     b.append('<rect class="sweep" x="0" y="-20" width="150" height="330" fill="url(#shine)"/>')
-    b.append(f'<rect x="1" y="1" width="8" height="288" fill="url(#g)"/></g>')
+    b.append('<rect x="1" y="1" width="8" height="288" fill="url(#g)"/></g>')
+    # Text
     b.append(cv.text(48, 58, "UNOFFICIAL STUDY GUIDE  ·  OPEN SOURCE", 13, 700,
                      attrs=f'class="rise" letter-spacing="1.4" style="fill:{ACCENT}"'))
     b.append(cv.text(46, 114, "Claude Certification", 48, 800, attrs='class="rise" style="animation-delay:.1s"'))
-    b.append(cv.text(46, 168, "Zero to Hero", 48, 800,
-                     attrs='class="rise" style="fill:url(#gt);animation-delay:.2s"'))
-    b.append(cv.text(48, 206, "From your first prompt to production-ready AI architecture", 18,
-                     attrs='class="muted rise" style="animation-delay:.3s"'))
+    b.append('<g class="rise" style="animation-delay:.2s"><g clip-path="url(#hero)">'
+             '<rect class="slide" x="-640" y="120" width="1300" height="60" fill="url(#flow)"/></g></g>')
+    b.append(f'<g clip-path="url(#tag)">{cv.text(48, 206, tagline, 18, attrs=MUTED)}</g>')
+    # Stat chips: pop in once, then a wave of highlights runs along them.
     x = 48.0
     for i, label in enumerate(repo_counts()):
         w = est_width(label, 14) + 30
-        b.append(f'<g class="chip" style="animation-delay:{0.45 + 0.12 * i:.2f}s"><rect x="{x:.1f}" y="228" '
-                 f'width="{w:.1f}" height="34" rx="17" fill="{c["tint"]}" stroke="{ACCENT}" stroke-opacity="0.35"/>'
-                 + cv.text(x + w / 2, 250, label, 14, 700, "middle", f'style="fill:{c["tint_text"]}"') + '</g>')
+        d = f"animation-delay:{1.0 + 0.18 * i:.2f}s"
+        b.append(f'<g class="chip" style="animation-delay:{0.45 + 0.12 * i:.2f}s"><g class="wave" style="{d}">'
+                 f'<rect x="{x:.1f}" y="228" width="{w:.1f}" height="34" rx="17" fill="{c["tint"]}" stroke="{ACCENT}" '
+                 f'stroke-opacity="0.35"/><rect class="hl" style="{d}" x="{x:.1f}" y="228" width="{w:.1f}" height="34" '
+                 f'rx="17" fill="url(#g)"/>'
+                 + cv.text(x + w / 2, 250, label, 14, 700, "middle", f'style="fill:{c["tint_text"]}"')
+                 + f'<g class="hl" style="{d}">' + cv.text(x + w / 2, 250, label, 14, 700, "middle", WHITE) + '</g></g></g>')
         x += w + 10
-    b.append('<rect class="breathe" x="846" y="46" width="128" height="128" rx="32" fill="#f0915f" filter="url(#halo)"/>')
-    b.append('<rect x="856" y="56" width="108" height="108" rx="28" fill="url(#g)"/>')
-    b.append(cv.icon("cap", 910, 80, "#ffffff", 60))
+    # Graduation-cap tile with a glow, two orbits and a gentle bob.
+    b.append(f'<g class="orbit2"><circle cx="{ox}" cy="{oy}" r="96" fill="none" stroke="{ACCENT}" stroke-opacity="0.25" '
+             f'stroke-width="1.5" stroke-dasharray="2 7"/><circle cx="{ox}" cy="{oy - 96}" r="3.5" fill="{ACCENT}" '
+             f'opacity="0.7"/></g>')
+    b.append(f'<g class="orbit"><circle cx="{ox}" cy="{oy}" r="78" fill="none" stroke="{ACCENT}" stroke-opacity="0.4" '
+             f'stroke-width="1.5" stroke-dasharray="10 8"/><circle cx="{ox + 78}" cy="{oy}" r="6" fill="url(#g)"/>'
+             f'<circle cx="{ox - 78}" cy="{oy}" r="4" fill="{ORANGE[0]}"/></g>')
+    b.append(f'<g class="bob"><rect class="breathe" x="{tile_x - 10}" y="{tile_y - 10}" width="{tile + 20}" '
+             f'height="{tile + 20}" rx="32" fill="#f0915f" filter="url(#halo)"/>'
+             f'<rect x="{tile_x}" y="{tile_y}" width="{tile}" height="{tile}" rx="28" fill="url(#g)"/>'
+             + cv.icon("cap", ox, tile_y + 24, "#ffffff", 60) + '</g>')
     return cv.svg("Claude Certification Zero to Hero: an unofficial, open-source study guide. "
                   + ", ".join(repo_counts()) + ".")
 
