@@ -5,7 +5,7 @@ the [learning roadmaps](00-getting-started/roadmaps/README.md).
 
 Current status, file by file, is tracked in [PROGRESS.md](PROGRESS.md).
 
-## v1.0: foundation release (current)
+## v1.0: foundation release (released 2026-10-24)
 
 - [x] Certification registry verified against the official v1.0 exam guides (2026-10-24)
 - [x] Full preparation tracks for **CCAO-F** and **CCAR-P**, with objective-level coverage matrices

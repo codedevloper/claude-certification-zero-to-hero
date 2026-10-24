@@ -5,6 +5,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-24
+
 ### Changed (full repository review, 2026-10-24)
 
 - Practice questions no longer reward test-taking tricks: CCAR-P distractors rewritten (longest-option key rate 96% to
