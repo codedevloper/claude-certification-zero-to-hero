@@ -14,6 +14,10 @@ not affiliated with, sponsored by or endorsed by Anthropic. Organisations, peopl
 are fictional. Material from the OWASP GenAI Security Project is referenced under CC BY-SA 4.0 with
 attribution where it appears.
 
+Excluded from both licences: the certificate images in images/certificates/. They are the
+maintainer's personally issued credentials, shown only to evidence those credentials; they contain
+Anthropic's trademarks and may not be reused.
+
 ------------------------------------------------------------------------------
 
 MIT License

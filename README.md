@@ -168,8 +168,39 @@ Run everything locally with `python tools/validate_all.py --labs`.
 
 ## About the maintainer
 
-This repository is maintained by **Amol Bhure** ([@codedevloper](https://github.com/codedevloper)), who holds the
-following Anthropic certifications. Each one can be checked on Credly.
+This repository is maintained by **Amol Bhure** ([@codedevloper](https://github.com/codedevloper)).
+
+Earning these three Anthropic certifications between September and October 2026 was one of the most rewarding learning
+stretches of my career, and I am genuinely proud of it. Each exam pushed me past knowing *what* Claude can do and into
+judging *how* to use it well: when to trust an answer and when to check it, how to build security in from the start,
+and how to explain trade-offs to the people who depend on the system. Going from the Associate exam to the Architect
+Professional exam in a few weeks showed me how much there is to learn, and how much it pays off.
+
+This repository is my way of paying that forward. It is the guide I wish I had had when I started. If it helps you pass
+an exam, or ship something you are proud of, it has done its job.
+
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <a href="https://www.credly.com/badges/b93e30a8-2195-4738-8eab-8d93bcea82da">
+        <img src="images/certificates/ccao-f-certificate.png" alt="Claude Certified Associate – Foundations certificate issued to Amol Shivraj Bhure, September 2026" width="260">
+      </a><br>
+      <sub><b>Associate – Foundations</b><br>Sep 2026 · <a href="https://www.credly.com/badges/b93e30a8-2195-4738-8eab-8d93bcea82da">Verify on Credly</a></sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="https://www.credly.com/badges/25fc6fd8-45c5-4d40-a4ac-ff4f3b10f8b5">
+        <img src="images/certificates/ccar-f-certificate.png" alt="Claude Certified Architect – Foundations certificate issued to Amol Shivraj Bhure, September 2026" width="260">
+      </a><br>
+      <sub><b>Architect – Foundations</b><br>Sep 2026 · <a href="https://www.credly.com/badges/25fc6fd8-45c5-4d40-a4ac-ff4f3b10f8b5">Verify on Credly</a></sub>
+    </td>
+    <td align="center" width="33%">
+      <a href="https://www.credly.com/badges/78ace069-21d1-4c34-8936-4ebf027374aa">
+        <img src="images/certificates/ccar-p-certificate.png" alt="Claude Certified Architect – Professional certificate issued to Amol Shivraj Bhure, October 2026" width="260">
+      </a><br>
+      <sub><b>Architect – Professional</b><br>Oct 2026 · <a href="https://www.credly.com/badges/78ace069-21d1-4c34-8936-4ebf027374aa">Verify on Credly</a></sub>
+    </td>
+  </tr>
+</table>
 
 | Certification | Code | Earned | Valid until | Verify |
 |---|---|---|---|---|
@@ -199,7 +230,9 @@ More in [25 · Official resources](25-official-resources/README.md).
 
 This is an **independent, community study resource**. It is **not affiliated with, sponsored by or endorsed by
 Anthropic**. "Claude", "Anthropic" and the certification names are trademarks of Anthropic, PBC, and are used here only to
-identify the products and exams this guide is about. The repository uses no Anthropic logos or artwork.
+identify the products and exams this guide is about. Apart from the maintainer's own issued certificates shown in
+[About the maintainer](#about-the-maintainer), which display Anthropic's logo and badge artwork as issued, the repository
+uses no Anthropic logos or artwork.
 
 - The maintainer and contributors do not speak for Anthropic, and nothing here is official guidance or a promise about
   exam content or results.
