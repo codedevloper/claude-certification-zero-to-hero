@@ -36,7 +36,7 @@ placeholders. It does not mean every sentence has had expert human review; see [
 | External links (`tools/check_external_links.py`, 264 URLs) | All reachable; a few sites block bots (403) and need manual checks |
 | Bandit SAST (Python) | No medium/high issues after review; low-severity findings are lab `assert` self-checks, non-crypto `random`, and fixed-argument `subprocess` |
 | Originality scan (2026-10-24) | Compared every 10-word sequence against 256 cited sources (250 web pages, the 4 official exam guides, the exam policy and NIST AI 600-1). 18 passages that echoed source wording were rewritten, along with one workflow adapted from the docs. The remaining matches are citations, required code/API syntax, official names and figures, and the official exam blueprint tables. |
-| Snyk Code scan | **Not run:** the Snyk MCP needs the maintainer to authenticate (`snyk_auth`) |
+| Code and secret scanning | Bandit (Python SAST) reviewed locally; gitleaks, the repository secret scanner, and GitHub secret scanning with push protection run on every push. Snyk is intentionally not used for this personal project. |
 
 ## Independent review (2026-10-24)
 
@@ -52,22 +52,21 @@ These are honest limitations of v1.0. None is hidden as "complete".
 1. **Live-mode code was not run against the paid API.** Every lab and project runs offline in mock mode.
    Live paths follow the current API rules, and labs 03 and 07 were checked against the real `anthropic` 2.3.0 SDK
    using a local stub server, but no request was sent to Anthropic. Expect small fixes on the first live run.
-2. **Snyk scan pending** until the maintainer authenticates Snyk (see above).
-3. **Exam guides change on 2026-11-17.** The registry reflects v1.0. Re-verify and update after that date
+2. **Exam guides change on 2026-11-17.** The registry reflects v1.0. Re-verify and update after that date
    (see the [ROADMAP](ROADMAP.md)).
-4. **Facts labelled `Unverified`.** Search the repository for `Unverified:` to list them. Most concern plan-specific
+3. **Facts labelled `Unverified`.** Search the repository for `Unverified:` to list them. Most concern plan-specific
    features, regional or compliance attestations (FedRAMP, HIPAA eligibility per offering), and a few beta details.
    Each needs confirming against an official page or with Anthropic.
-5. **Planned tracks:** CCAR-F and CCDV-F have verified facts in the registry but no track content. The maintainer's
-   third certification is not yet identified.
-6. **Expert review:** content was written to strict standards and machine-checked, but a human subject-matter review of
+4. **Planned tracks:** CCAR-F and CCDV-F have verified facts in the registry but no track content. CCAR-F is the maintainer's third certification and the first planned track; a stop-gap study map is in the certification tracks README.
+5. **Expert review:** content was written to strict standards and machine-checked, but a human subject-matter review of
    each module (especially practice-question answer keys) is still recommended before public release.
-7. **External links:** some pages (claude.ai, hhs.gov, iso.org) block automated checks and were not machine-verified.
+6. **External links:** some pages (claude.ai, hhs.gov, iso.org) block automated checks and were not machine-verified.
 
 ## Next steps
 
+- [ ] Upload `images/social-preview.png` in GitHub: Settings → General → Social preview
+
 - [ ] Maintainer review of README, disclaimers and licence choice
-- [ ] Authenticate Snyk and run a code scan
 - [ ] Spot-review a sample of practice questions per domain
 - [ ] Optional: run a few labs in live mode to confirm live paths
 - [ ] Set up a personal git identity, commit, then push to the personal GitHub repository

@@ -180,6 +180,11 @@ Run everything locally with `python tools/validate_all.py --labs`.
 
 This repository is maintained by **Amol Bhure** ([@codedevloper](https://github.com/codedevloper)).
 
+I have been working with Claude for the last couple of years, alongside a range of other AI tools, including Microsoft
+Copilot, GitHub Copilot, ChatGPT, OpenAI Codex, Grok and Gemini. Using them side by side taught me that getting real
+value from AI depends less on which tool you pick and more on how well you prompt, check and design around it. That is
+what led me to pursue Anthropic's certifications, and I have been preparing for them since March 2026.
+
 Earning these three Anthropic certifications between September and October 2026 was one of the most rewarding learning
 stretches of my career, and I am genuinely proud of it. Each exam pushed me past knowing *what* Claude can do and into
 judging *how* to use it well: when to trust an answer and when to check it, how to build security in from the start,
