@@ -7,6 +7,10 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- "About the maintainer" section in the README, with Credly verification links for the maintainer's CCAO-F, CCAR-F
+  and CCAR-P certifications
+- Manual trigger (`workflow_dispatch`) for the CI workflow
+
 - Initial repository structure: 26 numbered sections, governance files, issue and PR templates
 - Certification registry (`16-certification-tracks/registry.yaml`) verified against the official v1.0 exam guides on
   2026-10-24: CCAO-F and CCAR-P fully supported, CCAR-F and CCDV-F recorded as planned

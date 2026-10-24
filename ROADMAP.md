@@ -35,7 +35,7 @@ The registry already records verified facts for both exams below, so adding them
       prompt engineering and structured output, context management)
 - [ ] **CCDV-F**: Claude Certified Developer – Foundations (applications and integration, model selection, agents,
       tools and MCP, prompt and context engineering, security)
-- [ ] The maintainer's third certification track, once confirmed
+- [ ] CCAR-F is also the maintainer's third certification, so it is the first planned track to build
 
 ## Later ideas
 

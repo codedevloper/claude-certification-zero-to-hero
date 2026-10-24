@@ -166,6 +166,21 @@ Every pull request is checked automatically:
 
 Run everything locally with `python tools/validate_all.py --labs`.
 
+## About the maintainer
+
+This repository is maintained by **Amol Bhure** ([@codedevloper](https://github.com/codedevloper)), who holds the
+following Anthropic certifications. Each one can be checked on Credly.
+
+| Certification | Code | Earned | Valid until | Verify |
+|---|---|---|---|---|
+| Claude Certified Associate – Foundations | CCAO-F | Sep 2026 | Sep 2027 | [Credly badge](https://www.credly.com/badges/b93e30a8-2195-4738-8eab-8d93bcea82da) |
+| Claude Certified Architect – Foundations | CCAR-F | Sep 2026 | Sep 2027 | [Credly badge](https://www.credly.com/badges/25fc6fd8-45c5-4d40-a4ac-ff4f3b10f8b5) |
+| Claude Certified Architect – Professional | CCAR-P | Oct 2026 | Oct 2027 | [Credly badge](https://www.credly.com/badges/78ace069-21d1-4c34-8936-4ebf027374aa) |
+
+> Holding these certifications does not make this guide official, sponsored or endorsed by Anthropic. Exam content is
+> confidential, and none of it is used here: everything in this repository is written from public documentation and the
+> published exam guides.
+
 ## Contributing
 
 Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [documentation standards](docs/STYLE.md).
