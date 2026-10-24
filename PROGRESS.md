@@ -18,7 +18,7 @@ placeholders. It does not mean every sentence has had expert human review; see [
 | Practice questions | Complete | 135 CCAO-F + 131 CCAR-F + 144 CCAR-P = **410** | Schema, keys, distractors, near-duplicates, answer-cueing limits |
 | Mock exams | Complete | Terminal + browser engines, 9 fixed forms (CCAR-F forms use 4 of the 6 scenarios) | Unit tests, scripted CLI run, in-browser test |
 | Hands-on labs | Complete | **20** labs | All 20 pass in mock mode (`tools/run_lab_smoke.py`) |
-| Real-world projects | Complete | **5** projects | 173 offline tests passing |
+| Real-world projects | Complete | **5** projects | 194 offline tests passing |
 | Learning roadmaps | Complete | 7, 15, 30, 60 and 90-day plans | Link check |
 | Flashcards | Complete | 106 CCAO-F + 133 CCAR-F + 147 CCAR-P + 94 fundamentals = **480** | `tools/flashcards.py` |
 | Interview prep, cheat sheets, troubleshooting | Complete | 22 files | Link check |
@@ -32,7 +32,7 @@ placeholders. It does not mean every sentence has had expert human review; see [
 |---|---|
 | `tools/validate_all.py --labs`: questions, flashcards, internal links, exam claims, secrets, coverage, forms, web bundle, labs | Pass |
 | `pytest` (repository tests) | Pass |
-| Project test suites (5) | Pass (173 tests) |
+| Project test suites (5) | Pass (194 tests) |
 | markdownlint-cli2 | 0 errors |
 | External links (`tools/check_external_links.py`, 264 URLs) | All reachable; a few sites block bots (403) and need manual checks |
 | Bandit SAST (Python) | No medium/high issues after review; low-severity findings are lab `assert` self-checks, non-crypto `random`, and fixed-argument `subprocess` |
