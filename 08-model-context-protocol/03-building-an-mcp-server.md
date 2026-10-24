@@ -289,4 +289,9 @@ They then deployed the server centrally over Streamable HTTP behind the corporat
 - [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) and [SDK documentation](https://py.sdk.modelcontextprotocol.io/) (GitHub, modelcontextprotocol)
 - [MCP Inspector](https://github.com/modelcontextprotocol/inspector) (GitHub, modelcontextprotocol)
 - [Lab 09: MCP fundamentals](../19-hands-on-labs/lab-09-mcp-fundamentals/README.md)
-- Previous: [Architecture](02-architecture.md) · Next: [Using MCP with Claude](04-using-mcp-with-claude.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: MCP Architecture](02-architecture.md) · [Module overview](README.md) · [Next: Using MCP with Claude →](04-using-mcp-with-claude.md)
+<!-- page-nav:end -->

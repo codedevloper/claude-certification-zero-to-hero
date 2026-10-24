@@ -266,4 +266,9 @@ API after 30 days in line with Contoso's retention schedule, because files other
 - [Files API](https://platform.claude.com/docs/en/build-with-claude/files) (Anthropic docs)
 - [Citations](https://platform.claude.com/docs/en/build-with-claude/citations) (Anthropic docs)
 - [Lab 04 — Document-grounded Q&A](../19-hands-on-labs/lab-04-document-grounded-qa/README.md)
-- Next page: [Batch processing](05-batch-processing.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Streaming](03-streaming.md) · [Module overview](README.md) · [Next: Batch Processing →](05-batch-processing.md)
+<!-- page-nav:end -->

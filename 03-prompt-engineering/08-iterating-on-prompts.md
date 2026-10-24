@@ -254,4 +254,9 @@ examples and instructions can conflict with new knowledge.
 - [Define success criteria and build evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests) (Anthropic docs)
 - [Why evaluate](../14-evaluation-and-testing/01-why-evaluate.md) and [diagnosing failures](../14-evaluation-and-testing/06-diagnosing-failures.md) in this repository
 - [Lab 02 — Prompt improvement](../19-hands-on-labs/lab-02-prompt-improvement/README.md)
-- Next module: [Module 04 — Context Engineering](../04-context-engineering/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: System Prompts, Roles, Templates and Guardrails](07-system-prompts-and-roles.md) · [Module overview](README.md) · [Next module: Module 04 — Context Engineering →](../04-context-engineering/README.md)
+<!-- page-nav:end -->

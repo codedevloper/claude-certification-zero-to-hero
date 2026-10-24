@@ -376,3 +376,9 @@ not latency-sensitive (see [batch processing](../06-claude-api/05-batch-processi
 - Claude API docs — [Batch processing](https://platform.claude.com/docs/en/build-with-claude/batch-processing)
 - In this repository: [task decomposition and chaining](../03-prompt-engineering/05-task-decomposition-and-chaining.md),
   [model selection](../05-claude-products-and-models/03-model-selection.md), [architecture patterns](../13-enterprise-ai-architecture/02-architecture-patterns.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Workflows vs Agents](01-workflows-vs-agents.md) · [Module overview](README.md) · [Next: The Agent Loop →](03-the-agent-loop.md)
+<!-- page-nav:end -->

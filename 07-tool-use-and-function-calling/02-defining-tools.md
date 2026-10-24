@@ -173,7 +173,7 @@ The redesign replaced it with three narrow tools: `schedule_find_slots` (clinic 
 ## Common mistakes
 
 - **Descriptions that only restate the name.** "Gets the weather" tells Claude nothing about when to call it or what it returns.
-- **Forcing calls with `tool_choice: any` on current models.** It returns a 400. Use `auto` plus instructions, `strict: true` or structured outputs.
+- **Forcing calls with `tool_choice: any` on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1.** It returns a 400. Use `auto` plus instructions, `strict: true` or structured outputs.
 - **Assuming strict mode validates business rules.** It guarantees the schema, not authorisation or plausibility.
 - **Forgetting `additionalProperties: false`** on nested objects when using `strict`.
 - **Over-long parameter lists.** Ten optional flags confuse the model; split or consolidate thoughtfully.
@@ -220,4 +220,9 @@ The redesign replaced it with three narrow tools: `schedule_find_slots` (clinic 
 - [Strict tool use](https://platform.claude.com/docs/en/agents-and-tools/tool-use/strict-tool-use) (Claude Docs)
 - [Structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs) (Claude Docs)
 - [Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) (Anthropic Engineering, 2025-09-11)
-- Previous: [Tool use fundamentals](01-tool-use-fundamentals.md) · Next: [The tool-use loop](03-the-tool-use-loop.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Tool Use Fundamentals](01-tool-use-fundamentals.md) · [Module overview](README.md) · [Next: The Tool-Use Loop →](03-the-tool-use-loop.md)
+<!-- page-nav:end -->

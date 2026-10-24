@@ -138,4 +138,9 @@ More in [MCP troubleshooting](../24-troubleshooting/mcp.md).
 - [MCP specification, latest](https://modelcontextprotocol.io/specification/latest) (modelcontextprotocol.io)
 - [Donating the Model Context Protocol and establishing the Agentic AI Foundation](https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation) (Anthropic, 2025-12-09)
 - [MCP cheat sheet](../22-cheat-sheets/mcp.md)
-- Next: [Architecture](02-architecture.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: MCP Architecture →](02-architecture.md)
+<!-- page-nav:end -->

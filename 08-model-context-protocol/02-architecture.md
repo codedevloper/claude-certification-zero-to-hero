@@ -79,9 +79,12 @@ Tool results return a `content` array (text, images, embedded resources and so o
 Servers can also need things from the host:
 
 - **Elicitation** (`elicitation/create`): the server needs extra input or confirmation from the user mid-operation, for example "Which of these three accounts did you mean?".
-- **Roots**: the client tells the server which directories or locations are in scope.
+- **Roots**: the client tells the server which directories or locations are in scope. **Deprecated** in 2026-07-28; pass
+  directories or files as tool parameters, resource URIs or server configuration instead.
 - **Sampling** (`sampling/createMessage`): the server asks the host's model for a completion. **Deprecated** as of protocol version 2026-07-28; new servers should call a model API directly.
-- Server-to-client **logging** is also discouraged in 2026-07-28 in favour of stderr (stdio) or OpenTelemetry.
+- Server-to-client **logging** is also **deprecated** in 2026-07-28; log to stderr (stdio) or use OpenTelemetry instead.
+  Roots, Sampling and Logging were deprecated together ([SEP-2577](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2577))
+  and stay functional during the deprecation window of at least twelve months.
 
 In the 2026-07-28 revision, **servers never initiate JSON-RPC requests**. When a tool needs user input, the server answers the original request with a result whose `resultType` is `"input_required"`, and the client gathers the input and retries with it. The specification calls this the **Multi Round-Trip Request (MRTR)** pattern. In the handshake era, servers could send requests such as `elicitation/create` to the client directly over the session.
 
@@ -233,4 +236,9 @@ The approved design registered the MCP server as its own protected resource. Cli
 - [Specification: latest](https://modelcontextprotocol.io/specification/latest) and [Authorization](https://modelcontextprotocol.io/specification/latest/basic/authorization) (modelcontextprotocol.io)
 - [RFC 9728: OAuth 2.0 Protected Resource Metadata](https://datatracker.ietf.org/doc/html/rfc9728) and [RFC 8707: Resource Indicators](https://www.rfc-editor.org/rfc/rfc8707.html) (IETF)
 - [Agent identity and permissions](../12-ai-security/09-agent-identity-and-permissions.md) in Module 12
-- Previous: [What is MCP?](01-what-is-mcp.md) · Next: [Building an MCP server](03-building-an-mcp-server.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: What is MCP?](01-what-is-mcp.md) · [Module overview](README.md) · [Next: Building an MCP Server →](03-building-an-mcp-server.md)
+<!-- page-nav:end -->

@@ -255,3 +255,9 @@ human control real.
 - NIST — [AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
 - In this repository: [human oversight](../12-ai-security/13-human-oversight.md),
   [lab-13](../19-hands-on-labs/lab-13-human-in-the-loop/README.md), [agent reliability](07-agent-reliability.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Multi-Agent Architecture](04-multi-agent-architecture.md) · [Module overview](README.md) · [Next: Managed Agents, Agent SDK, Tool Runner or Manual Loop →](06-managed-agents-and-agent-sdk.md)
+<!-- page-nav:end -->

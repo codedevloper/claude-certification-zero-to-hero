@@ -231,3 +231,9 @@ rejected for matter documents because access rights differ per matter, not becau
 - In this repository: [managing long context](../04-context-engineering/02-managing-long-context.md),
   [the agent loop](../10-agentic-ai/03-the-agent-loop.md),
   [knowledge-base Q&A project](../20-real-world-projects/02-knowledge-base-qa-assistant/README.md).
+
+<!-- page-nav:start -->
+---
+
+[← Previous: RAG Evaluation](06-rag-evaluation.md) · [Module overview](README.md) · [Next module: Module 12: AI Security →](../12-ai-security/README.md)
+<!-- page-nav:end -->

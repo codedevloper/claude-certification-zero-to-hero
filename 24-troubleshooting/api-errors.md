@@ -75,7 +75,7 @@ except anthropic.APIConnectionError:           # network, DNS, TLS, timeout
 | `temperature`, `top_p`, `top_k` | Sampling parameters are rejected on current models | Remove them; control output with instructions, examples and `effort` |
 | `budget_tokens`, `thinking.type.enabled` / `disabled` | Legacy thinking configuration | Use `thinking={"type": "adaptive"}` or omit it; set `output_config={"effort": ...}` |
 | Final message is `assistant` / prefill | Assistant prefill is not supported | End with a `user` message; use structured outputs for format |
-| `tool_choice` `any` / `tool` not supported | Forced tool use is rejected on current models | `tool_choice: auto` plus an explicit instruction; `strict: true` on the tool; or structured outputs |
+| `tool_choice` `any` / `tool` not supported | Forced tool use is rejected on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1 | `tool_choice: auto` plus an explicit instruction; `strict: true` on the tool; or structured outputs |
 | `roles must alternate` / first message | Message order | First message `user`; alternate roles; merge consecutive same-role messages |
 | `max_tokens` | Above the model's output limit | Lower it, or stream for large values |
 | `tool_use ids were found without tool_result` | Tool loop bug | Return a `tool_result` for **every** `tool_use` id in the next user message |

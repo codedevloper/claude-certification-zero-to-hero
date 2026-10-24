@@ -2,6 +2,8 @@
 
 > **Level:** Advanced · **Time:** ~50 min · **Exam relevance:** CCAR-P D3 (3.1, 3.2, 3.7), CCAR-P D5 (5.1)
 
+> **Scope:** this page is the security team's view: vetting, approving and monitoring MCP servers across an organisation. For protocol-level threats and builder guidance, see [MCP security](../08-model-context-protocol/05-mcp-security.md).
+
 ## In plain English
 
 The Model Context Protocol (MCP) lets an AI application (the host and its MCP client) connect to MCP servers that
@@ -217,3 +219,9 @@ agent. The security review finds:
 - In this repository: [building an MCP server](../08-model-context-protocol/03-building-an-mcp-server.md),
   [MCP security](../08-model-context-protocol/05-mcp-security.md),
   [Lab 09: MCP fundamentals](../19-hands-on-labs/lab-09-mcp-fundamentals/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Supply-Chain Risks](07-supply-chain-risks.md) · [Module overview](README.md) · [Next: Agent Identity and Permissions →](09-agent-identity-and-permissions.md)
+<!-- page-nav:end -->

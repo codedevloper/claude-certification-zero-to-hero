@@ -176,4 +176,9 @@ The result is useful automation with a clear boundary, documented for auditors.
 - [Using the Google Workspace connectors](https://support.claude.com/en/articles/10166901-using-the-google-workspace-connectors) (Claude Help Center)
 - [Model Context Protocol](https://modelcontextprotocol.io/) (official site)
 - Related: [What is MCP?](../08-model-context-protocol/01-what-is-mcp.md), [Using MCP with Claude](../08-model-context-protocol/04-using-mcp-with-claude.md)
-- Previous: [Artifacts and output formats](05-artifacts-and-output-formats.md) · Back to [Module 05 overview](README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Artifacts and Output Formats](05-artifacts-and-output-formats.md) · [Module overview](README.md) · [Next module: Module 06 — The Claude API →](../06-claude-api/README.md)
+<!-- page-nav:end -->

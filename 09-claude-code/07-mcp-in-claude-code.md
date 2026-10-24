@@ -28,7 +28,7 @@ claude mcp add --transport http internal-api https://mcp.internal.example.com/mc
   --header "Authorization: Bearer ${INTERNAL_MCP_TOKEN}"
 
 # Local stdio server. Options come before the name; everything after -- is the launch command.
-claude mcp add --transport stdio --env ASSETS_LOG_LEVEL=WARNING assets -- uvx contoso-assets-mcp==1.4.2
+claude mcp add --env ASSETS_LOG_LEVEL=WARNING --transport stdio assets -- uvx contoso-assets-mcp==1.4.2
 
 # From a JSON definition (also the way to add WebSocket servers: "type": "ws")
 claude mcp add-json reports '{"type":"http","url":"https://mcp.reports.example.com/mcp"}'
@@ -207,4 +207,9 @@ More in [MCP troubleshooting](../24-troubleshooting/mcp.md).
 - [Connect Claude Code to tools via MCP](https://code.claude.com/docs/en/mcp) and [MCP quickstart](https://code.claude.com/docs/en/mcp-quickstart) (Claude Code Docs)
 - [Managed MCP configuration](https://code.claude.com/docs/en/managed-mcp) (Claude Code Docs)
 - [Module 08: Model Context Protocol](../08-model-context-protocol/README.md)
-- Previous: [Hooks](06-hooks.md) · Next: [Team rollout](08-team-rollout.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Hooks](06-hooks.md) · [Module overview](README.md) · [Next: Team Rollout →](08-team-rollout.md)
+<!-- page-nav:end -->

@@ -252,3 +252,9 @@ below four minutes.
   [cost optimisation](../15-production-operations/03-cost-optimisation.md), [model selection](../05-claude-products-and-models/03-model-selection.md),
   [stakeholder communication](06-stakeholder-communication.md)
 - Practice: [Lab 17: Cost optimisation](../19-hands-on-labs/lab-17-cost-optimisation/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Architecture Decision Records](07-architecture-decision-records.md) · [Module overview](README.md) · [Next: Lifecycle Management →](09-lifecycle-management.md)
+<!-- page-nav:end -->

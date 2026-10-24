@@ -172,4 +172,9 @@ A realistic first hour on a fictional repository, written as the prompts a devel
 - [Interactive mode](https://code.claude.com/docs/en/interactive-mode) and [commands reference](https://code.claude.com/docs/en/commands) (Claude Code Docs)
 - [Best practices](https://code.claude.com/docs/en/best-practices) (Claude Code Docs)
 - [Environment setup for this repository](../00-getting-started/environment-setup.md)
-- Previous: [What is Claude Code?](01-what-is-claude-code.md) · Next: [CLAUDE.md and memory](03-claude-md-and-memory.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: What is Claude Code?](01-what-is-claude-code.md) · [Module overview](README.md) · [Next: CLAUDE.md and Memory →](03-claude-md-and-memory.md)
+<!-- page-nav:end -->

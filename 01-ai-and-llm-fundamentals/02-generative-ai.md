@@ -1,6 +1,6 @@
 # Generative AI
 
-> **Level:** Beginner · **Time:** ~25 min · **Exam relevance:** CCAO-F D1 (1.4), D4 (4.5), D6 (6.1) · CCAR-P D1 (1.1)
+> **Level:** Beginner · **Time:** ~25 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D1 (1.4), D4 (4.5), D6 (6.1) · CCAR-P D1 (1.1)
 
 ## In plain English
 
@@ -142,4 +142,9 @@ They choose Idea B. Transformation keeps the clinical facts anchored in a source
 ## Further reading
 
 - [Claude prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) (Anthropic documentation)
-- Previous: [What is AI?](01-what-is-ai.md) · Next: [Large language models](03-large-language-models.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: What is AI?](01-what-is-ai.md) · [Module overview](README.md) · [Next: Large Language Models →](03-large-language-models.md)
+<!-- page-nav:end -->

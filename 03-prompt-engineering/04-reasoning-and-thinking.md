@@ -247,4 +247,9 @@ effort is a behaviour change that needs the same review as a prompt change.
 - [Effort](https://platform.claude.com/docs/en/build-with-claude/effort) (Anthropic docs)
 - [Prompting best practices: thinking and reasoning](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) (Anthropic docs)
 - [Latency optimisation](../15-production-operations/04-latency-optimisation.md) and [cost optimisation](../15-production-operations/03-cost-optimisation.md) in this repository
-- Next page: [Task decomposition and chaining](05-task-decomposition-and-chaining.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Examples and Few-Shot Prompting](03-examples-few-shot.md) · [Module overview](README.md) · [Next: Task Decomposition and Prompt Chaining →](05-task-decomposition-and-chaining.md)
+<!-- page-nav:end -->

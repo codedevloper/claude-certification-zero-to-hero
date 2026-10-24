@@ -384,29 +384,28 @@
       "id": "CCAO-F-D1-014",
       "objective": "CCAO-F-1.3",
       "type": "single",
-      "difficulty": "advanced",
-      "category": "troubleshooting",
-      "scenario": "After ten rounds of feedback in one long chat, a policy writer at Humongous Insurance notices Claude's drafts now mix instructions from early turns that she later reversed, such as an abandoned bullet-point format.",
-      "question": "What is the best way to continue iterating?",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Beatriz, an HR coordinator at Northwind Traders, has asked Claude four times to redraft a job advert for a warehouse supervisor. Each draft guesses details she never gave, such as the salary range, shift pattern and who the role reports to, and she keeps correcting them one at a time.",
+      "question": "What is the most effective next step in her iteration?",
       "options": {
-        "A": "Keep going in the same chat and add a clear message listing which earlier instructions Claude should now ignore.",
-        "B": "Delete the draft and write it manually because Claude cannot handle revisions.",
-        "C": "Switch to a faster model for the remaining rounds, since a quicker model responds more directly to each new piece of feedback.",
-        "D": "Ask Claude to summarise the agreed requirements, correct that summary, and continue in a fresh chat with it and the latest draft."
+        "A": "Ask Claude to list the details it needs and the assumptions it is making, answer them, then request a new draft.",
+        "B": "Ask for three alternative drafts each round, so she can pick the one whose guessed details happen to be closest.",
+        "C": "Add \"Do not invent details\" to her request and ask Claude to produce the next draft of the advert again.",
+        "D": "Correct the wrong details together in one message this time, and ask Claude to carry the fixes into the next draft."
       },
       "answer": [
-        "D"
+        "A"
       ],
-      "explanation": "Long iterative threads can accumulate superseded instructions. Consolidating the agreed requirements into a single, corrected brief and continuing in a fresh conversation gives Claude one clear source of truth.",
+      "explanation": "Repeated guessing shows that the request lacks information, not that Claude needs more attempts. Asking Claude to surface the information it needs and the assumptions it is making turns hidden gaps into explicit questions. Once she answers them, the next draft is built on real facts rather than guesses, which ends the cycle of one-at-a-time corrections.",
       "why_incorrect": {
-        "A": "Piling up contradictory turns makes the conversation harder to follow, which is the source of the problem.",
-        "B": "Claude handles revisions well when the requirements are clear; the issue is accumulated, contradictory history.",
-        "C": "Speed does not resolve conflicting instructions accumulated in the conversation history."
+        "B": "More variations multiply the guessed details rather than removing them, and she still has to check each one.",
+        "C": "Forbidding invention leaves the gaps unfilled; the draft will contain placeholders or vague wording because the facts were never supplied.",
+        "D": "This fixes the errors she has already spotted, but other missing details may still be guessed; surfacing every gap first is more reliable."
       },
       "module": "03-prompt-engineering/08-iterating-on-prompts.md",
       "references": [
-        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
-        "https://support.claude.com/en/articles/9797557-usage-limit-best-practices"
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
       ]
     },
     {

@@ -216,4 +216,9 @@ They also set `max_uses` on web search and an `allowed_domains` list of vendor s
 - [Code execution tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/code-execution-tool) (Claude Docs)
 - [Tool search tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool) (Claude Docs)
 - [Progressive disclosure and Skills](../04-context-engineering/06-progressive-disclosure-and-skills.md) in Module 04
-- Previous: [The tool-use loop](03-the-tool-use-loop.md) · Next: [Tool design best practices](05-tool-design-best-practices.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: The Tool-Use Loop](03-the-tool-use-loop.md) · [Module overview](README.md) · [Next: Tool Design Best Practices →](05-tool-design-best-practices.md)
+<!-- page-nav:end -->

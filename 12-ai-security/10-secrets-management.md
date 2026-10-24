@@ -205,3 +205,9 @@ Remediation:
 - OWASP: [Secrets Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html)
 - In this repository: [environment setup](../00-getting-started/environment-setup.md),
   [Lab 15: sensitive data protection](../19-hands-on-labs/lab-15-sensitive-data-protection/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Agent Identity and Permissions](09-agent-identity-and-permissions.md) · [Module overview](README.md) · [Next: Logging and Auditability →](11-logging-and-auditability.md)
+<!-- page-nav:end -->

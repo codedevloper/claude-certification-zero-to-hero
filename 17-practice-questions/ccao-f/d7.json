@@ -267,29 +267,28 @@
       "id": "CCAO-F-D7-010",
       "objective": "CCAO-F-7.3",
       "type": "single",
-      "difficulty": "foundation",
+      "difficulty": "intermediate",
       "category": "cost-performance",
-      "scenario": "Hannah at Margie's Travel re-uploads the same 50-page supplier handbook to a new chat several times a day and is hitting her usage limit.",
-      "question": "Which change is most efficient?",
+      "scenario": "Booking agents at Lakeshore Coach Tours ask Claude about 40 times a day to work out baggage fees. The fee table and rules are fixed for the season and purely arithmetic, yet each answer needs a chat round trip, and occasionally two agents get different totals for the same booking.",
+      "question": "Which workflow change would most improve efficiency and consistency?",
       "options": {
-        "A": "Add the handbook to a Project's knowledge once and work in chats inside that Project.",
-        "B": "Use research for each question, which can look up the relevant parts of the handbook without re-uploading it.",
-        "C": "Ask Claude to compress the handbook into a short summary once, and paste that summary into each new chat.",
-        "D": "Paste the full text of the handbook into each message instead of attaching the file, which is lighter on usage."
+        "A": "Have Claude build a small fee-calculator artifact from the table, test it on known bookings, and share it with the agents.",
+        "B": "Put the fee table in a shared Project with instructions, so agents ask Claude in a Project chat rather than a blank one.",
+        "C": "Write a detailed prompt template with the fee rules that each agent pastes into a new chat before every booking query.",
+        "D": "Ask Claude each morning to compute fees for the day's expected bookings in one long message, and circulate the results."
       },
       "answer": [
         "A"
       ],
-      "explanation": "Project knowledge is reused across chats, and reused Project content counts less against usage limits than repeatedly uploading the same files (as of 2026-10-24). Projects also save set-up time.",
+      "explanation": "When the same rule-based calculation is repeated many times a day, a reusable tool beats repeated conversations. Claude can build interactive artifacts such as a small calculator; once it is checked against known cases and shared, agents get instant, identical answers without a chat for each booking. Claude stays useful for updating the tool when the rules change.",
       "why_incorrect": {
-        "B": "Research uses more of the allowance and is not needed for questions about a known document.",
-        "C": "A summary loses detail her questions depend on, and she still re-sends content in every chat.",
-        "D": "This still sends the full content repeatedly."
+        "B": "A Project removes the set-up, but each fee still needs a chat round trip, and answers can still vary between conversations.",
+        "C": "A template standardises the prompt but keeps a full chat for every booking and does not guarantee identical totals.",
+        "D": "Bookings arrive throughout the day, so a morning batch misses later ones, and a long message is harder to check line by line."
       },
-      "module": "05-claude-products-and-models/04-projects-and-knowledge.md",
+      "module": "05-claude-products-and-models/05-artifacts-and-output-formats.md",
       "references": [
-        "https://support.claude.com/en/articles/9797557-usage-limit-best-practices",
-        "https://support.claude.com/en/articles/9517075-what-are-projects"
+        "https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them"
       ]
     },
     {

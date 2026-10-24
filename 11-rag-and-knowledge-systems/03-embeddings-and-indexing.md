@@ -260,4 +260,9 @@ if __name__ == "__main__":
 
 - Claude docs, [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings) (checked 2026-10-24).
 - Anthropic, [Contextual Retrieval](https://www.anthropic.com/news/contextual-retrieval).
-- Next: [retrieval strategies](04-retrieval-strategies.md).
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Chunking Strategies](02-chunking-strategies.md) · [Module overview](README.md) · [Next: Retrieval Strategies →](04-retrieval-strategies.md)
+<!-- page-nav:end -->

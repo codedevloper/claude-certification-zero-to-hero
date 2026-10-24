@@ -290,3 +290,9 @@ three enterprise additions:
 - In this repository: [the tool-use loop](../07-tool-use-and-function-calling/03-the-tool-use-loop.md),
   [tool design best practices](../07-tool-use-and-function-calling/05-tool-design-best-practices.md),
   [agent reliability](07-agent-reliability.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Workflow Patterns](02-workflow-patterns.md) · [Module overview](README.md) · [Next: Multi-Agent Architecture →](04-multi-agent-architecture.md)
+<!-- page-nav:end -->

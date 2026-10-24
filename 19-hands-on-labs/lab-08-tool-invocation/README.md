@@ -199,7 +199,7 @@ All checks passed.
 | Symptom | Cause and fix |
 |---|---|
 | `400` "tool_use ids were found without tool_result blocks" | A `tool_use` block was not answered. Every call needs exactly one result with the matching `tool_use_id`, in the very next user message. |
-| `400` mentioning `tool_choice` `any` or `tool` | Forced tool use is rejected on current models. Use `auto` plus clear instructions. |
+| `400` mentioning `tool_choice` `any` or `tool` | Forced tool use is rejected on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1. Use `auto` plus clear instructions. |
 | Claude stops calling tools in parallel | Results were split across several user messages, or the user message mixed text before the results. Send all results together. |
 | Claude invents a value after a tool fails | The error result was dropped. Return it with `is_error: true` and a useful message. |
 | The loop never ends | The model keeps calling a tool whose error message does not explain how to fix the input. Improve the message and keep the iteration cap. |

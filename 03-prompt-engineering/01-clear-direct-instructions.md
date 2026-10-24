@@ -224,4 +224,9 @@ More diagnostics are in [troubleshooting prompts and outputs](../24-troubleshoot
 - [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) (Anthropic docs; "Be clear and direct" and "Add context")
 - [Prompt engineering overview](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview)
 - [Define success criteria and build evaluations](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)
-- Next page: [Structure with XML tags](02-structure-with-xml-tags.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Structure with XML Tags →](02-structure-with-xml-tags.md)
+<!-- page-nav:end -->

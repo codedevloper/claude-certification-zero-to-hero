@@ -46,7 +46,7 @@ document).
 - [ ] Every response path checks `stop_reason` (`end_turn`, `max_tokens`, `tool_use`, `pause_turn`, `refusal`)
   before using `content`.
 - [ ] `max_tokens` sized for the longest legitimate output; streaming used for long outputs.
-- [ ] No unsupported parameters (sampling parameters, assistant prefill, forced `tool_choice` on current models) per
+- [ ] No unsupported parameters (sampling parameters, assistant prefill, forced `tool_choice` on the models that reject it) per
   the current API rules.
 - [ ] Structured outputs or strict tool schemas used where downstream code parses output.
 
@@ -218,3 +218,9 @@ two weeks, with a post-launch review that adds a quality SLO based on sampled gr
 - In this repository: [lifecycle management](../13-enterprise-ai-architecture/09-lifecycle-management.md),
   [stakeholder communication](../13-enterprise-ai-architecture/06-stakeholder-communication.md),
   [Lab 20](../19-hands-on-labs/lab-20-secure-enterprise-architecture/README.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Observability →](02-observability.md)
+<!-- page-nav:end -->

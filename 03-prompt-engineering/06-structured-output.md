@@ -24,7 +24,7 @@ to do when data is missing) apply there too.
   are the interface between components.
 - **Safer automation.** Validated fields with `enum` values are easier to check against business rules before acting.
 - **The API changed.** Assistant-message prefill, which people used to force JSON (by starting the reply with `{`), is
-  no longer accepted on current models. Forcing a specific tool with `tool_choice` is also rejected on several current
+  no longer accepted on current models (the Claude 4.6 family and later, including Haiku 5.5). Forcing a specific tool with `tool_choice` is also rejected on several current
   models. Structured outputs and strict tools are the supported replacements.
 
 ## How it works
@@ -327,4 +327,9 @@ policy.
 - [Prompting best practices: migrating away from prefilled responses](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) (Anthropic docs)
 - [Defining tools](../07-tool-use-and-function-calling/02-defining-tools.md) in this repository
 - [Lab 03 — Structured outputs](../19-hands-on-labs/lab-03-structured-outputs/README.md)
-- Next page: [System prompts and roles](07-system-prompts-and-roles.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Task Decomposition and Prompt Chaining](05-task-decomposition-and-chaining.md) · [Module overview](README.md) · [Next: System Prompts, Roles, Templates and Guardrails →](07-system-prompts-and-roles.md)
+<!-- page-nav:end -->

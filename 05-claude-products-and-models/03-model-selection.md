@@ -205,4 +205,9 @@ Errors cluster in two handwritten fields. The team chooses Sonnet, adds validati
 - [Effort](https://platform.claude.com/docs/en/build-with-claude/effort) (Anthropic documentation)
 - [Pricing](https://platform.claude.com/docs/en/about-claude/pricing) (Anthropic documentation)
 - Related: [Cost optimisation](../15-production-operations/03-cost-optimisation.md), [Latency optimisation](../15-production-operations/04-latency-optimisation.md), [Model selection cheat sheet](../22-cheat-sheets/model-selection.md)
-- Previous: [Model families](02-model-families.md) · Next: [Projects and knowledge management](04-projects-and-knowledge.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Model Families and Current Models](02-model-families.md) · [Module overview](README.md) · [Next: Projects and Knowledge Management →](04-projects-and-knowledge.md)
+<!-- page-nav:end -->

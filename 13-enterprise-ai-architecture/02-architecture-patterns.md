@@ -232,3 +232,9 @@ parallel subagents would mostly wait or duplicate work, and the extra tokens bou
   [reference architectures](03-reference-architectures.md), [tool design best practices](../07-tool-use-and-function-calling/05-tool-design-best-practices.md)
 - Practice: [Lab 12: Agentic task execution](../19-hands-on-labs/lab-12-agentic-task-execution/README.md),
   [Agentic investigation assistant project](../20-real-world-projects/05-agentic-investigation-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Solution Design Process](01-solution-design-process.md) · [Module overview](README.md) · [Next: Reference Architectures →](03-reference-architectures.md)
+<!-- page-nav:end -->

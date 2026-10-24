@@ -214,4 +214,9 @@ A rollout checklist an architect might attach to the decision record:
 - [Manage costs effectively](https://code.claude.com/docs/en/costs), [analytics](https://code.claude.com/docs/en/analytics) and [monitoring usage](https://code.claude.com/docs/en/monitoring-usage) (Claude Code Docs)
 - [Observability](../15-production-operations/02-observability.md) in Module 15
 - [CCAR-P domain 7 study guide](../16-certification-tracks/ccar-p/study-guide/domain-7.md)
-- Previous: [MCP in Claude Code](07-mcp-in-claude-code.md) · Next: [Headless, CI and the Agent SDK](09-headless-ci-and-agent-sdk.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: MCP in Claude Code](07-mcp-in-claude-code.md) · [Module overview](README.md) · [Next: Headless, CI and the Agent SDK →](09-headless-ci-and-agent-sdk.md)
+<!-- page-nav:end -->

@@ -251,4 +251,9 @@ shared blocks come first and never change per request, all six assistants also b
 - [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (Anthropic engineering, 2025-09-29)
 - [Mitigate jailbreaks and prompt injections](https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/mitigate-jailbreaks) (Anthropic docs)
 - [Enterprise deployment controls](../12-ai-security/14-enterprise-deployment-controls.md) in this repository
-- Next page: [Iterating on prompts](08-iterating-on-prompts.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Structured Output](06-structured-output.md) · [Module overview](README.md) · [Next: Iterating on Prompts →](08-iterating-on-prompts.md)
+<!-- page-nav:end -->

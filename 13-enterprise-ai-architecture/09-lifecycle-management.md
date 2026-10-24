@@ -236,3 +236,9 @@ Wire a gate like this into continuous integration so that prompt and model chang
 - Practice: [Lab 16: Evaluation framework](../19-hands-on-labs/lab-16-evaluation-framework/README.md),
   [Lab 19: Observability](../19-hands-on-labs/lab-19-observability/README.md),
   [Lab 20](../19-hands-on-labs/lab-20-secure-enterprise-architecture/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Business Value and ROI](08-business-value-and-roi.md) · [Module overview](README.md) · [Next module: Module 14: Evaluation and Testing →](../14-evaluation-and-testing/README.md)
+<!-- page-nav:end -->

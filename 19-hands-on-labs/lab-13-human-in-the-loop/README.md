@@ -76,7 +76,7 @@ Output files go to `$LAB_OUTPUT_DIR/claude-labs/lab-13`. If `LAB_OUTPUT_DIR` is 
 
 All the code is in [`lab.py`](lab.py). Read it top to bottom; the sections below follow its order.
 
-**Tools.** Five tools for a fictional freight company, Acme Logistics. Each is declared with `strict: true`, every property is required, and `additionalProperties` is `false`, so the shape of the arguments is predictable. The request uses `tool_choice={"type": "auto"}`; forcing a specific tool (`any` or `tool`) is rejected on current models, and you do not need it.
+**Tools.** Five tools for a fictional freight company, Acme Logistics. Each is declared with `strict: true`, every property is required, and `additionalProperties` is `false`, so the shape of the arguments is predictable. The request uses `tool_choice={"type": "auto"}`; forcing a specific tool (`any` or `tool`) is rejected on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1, and you do not need it.
 
 **FakeClock.** Approval waits are measured in simulated minutes. The lab advances the clock instead of sleeping, so a 15-minute expiry takes microseconds and the output is identical on every run. Production systems use the same trick in tests.
 

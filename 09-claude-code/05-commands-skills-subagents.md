@@ -205,4 +205,9 @@ The platform team moved each procedure into a project skill (`/release`, `/db-mi
 - [Commands reference](https://code.claude.com/docs/en/commands) (Claude Code Docs)
 - [Plugins overview](https://code.claude.com/docs/en/plugins/overview) (Claude Code Docs)
 - [Progressive disclosure and Skills](../04-context-engineering/06-progressive-disclosure-and-skills.md) in Module 04
-- Previous: [Permissions and settings](04-permissions-and-settings.md) · Next: [Hooks](06-hooks.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Permissions and Settings](04-permissions-and-settings.md) · [Module overview](README.md) · [Next: Hooks →](06-hooks.md)
+<!-- page-nav:end -->

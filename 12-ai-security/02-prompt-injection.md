@@ -239,3 +239,9 @@ The fourth change is the one that removes the serious risk. The first three redu
 - In this repository: [system prompts and roles](../03-prompt-engineering/07-system-prompts-and-roles.md),
   [Lab 14: prompt injection testing](../19-hands-on-labs/lab-14-prompt-injection-testing/README.md),
   [safety and red-team evals](../14-evaluation-and-testing/07-safety-and-red-team-evals.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: LLM Threat Modelling](01-llm-threat-modelling.md) · [Module overview](README.md) · [Next: Indirect Prompt Injection →](03-indirect-prompt-injection.md)
+<!-- page-nav:end -->

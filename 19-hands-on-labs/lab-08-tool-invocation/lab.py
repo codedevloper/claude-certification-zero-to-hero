@@ -180,7 +180,7 @@ def run_conversation(client, user_text: str) -> tuple[str, list[dict], list[str]
             output_config={"effort": "medium"},
             system="You are Acme Logistics' parcel assistant. Use the tools for facts; never guess tracking data.",
             tools=TOOLS,
-            tool_choice={"type": "auto"},  # forced tool use is not supported on current models
+            tool_choice={"type": "auto"},  # forced tool use is not supported on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1
             messages=messages,
         )
         messages.append({"role": "assistant", "content": response.content})

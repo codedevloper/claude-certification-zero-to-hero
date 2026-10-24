@@ -31,7 +31,7 @@ Claude Code exposes many events (as of 2026-10-24). The ones you will use most:
 
 | Event | When it fires | Can block? | Typical use |
 |---|---|---|---|
-| `SessionStart` | Session begins or resumes (matcher: `startup`, `resume`, `clear`, `compact`) | No | Inject context (stdout becomes context), set up environment |
+| `SessionStart` | Session begins or resumes (matcher: `startup`, `resume`, `clear`, `compact`, `fork`) | No | Inject context (stdout becomes context), set up environment |
 | `UserPromptSubmit` | You submit a prompt, before Claude sees it | Yes | Reject prompts containing secrets; add context |
 | `PreToolUse` | After Claude chooses tool inputs, before the tool runs | **Yes** | Allow, deny, ask, or modify the call |
 | `PermissionRequest` | A tool call needs a permission decision | Yes | Auto-answer prompts by policy |
@@ -289,4 +289,9 @@ Because the hooks are managed, developers cannot disable them with `disableAllHo
 - [Hooks reference](https://code.claude.com/docs/en/hooks) and [hooks guide](https://code.claude.com/docs/en/hooks-guide) (Claude Code Docs)
 - [Configure permissions: extend permissions with hooks](https://code.claude.com/docs/en/permissions) (Claude Code Docs)
 - [Human oversight](../12-ai-security/13-human-oversight.md) and [logging and auditability](../12-ai-security/11-logging-and-auditability.md) in Module 12
-- Previous: [Commands, Skills and subagents](05-commands-skills-subagents.md) · Next: [MCP in Claude Code](07-mcp-in-claude-code.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Commands, Skills and Subagents](05-commands-skills-subagents.md) · [Module overview](README.md) · [Next: MCP in Claude Code →](07-mcp-in-claude-code.md)
+<!-- page-nav:end -->

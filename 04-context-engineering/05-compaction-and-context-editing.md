@@ -248,4 +248,9 @@ which the team accepted after measuring the net cost.
 - [Context editing](https://platform.claude.com/docs/en/build-with-claude/context-editing) (Anthropic docs)
 - [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (Anthropic engineering, 2025-09-29)
 - [The agent loop](../10-agentic-ai/03-the-agent-loop.md) and [agent reliability](../10-agentic-ai/07-agent-reliability.md) in this repository
-- Next page: [Progressive disclosure and Skills](06-progressive-disclosure-and-skills.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Memory and Persistence](04-memory-and-persistence.md) · [Module overview](README.md) · [Next: Progressive Disclosure and Agent Skills →](06-progressive-disclosure-and-skills.md)
+<!-- page-nav:end -->

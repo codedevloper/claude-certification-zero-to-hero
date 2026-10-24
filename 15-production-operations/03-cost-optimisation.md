@@ -229,3 +229,9 @@ cost per completed task rose once escalations were counted.
   [model selection](../05-claude-products-and-models/03-model-selection.md),
   [Lab 17](../19-hands-on-labs/lab-17-cost-optimisation/README.md),
   [Project 01](../20-real-world-projects/01-document-summarisation-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Observability](02-observability.md) · [Module overview](README.md) · [Next: Latency Optimisation →](04-latency-optimisation.md)
+<!-- page-nav:end -->

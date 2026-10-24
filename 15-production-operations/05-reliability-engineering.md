@@ -256,3 +256,9 @@ degraded mode handled the remaining peak. Nurses saw slower answers but no outag
   [agent reliability](../10-agentic-ai/07-agent-reliability.md),
   [Lab 18](../19-hands-on-labs/lab-18-reliability-engineering/README.md),
   [tools and agents troubleshooting](../24-troubleshooting/tools-and-agents.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Latency Optimisation](04-latency-optimisation.md) · [Module overview](README.md) · [Next: Rate Limits and Capacity →](06-rate-limits-and-capacity.md)
+<!-- page-nav:end -->

@@ -48,12 +48,13 @@ if response.stop_reason == "end_turn":
 | `messages` | Yes | Alternating `user` / `assistant`; first message is `user`; **last must not be `assistant`** (no prefill) |
 | `system` | No | String or list of content blocks; the operator's instructions |
 | `tools` | No | Client tools (`name`, `description`, `input_schema`, optional `strict: true`) or server tools (`type`) |
-| `tool_choice` | No | `auto` (default) or `none`. `any` and `tool` return 400 on current models |
+| `tool_choice` | No | `auto` (default) or `none`. `any` and `tool` return a 400 on Claude Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1; Haiku 5.5 accepts them |
 | `thinking` | No | `{"type": "adaptive"}` or omit. `budget_tokens` is legacy and rejected on current models |
 | `output_config` | No | `effort`, `format` (structured outputs), `task_budget` (beta) |
 | `stream` | No | `true` for server-sent events; SDKs offer `.stream()` helpers |
 
-**Do not send** `temperature`, `top_p` or `top_k`: current models reject them with a 400. Shape output with
+**Do not send** `temperature`, `top_p` or `top_k`. Opus 5.5 rejects them, Sonnet 5.5 and Haiku 5.5 reject non-default
+values, and on API version `2026-10-21` every model rejects them with a 400. Shape output with
 instructions, examples, effort and structured outputs instead.
 
 ## 3. Response and stop reasons
@@ -82,6 +83,7 @@ Always branch on `stop_reason` before you use `content`:
 | `tool_use` | Claude wants one or more tools run | Execute every `tool_use` block, return all `tool_result` blocks in **one** user message, call again |
 | `pause_turn` | A long server-tool turn paused | Send the response back as-is to let Claude continue |
 | `refusal` | A safety classifier declined | Read `stop_details.category` / `explanation`; do not retry blindly; consider the server-side `fallbacks` option |
+| `model_context_window_exceeded` | The conversation reached the model's context window | Compact, trim or summarise history, then retry |
 
 ## 4. Content blocks you will meet
 
@@ -209,7 +211,7 @@ The SDKs retry 408, 409, 429, 5xx and connection errors twice by default (`max_r
 most to least specific (`RateLimitError` → `APIStatusError` → `APIConnectionError`). Log the `request-id` header.
 Full guide: [24 · API errors](../24-troubleshooting/api-errors.md).
 
-## 10. Tool-use loop in ten lines
+## 10. Tool-use loop in a dozen lines
 
 ```python
 messages = [{"role": "user", "content": question}]
@@ -217,6 +219,8 @@ while True:
     resp = client.messages.create(model="claude-opus-5-5", max_tokens=4096, tools=TOOLS, messages=messages)
     messages.append({"role": "assistant", "content": resp.content})
     if resp.stop_reason != "tool_use":
+        if resp.stop_reason != "end_turn":   # max_tokens, refusal, pause_turn...: handle, don't ignore
+            raise RuntimeError(f"stopped with {resp.stop_reason}; see the stop_reason table")
         break
     results = [{"type": "tool_result", "tool_use_id": b.id, "content": run_tool(b.name, b.input)}
                for b in resp.content if b.type == "tool_use"]

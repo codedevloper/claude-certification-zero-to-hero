@@ -315,3 +315,9 @@ def authorise(app_id: str, request: dict) -> dict:
   [multi-agent architecture](../10-agentic-ai/04-multi-agent-architecture.md), [MCP architecture](../08-model-context-protocol/02-architecture.md)
 - Practice: [Lab 20](../19-hands-on-labs/lab-20-secure-enterprise-architecture/README.md), [Lab 11](../19-hands-on-labs/lab-11-rag-pipeline/README.md),
   [Knowledge base Q&A assistant project](../20-real-world-projects/02-knowledge-base-qa-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Architecture Patterns](02-architecture-patterns.md) · [Module overview](README.md) · [Next: Integration Patterns →](04-integration-patterns.md)
+<!-- page-nav:end -->

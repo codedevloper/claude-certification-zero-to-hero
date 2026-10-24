@@ -222,3 +222,9 @@ The platform team:
 - OWASP: [Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/) (LLM03, LLM04)
 - In this repository: [progressive disclosure and Skills](../04-context-engineering/06-progressive-disclosure-and-skills.md),
   [MCP in Claude Code](../09-claude-code/07-mcp-in-claude-code.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Insecure Output Handling](06-insecure-output-handling.md) · [Module overview](README.md) · [Next: MCP Server Security →](08-mcp-server-security.md)
+<!-- page-nav:end -->

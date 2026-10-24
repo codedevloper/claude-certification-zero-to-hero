@@ -192,3 +192,9 @@ or `@` are prefixed). Report accuracy on their eval set stayed the same and the 
 - Anthropic: [Structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs)
 - In this repository: [structured output](../03-prompt-engineering/06-structured-output.md),
   [Project 04: DevSecOps code review assistant](../20-real-world-projects/04-devsecops-code-review-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Tool Misuse and Excessive Agency](05-tool-misuse-and-excessive-agency.md) · [Module overview](README.md) · [Next: Supply-Chain Risks →](07-supply-chain-risks.md)
+<!-- page-nav:end -->

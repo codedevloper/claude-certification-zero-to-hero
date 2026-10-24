@@ -2,6 +2,8 @@
 
 > **Level:** Advanced · **Time:** ~60 min · **Exam relevance:** CCAR-P 3.1, 3.2, 5.1, 5.2
 
+> **Scope:** this page covers MCP security from the builder's side: how the protocol's design creates risks and what to do when you write or connect a server. For the enterprise review of third-party servers (vetting, approval, monitoring), see [MCP server security](../12-ai-security/08-mcp-server-security.md).
+
 ## In plain English
 
 Connecting an MCP server is closer to installing software than to calling an API. A server can:
@@ -224,4 +226,9 @@ See also [MCP server security](../12-ai-security/08-mcp-server-security.md), [su
 - [Managed MCP configuration](https://code.claude.com/docs/en/managed-mcp) (Claude Code Docs)
 - [OAuth 2.0 Security Best Current Practice, RFC 9700](https://datatracker.ietf.org/doc/html/rfc9700) (IETF)
 - [OWASP Top 10 for LLM Applications 2025](https://genai.owasp.org/llm-top-10/) (OWASP)
-- Previous: [Using MCP with Claude](04-using-mcp-with-claude.md) · Next: [MCP versus alternatives](06-mcp-vs-alternatives.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Using MCP with Claude](04-using-mcp-with-claude.md) · [Module overview](README.md) · [Next: MCP versus Alternatives →](06-mcp-vs-alternatives.md)
+<!-- page-nav:end -->

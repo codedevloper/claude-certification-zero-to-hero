@@ -173,7 +173,7 @@ cards:
   module: 03-prompt-engineering/07-system-prompts-and-roles.md
 - id: CCAR-P-FC-031
   objective: CCAR-P-2.2
-  front: What replaces tool_choice 'any' or 'tool' on current models?
+  front: What replaces tool_choice 'any' or 'tool' on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1?
   back: 'tool_choice ''auto'' with an instruction naming the tool, strict: true tool schemas, or structured outputs when you
     only need JSON.'
   module: 07-tool-use-and-function-calling/02-defining-tools.md

@@ -50,7 +50,7 @@ python 19-hands-on-labs/lab-01-first-claude-interaction/lab.py
 
 - `assistant prefill is not supported on current Claude models`
 - `'temperature' is not supported on current Claude models`
-- `forced tool_choice is not supported on current models`
+- `forced tool_choice is not supported on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1`
 - `the first message must have role 'user'`
 
 **Cause:** the mock client validates requests against current API rules. If you are on an older model in live mode,

@@ -154,7 +154,7 @@ def check_cueing(report: Report) -> None:
             if exp >= MIN_EXPECTED_FOR_POSITION_CHECK and not low * exp <= obs <= high * exp:
                 report.error(
                     f"{track}: option {letter} is the key {obs} times vs ~{exp} expected; "
-                    "run python tools/shuffle_options.py"
+                    "run python tools/shuffle_options.py --all (or --ids for specific questions)"
                 )
 
 

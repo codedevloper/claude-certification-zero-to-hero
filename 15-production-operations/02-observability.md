@@ -249,3 +249,9 @@ both signals. Cost and call volume return to baseline within a day.
 - In this repository: [Lab 19](../19-hands-on-labs/lab-19-observability/README.md),
   [logging and auditability](../12-ai-security/11-logging-and-auditability.md),
   [API errors troubleshooting](../24-troubleshooting/api-errors.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Production Readiness](01-production-readiness.md) · [Module overview](README.md) · [Next: Cost Optimisation →](03-cost-optimisation.md)
+<!-- page-nav:end -->

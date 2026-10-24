@@ -681,6 +681,35 @@
       "references": [
         "https://www.anthropic.com/engineering/building-effective-agents"
       ]
+    },
+    {
+      "id": "CCAR-P-D1-024",
+      "objective": "CCAR-P-1.3",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Harbourline Credit Union wants an agent that runs every night at 02:00, clones a set of internal repositories, runs dependency and test checks with shell tools, and files a findings report. The platform team does not want to operate containers, a scheduler or the agent loop itself, and it wants to roll prompt and tool changes back to a known version if a run regresses. The organisation calls Claude through the Claude API.",
+      "question": "Which approach best fits these requirements, as of 2026-10-24?",
+      "options": {
+        "A": "Claude Managed Agents: a versioned agent with a cloud environment, started each night by a scheduled deployment",
+        "B": "The Tool Runner in the Anthropic SDK, with custom shell and git tools, on a cron-triggered VM the team maintains",
+        "C": "The Claude Agent SDK with its built-in file and shell tools, packaged in a container that the CI scheduler runs",
+        "D": "A hand-written `stop_reason` loop over the Messages API, with tools run in a sandbox the team builds and patches"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Managed Agents supplies both the agent harness and its deployment: Anthropic runs the loop and a per-session sandbox where bash and file tools execute, agents are persisted and versioned so sessions can pin to or roll back to a version, and scheduled deployments start sessions on a cron schedule. The Tool Runner, the Agent SDK and a manual loop each provide at most the harness, leaving the team to host the compute, sandbox and scheduler it wants to avoid. Managed Agents is in beta, so confirm availability for the platform in use.",
+      "why_incorrect": {
+        "B": "The Tool Runner automates the loop over tools you define but has no built-in sandbox; the team must host the VM, the shell tools and the scheduler.",
+        "C": "The Agent SDK brings Claude Code's built-in tools, but it is harness-only; the team would still package, host and schedule it.",
+        "D": "A manual loop gives full control but leaves the whole harness and deployment to the team, the opposite of the stated requirement."
+      },
+      "module": "10-agentic-ai/06-managed-agents-and-agent-sdk.md",
+      "references": [
+        "https://platform.claude.com/docs/en/managed-agents/overview",
+        "https://code.claude.com/docs/en/agent-sdk/overview"
+      ]
     }
   ]
 }

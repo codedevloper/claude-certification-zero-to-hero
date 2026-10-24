@@ -161,4 +161,9 @@ In every case, output from the other side is untrusted input to Claude.
 - [Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) (Anthropic Engineering)
 - [Integration patterns](../13-enterprise-ai-architecture/04-integration-patterns.md) in Module 13
 - [CCAR-P domain 3 study guide](../16-certification-tracks/ccar-p/study-guide/domain-3.md)
-- Previous: [MCP security](05-mcp-security.md) · Back to the [module overview](README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: MCP Security](05-mcp-security.md) · [Module overview](README.md) · [Next module: Module 09: Claude Code →](../09-claude-code/README.md)
+<!-- page-nav:end -->

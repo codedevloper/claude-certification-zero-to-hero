@@ -535,26 +535,26 @@
       "type": "single",
       "difficulty": "advanced",
       "category": "scenario",
-      "scenario": "Lucerne Publishing's rights team asks questions of two kinds: exact lookups ('which contracts mention clause code RX-14?') and conceptual ones ('which contracts limit audiobook adaptations?'). The current dense-vector retriever does well on the second kind but misses many exact codes.",
-      "question": "Which retrieval approach best fits both query patterns?",
+      "scenario": "Adventure Works Insurance indexes 12 years of underwriting guidelines for 30 US states in one vector store, and each chunk carries metadata for state, product line and effective-date range. Questions such as 'What was the flood-cover deductible rule in Oregon in March 2023?' often retrieve well-written guidance from the wrong state or a superseded year, because near-identical text exists for every state and version.",
+      "question": "Which retrieval strategy best fits this data shape and query pattern?",
       "options": {
-        "A": "Replace the dense retriever with a tuned BM25 keyword index, adding synonym lists for common contract concepts",
-        "B": "Route each query with a classifier: exact-looking queries go to keyword search and the rest to embeddings",
-        "C": "Fine-tune the embedding model on contract text so that rare clause codes get distinctive vectors",
-        "D": "Hybrid retrieval that combines lexical (BM25) and embedding search, with result fusion and reranking"
+        "A": "Parse state, product and date from each query into metadata filters, then run semantic search over the matching chunks",
+        "B": "Append the state name and year to each query string so that embedding search favours chunks mentioning them in the text",
+        "C": "Retrieve the top 50 chunks by similarity and instruct Claude to use the passages whose headers match the state and date",
+        "D": "Build a separate vector index per state, each holding every year of guidelines, and route each query by the state it names"
       },
       "answer": [
-        "D"
+        "A"
       ],
-      "explanation": "Exact identifiers and rare tokens are matched well by lexical retrieval such as BM25, while conceptual questions benefit from dense embeddings. Hybrid retrieval runs both and fuses the results, often followed by a reranking step to order the merged set. Abandoning embeddings would hurt conceptual queries, tuning embeddings does not make rare tokens reliable, and routing between modes breaks on mixed queries.",
+      "explanation": "The corpus holds many near-identical passages that differ mainly in structured attributes: jurisdiction, product and effective dates. Semantic similarity cannot reliably separate them, but those attributes are already stored as metadata. Filtering on them first, with filter values extracted from the question (Claude can do this extraction), narrows candidates to the right state and version, and semantic search then ranks within that set.",
       "why_incorrect": {
-        "A": "Synonym lists cover a fraction of how concepts are phrased; keyword-only search loses the conceptual matches the team relies on.",
-        "B": "Routing fails on mixed queries and misclassifications, whereas hybrid retrieval handles both kinds without choosing.",
-        "C": "Dense retrieval remains weak on rare exact tokens even after tuning, and new codes appear faster than the model can be retrained."
+        "B": "Extra query terms nudge similarity but do not exclude other states or superseded versions whose text is nearly identical.",
+        "C": "Over-retrieving fills context with wrong-version passages and relies on the model to filter, which is the failure being seen; the right version may also fall outside the top 50.",
+        "D": "Per-state indexes fix jurisdiction but not superseded years, multiply the indexes to maintain, and break on multi-state questions; metadata filters handle every attribute in one index."
       },
       "module": "11-rag-and-knowledge-systems/04-retrieval-strategies.md",
       "references": [
-        "https://www.anthropic.com/engineering/contextual-retrieval"
+        "https://platform.claude.com/docs/en/build-with-claude/embeddings"
       ]
     },
     {
@@ -677,34 +677,30 @@
     },
     {
       "id": "CCAR-P-D3-024",
-      "objective": "CCAR-P-3.8",
-      "type": "multiple",
-      "select": 2,
+      "objective": "CCAR-P-3.3",
+      "type": "single",
       "difficulty": "advanced",
       "category": "architecture",
-      "scenario": "Litware's enterprise agent can handle 40 business procedures, each with several pages of instructions and helper scripts. Loading all of them into the system prompt costs about 90,000 tokens per request and accuracy on routine requests has dropped.",
-      "question": "Which TWO designs apply progressive discovery effectively? (Choose 2.)",
+      "scenario": "Lamna Healthcare's contract-intake pipeline runs six checks on each supplier contract: liability caps, data protection, termination, pricing, insurance and jurisdiction. They run as a sequential chain of six Claude calls averaging 8 seconds each, although no check uses another's output. Each check meets its accuracy target on the team's eval, but the business now needs results within 15 seconds.",
+      "question": "Which change best meets the latency target while protecting accuracy?",
       "options": {
-        "A": "Have Claude condense each procedure to a one-paragraph summary and keep all 40 summaries in the system prompt",
-        "B": "Expose procedures as files in a navigable directory with an index the agent can list and read on demand",
-        "C": "Package each procedure as an Agent Skill so names and descriptions load by default and full instructions load when relevant",
-        "D": "Route each request with a classifier to one of five agents, each preloaded with eight procedures in its system prompt",
-        "E": "Keep all procedures in the system prompt but cache them, so the 90,000 tokens are billed at the cache-read rate"
+        "A": "Run the six checks as parallel calls, keeping their current focused prompts, then confirm accuracy on the existing eval",
+        "B": "Merge the six checks into a single call that returns every finding at once, and lower effort so it completes in time",
+        "C": "Move the six checks to the smallest current model so that each call in the sequential chain finishes in roughly two seconds",
+        "D": "Stream each check's output to the reviewer's screen so that results start appearing within the first few seconds"
       },
       "answer": [
-        "B",
-        "C"
+        "A"
       ],
-      "explanation": "Progressive discovery (or disclosure) keeps a lightweight index in context and loads detail only when needed. Agent Skills do this by keeping each skill's name and description in context and reading the full instructions and scripts on demand. Similarly, presenting procedures as a discoverable hierarchy of files that the agent can list and read when relevant avoids paying for everything up front. Caching, summarising or statically partitioning procedures each keeps paying for, or loses, detail that should load on demand.",
+      "explanation": "Independent subtasks suit parallelisation (sectioning): wall-clock time falls from the sum of six calls to roughly the slowest one, about 8 seconds, while each check keeps the focused prompt that already meets its accuracy target. Re-running the eval confirms nothing regressed. Merging checks or downgrading the model trades away accuracy without evidence, and streaming changes perceived rather than actual completion time.",
       "why_incorrect": {
-        "A": "Summaries lose the operational detail and scripts the agent needs to execute procedures correctly.",
-        "D": "Static partitioning still preloads eight full procedures per request and breaks on requests that span groups; it is not on-demand discovery.",
-        "E": "Caching reduces price, but the 90,000 tokens still occupy context and dilute attention on routine requests."
+        "B": "One call juggling six analyses at reduced effort puts at risk the per-check accuracy that the focused prompts achieve, with no evidence it would still pass the eval.",
+        "C": "Six two-second calls would meet the target, but the smallest model has not been shown to hold accuracy on these legal checks.",
+        "D": "The pipeline needs all six results; streaming improves perceived latency, but the full set would still take about 48 seconds."
       },
-      "module": "04-context-engineering/06-progressive-disclosure-and-skills.md",
+      "module": "15-production-operations/04-latency-optimisation.md",
       "references": [
-        "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills",
-        "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+        "https://www.anthropic.com/engineering/building-effective-agents"
       ]
     },
     {
@@ -761,6 +757,35 @@
       "module": "04-context-engineering/06-progressive-disclosure-and-skills.md",
       "references": [
         "https://www.anthropic.com/engineering/code-execution-with-mcp"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-027",
+      "objective": "CCAR-P-3.7",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Proseware's data-platform group must route all model traffic through Google Cloud Vertex AI under an existing cloud agreement. It wants an agent that reads and edits files and runs shell commands in a sandbox to triage failed data-pipeline jobs. An engineer proposes Claude Managed Agents so that Anthropic runs the loop and hosts the sandbox.",
+      "question": "What should the architect recommend, as of 2026-10-24?",
+      "options": {
+        "A": "Run the Claude Agent SDK in the team's own sandboxed containers, authenticated to Claude through Vertex AI",
+        "B": "Use Managed Agents with a self-hosted sandbox, so tool execution stays in Google Cloud while Anthropic runs the loop",
+        "C": "Use Managed Agents on the Claude API for the agent loop, and route the file and shell tool traffic through Vertex AI",
+        "D": "Call the Messages API on Vertex AI and use the server-side code execution tool as the sandbox for shell commands"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "As of 2026-10-24, Managed Agents is offered on the Claude API and Claude Platform on AWS but not on Google Cloud Vertex AI, and that includes its self-hosted sandbox option. Under a Vertex-only constraint the team needs a self-hosted harness. The Claude Agent SDK provides Claude Code's agent loop and built-in file and shell tools and supports Vertex AI authentication, so it can run in the team's own sandboxed containers. The Tool Runner with custom tools would be a lighter alternative.",
+      "why_incorrect": {
+        "B": "Self-hosted sandboxes are a Managed Agents feature, and Managed Agents is not offered on Vertex AI; the loop's model calls would still bypass the agreed platform.",
+        "C": "The model calls are made by the Managed Agents loop on Anthropic's platform, so traffic would not flow through Vertex AI as required.",
+        "D": "The server-side code execution tool is not available on Vertex AI, and it would not give access to the team's own pipeline environment."
+      },
+      "module": "10-agentic-ai/06-managed-agents-and-agent-sdk.md",
+      "references": [
+        "https://platform.claude.com/docs/en/managed-agents/overview",
+        "https://code.claude.com/docs/en/agent-sdk/quickstart"
       ]
     }
   ]

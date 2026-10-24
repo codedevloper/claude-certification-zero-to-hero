@@ -87,7 +87,7 @@ confused with each other.
 - Remove tools the task does not need; for large tool sets, load tools on demand (tool search, Skills or sub-agents
   with focused toolsets).
 - Add an instruction: "Use `lookup_shipment` for any question about a shipment's location or ETA."
-- Keep `tool_choice: auto`; forced selection is not available on current models.
+- Keep `tool_choice: auto`; forced selection is not available on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1.
 
 See [07 · Tool design best practices](../07-tool-use-and-function-calling/05-tool-design-best-practices.md).
 

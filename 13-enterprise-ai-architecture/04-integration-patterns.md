@@ -253,3 +253,9 @@ they chose Claude Platform on AWS for those workloads, and documented the featur
   [MCP versus alternatives](../08-model-context-protocol/06-mcp-vs-alternatives.md), [latency optimisation](../15-production-operations/04-latency-optimisation.md)
 - Practice: [Security alert triage assistant project](../20-real-world-projects/03-security-alert-triage-assistant/README.md),
   [Document summarisation assistant project](../20-real-world-projects/01-document-summarisation-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Reference Architectures](03-reference-architectures.md) · [Module overview](README.md) · [Next: Data Governance and Compliance →](05-data-governance-and-compliance.md)
+<!-- page-nav:end -->

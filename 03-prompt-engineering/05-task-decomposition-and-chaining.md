@@ -252,4 +252,9 @@ score, which made the rating defensible to auditors.
 - [Prompting best practices: chain complex prompts](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) (Anthropic docs)
 - [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) (Anthropic engineering)
 - [Workflows vs agents](../10-agentic-ai/01-workflows-vs-agents.md) in this repository
-- Next page: [Structured output](06-structured-output.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Reasoning and Thinking](04-reasoning-and-thinking.md) · [Module overview](README.md) · [Next: Structured Output →](06-structured-output.md)
+<!-- page-nav:end -->

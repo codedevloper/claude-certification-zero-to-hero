@@ -186,4 +186,9 @@ The platform team restructured: a managed CLAUDE.md with ten lines of company-wi
 - [How Claude remembers your project](https://code.claude.com/docs/en/memory) (Claude Code Docs)
 - [Best practices](https://code.claude.com/docs/en/best-practices) (Claude Code Docs)
 - [Memory and persistence](../04-context-engineering/04-memory-and-persistence.md) in Module 04
-- Previous: [Setup and first session](02-setup-and-first-session.md) · Next: [Permissions and settings](04-permissions-and-settings.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Setup and First Session](02-setup-and-first-session.md) · [Module overview](README.md) · [Next: Permissions and Settings →](04-permissions-and-settings.md)
+<!-- page-nav:end -->

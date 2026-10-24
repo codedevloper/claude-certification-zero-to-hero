@@ -1,6 +1,6 @@
 # Tokens and Tokenisation
 
-> **Level:** Beginner · **Time:** ~30 min · **Exam relevance:** CCAO-F D3 (3.3, 3.4) · CCAR-P D2 (2.4), D4 (4.5)
+> **Level:** Beginner · **Time:** ~30 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D3 (3.3, 3.4) · CCAR-P D2 (2.4), D4 (4.5)
 
 ## In plain English
 
@@ -167,4 +167,9 @@ Cost per email falls by more than 90% with no measurable loss in quality on thei
 - [Pricing](https://platform.claude.com/docs/en/about-claude/pricing) (Anthropic documentation)
 - [Token counting](https://platform.claude.com/docs/en/build-with-claude/token-counting) (Anthropic documentation)
 - [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) (token-to-word conversions)
-- Previous: [Large language models](03-large-language-models.md) · Next: [Context windows](05-context-windows.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Large Language Models](03-large-language-models.md) · [Module overview](README.md) · [Next: Context Windows →](05-context-windows.md)
+<!-- page-nav:end -->

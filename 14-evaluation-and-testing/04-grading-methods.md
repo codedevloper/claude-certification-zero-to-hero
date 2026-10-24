@@ -240,3 +240,9 @@ code checks disagree.
 - In this repository: [structured output](../03-prompt-engineering/06-structured-output.md),
   [Lab 16](../19-hands-on-labs/lab-16-evaluation-framework/README.md),
   [Project 04](../20-real-world-projects/04-devsecops-code-review-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Building Eval Datasets](03-building-eval-datasets.md) · [Module overview](README.md) · [Next: A/B Testing and Iteration →](05-ab-testing-and-iteration.md)
+<!-- page-nav:end -->

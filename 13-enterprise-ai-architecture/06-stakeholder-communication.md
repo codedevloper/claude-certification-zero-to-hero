@@ -181,3 +181,9 @@ The escalation became evidence that the controls worked. Without the charter, th
 - In this repository: [architecture decision records](07-architecture-decision-records.md), [business value and ROI](08-business-value-and-roi.md),
   [metrics](../14-evaluation-and-testing/02-metrics.md), [stakeholder and behavioural interview questions](../21-interview-preparation/stakeholder-and-behavioural.md)
 - Practice: [Lab 13: Human in the loop](../19-hands-on-labs/lab-13-human-in-the-loop/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Data Governance and Compliance](05-data-governance-and-compliance.md) · [Module overview](README.md) · [Next: Architecture Decision Records →](07-architecture-decision-records.md)
+<!-- page-nav:end -->

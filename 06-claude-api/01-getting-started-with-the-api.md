@@ -122,6 +122,12 @@ curl https://api.anthropic.com/v1/messages \
 Three headers matter: `x-api-key` (authentication), `anthropic-version` (the API version your code was written
 against) and `content-type`. Beta features add an `anthropic-beta` header; the SDK sets it when you pass `betas=[...]`.
 
+> **API versions (as of 2026-10-24).** The examples use `anthropic-version: 2023-06-01`, which still works. A newer
+> version, `2026-10-21`, tightens validation: it rejects `temperature`, `top_p` and `top_k` on every model (even at
+> default values), a `document` block placed directly in an `assistant` message, and a `text` block carrying `citations`
+> in a `user` message. Test against the new version before you switch, and see
+> [model upgrades and change management](../15-production-operations/08-model-upgrades-and-change-management.md).
+
 ### Discovering models
 
 Model IDs and capabilities change. The Models API returns the models your organisation can use, with their context
@@ -256,4 +262,9 @@ More in [troubleshooting API errors](../24-troubleshooting/api-errors.md).
 - [Client SDKs](https://platform.claude.com/docs/en/api/client-sdks) (Anthropic docs)
 - [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) (Anthropic docs)
 - [Lab 01 — First Claude interaction](../19-hands-on-labs/lab-01-first-claude-interaction/README.md)
-- Next page: [The Messages API](02-messages-api.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: The Messages API →](02-messages-api.md)
+<!-- page-nav:end -->

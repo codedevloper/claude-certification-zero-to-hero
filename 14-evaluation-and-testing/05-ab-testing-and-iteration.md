@@ -219,3 +219,9 @@ guardrail; the rate does not change measurably, so A becomes the new default.
   [model selection](../05-claude-products-and-models/03-model-selection.md),
   [Lab 06: model comparison](../19-hands-on-labs/lab-06-model-comparison/README.md),
   [Lab 16](../19-hands-on-labs/lab-16-evaluation-framework/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Grading Methods](04-grading-methods.md) · [Module overview](README.md) · [Next: Diagnosing Failures →](06-diagnosing-failures.md)
+<!-- page-nav:end -->

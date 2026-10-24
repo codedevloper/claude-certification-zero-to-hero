@@ -1,6 +1,6 @@
 # Prompt Fundamentals
 
-> **Level:** Beginner · **Time:** ~40 min · **Exam relevance:** CCAO-F D1 (1.1, 1.2, 1.3, 1.4) · CCAR-P D2 (2.2, 2.3)
+> **Level:** Beginner · **Time:** ~40 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D1 (1.1, 1.2, 1.3, 1.4) · CCAR-P D2 (2.2, 2.3)
 
 ## In plain English
 
@@ -180,4 +180,9 @@ The team builds a shared prompt template from the building blocks: task, context
 - [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) (Anthropic documentation)
 - [Prompt engineering overview](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview) (Anthropic documentation)
 - Next steps: [Module 03: Prompt engineering](../03-prompt-engineering/README.md)
-- Previous: [Your first conversation](02-first-conversation.md) · Next: [Anthropic's safety approach](04-anthropic-safety-approach.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Your First Conversation](02-first-conversation.md) · [Module overview](README.md) · [Next: Anthropic's Safety Approach →](04-anthropic-safety-approach.md)
+<!-- page-nav:end -->

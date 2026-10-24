@@ -253,3 +253,9 @@ section that reviewers can open directly.
 - Claude docs, [Citations](https://platform.claude.com/docs/en/build-with-claude/citations): describes how the API itself
   chunks documents into sentences for citation purposes.
 - Next: [embeddings and indexing](03-embeddings-and-indexing.md). Practise in [lab-11](../19-hands-on-labs/lab-11-rag-pipeline/README.md).
+
+<!-- page-nav:start -->
+---
+
+[← Previous: RAG Fundamentals](01-rag-fundamentals.md) · [Module overview](README.md) · [Next: Embeddings and Indexing →](03-embeddings-and-indexing.md)
+<!-- page-nav:end -->

@@ -1,6 +1,6 @@
 # Anthropic's Safety Approach
 
-> **Level:** Beginner · **Time:** ~35 min · **Exam relevance:** CCAO-F D6 (6.1, 6.4) · CCAR-P D5 (5.1, 5.2, 5.5)
+> **Level:** Beginner · **Time:** ~35 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D6 (6.1, 6.4) · CCAR-P D5 (5.1, 5.2, 5.5)
 
 ## In plain English
 
@@ -180,4 +180,9 @@ The governance group maps both against the Usage Policy. Appointment logistics i
 - [Responsible Scaling Policy](https://www.anthropic.com/responsible-scaling-policy) (Anthropic)
 - [Transparency Hub](https://www.anthropic.com/transparency) (Anthropic)
 - Related: [AI governance](../12-ai-security/12-ai-governance.md), [Human oversight](../12-ai-security/13-human-oversight.md)
-- Previous: [Prompt fundamentals](03-prompt-fundamentals.md) · Next: [Responsible use](05-responsible-use.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Prompt Fundamentals](03-prompt-fundamentals.md) · [Module overview](README.md) · [Next: Responsible Use →](05-responsible-use.md)
+<!-- page-nav:end -->

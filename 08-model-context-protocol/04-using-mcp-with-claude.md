@@ -234,4 +234,9 @@ The same server, three entry points, each with the narrowest tool set its audien
 - [Get started with custom connectors using remote MCP](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp) (Claude Help Center)
 - [Connect Claude Code to tools via MCP](https://code.claude.com/docs/en/mcp) (Claude Code Docs)
 - [Connect to local MCP servers](https://modelcontextprotocol.io/docs/develop/connect-local-servers) (modelcontextprotocol.io)
-- Previous: [Building an MCP server](03-building-an-mcp-server.md) · Next: [MCP security](05-mcp-security.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Building an MCP Server](03-building-an-mcp-server.md) · [Module overview](README.md) · [Next: MCP Security →](05-mcp-security.md)
+<!-- page-nav:end -->

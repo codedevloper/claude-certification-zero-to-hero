@@ -77,8 +77,10 @@ Content Security Policy. It makes no external requests and renders all question 
 
 ## Forms
 
-`forms/<slug>-form-1.json` and `-form-2.json` are full-length (60 items for CCAO-F, 63 for CCAR-P, 120 minutes) and
-overlap as little as the bank allows; `-form-3.json` is a half-length checkpoint. Regenerate them with
+`forms/<slug>-form-1.json` and `-form-2.json` are full-length (60 items for CCAO-F, 63 for CCAR-P, 120 minutes).
+**Forms 1 and 2 share no questions**, so taking both gives two genuinely independent attempts. `-form-3.json` is a
+half-length checkpoint drawn from the same bank, so it repeats questions you will meet in forms 1 and 2: take it
+first, as a warm-up, rather than as a final readiness check. Regenerate the forms with
 `python tools/build_mock_forms.py` after adding many questions.
 
 A suggested sequence: domain drills in learning mode, then form 3 as a checkpoint, then form 1 under timed

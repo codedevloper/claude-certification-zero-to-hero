@@ -11,7 +11,7 @@ By the end of this module you can:
 1. Explain the difference between **client tools** (your code runs them) and **server tools** (Anthropic runs them), and choose between them.
 2. Write a tool definition with a precise name, description and JSON Schema, and decide when to add `strict: true` and `input_examples`.
 3. Implement the tool-use loop by hand and with the SDK Tool Runner, including parallel tool calls, `is_error` results and the `pause_turn` stop reason.
-4. Explain why forced `tool_choice` (`any` or `tool`) is rejected on current models and what to use instead.
+4. Explain why forced `tool_choice` (`any` or `tool`) is rejected on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1 and what to use instead.
 5. Configure the web search, web fetch, code execution and tool search server tools, including deferred loading.
 6. Apply tool design practices: consolidation, namespacing, high-signal responses and evaluation-driven iteration.
 7. Secure a tool surface with least privilege, input validation, confirmation gates and a review for capability bloat.

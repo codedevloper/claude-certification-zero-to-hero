@@ -284,4 +284,9 @@ broker question became the KPI reported to the steering group (see
 - [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) (Anthropic docs)
 - [Cost optimisation](../15-production-operations/03-cost-optimisation.md) and [model selection](../05-claude-products-and-models/03-model-selection.md) in this repository
 - [Lab 17 — Cost optimisation](../19-hands-on-labs/lab-17-cost-optimisation/README.md)
-- Next module: [Module 07 — Tool Use and Function Calling](../07-tool-use-and-function-calling/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Cloud Platforms: AWS, Google Cloud and Microsoft Foundry](07-cloud-platforms.md) · [Module overview](README.md) · [Next module: Module 07: Tool Use and Function Calling →](../07-tool-use-and-function-calling/README.md)
+<!-- page-nav:end -->

@@ -2,6 +2,8 @@
 
 > **Level:** Advanced · **Time:** ~45 min · **Exam relevance:** CCAR-P D3 (3.1, 3.2), CCAR-P D5 (5.1, 5.3)
 
+> **Scope:** this page covers excessive agency as a system and governance risk. For the per-tool engineering controls, see [tool security](../07-tool-use-and-function-calling/06-tool-security.md).
+
 ## In plain English
 
 Agency is what lets an LLM application *do* things: call APIs, run code, send messages, change records. Excessive
@@ -221,3 +223,9 @@ Tool-selection accuracy on the team's eval set improves because the model has fe
 - In this repository: [tool design best practices](../07-tool-use-and-function-calling/05-tool-design-best-practices.md),
   [tool security](../07-tool-use-and-function-calling/06-tool-security.md),
   [agent reliability](../10-agentic-ai/07-agent-reliability.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Data Exfiltration and Sensitive Information Disclosure](04-data-exfiltration-and-disclosure.md) · [Module overview](README.md) · [Next: Insecure Output Handling →](06-insecure-output-handling.md)
+<!-- page-nav:end -->

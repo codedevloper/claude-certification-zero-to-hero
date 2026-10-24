@@ -260,3 +260,9 @@ to measure, and it left room to add an investigation agent for exceptions later.
 - In this repository: [architecture patterns](02-architecture-patterns.md), [stakeholder communication](06-stakeholder-communication.md),
   [lifecycle management](09-lifecycle-management.md), [why evaluate](../14-evaluation-and-testing/01-why-evaluate.md)
 - Practice: [Lab 20: Secure enterprise architecture](../19-hands-on-labs/lab-20-secure-enterprise-architecture/README.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Architecture Patterns →](02-architecture-patterns.md)
+<!-- page-nav:end -->

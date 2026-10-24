@@ -232,4 +232,9 @@ platform change can be assessed quickly.
 - [Claude on Vertex AI](https://platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai) (Anthropic docs)
 - [Claude in Microsoft Foundry](https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry) (Anthropic docs)
 - [Integration patterns](../13-enterprise-ai-architecture/04-integration-patterns.md) in this repository
-- Next page: [Token counting and cost](08-token-counting-and-cost.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Errors, Rate Limits and Retries](06-errors-rate-limits-retries.md) · [Module overview](README.md) · [Next: Token Counting and Cost →](08-token-counting-and-cost.md)
+<!-- page-nav:end -->

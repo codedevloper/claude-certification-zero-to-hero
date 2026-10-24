@@ -232,4 +232,9 @@ that re-requests the whole itinerary rather than trying to stitch fragments.
 - [Fine-grained tool streaming](https://platform.claude.com/docs/en/agents-and-tools/tool-use/fine-grained-tool-streaming) (Anthropic docs)
 - [Latency optimisation](../15-production-operations/04-latency-optimisation.md) in this repository
 - [Lab 07 — API integration](../19-hands-on-labs/lab-07-api-integration/README.md)
-- Next page: [Vision, documents and citations](04-vision-documents-and-citations.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: The Messages API](02-messages-api.md) · [Module overview](README.md) · [Next: Vision, Documents, the Files API and Citations →](04-vision-documents-and-citations.md)
+<!-- page-nav:end -->

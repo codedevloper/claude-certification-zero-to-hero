@@ -19,16 +19,17 @@ contribution, human or AI-assisted, follows them. CI enforces the mechanical par
 5. **Current API rules** (as of 2026-10-24) that examples must respect:
    - Model IDs: `claude-opus-5-5` (default), `claude-sonnet-5-5`, `claude-haiku-5-5`, `claude-fable-5-1`.
      No date suffixes.
-   - Do not send `temperature`, `top_p` or `top_k`. They are not supported on current models.
+   - Do not send `temperature`, `top_p` or `top_k`. Claude Opus 5.5 rejects them; Sonnet 5.5 and Haiku 5.5 reject
+     non-default values; and on API version `2026-10-21` every model rejects them. Tune prompts or effort instead.
    - No assistant-message prefill. Use structured outputs (`output_config.format` or
      `client.messages.parse(...)`) or instructions to shape output.
-   - `tool_choice` of `any` or `tool` is rejected on current models. Use `auto` plus a clear instruction,
+   - `tool_choice` of `any` or `tool` returns a 400 on Claude Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1 (Haiku 5.5 still accepts it). Use `auto` plus a clear instruction,
      `strict: true` tools, or structured outputs.
    - Thinking is adaptive (`thinking={"type": "adaptive"}` or omitted). Depth is tuned with
      `output_config={"effort": "low" | "medium" | "high" | "xhigh" | "max"}`. `budget_tokens` is legacy.
    - Prompt caching is a prefix match: stable content first, `cache_control` breakpoints, check
      `usage.cache_read_input_tokens`.
-   - Always check `stop_reason` (`end_turn`, `max_tokens`, `tool_use`, `pause_turn`, `refusal`) before
+   - Always check `stop_reason` (`end_turn`, `max_tokens`, `stop_sequence`, `tool_use`, `pause_turn`, `refusal`, `model_context_window_exceeded`) before
      using `content`.
 
 ## 2. Original work and intellectual property
@@ -62,6 +63,9 @@ when it truly does not apply, and avoid repeating material covered elsewhere. Li
 ## Check your understanding <!-- 3–5 questions, answers in a <details> block -->
 ## Further reading          <!-- official docs first -->
 ```
+
+Reference pages that collect material rather than teach one topic (for example `12-ai-security/owasp-llm-mapping.md`)
+are exempt from this template.
 
 Each module folder has a `README.md` that gives the learning objectives, the page order, prerequisites,
 exam relevance (objective IDs) and a "next module" link.

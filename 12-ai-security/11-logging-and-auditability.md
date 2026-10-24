@@ -210,3 +210,9 @@ findings, screen blocks, refusals, and unusual volumes of retrieval per user.
 - In this repository: [observability](../15-production-operations/02-observability.md),
   [Lab 19: observability](../19-hands-on-labs/lab-19-observability/README.md),
   [Project 05: agentic investigation assistant](../20-real-world-projects/05-agentic-investigation-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Secrets Management for AI Systems](10-secrets-management.md) · [Module overview](README.md) · [Next: AI Governance →](12-ai-governance.md)
+<!-- page-nav:end -->

@@ -242,3 +242,9 @@ answer was last verified, and a policy change triggers re-verification of the af
 - In this repository: [RAG evaluation](../11-rag-and-knowledge-systems/06-rag-evaluation.md),
   [Lab 16](../19-hands-on-labs/lab-16-evaluation-framework/README.md),
   [Project 02](../20-real-world-projects/02-knowledge-base-qa-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Metrics](02-metrics.md) · [Module overview](README.md) · [Next: Grading Methods →](04-grading-methods.md)
+<!-- page-nav:end -->

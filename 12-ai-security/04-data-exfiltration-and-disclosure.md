@@ -235,3 +235,9 @@ Lab 15 reproduces this scenario offline.
 - MDN: [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 - In this repository: [Lab 15: sensitive data protection](../19-hands-on-labs/lab-15-sensitive-data-protection/README.md),
   [data governance and compliance](../13-enterprise-ai-architecture/05-data-governance-and-compliance.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Indirect Prompt Injection](03-indirect-prompt-injection.md) · [Module overview](README.md) · [Next: Tool Misuse and Excessive Agency →](05-tool-misuse-and-excessive-agency.md)
+<!-- page-nav:end -->

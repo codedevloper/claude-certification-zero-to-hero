@@ -224,3 +224,9 @@ workspace with its own spend limit. Audit logs record `sub`, `act_chain`, tool, 
 - In this repository: [multi-agent architecture](../10-agentic-ai/04-multi-agent-architecture.md),
   [managed agents and the Agent SDK](../10-agentic-ai/06-managed-agents-and-agent-sdk.md),
   [Lab 20](../19-hands-on-labs/lab-20-secure-enterprise-architecture/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: MCP Server Security](08-mcp-server-security.md) · [Module overview](README.md) · [Next: Secrets Management for AI Systems →](10-secrets-management.md)
+<!-- page-nav:end -->

@@ -1,6 +1,6 @@
 # Capabilities and Limitations
 
-> **Level:** Beginner · **Time:** ~30 min · **Exam relevance:** CCAO-F D4 (4.5), D6 (6.1, 6.4) · CCAR-P D5 (5.2), D6 (6.2, 6.3)
+> **Level:** Beginner · **Time:** ~30 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D4 (4.5), D6 (6.1, 6.4) · CCAR-P D5 (5.2), D6 (6.2, 6.3)
 
 ## In plain English
 
@@ -135,5 +135,9 @@ The recommendation is "augment the dispatch team", with measurable goals (time s
 
 - [Intro to Claude](https://platform.claude.com/docs/en/intro) (Anthropic documentation)
 - [Usage Policy](https://www.anthropic.com/legal/aup) (Anthropic)
-- Next module: [Module 02: Claude fundamentals](../02-claude-fundamentals/README.md)
-- Previous: [Hallucinations](06-hallucinations.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Hallucinations](06-hallucinations.md) · [Module overview](README.md) · [Next module: Module 02: Claude Fundamentals →](../02-claude-fundamentals/README.md)
+<!-- page-nav:end -->

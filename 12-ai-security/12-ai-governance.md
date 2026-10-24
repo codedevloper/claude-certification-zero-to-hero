@@ -254,3 +254,9 @@ if __name__ == "__main__":
 - In this repository: [Anthropic's safety approach](../02-claude-fundamentals/04-anthropic-safety-approach.md),
   [responsible use](../02-claude-fundamentals/05-responsible-use.md),
   [data governance and compliance](../13-enterprise-ai-architecture/05-data-governance-and-compliance.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Logging and Auditability](11-logging-and-auditability.md) · [Module overview](README.md) · [Next: Human Oversight →](13-human-oversight.md)
+<!-- page-nav:end -->

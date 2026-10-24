@@ -208,3 +208,9 @@ edits.
   [prompts and outputs troubleshooting](../24-troubleshooting/prompts-and-outputs.md),
   [RAG troubleshooting](../24-troubleshooting/rag.md),
   [Lab 11: RAG pipeline](../19-hands-on-labs/lab-11-rag-pipeline/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: A/B Testing and Iteration](05-ab-testing-and-iteration.md) · [Module overview](README.md) · [Next: Safety and Red-Team Evals →](07-safety-and-red-team-evals.md)
+<!-- page-nav:end -->

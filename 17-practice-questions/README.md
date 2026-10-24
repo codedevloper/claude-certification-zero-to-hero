@@ -75,7 +75,7 @@ Each domain file validates against [`schema/question-bank.schema.json`](schema/q
    validator fails a bank when the key is the longest option in more than 40% of items, or when one answer position
    is used far more or less often than chance.
 
-After adding or editing questions, run `python tools/shuffle_options.py` once. It gives every question a fair,
+After adding or editing questions, run `python tools/shuffle_options.py --ids <the IDs you changed>`. It gives every question a fair,
 reproducible answer order (seeded by the question ID) and remaps the key and rationales, so never refer to options by
 letter in question text.
 

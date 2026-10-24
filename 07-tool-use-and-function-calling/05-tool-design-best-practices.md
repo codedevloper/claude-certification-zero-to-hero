@@ -213,4 +213,9 @@ The platform team rewrote the surface as nine workflow-level tools, including `p
 - [Define tools: best practices](https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools) (Claude Docs)
 - [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (Anthropic Engineering)
 - [Building eval datasets](../14-evaluation-and-testing/03-building-eval-datasets.md) in Module 14
-- Previous: [Server tools](04-server-tools.md) · Next: [Tool security](06-tool-security.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Server Tools](04-server-tools.md) · [Module overview](README.md) · [Next: Tool Security →](06-tool-security.md)
+<!-- page-nav:end -->

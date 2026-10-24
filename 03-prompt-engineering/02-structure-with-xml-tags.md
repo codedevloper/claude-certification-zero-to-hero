@@ -226,4 +226,9 @@ reduced the problem; the output check catches what structure misses.
 - [Prompting best practices: structure prompts with XML tags](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) (Anthropic docs)
 - [Prompting best practices: long context prompting](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) (Anthropic docs)
 - [Prompt injection](../12-ai-security/02-prompt-injection.md) in this repository
-- Next page: [Examples and few-shot prompting](03-examples-few-shot.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Clear and Direct Instructions](01-clear-direct-instructions.md) · [Module overview](README.md) · [Next: Examples and Few-Shot Prompting →](03-examples-few-shot.md)
+<!-- page-nav:end -->

@@ -51,3 +51,14 @@ def test_markdown_adaptation(monkeypatch):
     out = hooks.on_page_markdown(md, Page, {}, FakeFiles(set()))
     assert out.splitlines()[0] == "<details markdown>"
     assert out.splitlines()[-2] == "<details>"  # code blocks are left alone
+
+
+def test_github_page_footer_is_hidden_on_the_site(monkeypatch):
+    class Page:
+        class file:
+            src_uri = "03-prompt-engineering/01-x.md"
+
+    monkeypatch.setattr(hooks, "_repo_root", build_site.ROOT)
+    md = "# T\n\nBody\n\n<!-- page-nav:start -->\n---\n\n[Next](02.md)\n<!-- page-nav:end -->\n"
+    out = hooks.on_page_markdown(md, Page, {}, FakeFiles(set()))
+    assert "page-nav" not in out and "[Next]" not in out and "Body" in out

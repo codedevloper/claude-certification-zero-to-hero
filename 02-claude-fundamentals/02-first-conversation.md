@@ -1,6 +1,6 @@
 # Your First Conversation
 
-> **Level:** Beginner · **Time:** ~40 min · **Exam relevance:** CCAO-F D1 (1.3), D3 (3.1, 3.4)
+> **Level:** Beginner · **Time:** ~40 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D1 (1.3), D3 (3.1, 3.4)
 
 ## In plain English
 
@@ -162,4 +162,9 @@ The team lead watches a few sessions and sees the difference. Staff who get good
 
 - [Claude Help Center](https://support.claude.com/) (official product help)
 - [Get started with Claude](https://support.claude.com/en/collections/4078531-claude) (Claude Help Center collection)
-- Previous: [How Claude works](01-how-claude-works.md) · Next: [Prompt fundamentals](03-prompt-fundamentals.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: How Claude Works](01-how-claude-works.md) · [Module overview](README.md) · [Next: Prompt Fundamentals →](03-prompt-fundamentals.md)
+<!-- page-nav:end -->

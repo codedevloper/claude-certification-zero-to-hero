@@ -262,3 +262,9 @@ is the point.
 - In this repository: [Module 14 metrics](../14-evaluation-and-testing/02-metrics.md),
   [building eval datasets](../14-evaluation-and-testing/03-building-eval-datasets.md),
   [lab-16 evaluation framework](../19-hands-on-labs/lab-16-evaluation-framework/README.md).
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Grounding and Citations](05-grounding-and-citations.md) · [Module overview](README.md) · [Next: RAG vs Long Context vs Agentic Search →](07-rag-vs-long-context.md)
+<!-- page-nav:end -->

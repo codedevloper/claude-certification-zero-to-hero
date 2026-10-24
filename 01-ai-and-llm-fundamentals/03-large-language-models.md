@@ -1,6 +1,6 @@
 # Large Language Models
 
-> **Level:** Beginner · **Time:** ~35 min · **Exam relevance:** CCAO-F D3 (3.2) · CCAR-P D2 (2.1), D5 (5.2)
+> **Level:** Beginner · **Time:** ~35 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D3 (3.2) · CCAR-P D2 (2.1), D5 (5.2)
 
 ## In plain English
 
@@ -161,4 +161,9 @@ An architect who understands how LLMs are built points out that pre-training a m
 
 - [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) (Anthropic documentation, includes knowledge cutoffs)
 - [Anthropic Transparency Hub](https://www.anthropic.com/transparency)
-- Previous: [Generative AI](02-generative-ai.md) · Next: [Tokens and tokenisation](04-tokens-and-tokenisation.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Generative AI](02-generative-ai.md) · [Module overview](README.md) · [Next: Tokens and Tokenisation →](04-tokens-and-tokenisation.md)
+<!-- page-nav:end -->

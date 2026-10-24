@@ -2,6 +2,8 @@
 
 > **Level:** Advanced · **Time:** ~45 min · **Exam relevance:** CCAR-P 3.1, 3.2, 5.1, 5.2, 5.3
 
+> **Scope:** this page covers the controls you build into each tool you define (inputs, permissions, confirmation). For the system-level risk of giving an agent too much power, see [tool misuse and excessive agency](../12-ai-security/05-tool-misuse-and-excessive-agency.md).
+
 ## In plain English
 
 Giving Claude a tool is giving it a key. A key to a filing cabinet is low risk. A key to the payments system is not. Tool security is about deciding which keys to hand over, making sure each key opens only the doors it should, and putting a person at the doors that matter.
@@ -243,4 +245,9 @@ This whole page is the security consideration. For deeper treatment, see:
 - [Handle tool calls: untrusted content warning](https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls) (Claude Docs)
 - [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) (NIST)
 - [OWASP LLM mapping for this repository](../12-ai-security/owasp-llm-mapping.md)
-- Previous: [Tool design best practices](05-tool-design-best-practices.md) · Back to the [module overview](README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Tool Design Best Practices](05-tool-design-best-practices.md) · [Module overview](README.md) · [Next module: Module 08: Model Context Protocol (MCP) →](../08-model-context-protocol/README.md)
+<!-- page-nav:end -->

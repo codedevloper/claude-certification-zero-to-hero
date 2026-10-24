@@ -220,6 +220,19 @@ flowchart TD
     Q3 -- no --> ML[Manual loop]
 ```
 
+## Example
+
+Three requests arrive at the same platform team, and each lands on a different approach:
+
+| Request | Deciding factors | Approach |
+|---|---|---|
+| "Classify each inbound support email and call our CRM lookup tool when needed" | Tools are yours, runs inside your service, short loops | **Tool Runner**: you write the tool functions; the SDK runs the loop |
+| "Run a nightly agent that reads the repo, edits files and opens a PR" | Needs a sandbox with bash and files, runs on a schedule, no servers to maintain | **Managed Agents**: Anthropic hosts the loop and the per-session workspace |
+| "Build an internal coding assistant that runs on our own build machines" | Needs Claude Code's built-in tools on infrastructure you control | **Claude Agent SDK**: the Claude Code harness as a library, deployed by you |
+
+A fourth case, a regulated workflow whose every step must pass a custom approval service, is where the **manual loop**
+earns its extra code: you own each request and can insert the approval call exactly where policy requires.
+
 ## Enterprise use case
 
 *Fabrikam Insurance* evaluated all four for three agents:
@@ -292,3 +305,9 @@ The architecture decision record for the first row is the kind of document descr
 - Claude Code docs — [Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview) and [quickstart](https://code.claude.com/docs/en/agent-sdk/quickstart)
 - In this repository: [the agent loop](03-the-agent-loop.md), [cloud platforms](../06-claude-api/07-cloud-platforms.md),
   [headless, CI and the Agent SDK](../09-claude-code/09-headless-ci-and-agent-sdk.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Human in the Loop](05-human-in-the-loop.md) · [Module overview](README.md) · [Next: Agent Reliability →](07-agent-reliability.md)
+<!-- page-nav:end -->

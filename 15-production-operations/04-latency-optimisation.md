@@ -203,3 +203,9 @@ under 1.5 seconds. These figures are illustrative.
 - In this repository: [streaming](../06-claude-api/03-streaming.md),
   [model selection](../05-claude-products-and-models/03-model-selection.md),
   [Project 01](../20-real-world-projects/01-document-summarisation-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Cost Optimisation](03-cost-optimisation.md) · [Module overview](README.md) · [Next: Reliability Engineering →](05-reliability-engineering.md)
+<!-- page-nav:end -->

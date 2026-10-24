@@ -215,7 +215,7 @@ explains it in depth. Product and API terms reflect Claude as of 2026-10-24; che
 - **Token**: The unit of text a model processes and the basis for cost and limits. See [01 · Tokens and tokenisation](01-ai-and-llm-fundamentals/04-tokens-and-tokenisation.md).
 - **Token passthrough**: Forwarding a client's token to downstream services; forbidden for MCP servers. See [08 · MCP security](08-model-context-protocol/05-mcp-security.md).
 - **Tool poisoning**: Malicious instructions hidden in tool descriptions or metadata. See [12 · MCP server security](12-ai-security/08-mcp-server-security.md).
-- **tool_choice**: The request setting for tool selection; `auto` or `none` on current models. See [07 · Defining tools](07-tool-use-and-function-calling/02-defining-tools.md).
+- **tool_choice**: The request setting for tool selection; `auto` or `none` on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1. See [07 · Defining tools](07-tool-use-and-function-calling/02-defining-tools.md).
 - **Tool Runner**: An SDK helper that runs the tool-use loop for tools you define. See [07 · The tool-use loop](07-tool-use-and-function-calling/03-the-tool-use-loop.md).
 - **tool_result**: The block returning a tool's output to Claude, matched to a `tool_use` id. See [07 · The tool-use loop](07-tool-use-and-function-calling/03-the-tool-use-loop.md).
 - **Tool use (function calling)**: Letting Claude request calls to functions you define. See [07 · Tool use fundamentals](07-tool-use-and-function-calling/01-tool-use-fundamentals.md).

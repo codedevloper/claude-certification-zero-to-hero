@@ -51,7 +51,7 @@ From the Help Center articles on [Projects](https://support.claude.com/en/articl
 | Memory | Each Project has its own memory. Inside a Project, Claude uses that Project's memory plus your account memory, but never other Projects' memories. Turn off "Use account memory" on a Project to isolate it fully |
 | Connectors | On Team and Enterprise plans, connectors are available only in private Projects |
 
-> **Unverified:** a newer beta version of Projects (starting with Claude Code) is available to some Pro and Max users and works differently. This page describes the standard version.
+> **New Projects beta (as of 2026-10-24):** a new version of Projects is rolling out in stages, starting with Claude Code, for selected Pro and Max subscribers; chat, Cowork, Team and Enterprise follow later ([What are Projects?](https://support.claude.com/en/articles/9517075-what-are-projects)). It works differently; this page describes the standard version.
 
 ### Writing effective Project instructions
 
@@ -215,4 +215,9 @@ Accuracy on the five test questions goes from three out of five to five out of f
 - [Using chat search and memory](https://support.claude.com/en/articles/11817273-using-claude-s-chat-search-and-memory-to-build-on-previous-context) (Claude Help Center)
 - [How large is the context window on paid Claude plans?](https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-claude-plans) (Claude Help Center)
 - Related: [System prompts and roles](../03-prompt-engineering/07-system-prompts-and-roles.md), [Memory and persistence](../04-context-engineering/04-memory-and-persistence.md), [Lab 05: Context management](../19-hands-on-labs/lab-05-context-management/README.md)
-- Previous: [Model selection](03-model-selection.md) · Next: [Artifacts and output formats](05-artifacts-and-output-formats.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Model Selection](03-model-selection.md) · [Module overview](README.md) · [Next: Artifacts and Output Formats →](05-artifacts-and-output-formats.md)
+<!-- page-nav:end -->

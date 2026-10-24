@@ -81,7 +81,7 @@ When you send `tools`, the API builds a special system prompt that lists the too
 
 1. **The tool description.** This is by far the most important input. Anthropic's documentation describes detailed descriptions as the main factor in tool performance.
 2. **Your system prompt and user message.** "Use the order tool to check status" makes a call more likely.
-3. **`tool_choice`.** `auto` (the default when tools are present) lets Claude decide; `none` forbids tools. The forcing options `any` and `tool` are rejected on the current models; see [page 2](02-defining-tools.md#controlling-when-claude-calls-a-tool).
+3. **`tool_choice`.** `auto` (the default when tools are present) lets Claude decide; `none` forbids tools. The forcing options `any` and `tool` return a 400 on Claude Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1 (Haiku 5.5 accepts them); see [page 2](02-defining-tools.md#controlling-when-claude-calls-a-tool).
 
 Claude often writes a short sentence before a tool call ("I'll check that order for you"). Treat that text as ordinary output. Do not parse it to find out what Claude is doing: read the `tool_use` blocks.
 
@@ -198,4 +198,9 @@ The [tools and agents troubleshooting page](../24-troubleshooting/tools-and-agen
 - [Define tools](https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools) (Claude Docs)
 - [Handle tool calls](https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls) (Claude Docs)
 - [Tool reference](https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-reference) (Claude Docs)
-- Next: [Defining tools](02-defining-tools.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Defining Tools →](02-defining-tools.md)
+<!-- page-nav:end -->

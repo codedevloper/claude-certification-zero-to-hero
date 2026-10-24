@@ -295,3 +295,9 @@ the rejected alternative of a larger embedding model (higher cost, no improvemen
 - Claude docs, [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings) (rerankers section).
 - Next: [grounding and citations](05-grounding-and-citations.md). Practise hybrid retrieval in
   [lab-11](../19-hands-on-labs/lab-11-rag-pipeline/README.md).
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Embeddings and Indexing](03-embeddings-and-indexing.md) · [Module overview](README.md) · [Next: Grounding and Citations →](05-grounding-and-citations.md)
+<!-- page-nav:end -->

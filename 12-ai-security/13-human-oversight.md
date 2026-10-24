@@ -207,3 +207,9 @@ The redesign:
 - In this repository: [human in the loop](../10-agentic-ai/05-human-in-the-loop.md),
   [Lab 13](../19-hands-on-labs/lab-13-human-in-the-loop/README.md),
   [Project 05: agentic investigation assistant](../20-real-world-projects/05-agentic-investigation-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: AI Governance](12-ai-governance.md) · [Module overview](README.md) · [Next: Enterprise Deployment Controls →](14-enterprise-deployment-controls.md)
+<!-- page-nav:end -->

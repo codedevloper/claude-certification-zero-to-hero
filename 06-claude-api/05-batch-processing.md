@@ -102,7 +102,10 @@ SYSTEM = [{
     "type": "text",
     "text": "Classify insurance claim notes into exactly one category: water_damage, theft, "
             "vehicle, liability, other. Use 'other' when unsure.",
-    "cache_control": {"type": "ephemeral", "ttl": "1h"},   # shared prefix across the batch
+    # Caching only works once the shared prefix reaches the model's minimum (512 tokens on current
+    # models). A two-line prompt like this one will not be cached; in real use, put your full
+    # classification guidelines and examples here so the prefix is long enough to reuse.
+    "cache_control": {"type": "ephemeral", "ttl": "1h"},
 }]
 SCHEMA = {
     "type": "object",
@@ -239,4 +242,9 @@ token cost, and the engineering team retired its home-grown queue.
 - [Pricing](https://platform.claude.com/docs/en/about-claude/pricing) (Anthropic docs)
 - [Cost optimisation](../15-production-operations/03-cost-optimisation.md) and [rate limits and capacity](../15-production-operations/06-rate-limits-and-capacity.md) in this repository
 - [Lab 17 — Cost optimisation](../19-hands-on-labs/lab-17-cost-optimisation/README.md)
-- Next page: [Errors, rate limits and retries](06-errors-rate-limits-retries.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Vision, Documents, the Files API and Citations](04-vision-documents-and-citations.md) · [Module overview](README.md) · [Next: Errors, Rate Limits and Retries →](06-errors-rate-limits-retries.md)
+<!-- page-nav:end -->

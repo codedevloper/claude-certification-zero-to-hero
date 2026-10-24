@@ -236,4 +236,9 @@ questions. Reviewers now spend their time on the flagged clauses rather than re-
 - [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows) (Anthropic docs)
 - [Grounding and citations](../11-rag-and-knowledge-systems/05-grounding-and-citations.md) in this repository
 - [Lab 05 — Context management](../19-hands-on-labs/lab-05-context-management/README.md)
-- Next page: [Prompt caching](03-prompt-caching.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: What Is Context Engineering?](01-what-is-context-engineering.md) · [Module overview](README.md) · [Next: Prompt Caching →](03-prompt-caching.md)
+<!-- page-nav:end -->

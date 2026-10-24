@@ -212,4 +212,9 @@ examples in the same repository as the prompt and review both together.
 - [Prompting best practices: use examples effectively](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) (Anthropic docs)
 - [Structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs) (Anthropic docs)
 - [Building evaluation datasets](../14-evaluation-and-testing/03-building-eval-datasets.md) in this repository
-- Next page: [Reasoning and thinking](04-reasoning-and-thinking.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Structure with XML Tags](02-structure-with-xml-tags.md) · [Module overview](README.md) · [Next: Reasoning and Thinking →](04-reasoning-and-thinking.md)
+<!-- page-nav:end -->

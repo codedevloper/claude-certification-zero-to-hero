@@ -245,3 +245,9 @@ review questions by linking ADRs, and the time to approve new AI use cases fell 
   [lifecycle management](09-lifecycle-management.md)
 - Practice: write ADRs for the [Lab 20](../19-hands-on-labs/lab-20-secure-enterprise-architecture/README.md) design and for one of the
   [real-world projects](../20-real-world-projects/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Stakeholder Communication](06-stakeholder-communication.md) · [Module overview](README.md) · [Next: Business Value and ROI →](08-business-value-and-roi.md)
+<!-- page-nav:end -->

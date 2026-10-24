@@ -227,4 +227,9 @@ matched the start, and per-task cost fell substantially.
 - [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows) (Anthropic docs)
 - [Token counting](https://platform.claude.com/docs/en/build-with-claude/token-counting) (Anthropic docs)
 - [RAG versus long context](../11-rag-and-knowledge-systems/07-rag-vs-long-context.md) in this repository
-- Next page: [Managing long context](02-managing-long-context.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Managing Long Context →](02-managing-long-context.md)
+<!-- page-nav:end -->

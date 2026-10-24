@@ -1,6 +1,6 @@
 # Responsible Use
 
-> **Level:** Beginner · **Time:** ~35 min · **Exam relevance:** CCAO-F D2 (2.4), D6 (6.1, 6.2, 6.3, 6.4) · CCAR-P D5 (5.3, 5.4, 5.5)
+> **Level:** Beginner · **Time:** ~35 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D2 (2.4), D6 (6.1, 6.2, 6.3, 6.4) · CCAR-P D5 (5.3, 5.4, 5.5)
 
 ## In plain English
 
@@ -189,4 +189,9 @@ Every user completes a 20-minute training session before access is granted, and 
 - [Anthropic Privacy Center](https://privacy.claude.com/) (Anthropic)
 - [Claude Help Center](https://support.claude.com/) for plan-specific data and admin settings
 - Related: [AI governance](../12-ai-security/12-ai-governance.md), [Data governance and compliance](../13-enterprise-ai-architecture/05-data-governance-and-compliance.md)
-- Previous: [Anthropic's safety approach](04-anthropic-safety-approach.md) · Next module: [Module 03: Prompt engineering](../03-prompt-engineering/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Anthropic's Safety Approach](04-anthropic-safety-approach.md) · [Module overview](README.md) · [Next module: Module 03 — Prompt Engineering →](../03-prompt-engineering/README.md)
+<!-- page-nav:end -->

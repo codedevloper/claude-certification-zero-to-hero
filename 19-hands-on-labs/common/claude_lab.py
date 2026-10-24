@@ -164,7 +164,7 @@ def _validate_request(request: dict) -> None:
             raise ValueError(f"'{banned}' is not supported on current Claude models; tune prompts or effort instead")
     choice = (request.get("tool_choice") or {}).get("type")
     if choice in {"any", "tool"}:
-        raise ValueError("forced tool_choice is not supported on current models; use 'auto' with a clear instruction")
+        raise ValueError("forced tool_choice is not supported on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1; use 'auto' with a clear instruction")
 
 
 # --------------------------------------------------------------------------- public helpers

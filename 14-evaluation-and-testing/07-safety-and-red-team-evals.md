@@ -250,3 +250,9 @@ point them at your local test collector. [Lab 14](../19-hands-on-labs/lab-14-pro
   [Lab 14](../19-hands-on-labs/lab-14-prompt-injection-testing/README.md),
   [Lab 15](../19-hands-on-labs/lab-15-sensitive-data-protection/README.md),
   [security interview questions](../21-interview-preparation/security-questions.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Diagnosing Failures](06-diagnosing-failures.md) · [Module overview](README.md) · [Next module: Module 15: Production Operations →](../15-production-operations/README.md)
+<!-- page-nav:end -->

@@ -252,3 +252,9 @@ about patient-data handling show the policy, version and section.
 - Claude docs, [Search results](https://platform.claude.com/docs/en/build-with-claude/search-results).
 - In this repository: [vision, documents and citations](../06-claude-api/04-vision-documents-and-citations.md),
   [lab-04 document-grounded Q&A](../19-hands-on-labs/lab-04-document-grounded-qa/README.md).
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Retrieval Strategies](04-retrieval-strategies.md) · [Module overview](README.md) · [Next: RAG Evaluation →](06-rag-evaluation.md)
+<!-- page-nav:end -->

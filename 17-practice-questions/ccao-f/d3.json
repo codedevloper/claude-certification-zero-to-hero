@@ -335,23 +335,23 @@
       "objective": "CCAO-F-3.3",
       "type": "single",
       "difficulty": "intermediate",
-      "category": "troubleshooting",
-      "scenario": "Lena at Southridge Video switched from a balanced model to a lighter one to stretch her usage. Short rewrites are fine, but her multi-step budget variance explanations now skip steps and miss interactions between line items.",
-      "question": "What should she do?",
+      "category": "cost-performance",
+      "scenario": "Kofi, a compliance manager at Wide World Importers, must send a response letter to a customs regulator by Friday, three days away. The letter has to reconcile figures from six shipment files and explain two exceptions precisely. A colleague suggests drafting it on the fastest, lightest model because \"it answers in seconds\".",
+      "question": "Which approach best balances speed and quality for this deliverable?",
       "options": {
-        "A": "Switch every task, including short rewrites, back to the most capable model available.",
-        "B": "Use the more capable model for variance analyses and the lighter model for short rewrites.",
-        "C": "Keep the lighter model for everything and add \"think carefully, step by step\" to the variance prompts to recover the quality.",
-        "D": "Stop doing variance analyses with Claude altogether."
+        "A": "Use a more capable model for this letter; a few extra seconds per reply matter little against a three-day deadline.",
+        "B": "Use the fastest model for the whole letter and ask it to double-check its own figures before he sends the final version.",
+        "C": "Use the fastest model to draft each exception separately, then paste the sections together and edit the joins himself.",
+        "D": "Use the fastest model now so he has a full draft today, then spend the remaining days editing it line by line."
       },
       "answer": [
-        "B"
+        "A"
       ],
-      "explanation": "Model choice can be made per task. When a lighter model degrades quality on complex reasoning, move that task back to a more capable model while keeping simpler tasks on the efficient option.",
+      "explanation": "Lighter models trade some reasoning quality for speed and lower usage. That trade pays off for routine, low-stakes work, but this letter is high-stakes, must reconcile several sources, and time is not the constraint. A more capable model lowers the risk of errors and the editing needed, while the response-time saving from a lighter model is negligible over three days.",
       "why_incorrect": {
-        "A": "Short rewrites are working fine; moving them to the heaviest model spends usage unnecessarily.",
-        "C": "Asking for careful reasoning may help a little, but the evidence shows the lighter model struggles with this multi-step task; moving it to a more capable model is the reliable fix.",
-        "D": "The task worked before on a more capable model; the issue is the model choice, not the use case."
+        "B": "Self-checking can catch some slips, but it does not give a lighter model the reasoning depth to reconcile six files reliably, and the speed gained is not needed.",
+        "C": "Splitting the work loses the cross-file reconciliation that ties the exceptions together, and the joins add editing time.",
+        "D": "A fast but weaker draft shifts effort into days of line-by-line editing, which costs far more time than the model's response speed saves."
       },
       "module": "05-claude-products-and-models/03-model-selection.md",
       "references": [

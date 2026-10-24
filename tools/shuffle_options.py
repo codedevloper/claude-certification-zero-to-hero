@@ -5,11 +5,13 @@ Options are permuted per question with a seed derived from the question ID, then
 `answer` and `why_incorrect` keys are remapped. Questions whose text refers to options by
 letter are left alone (and reported), because shuffling would make those references wrong.
 
-  python tools/shuffle_options.py            # shuffle every bank in place
-  python tools/shuffle_options.py --check    # report position balance only
+  python tools/shuffle_options.py --all                   # reshuffle every question (rarely needed)
+  python tools/shuffle_options.py --ids CCAR-P-D3-027 ...  # shuffle only new or rewritten questions
+  python tools/shuffle_options.py --check                 # report position balance only
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import random
@@ -40,13 +42,13 @@ def shuffle(q: dict) -> dict:
     return q
 
 
-def main(check: bool) -> int:
+def main(check: bool, only: set[str] | None = None) -> int:
     skipped = []
     by_track: dict[str, list[dict]] = {}
     for path in question_files():
         bank = json.loads(path.read_text(encoding="utf-8"))
         for q in bank["questions"]:
-            if not check:
+            if not check and (only is None or q["id"] in only):
                 if refers_to_letters(q):
                     skipped.append(q["id"])
                 else:
@@ -65,4 +67,12 @@ def main(check: bool) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main("--check" in sys.argv))
+    parser = argparse.ArgumentParser(description="Give practice questions a fair, reproducible answer order.")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--check", action="store_true", help="report position balance only; change nothing")
+    group.add_argument("--ids", nargs="+", metavar="ID", help="shuffle only these questions (new or rewritten)")
+    group.add_argument("--all", action="store_true", help="reshuffle every question (rarely needed)")
+    args = parser.parse_args()  # unknown flags exit with an error instead of shuffling everything
+    if not (args.check or args.ids or args.all):
+        parser.error("choose --check, --ids ID [ID ...] or --all")
+    sys.exit(main(args.check, set(args.ids) if args.ids else None))

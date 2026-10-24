@@ -248,3 +248,9 @@ open-ended and mistakes were cheap to catch (read-only questions), and withheld 
 - Claude API docs — [Tool use overview](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview)
 - In this repository: [workflow patterns](02-workflow-patterns.md), [architecture patterns](../13-enterprise-ai-architecture/02-architecture-patterns.md),
   [task decomposition and chaining](../03-prompt-engineering/05-task-decomposition-and-chaining.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Workflow Patterns →](02-workflow-patterns.md)
+<!-- page-nav:end -->

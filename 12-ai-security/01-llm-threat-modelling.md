@@ -248,3 +248,9 @@ The resulting threat model goes into the design review alongside the
 - OWASP: [Threat Modeling Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html)
 - In this repository: [tool security](../07-tool-use-and-function-calling/06-tool-security.md),
   [Lab 20: secure enterprise architecture](../19-hands-on-labs/lab-20-secure-enterprise-architecture/README.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Prompt Injection →](02-prompt-injection.md)
+<!-- page-nav:end -->

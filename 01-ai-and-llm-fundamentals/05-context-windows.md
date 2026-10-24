@@ -1,6 +1,6 @@
 # Context Windows
 
-> **Level:** Beginner · **Time:** ~30 min · **Exam relevance:** CCAO-F D3 (3.4), D5 (5.1) · CCAR-P D2 (2.4), D3 (3.8)
+> **Level:** Beginner · **Time:** ~30 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D3 (3.4), D5 (5.1) · CCAR-P D2 (2.4), D3 (3.8)
 
 ## In plain English
 
@@ -183,4 +183,9 @@ Answers become faster and more accurate, and usage drops. This is the pattern CC
 - [How large is the context window on paid Claude plans?](https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-claude-plans) (Claude Help Center)
 - [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (Anthropic engineering blog)
 - Deeper treatment: [Module 04: Context engineering](../04-context-engineering/README.md)
-- Previous: [Tokens and tokenisation](04-tokens-and-tokenisation.md) · Next: [Hallucinations](06-hallucinations.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Tokens and Tokenisation](04-tokens-and-tokenisation.md) · [Module overview](README.md) · [Next: Hallucinations →](06-hallucinations.md)
+<!-- page-nav:end -->

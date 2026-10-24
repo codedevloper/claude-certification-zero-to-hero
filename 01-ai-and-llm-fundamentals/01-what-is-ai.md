@@ -1,6 +1,6 @@
 # What is AI?
 
-> **Level:** Beginner · **Time:** ~25 min · **Exam relevance:** CCAO-F D4 (4.5), D6 (6.1) · CCAR-P D6 (6.2)
+> **Level:** Beginner · **Time:** ~25 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D4 (4.5), D6 (6.1) · CCAR-P D6 (6.2)
 
 ## In plain English
 
@@ -131,4 +131,9 @@ Understanding the family of terms answers the question. The fraud model is a nar
 
 - [Intro to Claude](https://platform.claude.com/docs/en/intro) (Anthropic documentation)
 - [Claude Academy](https://academy.claude.com/): free self-paced courses from Anthropic
-- Next page: [Generative AI](02-generative-ai.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Generative AI →](02-generative-ai.md)
+<!-- page-nav:end -->

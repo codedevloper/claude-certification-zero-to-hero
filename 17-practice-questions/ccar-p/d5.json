@@ -562,6 +562,37 @@
         "https://www.nist.gov/itl/ai-risk-management-framework",
         "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
       ]
+    },
+    {
+      "id": "CCAR-P-D5-020",
+      "objective": "CCAR-P-5.4",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Kestrel Payments' risk committee requires that model inference for a new dispute-analysis service run on Amazon Bedrock under the company's existing AWS agreements and controls. The prototype, built on the Claude API, uses prompt caching, strict tool use, citations on policy PDFs, the server-side web search tool for current card-network bulletins, and the Files API to upload policy PDFs once and reference them by ID.",
+      "question": "Which TWO parts of the design must be re-planned before committing to Bedrock, as of 2026-10-24? (Choose 2.)",
+      "options": {
+        "A": "Prompt caching of the shared system prompt and the policy documents",
+        "B": "The server-side web search tool for current card-network bulletins",
+        "C": "Strict tool use to keep dispute-record tool arguments schema-valid",
+        "D": "Uploading policy PDFs once through the Files API and citing them by ID",
+        "E": "Citations on the policy PDFs so analysts can trace claims to a page"
+      },
+      "answer": [
+        "B",
+        "D"
+      ],
+      "explanation": "Feature availability differs by platform, so a compliance-driven platform choice must be checked against the design. As of 2026-10-24, Amazon Bedrock supports prompt caching, structured outputs and strict tool use, PDF input and citations, but not Anthropic's server-side web search tool or the Files API. The team needs another source of current bulletins, such as its own retrieval tool, and must send the PDFs in each request. Claude Platform on AWS, which Anthropic operates, is a separate offering whose fit with the committee's requirement would need its own review.",
+      "why_incorrect": {
+        "A": "Prompt caching is supported on Amazon Bedrock.",
+        "C": "Structured outputs and strict tool use are supported on Amazon Bedrock.",
+        "E": "PDF input and citations are supported on Amazon Bedrock."
+      },
+      "module": "06-claude-api/07-cloud-platforms.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/claude-on-amazon-bedrock"
+      ]
     }
   ]
 }

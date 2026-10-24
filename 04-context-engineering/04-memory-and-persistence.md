@@ -292,4 +292,9 @@ memory, which Contoso enabled organisation-wide after its privacy review.
 - [Memory and chat search in the Claude apps](https://support.claude.com/en/articles/11817273) (Claude Help Center)
 - [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) (Anthropic engineering)
 - [Claude Code memory and CLAUDE.md](../09-claude-code/03-claude-md-and-memory.md) in this repository
-- Next page: [Compaction and context editing](05-compaction-and-context-editing.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Prompt Caching](03-prompt-caching.md) · [Module overview](README.md) · [Next: Compaction and Context Editing →](05-compaction-and-context-editing.md)
+<!-- page-nav:end -->

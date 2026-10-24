@@ -68,7 +68,7 @@ When a tool fails, still return a `tool_result`, with `"is_error": true` and a m
 
 Instructive errors let Claude recover: retry with corrected input, try another tool, or ask the user. "Error 500" does not. Anthropic's documentation notes that for invalid or missing parameters Claude will typically retry two or three times with corrections before apologising to the user.
 
-### Forced tool use is gone on current models
+### Forced tool use is gone on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1
 
 Older loops sometimes forced the first call with `tool_choice: {"type": "tool", ...}`. On Claude Opus 5.5, Claude Sonnet 5.5 and Claude Fable 5.1 that returns a 400. Use `auto`, instruct clearly, and check whether a `tool_use` came back. See [Defining tools](02-defining-tools.md#controlling-when-claude-calls-a-tool).
 
@@ -298,4 +298,9 @@ More cases: [tools and agents troubleshooting](../24-troubleshooting/tools-and-a
 - [Tool Runner](https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-runner) (Claude Docs)
 - [Handling stop reasons](https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons) (Claude Docs)
 - [The agent loop](../10-agentic-ai/03-the-agent-loop.md) in Module 10
-- Previous: [Defining tools](02-defining-tools.md) · Next: [Server tools](04-server-tools.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Defining Tools](02-defining-tools.md) · [Module overview](README.md) · [Next: Server Tools →](04-server-tools.md)
+<!-- page-nav:end -->

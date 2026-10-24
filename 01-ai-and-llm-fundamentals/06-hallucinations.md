@@ -1,6 +1,6 @@
 # Hallucinations
 
-> **Level:** Beginner · **Time:** ~35 min · **Exam relevance:** CCAO-F D2 (2.1, 2.2, 2.3, 2.4) · CCAR-P D4 (4.4), D5 (5.2, 5.3)
+> **Level:** Beginner · **Time:** ~35 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D2 (2.1, 2.2, 2.3, 2.4) · CCAR-P D4 (4.4), D5 (5.2, 5.3)
 
 ## In plain English
 
@@ -173,4 +173,9 @@ This is the pattern to remember: ground, flag, verify, and scale the human revie
 - [Reduce hallucinations](https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations) (Anthropic documentation)
 - [Citations](https://platform.claude.com/docs/en/build-with-claude/citations) (Anthropic documentation)
 - Related: [Grounding and citations](../11-rag-and-knowledge-systems/05-grounding-and-citations.md), [Diagnosing failures](../14-evaluation-and-testing/06-diagnosing-failures.md)
-- Previous: [Context windows](05-context-windows.md) · Next: [Capabilities and limitations](07-capabilities-and-limitations.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Context Windows](05-context-windows.md) · [Module overview](README.md) · [Next: Capabilities and Limitations →](07-capabilities-and-limitations.md)
+<!-- page-nav:end -->

@@ -266,4 +266,9 @@ from Anthropic, and to treat installing a Skill like installing software.
 - [Equipping agents for the real world with Agent Skills](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills) (Anthropic engineering)
 - [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) (Anthropic engineering, 2025-09-29)
 - [Commands, Skills and subagents in Claude Code](../09-claude-code/05-commands-skills-subagents.md) in this repository
-- Next module: [Module 05 — Claude Products and Models](../05-claude-products-and-models/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Compaction and Context Editing](05-compaction-and-context-editing.md) · [Module overview](README.md) · [Next module: Module 05: Claude Products and Models →](../05-claude-products-and-models/README.md)
+<!-- page-nav:end -->

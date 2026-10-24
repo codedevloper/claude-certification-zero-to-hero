@@ -163,4 +163,9 @@ See [Claude Code troubleshooting](../24-troubleshooting/claude-code.md).
 - [How Claude Code works](https://code.claude.com/docs/en/how-claude-code-works) (Claude Code Docs)
 - [Tools reference](https://code.claude.com/docs/en/tools-reference) (Claude Code Docs)
 - [Claude Code cheat sheet](../22-cheat-sheets/claude-code.md)
-- Next: [Setup and first session](02-setup-and-first-session.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Setup and First Session →](02-setup-and-first-session.md)
+<!-- page-nav:end -->

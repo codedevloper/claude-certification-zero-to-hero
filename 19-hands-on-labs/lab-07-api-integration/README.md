@@ -232,7 +232,7 @@ gateway records delays instead of sleeping, so the whole run finishes in well un
 | `APITimeoutError` on long answers | Stream the response instead of raising the timeout far above normal. |
 | A user sees two different answers | A stream was retried after tokens were already shown. Retry streams only before the first token. |
 | `AttributeError: _request_id` | You are reading it from a mock or a dict. Use `getattr(message, "_request_id", None)`. |
-| `BadRequestError` mentioning `temperature`, `budget_tokens` or `tool_choice` | These are rejected on current models. Remove them; use `effort`, adaptive thinking and `tool_choice: auto`. |
+| `BadRequestError` mentioning `temperature`, `budget_tokens` or `tool_choice` | `budget_tokens` is rejected on current models; `temperature` is rejected on Opus 5.5 (and on every model under API version `2026-10-21`); forced `tool_choice` is rejected on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1. Remove them; use `effort`, adaptive thinking and `tool_choice: auto`. |
 
 See also [API errors](../../24-troubleshooting/api-errors.md) and
 [Rate limits and capacity](../../15-production-operations/06-rate-limits-and-capacity.md).

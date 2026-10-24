@@ -112,7 +112,8 @@ describes coverage at the feature level. When checked on 2026-10-24 it stated, i
 - Covered API features included the Messages API (with features such as prompt caching, structured outputs, memory, web search, bash and text
   editor tools), token counting, the Models API and computer use.
 - **Not covered** on the API: the Message Batches API, the Files API, the Skills API, code execution and web fetch, plus external MCP servers
-  when data goes to third parties. Beta features and the non-ZDR Console were also listed as not covered.
+  when data goes to third parties. Beta features and the Claude Console itself are excluded. Claude Code used with a Console API key is covered only
+  through zero data retention (ZDR) on that Console organisation, not through the HIPAA configuration.
 - Some models ("Covered Models") require 30-day retention and are not available under zero data retention (ZDR) unless Anthropic authorises it.
 - Coverage for some features depended on accepting a BAA version after a stated date.
 
@@ -125,9 +126,11 @@ Amazon Bedrock in AWS GovCloud (US)
 workloads through Google Cloud's Vertex AI ([announcement](https://www.anthropic.com/news/claude-on-google-cloud-fedramp-high)). In both cases
 the authorisation belongs to the cloud provider's service boundary; check that the specific model, region and features you plan to use are inside it.
 
-> **Unverified:** Third-party reports describe a "Claude for Government" offering and FedRAMP High availability for Claude Code and other
-> Claude apps for government customers. These could not be confirmed against an official Anthropic page during this review (2026-10-24).
-> Ask Anthropic or check the Trust Center before relying on them.
+**Claude for Government.** Anthropic announced on 2026-09-30 that
+[Claude for Government is generally available](https://claude.com/blog/claude-for-government-is-now-generally-available)
+to federal and state agencies, running in a FedRAMP High authorised environment. The Claude Code CLI was announced in
+early access at the same time, so confirm that each specific capability you plan to use is inside the authorised
+boundary before relying on it.
 
 > **Unverified:** The exact list of regions and data-residency commitments for each platform changes frequently and was not verified
 > here. Confirm with the platform documentation and your contract.
@@ -260,3 +263,9 @@ appointment-cancellation reasons.
 - In this repository: [AI governance](../12-ai-security/12-ai-governance.md), [human oversight](../12-ai-security/13-human-oversight.md),
   [Lab 15: Sensitive data protection](../19-hands-on-labs/lab-15-sensitive-data-protection/README.md),
   [Lab 20](../19-hands-on-labs/lab-20-secure-enterprise-architecture/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Integration Patterns](04-integration-patterns.md) · [Module overview](README.md) · [Next: Stakeholder Communication →](06-stakeholder-communication.md)
+<!-- page-nav:end -->

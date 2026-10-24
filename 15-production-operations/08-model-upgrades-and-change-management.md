@@ -55,7 +55,7 @@ API parameters can be deprecated too. For example, as of the `2026-10-21` API ve
 
 | Area | Example changes to check |
 |---|---|
-| Request surface | Parameters rejected (sampling parameters, assistant prefill, forced `tool_choice` on current models, legacy thinking budgets), thinking and effort defaults differ by model |
+| Request surface | Parameters rejected (sampling parameters, assistant prefill, forced `tool_choice` on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1, legacy thinking budgets), thinking and effort defaults differ by model |
 | Tokenizer | Same text may produce a different number of tokens; re-baseline costs, limits and `max_tokens` with `count_tokens` |
 | Output behaviour | Length, formatting, verbosity, how literally instructions are followed |
 | Tool use | More or fewer tool calls, parallel calls, different argument formatting (always parse with a JSON parser) |
@@ -116,8 +116,8 @@ from datetime import date
 
 # Maintain from https://platform.claude.com/docs/en/about-claude/model-deprecations (checked 2026-10-24).
 LIFECYCLE = {
-    "claude-sonnet-4-5-20250929": {"state": "deprecated", "retires": date(2026, 11, 30),
-                                   "replacement": "claude-sonnet-5-5"},
+    # Deprecated, retirement date not yet announced (shown as "TBD" on the deprecations page).
+    "claude-sonnet-4-20250514": {"state": "deprecated", "retires": None, "replacement": "claude-sonnet-5-5"},
     "claude-opus-5-5": {"state": "active", "retires": None, "replacement": None},
     "claude-sonnet-5-5": {"state": "active", "retires": None, "replacement": None},
 }
@@ -132,6 +132,9 @@ def retirement_findings(configured: dict[str, str], today: date) -> list[str]:
             out.append(f"{route}: model {model} not in lifecycle table; check the deprecations page")
         elif info["retires"] and (info["retires"] - today).days <= WARN_DAYS:
             out.append(f"{route}: {model} retires {info['retires']}; migrate to {info['replacement']}")
+        elif info["state"] == "deprecated":
+            out.append(f"{route}: {model} is deprecated (retirement date not yet announced); "
+                       f"plan the move to {info['replacement']}")
     return out
 
 
@@ -148,7 +151,7 @@ def regression_findings(baseline: dict, candidate: dict, tolerances: dict) -> li
 
 
 if __name__ == "__main__":
-    configured = {"triage": "claude-sonnet-4-5-20250929", "answer": "claude-opus-5-5"}
+    configured = {"triage": "claude-sonnet-4-20250514", "answer": "claude-opus-5-5"}
     print(retirement_findings(configured, today=date(2026, 10, 24)))
     baseline = {"rubric_pass": 0.91, "p95_latency_s": 6.2, "cost_per_task": 0.012,
                 "attack_success_rate": 0.0, "over_refusal_rate": 0.012}
@@ -232,3 +235,9 @@ The migration finishes a month before retirement, with lower cost per task than 
   [model selection](../05-claude-products-and-models/03-model-selection.md),
   [lifecycle management](../13-enterprise-ai-architecture/09-lifecycle-management.md),
   [Lab 16](../19-hands-on-labs/lab-16-evaluation-framework/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Incident Response for AI Systems](07-incident-response.md) · [Module overview](README.md) · [Next module: 16 · Certification Tracks →](../16-certification-tracks/README.md)
+<!-- page-nav:end -->

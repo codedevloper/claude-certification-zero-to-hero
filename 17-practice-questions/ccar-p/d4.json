@@ -536,30 +536,31 @@
     },
     {
       "id": "CCAR-P-D4-019",
-      "objective": "CCAR-P-4.5",
+      "objective": "CCAR-P-4.1",
       "type": "single",
-      "difficulty": "advanced",
-      "category": "architecture",
-      "scenario": "Litware's document-QA service shows p95 latency of 9 seconds. Profiling shows 70% of time is input processing of a large, unchanging instruction and reference block, and 30% is output generation of short answers.",
-      "question": "Which optimisation targets the dominant latency component?",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Litware's dashboard reports one latency figure: mean end-to-end response time across all its Claude calls, which fell from 3.4 to 2.9 seconds last month. Yet complaints about the streaming support chat rose, mostly at peak hours. The same figure also averages in thousands of short, non-streaming classification calls.",
+      "question": "Which latency metrics should the team define for the support chat?",
       "options": {
-        "A": "Ask for shorter answers and stream them, so output generation finishes sooner and users see text earlier",
-        "B": "Cache the unchanging instruction and reference block so repeated requests skip reprocessing it",
-        "C": "Split the reference block across parallel requests and merge the partial answers, so each request processes less input",
-        "D": "Move to fast mode, which raises output tokens per second and shortens the generation stage of each request"
+        "A": "Per-route time to first token with p95 and p99 percentiles for the chat, tracked by hour alongside full completion time",
+        "B": "Mean end-to-end latency for the chat route on its own, sampled every minute instead of daily so peak spikes are visible",
+        "C": "Median end-to-end latency per route with the slowest 5% of requests excluded as outliers, so the trend is not distorted",
+        "D": "Average output tokens per second for each route, since generation speed determines how quickly users can read complete answers"
       },
       "answer": [
-        "B"
+        "A"
       ],
-      "explanation": "Optimise the dominant stage first. When most latency comes from processing a large, unchanging input prefix, prompt caching reduces time to first token on cache hits as well as cost. Output-side measures (shorter answers, faster output speed) would address only 30% of the time. Splitting the reference block across parallel requests would lose shared context.",
+      "explanation": "Users of a streaming chat feel the wait before text appears, so time to first token is the primary latency metric for that route, and complaints concentrated at peak hours point to the tail rather than the mean. Defining metrics per route stops fast, high-volume classification calls from masking the chat, and percentiles such as p95 and p99 expose the slow experiences that means and medians hide.",
       "why_incorrect": {
-        "A": "Output is 30% of latency; this leaves the dominant input-processing cost untouched.",
-        "C": "Parallel fragments lose shared context, multiply requests and still reprocess the full block every time.",
-        "D": "Fast mode speeds output generation, which is the smaller share of latency here, and it carries premium pricing."
+        "B": "Separating the route helps, but a mean still hides the slow tail and does not measure the wait before text appears.",
+        "C": "The excluded slowest requests are exactly the poor experiences that are driving the complaints.",
+        "D": "Output speed matters once text is flowing; it captures neither the wait before the first token nor tail behaviour."
       },
-      "module": "15-production-operations/04-latency-optimisation.md",
+      "module": "14-evaluation-and-testing/02-metrics.md",
       "references": [
-        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+        "https://platform.claude.com/docs/en/build-with-claude/streaming",
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
       ]
     },
     {
@@ -649,6 +650,34 @@
       "references": [
         "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
         "https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/"
+      ]
+    },
+    {
+      "id": "CCAR-P-D4-023",
+      "objective": "CCAR-P-4.3",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Coho Vineyard's support team A/B tested a new escalation prompt for one week with 500 conversations per arm. First-contact resolution was 20.0% for the control and 21.6% for the variant (two-sided p ≈ 0.53). The product owner says this proves the prompt makes no difference, but the team considers a 2-percentage-point gain worth shipping.",
+      "question": "What is the most appropriate conclusion and next step?",
+      "options": {
+        "A": "The test is underpowered for a 2-point effect; size it with a power calculation (about 6,500 per arm) and rerun",
+        "B": "The variant has no effect, since p is far above 0.05; keep the control prompt and test a different idea next week",
+        "C": "Ship the variant, since its rate is higher and a non-significant difference still points in the right direction",
+        "D": "Extend the current test day by day and ship the variant as soon as the running p-value drops below 0.05"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "A non-significant result from a small sample is inconclusive, not evidence of no effect. Detecting a 2-point lift from a 20% baseline with 80% power at a two-sided 5% significance level needs roughly 6,500 conversations per arm, so 500 per arm could reliably detect only much larger effects. The right step is to size the test for the smallest effect worth shipping and run it to that pre-set size.",
+      "why_incorrect": {
+        "B": "Failing to reject the null with low power does not show the effect is zero; a worthwhile 2-point gain could easily be missed at this size.",
+        "C": "The observed difference is well within chance variation at this sample size; shipping on direction alone risks adopting a prompt that is no better.",
+        "D": "Checking repeatedly and stopping on the first significant reading inflates the false-positive rate; the stopping point should be fixed in advance."
+      },
+      "module": "14-evaluation-and-testing/05-ab-testing-and-iteration.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
       ]
     }
   ]

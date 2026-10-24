@@ -245,4 +245,9 @@ The remediation was layered: managed deny rules for reading `.env` and secrets p
 - [Settings files and precedence](https://code.claude.com/docs/en/settings) and [settings reference](https://code.claude.com/docs/en/settings-reference) (Claude Code Docs)
 - [Configure the sandboxed Bash tool](https://code.claude.com/docs/en/sandboxing) (Claude Code Docs)
 - [Deploy managed settings](https://code.claude.com/docs/en/managed-settings) (Claude Code Docs)
-- Previous: [CLAUDE.md and memory](03-claude-md-and-memory.md) · Next: [Commands, Skills and subagents](05-commands-skills-subagents.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: CLAUDE.md and Memory](03-claude-md-and-memory.md) · [Module overview](README.md) · [Next: Commands, Skills and Subagents →](05-commands-skills-subagents.md)
+<!-- page-nav:end -->

@@ -17,6 +17,8 @@ from pathlib import Path
 from urllib.parse import unquote
 
 LINK = re.compile(r"(\]\()([^)\s]+)((?:\s+\"[^\"]*\")?\))")
+# The GitHub-only "Previous · Module overview · Next" footer; the site has its own footer.
+PAGE_NAV = re.compile(r"\n*<!-- page-nav:start -->.*?<!-- page-nav:end -->\n*", re.DOTALL)
 FENCE = re.compile(r"^\s*(```|~~~)")
 SCHEME = re.compile(r"^[a-z][a-z0-9+.-]*:", re.IGNORECASE)
 BRANCH = "main"
@@ -56,6 +58,7 @@ def _rewrite(target: str, page_src: str, files) -> str:
 
 def on_page_markdown(markdown: str, page, config, files, **_):
     src = page.file.src_uri
+    markdown = PAGE_NAV.sub("\n", markdown)
     out, in_fence = [], False
     for line in markdown.splitlines():
         if FENCE.match(line):

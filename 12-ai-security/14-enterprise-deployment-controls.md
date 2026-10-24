@@ -90,8 +90,10 @@ Anthropic's [API and data retention](https://platform.claude.com/docs/en/manage-
   flagged content and legal holds. CORS (direct browser calls) is not supported for ZDR organisations.
 - **HIPAA readiness** for the API is available with a signed BAA and a HIPAA-enabled organisation, for eligible
   features.
-- When you consume Claude through Amazon Bedrock or Google Cloud, the cloud provider, not Anthropic, processes your
-  data, so its retention and compliance terms are the ones to check.
+- Who processes your data depends on the route. On Amazon Bedrock, and for Claude models on Google Cloud that Google
+  manages, the cloud provider is the processor, so its retention and compliance terms apply. On Google Cloud offerings
+  that Anthropic manages, on Claude Platform on AWS and on Microsoft Foundry, Anthropic is the processor (checked
+  2026-10-24 against Anthropic's [API and data retention](https://platform.claude.com/docs/en/manage-claude/api-and-data-retention) page).
 
 Design implication: build a feature-by-feature data-flow table. A pipeline that is ZDR-eligible for plain Messages
 calls may lose that property the moment you add a stateful or file-based feature.
@@ -230,3 +232,9 @@ if __name__ == "__main__":
   [team rollout](../09-claude-code/08-team-rollout.md),
   [reference architectures](../13-enterprise-ai-architecture/03-reference-architectures.md),
   [Lab 20](../19-hands-on-labs/lab-20-secure-enterprise-architecture/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Human Oversight](13-human-oversight.md) · [Module overview](README.md) · [Next module: Module 13: Enterprise AI Architecture →](../13-enterprise-ai-architecture/README.md)
+<!-- page-nav:end -->

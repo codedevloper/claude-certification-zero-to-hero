@@ -468,6 +468,38 @@
       "references": [
         "https://support.claude.com/en/articles/12512180-use-skills-in-claude"
       ]
+    },
+    {
+      "id": "CCAO-F-D5-017",
+      "objective": "CCAO-F-5.2",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "security",
+      "scenario": "Alpine Ski House, on a Claude Enterprise plan, wants to pilot the Microsoft 365 connector with its 15-person finance team. Managers have two worries: whether staff could use Claude to read the HR team's SharePoint files, and whether connecting can be limited to the pilot group.",
+      "question": "Which TWO statements about access and permission scoping are accurate, as of 2026-10-24? (Choose 2.)",
+      "options": {
+        "A": "Through the connector, Claude reaches the Microsoft 365 content that each person could already open themselves.",
+        "B": "IT can require assignment on the connector's apps in Microsoft Entra, limiting who can connect to the pilot group.",
+        "C": "Once the Microsoft administrator consents, members can search company mail and files beyond their own access.",
+        "D": "Tools that send email and post Teams messages switch on with the read tools as soon as the connector is enabled.",
+        "E": "The connector can be limited to chosen SharePoint sites, so the HR site can be left out of its search scope."
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "The Microsoft 365 connector acts on each user's behalf and respects their existing Microsoft permissions, so whether someone can see HR files depends on SharePoint permissions, which are worth reviewing before the pilot. A Claude organisation owner enables the connector, a Microsoft Entra Global Administrator consents for the tenant, and IT can require assignment on both of the connector's Entra enterprise applications to limit who can connect. Permissions are read-only by default; write tools need extra consent and an admin setting.",
+      "why_incorrect": {
+        "C": "Consent authorises the integration for the tenant; each person still reaches only what their own Microsoft permissions allow.",
+        "D": "The connector is read-only by default; write tools need additional admin consent and must be enabled in the connector settings.",
+        "E": "SharePoint and OneDrive search covers what the user can access across the tenant; restricting the connector to specific sites is not supported."
+      },
+      "module": "05-claude-products-and-models/06-connectors-and-integrations.md",
+      "references": [
+        "https://support.claude.com/en/articles/12542951-set-up-the-microsoft-365-connector",
+        "https://support.claude.com/en/articles/12684923-microsoft-365-connector-security-guide"
+      ]
     }
   ]
 }

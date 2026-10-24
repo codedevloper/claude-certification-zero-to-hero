@@ -214,3 +214,9 @@ every prompt change and blocks deployment if any class drops by more than three 
 - Anthropic: [Develop tests](https://platform.claude.com/docs/en/test-and-evaluate/develop-tests)
 - In this repository: [iterating on prompts](../03-prompt-engineering/08-iterating-on-prompts.md),
   [Lab 16](../19-hands-on-labs/lab-16-evaluation-framework/README.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Metrics →](02-metrics.md)
+<!-- page-nav:end -->

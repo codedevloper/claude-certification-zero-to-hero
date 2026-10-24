@@ -158,4 +158,9 @@ The format rules live in the Project instructions, so everyone gets consistent o
 - [What are Artifacts and how do I use them?](https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them) (Claude Help Center)
 - [Structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs) (Anthropic documentation)
 - Related: [Structured output](../03-prompt-engineering/06-structured-output.md)
-- Previous: [Projects and knowledge management](04-projects-and-knowledge.md) · Next: [Connectors and integrations](06-connectors-and-integrations.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Projects and Knowledge Management](04-projects-and-knowledge.md) · [Module overview](README.md) · [Next: Connectors and Integrations →](06-connectors-and-integrations.md)
+<!-- page-nav:end -->

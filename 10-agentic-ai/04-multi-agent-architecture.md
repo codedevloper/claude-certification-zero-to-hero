@@ -285,3 +285,9 @@ single agent.
 - Claude Agent SDK docs — [Subagents](https://code.claude.com/docs/en/agent-sdk/subagents)
 - In this repository: [workflow patterns](02-workflow-patterns.md), [agent reliability](07-agent-reliability.md),
   [cost optimisation](../15-production-operations/03-cost-optimisation.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: The Agent Loop](03-the-agent-loop.md) · [Module overview](README.md) · [Next: Human in the Loop →](05-human-in-the-loop.md)
+<!-- page-nav:end -->

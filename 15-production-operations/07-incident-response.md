@@ -228,3 +228,9 @@ No email had been sent, because drafts required a human to send them. The human-
   [human oversight](../12-ai-security/13-human-oversight.md),
   [Lab 19](../19-hands-on-labs/lab-19-observability/README.md),
   [Project 03](../20-real-world-projects/03-security-alert-triage-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Rate Limits and Capacity](06-rate-limits-and-capacity.md) · [Module overview](README.md) · [Next: Model Upgrades and Change Management →](08-model-upgrades-and-change-management.md)
+<!-- page-nav:end -->

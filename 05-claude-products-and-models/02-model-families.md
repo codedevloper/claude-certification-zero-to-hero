@@ -165,4 +165,9 @@ The architect documents each choice with the evaluation results that justified i
 - [Pricing](https://platform.claude.com/docs/en/about-claude/pricing) (Anthropic documentation)
 - [Choosing a model](https://platform.claude.com/docs/en/about-claude/models/choosing-a-model) (Anthropic documentation)
 - [Model deprecations](https://platform.claude.com/docs/en/about-claude/model-deprecations) (Anthropic documentation)
-- Previous: [The Claude product ecosystem](01-product-ecosystem.md) · Next: [Model selection](03-model-selection.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: The Claude Product Ecosystem](01-product-ecosystem.md) · [Module overview](README.md) · [Next: Model Selection →](03-model-selection.md)
+<!-- page-nav:end -->

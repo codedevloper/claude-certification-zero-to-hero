@@ -325,3 +325,9 @@ budgets, and the dashboard showed the problem the same morning.
 - In this repository: [reliability engineering](../15-production-operations/05-reliability-engineering.md),
   [observability](../15-production-operations/02-observability.md),
   [errors, rate limits and retries](../06-claude-api/06-errors-rate-limits-retries.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Managed Agents, Agent SDK, Tool Runner or Manual Loop](06-managed-agents-and-agent-sdk.md) · [Module overview](README.md) · [Next module: Module 11 — RAG and Knowledge Systems →](../11-rag-and-knowledge-systems/README.md)
+<!-- page-nav:end -->

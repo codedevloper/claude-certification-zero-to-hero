@@ -245,3 +245,9 @@ team chooses the cheaper, faster configuration and keeps the other as a fallback
 - In this repository: [token counting and cost](../06-claude-api/08-token-counting-and-cost.md),
   [RAG evaluation](../11-rag-and-knowledge-systems/06-rag-evaluation.md),
   [Lab 16](../19-hands-on-labs/lab-16-evaluation-framework/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Why Evaluate](01-why-evaluate.md) · [Module overview](README.md) · [Next: Building Eval Datasets →](03-building-eval-datasets.md)
+<!-- page-nav:end -->

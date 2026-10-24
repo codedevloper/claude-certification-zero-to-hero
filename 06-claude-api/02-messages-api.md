@@ -41,7 +41,7 @@ response = client.messages.create(
     output_config={"effort": "medium"},       # optional: low | medium | high | xhigh | max; also "format"
     thinking={"type": "adaptive"},            # optional on current models; adaptive is the default on Opus 5.5
     tools=[...],                              # optional: tool definitions (Module 07)
-    tool_choice={"type": "auto"},             # optional: auto or none on current models
+    tool_choice={"type": "auto"},             # optional: auto or none on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1
     stop_sequences=["</answer>"],             # optional: custom stop strings
     metadata={"user_id": "hashed-user-123"},  # optional: an opaque end-user identifier for abuse monitoring
 )
@@ -296,4 +296,9 @@ The audit produced an internal "response handling" library used by every team, w
 - [Refusals and fallback](https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback) (Anthropic docs)
 - [Effort](https://platform.claude.com/docs/en/build-with-claude/effort) (Anthropic docs)
 - [Lab 07 — API integration](../19-hands-on-labs/lab-07-api-integration/README.md)
-- Next page: [Streaming](03-streaming.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Getting Started with the API](01-getting-started-with-the-api.md) · [Module overview](README.md) · [Next: Streaming →](03-streaming.md)
+<!-- page-nav:end -->

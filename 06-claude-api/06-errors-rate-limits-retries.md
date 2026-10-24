@@ -36,7 +36,7 @@ Errors come back as JSON with a `type` and `message`, plus a `request_id` you sh
 
 | Status | `error.type` | Retry? | Typical cause | Fix |
 |---|---|---|---|---|
-| 400 | `invalid_request_error` | No | Malformed request; unsupported parameter (for example `temperature`, `budget_tokens`, prefill, forced `tool_choice` on current models) | Read the message; fix the request |
+| 400 | `invalid_request_error` | No | Malformed request; unsupported parameter (for example `temperature`, `budget_tokens`, prefill, forced `tool_choice` on Opus 5.5, Sonnet 5.5, Fable 5.1 or Mythos 5.1) | Read the message; fix the request |
 | 401 | `authentication_error` | No | Missing, invalid or revoked credential | Check the key or token in the running environment |
 | 402 | `billing_error` | No | Billing or payment problem | Resolve in the Console |
 | 403 | `permission_error` | No | Credential not allowed for this action or resource | Check workspace and organisation permissions |
@@ -274,4 +274,9 @@ More in [troubleshooting API errors](../24-troubleshooting/api-errors.md).
 - [Anthropic status page](https://status.anthropic.com)
 - [Reliability engineering](../15-production-operations/05-reliability-engineering.md) and [rate limits and capacity](../15-production-operations/06-rate-limits-and-capacity.md) in this repository
 - [Lab 18 — Reliability engineering](../19-hands-on-labs/lab-18-reliability-engineering/README.md)
-- Next page: [Cloud platforms](07-cloud-platforms.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Batch Processing](05-batch-processing.md) · [Module overview](README.md) · [Next: Cloud Platforms: AWS, Google Cloud and Microsoft Foundry →](07-cloud-platforms.md)
+<!-- page-nav:end -->

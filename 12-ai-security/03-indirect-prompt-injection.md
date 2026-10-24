@@ -232,3 +232,9 @@ never sees the email text.
   [the tool use loop](../07-tool-use-and-function-calling/03-the-tool-use-loop.md),
   [Lab 14](../19-hands-on-labs/lab-14-prompt-injection-testing/README.md),
   [Project 03: security alert triage assistant](../20-real-world-projects/03-security-alert-triage-assistant/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Prompt Injection](02-prompt-injection.md) · [Module overview](README.md) · [Next: Data Exfiltration and Sensitive Information Disclosure →](04-data-exfiltration-and-disclosure.md)
+<!-- page-nav:end -->

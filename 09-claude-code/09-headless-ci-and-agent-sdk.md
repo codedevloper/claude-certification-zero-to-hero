@@ -277,4 +277,9 @@ All three share a policy: no headless run loads repository-supplied hooks or MCP
 - [Claude Code GitHub Actions](https://code.claude.com/docs/en/github-actions) and [GitLab CI/CD](https://code.claude.com/docs/en/gitlab-ci-cd) (Claude Code Docs)
 - [Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview) and [Python reference](https://code.claude.com/docs/en/agent-sdk/python) (Claude Code Docs)
 - [Managed agents and the Agent SDK](../10-agentic-ai/06-managed-agents-and-agent-sdk.md) in Module 10
-- Previous: [Team rollout](08-team-rollout.md) · Back to the [module overview](README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Team Rollout](08-team-rollout.md) · [Module overview](README.md) · [Next module: Module 10 — Agentic AI →](../10-agentic-ai/README.md)
+<!-- page-nav:end -->

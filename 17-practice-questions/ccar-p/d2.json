@@ -416,31 +416,31 @@
     },
     {
       "id": "CCAR-P-D2-015",
-      "objective": "CCAR-P-2.4",
+      "objective": "CCAR-P-2.1",
       "type": "single",
-      "difficulty": "intermediate",
+      "difficulty": "advanced",
       "category": "troubleshooting",
-      "scenario": "Margie's Travel's itinerary planner sometimes returns responses that end mid-sentence. The team's logs record `stop_reason` but nobody reads it.",
-      "question": "What is the most likely cause, and what should the code do?",
+      "scenario": "Ironbark Security runs a code-review assistant on Claude Opus 5.5 through the Claude API. Reviews of its own malware-detection rules sometimes come back as HTTP 200 with an empty `content` array, and the service crashes when it reads the first content block. Logs show `stop_reason: \"refusal\"` with `stop_details.category` set to `\"cyber\"`.",
+      "question": "What is the best way to handle these responses, as of 2026-10-24?",
       "options": {
-        "A": "The API sheds load at peak traffic and returns partial completions; add retries with exponential backoff on those responses",
-        "B": "The model declines part of the request mid-answer; rephrase the system prompt to reduce refusals on itinerary content",
-        "C": "The responses hit `max_tokens`; check `stop_reason` and handle that case by raising the limit or tightening the output format, not by using truncated text",
-        "D": "Prompt-cache entries expire while long itineraries are generated; switch to the 1-hour TTL so the cached context survives the whole response"
+        "A": "Branch on `stop_reason` before reading content, log `stop_details.category`, and opt into server-side `fallbacks` for declines",
+        "B": "Detect refusals by checking whether `stop_details` is non-null, then resend those requests from the client to an older Opus model",
+        "C": "Treat the empty responses as transient failures and retry the identical request on the same model with exponential backoff",
+        "D": "Add a system-prompt statement that the work is authorised defensive security, so the classifier stops declining the reviews"
       },
       "answer": [
-        "C"
+        "A"
       ],
-      "explanation": "A response that ends mid-sentence usually stopped because it reached `max_tokens`. Applications should check `stop_reason` before using content and handle `max_tokens` explicitly, for example by raising the limit for that route, streaming long outputs, or asking for a more concise format. Rate limits return errors rather than truncated content, and refusals report a distinct stop reason.",
+      "explanation": "A safety-classifier decline returns HTTP 200 with `stop_reason: \"refusal\"`, and content can be empty, so code must branch on `stop_reason` before indexing content. `stop_details.category` is informational and useful for triage and monitoring. On the Claude API, the beta server-side `fallbacks` parameter (for example `fallbacks: \"default\"`, which routes by refusal category) re-runs a declined request on a recommended model, so legitimate security work completes. Anthropic also offers a Cyber Verification Program for sustained legitimate security work.",
       "why_incorrect": {
-        "A": "Rate limiting and overload return an error status, not a partially generated response, so backoff would not change the truncation.",
-        "B": "A refusal is reported as its own `stop_reason`, which the team would see if they checked it; nothing suggests refusals here.",
-        "D": "Caching affects input processing and cost, not output length; an entry expiring cannot cut off a response."
+        "B": "`stop_details` can be null even on a refusal, so detection must use `stop_reason`; a hand-rolled resend also gives up the server-side routing by category.",
+        "C": "A classifier decline is a policy outcome, not a transient error; the same request on the same model is likely to be declined again.",
+        "D": "Claiming authorisation in the prompt does not reliably change classifier outcomes; refusal handling with a fallback path is the supported mitigation."
       },
       "module": "06-claude-api/02-messages-api.md",
       "references": [
-        "https://platform.claude.com/docs/en/api/errors",
-        "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+        "https://platform.claude.com/docs/en/build-with-claude/refusals-and-fallback",
+        "https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons"
       ]
     },
     {

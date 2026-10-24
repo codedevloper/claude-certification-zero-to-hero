@@ -245,3 +245,9 @@ More in [RAG troubleshooting](../24-troubleshooting/rag.md).
 - Claude docs, [Citations](https://platform.claude.com/docs/en/build-with-claude/citations).
 - Claude docs, [Embeddings](https://platform.claude.com/docs/en/build-with-claude/embeddings).
 - In this repository: [chunking strategies](02-chunking-strategies.md), [lab-11 RAG pipeline](../19-hands-on-labs/lab-11-rag-pipeline/README.md).
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Chunking Strategies →](02-chunking-strategies.md)
+<!-- page-nav:end -->

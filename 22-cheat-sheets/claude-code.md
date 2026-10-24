@@ -172,7 +172,7 @@ allowed-tools: Bash(git log *)
 
 ```bash
 claude mcp add --transport http docs https://mcp.example.com/mcp                 # remote (recommended)
-claude mcp add --transport stdio --env API_KEY="$API_KEY" local-db -- python server.py
+claude mcp add --env API_KEY="$API_KEY" --transport stdio local-db -- python server.py   # name must not follow --env
 claude mcp add --transport http shared --scope project https://mcp.example.com/mcp
 claude mcp list
 ```

@@ -313,4 +313,9 @@ availability incident (see [observability](../15-production-operations/02-observ
 - [Rate limits](https://platform.claude.com/docs/en/api/rate-limits) (Anthropic docs)
 - [Cost optimisation](../15-production-operations/03-cost-optimisation.md) and [token counting and cost](../06-claude-api/08-token-counting-and-cost.md) in this repository
 - [Lab 17 — Cost optimisation](../19-hands-on-labs/lab-17-cost-optimisation/README.md)
-- Next page: [Memory and persistence](04-memory-and-persistence.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Managing Long Context](02-managing-long-context.md) · [Module overview](README.md) · [Next: Memory and Persistence →](04-memory-and-persistence.md)
+<!-- page-nav:end -->

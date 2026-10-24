@@ -217,3 +217,9 @@ forecast peak two weeks before the season.
 - In this repository: [errors, rate limits and retries](../06-claude-api/06-errors-rate-limits-retries.md),
   [Lab 17](../19-hands-on-labs/lab-17-cost-optimisation/README.md),
   [Lab 18](../19-hands-on-labs/lab-18-reliability-engineering/README.md)
+
+<!-- page-nav:start -->
+---
+
+[← Previous: Reliability Engineering](05-reliability-engineering.md) · [Module overview](README.md) · [Next: Incident Response for AI Systems →](07-incident-response.md)
+<!-- page-nav:end -->

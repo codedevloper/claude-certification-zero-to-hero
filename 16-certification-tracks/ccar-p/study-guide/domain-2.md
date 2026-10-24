@@ -100,7 +100,7 @@ stable prefix so caching still works. For mid-conversation operator instructions
 models, append a `{"role": "system", ...}` message to `messages` instead of editing the top-level system
 prompt; this preserves the cached prefix.
 
-Forced tool choice (`tool_choice` of `any` or `tool`) returns a 400 on current models. Use `auto` plus a clear
+Forced tool choice (`tool_choice` of `any` or `tool`) returns a 400 on Opus 5.5, Sonnet 5.5, Fable 5.1 and Mythos 5.1. Use `auto` plus a clear
 instruction naming the tool, `strict: true` tools for schema-valid arguments, or structured outputs when you
 only need JSON back.
 

@@ -211,4 +211,9 @@ One decision record explains the split, so later teams know which door to use (C
 - [Claude Code overview](https://code.claude.com/docs/en/overview)
 - [Using research on Claude](https://support.claude.com/en/articles/11088861-using-research-on-claude)
 - [What are Skills?](https://support.claude.com/en/articles/12512176-what-are-skills)
-- Next: [Model families](02-model-families.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Model Families and Current Models →](02-model-families.md)
+<!-- page-nav:end -->

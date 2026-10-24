@@ -1,6 +1,6 @@
 # How Claude Works
 
-> **Level:** Beginner · **Time:** ~40 min · **Exam relevance:** CCAO-F D3 (3.4), D5 (5.3) · CCAR-P D2 (2.2)
+> **Level:** Beginner · **Time:** ~40 min · **[Exam relevance](../00-getting-started/how-to-use-this-repo.md#objective-ids):** CCAO-F D3 (3.4), D5 (5.3) · CCAR-P D2 (2.2)
 
 ## In plain English
 
@@ -180,4 +180,9 @@ The developer finds the bug: the application sent only the latest message, not t
 - [Claude's constitution](https://www.anthropic.com/constitution) (Anthropic)
 - [Constitutional AI: Harmlessness from AI Feedback](https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback) (Anthropic research)
 - [Using chat search and memory](https://support.claude.com/en/articles/11817273-using-claude-s-chat-search-and-memory-to-build-on-previous-context) (Claude Help Center)
-- Next: [Your first conversation](02-first-conversation.md)
+
+<!-- page-nav:start -->
+---
+
+[Module overview](README.md) · [Next: Your First Conversation →](02-first-conversation.md)
+<!-- page-nav:end -->
