@@ -1,0 +1,529 @@
+{
+  "schema_version": 1,
+  "track": "CCAO-F",
+  "domain": 1,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAO-F-D1-001",
+      "objective": "CCAO-F-1.1",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Priya, an operations coordinator at Acme Logistics, types \"Write something about the new warehouse shift rota\" into Claude. The draft is generic, too long and aimed at no one in particular. She needs a 150-word notice for forklift drivers explaining that night shifts move from 22:00 to 21:00 starting 3 March.",
+      "question": "Which revised prompt is most likely to produce a usable notice on the first attempt?",
+      "options": {
+        "A": "\"Write a polished, professional notice about the changes to the warehouse shift rota. Make it excellent, engaging and clear so that everybody understands it.\"",
+        "B": "\"Write a 150-word notice for forklift drivers: night shift starts 21:00 instead of 22:00 from 3 March. Friendly, direct tone; end with the shift supervisor as the contact.\"",
+        "C": "\"You are the world's best internal communications expert with 20 years of logistics experience. Write about the new shift rota.\"",
+        "D": "\"Write about the rota. If it is wrong I will ask again.\""
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Effective prompts state the audience, the purpose, the key facts, the length and the tone. Treat Claude like a capable new colleague who has no background: everything it needs to get the task right should be in the request. Adjectives such as \"excellent\" or an inflated role do not substitute for concrete requirements.",
+      "why_incorrect": {
+        "A": "Adding praise words does not supply the missing facts, audience, length or tone, so Claude still has to guess.",
+        "C": "A grand role without the actual details (who, what changed, when, how long) leaves the same gaps as the original prompt.",
+        "D": "Planning to retry instead of stating requirements wastes turns; the gaps are predictable and can be closed up front."
+      },
+      "module": "03-prompt-engineering/01-clear-direct-instructions.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-002",
+      "objective": "CCAO-F-1.1",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "A marketing lead at Fabrikam Retail pastes a 12-page brand guideline and a product brief into one message, followed by \"Use the guideline to write three taglines for the brief.\" Claude sometimes confuses which text is the guideline and which is the brief.",
+      "question": "What is the simplest change that helps Claude keep the two documents apart?",
+      "options": {
+        "A": "Wrap each document in labelled tags such as <brand_guideline> and <product_brief>, and refer to those labels in the instruction.",
+        "B": "Paste the two documents in two separate chats and ask Claude to combine them later.",
+        "C": "Put the instruction in capital letters at the very top and repeat it at the bottom, so that it stands out clearly from both documents.",
+        "D": "Remove the long brand guideline and rely on Claude's general knowledge of Fabrikam's tone, which keeps the prompt short and focused."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "When a prompt mixes instructions with several pieces of reference material, labelled delimiters such as XML-style tags make the structure explicit. Claude can then follow instructions like \"apply the tone rules in <brand_guideline> to <product_brief>\" without mixing the sources up.",
+      "why_incorrect": {
+        "B": "Claude cannot see a different chat's content unless it is brought into the conversation, so this breaks the task rather than clarifying it.",
+        "C": "Emphasis does not tell Claude where one document ends and the other begins; clear delimiters do.",
+        "D": "Claude has no reliable knowledge of a fictional company's internal brand rules; removing the source lowers accuracy."
+      },
+      "module": "03-prompt-engineering/02-structure-with-xml-tags.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-003",
+      "objective": "CCAO-F-1.1",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Daniel, an HR business partner at Northwind Lending, wants Claude to draft interview questions for a junior data analyst role. His first prompt, \"Give me interview questions for an analyst\", returned 30 generic questions covering roles he does not hire for.",
+      "question": "Which TWO additions to his prompt would most improve the relevance of the output?",
+      "options": {
+        "A": "A note that the hiring manager will review the output, so that Claude raises its standard and filters out generic questions.",
+        "B": "The names and CVs of the candidates who have applied so far.",
+        "C": "The job description's key responsibilities and the three competencies the panel must assess.",
+        "D": "The format he needs, such as eight behavioural questions with a short note on what a strong answer shows.",
+        "E": "A request that Claude \"think harder than usual\" and take extra care, so that it reasons more deeply about which questions fit the role."
+      },
+      "answer": [
+        "C",
+        "D"
+      ],
+      "explanation": "Relevance comes from context (what the role actually involves and what must be assessed) and from a defined output format (how many questions, what type, what supporting notes). Both remove guesswork. Extra effort requests and reviewer notes do not supply the missing information, and candidate CVs introduce personal data without improving the questions.",
+      "why_incorrect": {
+        "A": "Knowing there will be a reviewer does not give Claude the role context or format that drive relevance.",
+        "B": "Candidate personal data is not needed to write role-based questions and adds unnecessary privacy risk.",
+        "E": "Asking for more effort does not tell Claude which role, level or competencies matter, which is the actual gap."
+      },
+      "module": "03-prompt-engineering/01-clear-direct-instructions.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-004",
+      "objective": "CCAO-F-1.1",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Contoso Health's patient-experience team wants Claude to rewrite appointment reminders in a warm but concise style. They have written a long description of the style, but Claude's rewrites still feel stiff.",
+      "question": "What is the most effective next step?",
+      "options": {
+        "A": "Tell Claude to imitate the voice of a well-known author famous for warmth, so it has a recognisable style to follow.",
+        "B": "Switch off all instructions and let Claude choose its own style.",
+        "C": "Expand the style description to twice its length with more adjectives, so that every nuance of \"warm but concise\" is spelled out.",
+        "D": "Add two or three short before-and-after examples of reminders rewritten in the desired style, labelled as examples."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Few-shot examples are one of the most reliable ways to communicate tone and format. A small set of varied, clearly labelled examples shows Claude what \"warm but concise\" means for this team, which descriptive adjectives struggle to do.",
+      "why_incorrect": {
+        "A": "An unrelated literary voice is unlikely to match a concise healthcare reminder and adds a new source of variation.",
+        "B": "Removing guidance moves further from the target style rather than closer.",
+        "C": "More adjectives tend to stay abstract; concrete examples show the target style far more precisely."
+      },
+      "module": "03-prompt-engineering/03-examples-few-shot.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-005",
+      "objective": "CCAO-F-1.1",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "A project manager at Tailspin Travel gives Claude one example status update and asks for weekly updates for six different projects. Every update Claude writes copies the example's three-bullet structure and even reuses its phrase \"slight slippage on vendor sign-off\", including for projects that have no vendor.",
+      "question": "What is the most likely cause, and the best fix?",
+      "options": {
+        "A": "Examples never help with writing tasks; delete the example and rely on a description only.",
+        "B": "The model is too small to generalise from an example; switch to the largest available model and keep the same single example.",
+        "C": "One example is being over-imitated; give several varied examples and say they show format, not content to reuse.",
+        "D": "Claude has run out of context after the first update; start a new chat for each project so each one has full room."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Claude pays close attention to examples. With only one, it may treat incidental details as requirements. Using several diverse examples and saying what they are meant to demonstrate lets Claude generalise the pattern without copying specific wording.",
+      "why_incorrect": {
+        "A": "Examples are very effective for format; the problem is having only one, not using examples at all.",
+        "B": "Larger models can also mirror a lone example closely; the cause is the narrow example set, not model size.",
+        "D": "Six short updates are nowhere near a context limit, and the copying happens from the first update onwards."
+      },
+      "module": "03-prompt-engineering/03-examples-few-shot.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-006",
+      "objective": "CCAO-F-1.2",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Mei, a programme manager at Proseware Education, asks Claude in one message to analyse 40 pages of course feedback, identify the top themes, propose fixes, draft an email to faculty and build a slide outline. The result is shallow in every part.",
+      "question": "What approach is most likely to improve quality?",
+      "options": {
+        "A": "Send the same all-in-one prompt again, since outputs vary between attempts and a second run is likely to go deeper.",
+        "B": "Split the work into sequential steps (themes, then fixes, then email and outline), checking each output before the next.",
+        "C": "Ask Claude to keep every part shorter and more concise, so it has room to cover all five deliverables in one response.",
+        "D": "Remove the feedback document and describe the themes from memory instead."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Complex, multi-stage requests usually work better as a chain of focused sub-tasks. Each step gets Claude's full attention, you can check intermediate results (for example the theme list) before building on them, and errors are caught early instead of spreading.",
+      "why_incorrect": {
+        "A": "Rerunning an overloaded prompt does not address the cause, which is too many distinct tasks competing in one response.",
+        "C": "Shorter output makes each part even shallower; the problem is depth, not length.",
+        "D": "Discarding the source data removes the evidence the analysis depends on."
+      },
+      "module": "03-prompt-engineering/05-task-decomposition-and-chaining.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-007",
+      "objective": "CCAO-F-1.2",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Woodgrove Bank's internal communications team is planning a quarterly town-hall pack with Claude: a summary of employee survey results, a Q&A list, and a speaker script that must reflect both.",
+      "question": "Which TWO decomposition decisions are sound?",
+      "options": {
+        "A": "Produce and validate the survey summary first, because the Q&A list and script both depend on it.",
+        "B": "Split the survey file into random chunks and ask a different chat to summarise each without combining them.",
+        "C": "Write the speaker script first, because it sets the narrative, then derive the survey summary and Q&A list from what the script says.",
+        "D": "Do all three in one prompt so the outputs are guaranteed to be consistent.",
+        "E": "Draft the Q&A list and the script as separate steps that each receive the approved summary as input."
+      },
+      "answer": [
+        "A",
+        "E"
+      ],
+      "explanation": "Good decomposition follows the dependencies in the work. Upstream outputs that others rely on (the survey summary) come first and are checked, then downstream tasks each receive that verified input. This keeps the pack consistent and makes it easy to rework one piece without redoing everything.",
+      "why_incorrect": {
+        "B": "Uncombined fragments cannot produce one coherent summary for later steps to rely on.",
+        "C": "This reverses the dependency: the script should be grounded in the survey data, not the other way round.",
+        "D": "A single prompt does not guarantee consistency; checking a shared, approved summary is what keeps later outputs aligned."
+      },
+      "module": "03-prompt-engineering/05-task-decomposition-and-chaining.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-008",
+      "objective": "CCAO-F-1.2",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "An events manager at Wingtip Events wants Claude's help choosing a venue for a 300-person conference. She has a shortlist of five venues, a budget and accessibility requirements.",
+      "question": "Which sequence of sub-tasks is the most sensible way to structure the work with Claude?",
+      "options": {
+        "A": "Ask for five separate, detailed venue descriptions so she can read them all and form her own overall view of which feels right.",
+        "B": "Ask Claude for a recommendation email first, and compile the comparison only if someone questions it.",
+        "C": "Ask Claude to pick the best venue immediately, then ask it to explain the criteria afterwards.",
+        "D": "Agree criteria and weights, compare each venue against them in a table, then draft a recommendation with trade-offs."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "For decision tasks, decompose into: define criteria, evaluate options against them, then recommend. The structure makes the reasoning visible, lets the manager adjust weights, and produces a recommendation that stakeholders can check.",
+      "why_incorrect": {
+        "A": "Without common criteria, the descriptions cannot be compared on a like-for-like basis.",
+        "B": "Producing the conclusion before the analysis skips the step that makes the recommendation defensible.",
+        "C": "Deciding before defining criteria invites a post-hoc justification rather than a fair comparison."
+      },
+      "module": "03-prompt-engineering/05-task-decomposition-and-chaining.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-009",
+      "objective": "CCAO-F-1.2",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Rahul at Adatum Insurance chained three steps with Claude: extract key clauses from a supplier contract, flag unusual terms, then draft a summary for procurement. The final summary misses an auto-renewal clause, even though the flagging step looked reasonable.",
+      "question": "Where should Rahul look first?",
+      "options": {
+        "A": "The output of the first extraction step, because a clause omitted there could never reach the later steps.",
+        "B": "The summary step's tone and length instructions, because a strict word limit there could have squeezed the clause out of the final text.",
+        "C": "The model choice for the summary step only.",
+        "D": "Nowhere specific: chained prompts lose information at every hand-off, so he should merge all three steps into one prompt."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "In a chain, each step only sees what earlier steps passed on. When something is missing at the end, trace backwards and check the earliest step that should have captured it. Inspecting intermediate outputs is a key benefit of decomposition.",
+      "why_incorrect": {
+        "B": "Tone and length settings in the last step cannot explain why the clause is missing from every step after extraction.",
+        "C": "Changing the last step cannot recover information that was dropped earlier in the chain.",
+        "D": "Chaining is useful precisely because each stage can be inspected; abandoning it removes that advantage."
+      },
+      "module": "03-prompt-engineering/05-task-decomposition-and-chaining.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-010",
+      "objective": "CCAO-F-1.2",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "A team lead at Litware Publishing is learning to use Claude for larger assignments and asks why colleagues recommend splitting big tasks into smaller prompts.",
+      "question": "Which statement best describes the main benefit?",
+      "options": {
+        "A": "Claude reliably follows only one instruction per prompt, so multiple requests must always be sent separately.",
+        "B": "Splitting tasks means each part is simple enough that the combined result no longer needs any human review.",
+        "C": "Each focused step is easier for Claude to do well and easier for a person to check before the next one builds on it.",
+        "D": "Smaller prompts are needed because any prompt over a page long will exceed the context window and be cut off."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Decomposition improves quality by giving each sub-task full attention and makes errors visible at intermediate checkpoints. It is a quality and control technique, not a workaround for a hard rule about single instructions.",
+      "why_incorrect": {
+        "A": "Claude can follow multiple instructions; decomposition helps when sub-tasks are distinct and depend on each other.",
+        "B": "Decomposition creates natural review points; it does not remove the need for human judgement.",
+        "D": "A one-page prompt is far below current context windows; quality and checkability, not hard limits, are the usual reasons to decompose."
+      },
+      "module": "03-prompt-engineering/05-task-decomposition-and-chaining.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-011",
+      "objective": "CCAO-F-1.3",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Sofia at Fourth Coffee asked Claude for a store-opening press release. The draft is good but uses US spelling and is 600 words; she needs British spelling and 300 words.",
+      "question": "What is the most efficient next message?",
+      "options": {
+        "A": "\"This isn't what I wanted, please try again and make it better.\"",
+        "B": "\"Good structure. Please switch to British spelling and cut to about 300 words, keeping the opening quote and address paragraph.\"",
+        "C": "Start a new chat and paste the original prompt again unchanged, so Claude produces a fresh draft without the earlier context.",
+        "D": "Edit the draft manually herself and not mention the spelling or length preferences, since Claude would only repeat the mistake."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Iteration works best when feedback is specific: say what to keep, what to change and the target (spelling convention, length). Claude can then make a focused revision instead of starting over.",
+      "why_incorrect": {
+        "A": "Vague negative feedback does not say what to change, so the next draft may lose what was already good.",
+        "C": "The same prompt will likely produce the same issues because the missing requirements were never stated.",
+        "D": "Manual editing works once, but the preferences are lost for the rest of the conversation and future drafts."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-012",
+      "objective": "CCAO-F-1.3",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Over a week, Kenji at Relecloud has refined a prompt that turns meeting notes into action-item lists. Some revisions improved results and others made them worse, and he can no longer tell which change did what.",
+      "question": "Which TWO practices would make his iteration more reliable?",
+      "options": {
+        "A": "Rewrite the whole prompt from scratch every time a result disappoints.",
+        "B": "Judge each version on a single run and keep whichever reads best at a glance.",
+        "C": "Test each new version on a different, freshly chosen set of notes, so that every version is judged against a wide variety of real meetings.",
+        "D": "Change one element of the prompt at a time and compare outputs on the same set of sample notes.",
+        "E": "Keep a simple log of each prompt version and what improved or got worse."
+      },
+      "answer": [
+        "D",
+        "E"
+      ],
+      "explanation": "Treat prompt iteration like a small experiment: hold the test inputs constant, vary one thing, and record the outcome. This turns trial and error into evidence about which instructions actually help.",
+      "why_incorrect": {
+        "A": "Full rewrites change many variables at once and discard improvements that were working.",
+        "B": "One impression is noisy; outputs vary, so comparisons need a few consistent test cases.",
+        "C": "Changing the inputs and the prompt together makes it impossible to tell which caused a difference."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-013",
+      "objective": "CCAO-F-1.3",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "A sales operations analyst at VanArsdel Foods asks Claude to summarise win/loss interview notes. The summaries are accurate but mostly restate what each customer said rather than drawing out patterns.",
+      "question": "Which refinement best targets the gap?",
+      "options": {
+        "A": "Ask Claude to rewrite the summaries in more formal, executive-ready language suitable for the sales leadership team.",
+        "B": "Add the instruction \"be insightful\" at the end of the prompt.",
+        "C": "Ask explicitly for cross-interview patterns: recurring win and loss reasons, how often each appears, and a quote for each.",
+        "D": "Ask Claude to make each individual interview summary shorter and tighter, so that the key point of each one stands out more clearly."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "When output is correct but not useful, the prompt usually asked for the wrong task. Refine by naming the analysis you want (patterns, frequency, evidence) so Claude knows to synthesise across sources rather than summarise each one.",
+      "why_incorrect": {
+        "A": "Register has nothing to do with whether patterns are identified.",
+        "B": "A vague quality word does not specify what kind of synthesis is wanted.",
+        "D": "Shorter per-interview summaries are still per-interview; they do not create cross-interview analysis."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-014",
+      "objective": "CCAO-F-1.3",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "After ten rounds of feedback in one long chat, a policy writer at Humongous Insurance notices Claude's drafts now mix instructions from early turns that she later reversed, such as an abandoned bullet-point format.",
+      "question": "What is the best way to continue iterating?",
+      "options": {
+        "A": "Ask Claude to summarise the agreed requirements, correct that summary, and continue in a fresh chat with it and the latest draft.",
+        "B": "Keep going in the same chat and add a clear message listing which earlier instructions Claude should now ignore.",
+        "C": "Switch to a faster model for the remaining rounds, since a quicker model responds more directly to each new piece of feedback.",
+        "D": "Delete the draft and write it manually because Claude cannot handle revisions."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Long iterative threads can accumulate superseded instructions. Consolidating the agreed requirements into a single, corrected brief and continuing in a fresh conversation gives Claude one clear source of truth.",
+      "why_incorrect": {
+        "B": "Piling up contradictory turns makes the conversation harder to follow, which is the source of the problem.",
+        "C": "Speed does not resolve conflicting instructions accumulated in the conversation history.",
+        "D": "Claude handles revisions well when the requirements are clear; the issue is accumulated, contradictory history."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices",
+        "https://support.claude.com/en/articles/9797557-usage-limit-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-015",
+      "objective": "CCAO-F-1.4",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "The innovation team at Coho Winery wants Claude's help naming a new low-alcohol sparkling wine. In a first session they asked for \"the best name\" and got one safe option.",
+      "question": "How should they adapt the prompt for a brainstorming task?",
+      "options": {
+        "A": "Ask Claude to cite sources proving each name will sell well.",
+        "B": "Give Claude a strict naming template (two syllables, starting with \"C\") that every suggestion must match exactly.",
+        "C": "Ask again for one name, but specify the brand values and stress that it must be the single strongest possible choice.",
+        "D": "Ask for many varied options in different styles (playful, heritage, botanical), then shortlist and refine the best."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Different task types need different prompts. Brainstorming rewards volume and diversity first, then convergence in a later step. Analysis and factual tasks, by contrast, reward precision, constraints and evidence.",
+      "why_incorrect": {
+        "A": "Sales evidence for new invented names does not exist, so this invites fabricated support.",
+        "B": "A rigid template suppresses the variety that makes brainstorming useful.",
+        "C": "Brainstorming benefits from breadth; asking for one \"best\" answer narrows the space too early."
+      },
+      "module": "02-claude-fundamentals/03-prompt-fundamentals.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-016",
+      "objective": "CCAO-F-1.4",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Leila, a policy analyst at Bellows College, needs a briefing on how three peer institutions handle remote-work policies for staff. The information is spread across several public web pages that change over time.",
+      "question": "Which approach best fits this research task?",
+      "options": {
+        "A": "Ask Claude to write the briefing in the style of a news article without sources.",
+        "B": "Use research or web search, ask for a source for each claim, then check the key sources herself.",
+        "C": "Ask Claude to brainstorm what the three policies probably say, then circulate the result for colleagues to correct.",
+        "D": "Ask Claude in a plain chat to describe each peer's current policy in detail, since it has read a great deal about universities."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Research tasks about current, external facts call for tools that retrieve live sources, an explicit request for citations, and a verification step. Plain chat relies on training data, which can be out of date for specific organisations.",
+      "why_incorrect": {
+        "A": "Dropping sources makes it impossible to verify claims in a research task.",
+        "C": "Brainstorming generates possibilities, not verified facts about what institutions actually do.",
+        "D": "Training data has a cutoff and may be incomplete or outdated for specific institutional policies."
+      },
+      "module": "02-claude-fundamentals/03-prompt-fundamentals.md",
+      "references": [
+        "https://support.claude.com/en/articles/11095361-when-should-i-use-web-search-extended-thinking-and-research",
+        "https://support.claude.com/en/articles/11088861-use-research-on-claude"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-017",
+      "objective": "CCAO-F-1.4",
+      "type": "multiple",
+      "select": 3,
+      "difficulty": "advanced",
+      "category": "concept",
+      "scenario": "A strategy manager at Trey Research uses Claude for four kinds of work: analysing a dataset of churn reasons, researching competitor pricing, drafting a board letter, and generating campaign ideas.",
+      "question": "Which THREE pairings of task type and prompting emphasis are appropriate?",
+      "options": {
+        "A": "Analysis: give the data, define the question, and ask Claude to show its reasoning and state uncertainties.",
+        "B": "Drafting: specify audience, purpose, tone, length and any must-include points.",
+        "C": "Research: ask Claude to drop source links and citations so the summary reads smoothly and can be pasted straight into a report.",
+        "D": "Drafting: ask for as many alternative versions of the board letter as possible, without stating the audience, so that Claude explores widely.",
+        "E": "Brainstorming: request many diverse options before narrowing down."
+      },
+      "answer": [
+        "A",
+        "B",
+        "E"
+      ],
+      "explanation": "Matching prompting style to task type is a core skill. Analysis benefits from clear questions and visible reasoning; drafting from audience and constraints; brainstorming from breadth; and research from sources and verification.",
+      "why_incorrect": {
+        "C": "Research needs sources so claims can be checked; removing them undermines the task's purpose.",
+        "D": "Without an audience and purpose, the drafts cannot be judged against a goal; volume alone does not help a board letter."
+      },
+      "module": "02-claude-fundamentals/03-prompt-fundamentals.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D1-018",
+      "objective": "CCAO-F-1.4",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "An operations analyst at Alpine Ski House asks Claude why lift-ticket revenue dropped 12% in February, attaching daily sales and weather data. Claude's first answer confidently blames one factor.",
+      "question": "Which follow-up prompt better suits an analysis task?",
+      "options": {
+        "A": "Ask Claude to rewrite its answer in a more persuasive, confident tone so it is ready to present to the leadership team.",
+        "B": "Ask Claude to answer in one sentence to avoid overthinking.",
+        "C": "Ask Claude to weigh several possible explanations against the data and rate how strongly the evidence supports each.",
+        "D": "Ask for ten creative marketing ideas to recover February's lost revenue, since the cause has already been identified."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "For analysis, ask Claude to weigh competing hypotheses against the evidence and to be explicit about confidence. This reduces premature conclusions and gives the analyst something they can verify.",
+      "why_incorrect": {
+        "A": "Persuasion polishes the conclusion but does nothing to check whether it is right.",
+        "B": "Constraining the answer to one sentence discourages the reasoning that analysis needs.",
+        "D": "This jumps to brainstorming solutions before the cause has been analysed."
+      },
+      "module": "03-prompt-engineering/04-reasoning-and-thinking.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    }
+  ]
+}

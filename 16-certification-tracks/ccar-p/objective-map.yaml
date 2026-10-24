@@ -1,0 +1,265 @@
+# CCAR-P objective map: every objective in registry.yaml -> learning modules and labs.
+# Consumed by tools/build_coverage.py to generate coverage-matrix.md. Paths follow docs/CONTENT-MAP.md.
+track: CCAR-P
+objectives:
+  # Domain 1 — Solution Design & Architecture (17%)
+  CCAR-P-1.1:
+    modules:
+      - 13-enterprise-ai-architecture/01-solution-design-process.md
+      - 10-agentic-ai/01-workflows-vs-agents.md
+    labs:
+      - 19-hands-on-labs/lab-20-secure-enterprise-architecture
+      - 19-hands-on-labs/lab-12-agentic-task-execution
+  CCAR-P-1.2:
+    modules:
+      - 13-enterprise-ai-architecture/02-architecture-patterns.md
+      - 13-enterprise-ai-architecture/03-reference-architectures.md
+    labs:
+      - 19-hands-on-labs/lab-20-secure-enterprise-architecture
+      - 19-hands-on-labs/lab-11-rag-pipeline
+  CCAR-P-1.3:
+    modules:
+      - 10-agentic-ai/01-workflows-vs-agents.md
+      - 10-agentic-ai/02-workflow-patterns.md
+      - 13-enterprise-ai-architecture/02-architecture-patterns.md
+    labs:
+      - 19-hands-on-labs/lab-12-agentic-task-execution
+  CCAR-P-1.4:
+    modules:
+      - 10-agentic-ai/04-multi-agent-architecture.md
+      - 10-agentic-ai/03-the-agent-loop.md
+      - 10-agentic-ai/06-managed-agents-and-agent-sdk.md
+    labs:
+      - 19-hands-on-labs/lab-12-agentic-task-execution
+  CCAR-P-1.5:
+    modules:
+      - 03-prompt-engineering/05-task-decomposition-and-chaining.md
+      - 10-agentic-ai/02-workflow-patterns.md
+    labs:
+      - 19-hands-on-labs/lab-12-agentic-task-execution
+      - 19-hands-on-labs/lab-02-prompt-improvement
+  CCAR-P-1.6:
+    modules:
+      - 13-enterprise-ai-architecture/08-business-value-and-roi.md
+      - 15-production-operations/03-cost-optimisation.md
+    labs:
+      - 19-hands-on-labs/lab-17-cost-optimisation
+
+  # Domain 2 — Claude Models, Prompting & Context Engineering (13%)
+  CCAR-P-2.1:
+    modules:
+      - 05-claude-products-and-models/03-model-selection.md
+      - 05-claude-products-and-models/02-model-families.md
+    labs:
+      - 19-hands-on-labs/lab-06-model-comparison
+  CCAR-P-2.2:
+    modules:
+      - 03-prompt-engineering/07-system-prompts-and-roles.md
+      - 03-prompt-engineering/02-structure-with-xml-tags.md
+      - 12-ai-security/02-prompt-injection.md
+    labs:
+      - 19-hands-on-labs/lab-02-prompt-improvement
+      - 19-hands-on-labs/lab-14-prompt-injection-testing
+  CCAR-P-2.3:
+    modules:
+      - 03-prompt-engineering/03-examples-few-shot.md
+      - 03-prompt-engineering/04-reasoning-and-thinking.md
+    labs:
+      - 19-hands-on-labs/lab-02-prompt-improvement
+  CCAR-P-2.4:
+    modules:
+      - 04-context-engineering/02-managing-long-context.md
+      - 04-context-engineering/05-compaction-and-context-editing.md
+      - 06-claude-api/08-token-counting-and-cost.md
+    labs:
+      - 19-hands-on-labs/lab-05-context-management
+  CCAR-P-2.5:
+    modules:
+      - 04-context-engineering/03-prompt-caching.md
+      - 04-context-engineering/06-progressive-disclosure-and-skills.md
+    labs:
+      - 19-hands-on-labs/lab-17-cost-optimisation
+      - 19-hands-on-labs/lab-05-context-management
+
+  # Domain 3 — Integration (19%)
+  CCAR-P-3.1:
+    modules:
+      - 07-tool-use-and-function-calling/05-tool-design-best-practices.md
+      - 12-ai-security/05-tool-misuse-and-excessive-agency.md
+    labs:
+      - 19-hands-on-labs/lab-08-tool-invocation
+  CCAR-P-3.2:
+    modules:
+      - 12-ai-security/09-agent-identity-and-permissions.md
+      - 08-model-context-protocol/05-mcp-security.md
+      - 12-ai-security/10-secrets-management.md
+    labs:
+      - 19-hands-on-labs/lab-20-secure-enterprise-architecture
+  CCAR-P-3.3:
+    modules:
+      - 15-production-operations/04-latency-optimisation.md
+      - 05-claude-products-and-models/03-model-selection.md
+    labs:
+      - 19-hands-on-labs/lab-06-model-comparison
+  CCAR-P-3.4:
+    modules:
+      - 15-production-operations/02-observability.md
+      - 12-ai-security/11-logging-and-auditability.md
+    labs:
+      - 19-hands-on-labs/lab-19-observability
+  CCAR-P-3.5:
+    modules:
+      - 11-rag-and-knowledge-systems/02-chunking-strategies.md
+      - 11-rag-and-knowledge-systems/03-embeddings-and-indexing.md
+    labs:
+      - 19-hands-on-labs/lab-11-rag-pipeline
+  CCAR-P-3.6:
+    modules:
+      - 11-rag-and-knowledge-systems/04-retrieval-strategies.md
+      - 11-rag-and-knowledge-systems/07-rag-vs-long-context.md
+    labs:
+      - 19-hands-on-labs/lab-11-rag-pipeline
+      - 19-hands-on-labs/lab-04-document-grounded-qa
+  CCAR-P-3.7:
+    modules:
+      - 08-model-context-protocol/06-mcp-vs-alternatives.md
+      - 13-enterprise-ai-architecture/04-integration-patterns.md
+    labs:
+      - 19-hands-on-labs/lab-09-mcp-fundamentals
+  CCAR-P-3.8:
+    modules:
+      - 04-context-engineering/06-progressive-disclosure-and-skills.md
+      - 08-model-context-protocol/04-using-mcp-with-claude.md
+    labs:
+      - 19-hands-on-labs/lab-09-mcp-fundamentals
+      - 19-hands-on-labs/lab-05-context-management
+
+  # Domain 4 — Evaluation, Testing & Optimization (16%)
+  CCAR-P-4.1:
+    modules:
+      - 14-evaluation-and-testing/02-metrics.md
+      - 14-evaluation-and-testing/01-why-evaluate.md
+    labs:
+      - 19-hands-on-labs/lab-16-evaluation-framework
+  CCAR-P-4.2:
+    modules:
+      - 14-evaluation-and-testing/03-building-eval-datasets.md
+      - 14-evaluation-and-testing/04-grading-methods.md
+    labs:
+      - 19-hands-on-labs/lab-16-evaluation-framework
+  CCAR-P-4.3:
+    modules:
+      - 14-evaluation-and-testing/05-ab-testing-and-iteration.md
+    labs:
+      - 19-hands-on-labs/lab-16-evaluation-framework
+  CCAR-P-4.4:
+    modules:
+      - 14-evaluation-and-testing/06-diagnosing-failures.md
+      - 01-ai-and-llm-fundamentals/06-hallucinations.md
+    labs:
+      - 19-hands-on-labs/lab-16-evaluation-framework
+      - 19-hands-on-labs/lab-04-document-grounded-qa
+  CCAR-P-4.5:
+    modules:
+      - 15-production-operations/03-cost-optimisation.md
+      - 15-production-operations/04-latency-optimisation.md
+      - 06-claude-api/08-token-counting-and-cost.md
+    labs:
+      - 19-hands-on-labs/lab-17-cost-optimisation
+  CCAR-P-4.6:
+    modules:
+      - 15-production-operations/02-observability.md
+    labs:
+      - 19-hands-on-labs/lab-19-observability
+
+  # Domain 5 — Governance, Safety & Risk Management (14%)
+  CCAR-P-5.1:
+    modules:
+      - 12-ai-security/14-enterprise-deployment-controls.md
+      - 12-ai-security/06-insecure-output-handling.md
+    labs:
+      - 19-hands-on-labs/lab-14-prompt-injection-testing
+      - 19-hands-on-labs/lab-15-sensitive-data-protection
+  CCAR-P-5.2:
+    modules:
+      - 12-ai-security/01-llm-threat-modelling.md
+      - 01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md
+      - 14-evaluation-and-testing/07-safety-and-red-team-evals.md
+    labs:
+      - 19-hands-on-labs/lab-14-prompt-injection-testing
+  CCAR-P-5.3:
+    modules:
+      - 10-agentic-ai/05-human-in-the-loop.md
+      - 12-ai-security/13-human-oversight.md
+    labs:
+      - 19-hands-on-labs/lab-13-human-in-the-loop
+  CCAR-P-5.4:
+    modules:
+      - 13-enterprise-ai-architecture/05-data-governance-and-compliance.md
+      - 12-ai-security/12-ai-governance.md
+      - 06-claude-api/07-cloud-platforms.md
+    labs:
+      - 19-hands-on-labs/lab-15-sensitive-data-protection
+      - 19-hands-on-labs/lab-20-secure-enterprise-architecture
+  CCAR-P-5.5:
+    modules:
+      - 12-ai-security/12-ai-governance.md
+      - 02-claude-fundamentals/05-responsible-use.md
+    labs:
+      - 19-hands-on-labs/lab-16-evaluation-framework
+
+  # Domain 6 — Stakeholder Communication & Lifecycle Management (14%)
+  CCAR-P-6.1:
+    modules:
+      - 13-enterprise-ai-architecture/01-solution-design-process.md
+      - 13-enterprise-ai-architecture/06-stakeholder-communication.md
+    labs:
+      - 19-hands-on-labs/lab-20-secure-enterprise-architecture
+  CCAR-P-6.2:
+    modules:
+      - 13-enterprise-ai-architecture/07-architecture-decision-records.md
+      - 13-enterprise-ai-architecture/06-stakeholder-communication.md
+    labs:
+      - 19-hands-on-labs/lab-20-secure-enterprise-architecture
+  CCAR-P-6.3:
+    modules:
+      - 13-enterprise-ai-architecture/06-stakeholder-communication.md
+      - 15-production-operations/01-production-readiness.md
+    labs:
+      - 19-hands-on-labs/lab-19-observability
+  CCAR-P-6.4:
+    modules:
+      - 13-enterprise-ai-architecture/07-architecture-decision-records.md
+      - 13-enterprise-ai-architecture/03-reference-architectures.md
+    labs:
+      - 19-hands-on-labs/lab-20-secure-enterprise-architecture
+  CCAR-P-6.5:
+    modules:
+      - 13-enterprise-ai-architecture/09-lifecycle-management.md
+      - 15-production-operations/08-model-upgrades-and-change-management.md
+    labs:
+      - 19-hands-on-labs/lab-18-reliability-engineering
+      - 19-hands-on-labs/lab-16-evaluation-framework
+
+  # Domain 7 — Developer Productivity & Operational Enablement (7%)
+  CCAR-P-7.1:
+    modules:
+      - 09-claude-code/08-team-rollout.md
+      - 09-claude-code/04-permissions-and-settings.md
+      - 09-claude-code/03-claude-md-and-memory.md
+    labs:
+      - 19-hands-on-labs/lab-10-claude-code-workflows
+  CCAR-P-7.2:
+    modules:
+      - 09-claude-code/05-commands-skills-subagents.md
+      - 09-claude-code/06-hooks.md
+      - 09-claude-code/09-headless-ci-and-agent-sdk.md
+    labs:
+      - 19-hands-on-labs/lab-10-claude-code-workflows
+  CCAR-P-7.3:
+    modules:
+      - 15-production-operations/07-incident-response.md
+      - 09-claude-code/09-headless-ci-and-agent-sdk.md
+    labs:
+      - 19-hands-on-labs/lab-18-reliability-engineering
+      - 19-hands-on-labs/lab-10-claude-code-workflows

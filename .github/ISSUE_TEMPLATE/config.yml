@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability in this repository
+    url: https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability
+    about: Please report security problems privately (see SECURITY.md), not as public issues.
+  - name: Official certification questions (registration, eligibility, results)
+    url: https://www.pearsonvue.com/us/en/anthropic.html
+    about: This project is unofficial and cannot help with exam administration.

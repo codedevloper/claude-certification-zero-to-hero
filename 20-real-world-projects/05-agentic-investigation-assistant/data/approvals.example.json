@@ -1,0 +1,5 @@
+{
+  "comment": "Example approval file for --approval-mode file. Each entry approves one containment action on one target. Synthetic data only.",
+  "approved_by": "on-call incident commander (example)",
+  "approved": ["revoke_sessions:dana.reyes"]
+}

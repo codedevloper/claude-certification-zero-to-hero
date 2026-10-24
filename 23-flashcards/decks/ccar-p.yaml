@@ -1,0 +1,810 @@
+# CCAR-P flashcards. Unofficial; original wording. Objectives from 16-certification-tracks/registry.yaml.
+# Product and API facts are as of 2026-10-24. Validate with: python tools/flashcards.py
+deck: ccar-p
+title: CCAR-P — Claude Certified Architect Professional
+cards:
+- id: CCAR-P-FC-001
+  objective: CCAR-P-1.1
+  front: What four criteria must all hold before an agent is the right tier?
+  back: The task is complex (hard to specify in advance), valuable enough to justify cost and latency, viable for Claude,
+    and errors are catchable and recoverable.
+  module: 13-enterprise-ai-architecture/01-solution-design-process.md
+- id: CCAR-P-FC-002
+  objective: CCAR-P-1.1
+  front: What is a value hypothesis?
+  back: A falsifiable statement of the business result the solution must achieve, with a baseline and target, for example
+    cutting median triage time from 40 to 10 minutes without raising the miss rate.
+  module: 13-enterprise-ai-architecture/01-solution-design-process.md
+- id: CCAR-P-FC-003
+  objective: CCAR-P-1.1
+  front: When should an architect recommend not using an LLM?
+  back: When a deterministic rule, search index or conventional model meets the need more cheaply and predictably, for example
+    fixed eligibility checks on structured fields.
+  module: 13-enterprise-ai-architecture/01-solution-design-process.md
+- id: CCAR-P-FC-004
+  objective: CCAR-P-1.2
+  front: Name the four stages of an end-to-end Claude architecture.
+  back: Input (validation, redaction, untrusted tagging, context assembly), processing (call, workflow or agent), output (validation,
+    encoding, risk gate) and feedback (telemetry, reviewer corrections, evals, gated release).
+  module: 13-enterprise-ai-architecture/02-architecture-patterns.md
+- id: CCAR-P-FC-005
+  objective: CCAR-P-1.2
+  front: What does the feedback loop in an LLM architecture consist of?
+  back: Outcome capture and reviewer edits feeding a versioned eval set and dashboards, which drive prompt, retrieval or model
+    changes that pass a release gate.
+  module: 13-enterprise-ai-architecture/03-reference-architectures.md
+- id: CCAR-P-FC-006
+  objective: CCAR-P-1.2
+  front: Why route outputs through a confidence and risk gate?
+  back: So low-risk outputs flow automatically while high-risk or low-confidence ones go to human review, bounding the impact
+    of errors.
+  module: 13-enterprise-ai-architecture/02-architecture-patterns.md
+- id: CCAR-P-FC-007
+  objective: CCAR-P-1.3
+  front: 'Workflow versus agent: who controls the flow?'
+  back: In a workflow your code defines the sequence of steps; in an agent the model decides the next step in a loop.
+  module: 10-agentic-ai/01-workflows-vs-agents.md
+- id: CCAR-P-FC-008
+  objective: CCAR-P-1.3
+  front: When is a router pattern appropriate?
+  back: When inputs fall into distinct categories that need different prompts, tools or model tiers.
+  module: 10-agentic-ai/02-workflow-patterns.md
+- id: CCAR-P-FC-009
+  objective: CCAR-P-1.3
+  front: When does an evaluator-optimiser loop help?
+  back: When quality criteria can be stated clearly and iterative critique measurably improves the output, and the extra latency
+    is acceptable.
+  module: 10-agentic-ai/02-workflow-patterns.md
+- id: CCAR-P-FC-010
+  objective: CCAR-P-1.3
+  front: What hybrid pattern is often the best answer for enterprise processes?
+  back: A deterministic workflow shell (intake, policy checks, approval, write-back) with a bounded agent inside the one step
+    that needs open-ended investigation.
+  module: 10-agentic-ai/01-workflows-vs-agents.md
+- id: CCAR-P-FC-011
+  objective: CCAR-P-1.4
+  front: Give three valid reasons to use multiple agents.
+  back: Parallelisable work, protecting a lead agent's context from reading-heavy subtasks, and separating privileges between
+    agents.
+  module: 10-agentic-ai/04-multi-agent-architecture.md
+- id: CCAR-P-FC-012
+  objective: CCAR-P-1.4
+  front: What should a worker agent return to its orchestrator?
+  back: A condensed, structured result (findings, sources, status), not its raw transcript, so the orchestrator's context
+    stays small.
+  module: 10-agentic-ai/04-multi-agent-architecture.md
+- id: CCAR-P-FC-013
+  objective: CCAR-P-1.4
+  front: What makes delegation to a worker agent well specified?
+  back: A clear objective, the minimum tool set, an output format, boundaries and a stopping condition or budget.
+  module: 10-agentic-ai/04-multi-agent-architecture.md
+- id: CCAR-P-FC-014
+  objective: CCAR-P-1.4
+  front: Which hosting option has Anthropic run both the agent loop and a per-session sandbox?
+  back: Claude Managed Agents (beta as of 2026-10-24). The tool runner and the Claude Agent SDK provide a harness only; you
+    host them.
+  module: 10-agentic-ai/06-managed-agents-and-agent-sdk.md
+- id: CCAR-P-FC-015
+  objective: CCAR-P-1.4
+  front: Name three controls that bound a runaway agent loop.
+  back: Maximum turns, token or task budgets, wall-clock timeouts, plus an escalation path when a budget is reached.
+  module: 10-agentic-ai/03-the-agent-loop.md
+- id: CCAR-P-FC-016
+  objective: CCAR-P-1.5
+  front: List five decomposition techniques.
+  back: Functional (by capability), data (map-reduce), temporal (plan, approve, execute), risk-based (isolate the risky step)
+    and verification (separate generation from checking).
+  module: 03-prompt-engineering/05-task-decomposition-and-chaining.md
+- id: CCAR-P-FC-017
+  objective: CCAR-P-1.5
+  front: What is a sign of over-decomposition?
+  back: Steps that always need the same context and never fail independently; merging them reduces latency and context loss.
+  module: 03-prompt-engineering/05-task-decomposition-and-chaining.md
+- id: CCAR-P-FC-018
+  objective: CCAR-P-1.5
+  front: Why use structured outputs between workflow steps?
+  back: Typed interfaces make each step testable and stop format errors propagating to later steps.
+  module: 10-agentic-ai/02-workflow-patterns.md
+- id: CCAR-P-FC-019
+  objective: CCAR-P-1.6
+  front: Why measure cost per completed task rather than per request?
+  back: Retries, extra turns, human review and rework are real costs; a cheaper request that fails more often can make each
+    finished task more expensive.
+  module: 13-enterprise-ai-architecture/08-business-value-and-roi.md
+- id: CCAR-P-FC-020
+  objective: CCAR-P-1.6
+  front: Name five categories of business value for Claude solutions.
+  back: Efficiency, productivity, transformation, cost reduction and service levels (SLAs).
+  module: 13-enterprise-ai-architecture/08-business-value-and-roi.md
+- id: CCAR-P-FC-021
+  objective: CCAR-P-1.6
+  front: Which API option suits non-urgent bulk work at lower cost?
+  back: The Message Batches API, which processes requests asynchronously at a discount.
+  module: 15-production-operations/03-cost-optimisation.md
+- id: CCAR-P-FC-022
+  objective: CCAR-P-2.1
+  front: What are the current default Opus, Sonnet and Haiku model IDs (as of 2026-10-24)?
+  back: claude-opus-5-5, claude-sonnet-5-5 and claude-haiku-5-5, with no date suffix.
+  module: 05-claude-products-and-models/02-model-families.md
+- id: CCAR-P-FC-023
+  objective: CCAR-P-2.1
+  front: Which model is the most capable widely released Claude model as of 2026-10-24?
+  back: Claude Fable 5.1 (claude-fable-5-1), priced above Opus, with thinking always on.
+  module: 05-claude-products-and-models/02-model-families.md
+- id: CCAR-P-FC-024
+  objective: CCAR-P-2.1
+  front: What is the recommended method for selecting a model?
+  back: Build an eval, establish a quality ceiling with a capable model, then step down effort and tier until quality falls
+    below the bar; judge cost per completed task.
+  module: 05-claude-products-and-models/03-model-selection.md
+- id: CCAR-P-FC-025
+  objective: CCAR-P-2.1
+  front: Why measure the strongest model at lower effort before building a model cascade?
+  back: 'It is often as good and cheaper overall: a cascade adds routing calls and misroutes, and caches are model-scoped
+    so each model pays its own cache writes.'
+  module: 05-claude-products-and-models/03-model-selection.md
+- id: CCAR-P-FC-026
+  objective: CCAR-P-2.1
+  front: What does the effort parameter control and where is it set?
+  back: 'Thoroughness and token spend within a model; set in output_config, for example output_config={''effort'': ''low''},
+    with levels low, medium, high, xhigh and max.'
+  module: 05-claude-products-and-models/03-model-selection.md
+- id: CCAR-P-FC-027
+  objective: CCAR-P-2.1
+  front: What is Claude Opus 5.5's default effort level?
+  back: medium (one level below high), so set effort explicitly per route (as of 2026-10-24).
+  module: 05-claude-products-and-models/03-model-selection.md
+- id: CCAR-P-FC-028
+  objective: CCAR-P-2.2
+  front: Name five layers of a guardrail stack.
+  back: Input controls, prompt rules, model-call constraints (structured outputs, strict tools), output validation and action
+    controls (least privilege, approvals, rate limits).
+  module: 03-prompt-engineering/07-system-prompts-and-roles.md
+- id: CCAR-P-FC-029
+  objective: CCAR-P-2.2
+  front: Which sampling parameters are rejected on current Claude models?
+  back: temperature, top_p and top_k.
+  module: 03-prompt-engineering/07-system-prompts-and-roles.md
+- id: CCAR-P-FC-030
+  objective: CCAR-P-2.2
+  front: How do you shape output format on current models now that prefill is unsupported?
+  back: Use structured outputs (output_config.format or client.messages.parse) or clear instructions; strict tool schemas
+    for tool arguments.
+  module: 03-prompt-engineering/07-system-prompts-and-roles.md
+- id: CCAR-P-FC-031
+  objective: CCAR-P-2.2
+  front: What replaces tool_choice 'any' or 'tool' on current models?
+  back: 'tool_choice ''auto'' with an instruction naming the tool, strict: true tool schemas, or structured outputs when you
+    only need JSON.'
+  module: 07-tool-use-and-function-calling/02-defining-tools.md
+- id: CCAR-P-FC-032
+  objective: CCAR-P-2.2
+  front: How should a system prompt treat retrieved documents and user files?
+  back: Delimit them, for example in tags, and state that they are data to analyse, not instructions to follow.
+  module: 03-prompt-engineering/02-structure-with-xml-tags.md
+- id: CCAR-P-FC-033
+  objective: CCAR-P-2.2
+  front: How do you add an operator instruction mid-conversation without breaking the cache?
+  back: Append a message with role system to the messages array (supported on current models) instead of editing the top-level
+    system prompt.
+  module: 04-context-engineering/03-prompt-caching.md
+- id: CCAR-P-FC-034
+  objective: CCAR-P-2.3
+  front: How many few-shot examples are typically recommended, and how should they be chosen?
+  back: About three to five, diverse enough to cover edge cases and not so similar that the model copies surface features;
+    wrap them in tags.
+  module: 03-prompt-engineering/03-examples-few-shot.md
+- id: CCAR-P-FC-035
+  objective: CCAR-P-2.3
+  front: How is reasoning depth controlled on current models?
+  back: Adaptive thinking (thinking type adaptive, or omitted) plus the effort parameter; fixed budget_tokens is legacy and
+    rejected on current models.
+  module: 03-prompt-engineering/04-reasoning-and-thinking.md
+- id: CCAR-P-FC-036
+  objective: CCAR-P-2.3
+  front: Thinking content is empty in responses by default on current models. How do you get a readable summary?
+  back: 'Set thinking display to summarized, for example thinking={''type'': ''adaptive'', ''display'': ''summarized''}.'
+  module: 03-prompt-engineering/04-reasoning-and-thinking.md
+- id: CCAR-P-FC-037
+  objective: CCAR-P-2.3
+  front: Why audit prompts written for older models?
+  back: They often contain prescriptive scaffolding that is unnecessary or harmful on current models and wastes tokens.
+  module: 03-prompt-engineering/04-reasoning-and-thinking.md
+- id: CCAR-P-FC-038
+  objective: CCAR-P-2.4
+  front: Does a 1M-token window mean you should fill it?
+  back: No. More tokens increase cost and latency and can distract the model; curate the smallest high-signal context.
+  module: 04-context-engineering/02-managing-long-context.md
+- id: CCAR-P-FC-039
+  objective: CCAR-P-2.4
+  front: How do you measure prompt size before sending?
+  back: The token counting endpoint, POST /v1/messages/count_tokens (client.messages.count_tokens).
+  module: 06-claude-api/08-token-counting-and-cost.md
+- id: CCAR-P-FC-040
+  objective: CCAR-P-2.4
+  front: Compaction versus context editing?
+  back: Compaction summarises earlier context near a threshold; context editing clears old tool results or thinking blocks.
+    Both are beta as of 2026-10-24.
+  module: 04-context-engineering/05-compaction-and-context-editing.md
+- id: CCAR-P-FC-041
+  objective: CCAR-P-2.4
+  front: What must your code do each turn when server-side compaction is enabled?
+  back: Append the full response.content (not just the text) so compaction blocks are preserved for the next request.
+  module: 04-context-engineering/05-compaction-and-context-editing.md
+- id: CCAR-P-FC-042
+  objective: CCAR-P-2.4
+  front: Where should long documents and the question go in a prompt?
+  back: Long documents near the top, the question and instructions after them; ask for relevant quotes first when grounding
+    matters.
+  module: 04-context-engineering/02-managing-long-context.md
+- id: CCAR-P-FC-043
+  objective: CCAR-P-2.5
+  front: In what order does the cached prefix render?
+  back: tools, then system, then messages.
+  module: 04-context-engineering/03-prompt-caching.md
+- id: CCAR-P-FC-044
+  objective: CCAR-P-2.5
+  front: How many cache breakpoints can one request have?
+  back: Up to four cache_control breakpoints.
+  module: 04-context-engineering/03-prompt-caching.md
+- id: CCAR-P-FC-045
+  objective: CCAR-P-2.5
+  front: How do you verify that caching is working?
+  back: Check that usage.cache_read_input_tokens is non-zero on repeated requests with the same prefix.
+  module: 04-context-engineering/03-prompt-caching.md
+- id: CCAR-P-FC-046
+  objective: CCAR-P-2.5
+  front: Name three silent cache invalidators.
+  back: A timestamp or request ID in the system prompt, non-deterministic JSON or tool ordering, a tool set that varies per
+    request, and edits to earlier messages.
+  module: 04-context-engineering/03-prompt-caching.md
+- id: CCAR-P-FC-047
+  objective: CCAR-P-2.5
+  front: How does a Skill avoid permanent context cost?
+  back: Only its name and description load up front; the SKILL.md body and resources load when Claude decides the skill is
+    relevant.
+  module: 04-context-engineering/06-progressive-disclosure-and-skills.md
+- id: CCAR-P-FC-048
+  objective: CCAR-P-2.5
+  front: What does a modular prompt library give you that caching does not?
+  back: Consistency, review, versioning and reuse across teams, with evals per module; caching only reduces runtime cost and
+    latency.
+  module: 04-context-engineering/06-progressive-disclosure-and-skills.md
+- id: CCAR-P-FC-049
+  objective: CCAR-P-3.1
+  front: What is capability bloat?
+  back: Exposing more tools, scopes or autonomy than the task needs, which raises attack surface, confuses tool selection
+    and inflates context.
+  module: 07-tool-use-and-function-calling/05-tool-design-best-practices.md
+- id: CCAR-P-FC-050
+  objective: CCAR-P-3.1
+  front: Why replace a generic execute_sql tool with intent-level tools?
+  back: Narrow tools like get_order_status(order_id) limit what can go wrong, are easier to validate and authorise, and are
+    easier for the model to choose correctly.
+  module: 07-tool-use-and-function-calling/05-tool-design-best-practices.md
+- id: CCAR-P-FC-051
+  objective: CCAR-P-3.1
+  front: How should a tool report a failure to the model?
+  back: 'Return a tool_result with is_error: true and an actionable message, rather than dropping the result.'
+  module: 07-tool-use-and-function-calling/05-tool-design-best-practices.md
+- id: CCAR-P-FC-052
+  objective: CCAR-P-3.1
+  front: Which OWASP LLM risk covers agents with too much functionality, permission or autonomy?
+  back: Excessive agency.
+  module: 12-ai-security/05-tool-misuse-and-excessive-agency.md
+- id: CCAR-P-FC-053
+  objective: CCAR-P-3.1
+  front: 'What does strict: true on a tool definition guarantee?'
+  back: The tool_use input validates exactly against the schema (which needs additionalProperties false and required fields).
+  module: 07-tool-use-and-function-calling/02-defining-tools.md
+- id: CCAR-P-FC-054
+  objective: CCAR-P-3.2
+  front: What is the confused-deputy risk in agent design?
+  back: An agent with broad service-account rights is manipulated into using them on behalf of a user who lacks those rights.
+  module: 12-ai-security/09-agent-identity-and-permissions.md
+- id: CCAR-P-FC-055
+  objective: CCAR-P-3.2
+  front: Why is token passthrough in an MCP server discouraged?
+  back: Forwarding a client's token to downstream APIs bypasses audience validation and enables confused-deputy attacks; servers
+    must accept only tokens issued for them.
+  module: 08-model-context-protocol/05-mcp-security.md
+- id: CCAR-P-FC-056
+  objective: CCAR-P-3.2
+  front: What authorisation approach does the MCP specification define for HTTP transports?
+  back: An OAuth 2.1-based authorisation flow.
+  module: 08-model-context-protocol/05-mcp-security.md
+- id: CCAR-P-FC-057
+  objective: CCAR-P-3.2
+  front: Where should credentials for tools live?
+  back: In the host or a vault, injected at execution time; never in prompts, tool descriptions, tool results or CLAUDE.md.
+  module: 12-ai-security/10-secrets-management.md
+- id: CCAR-P-FC-058
+  objective: CCAR-P-3.2
+  front: What is the alternative to long-lived API keys for server workloads calling the Claude API?
+  back: Workload Identity Federation, which exchanges a platform identity token for short-lived credentials (as of 2026-10-24).
+  module: 12-ai-security/09-agent-identity-and-permissions.md
+- id: CCAR-P-FC-059
+  objective: CCAR-P-3.2
+  front: Is the model's decision to call a tool an authorisation?
+  back: No. It is a request; authorise every tool call server-side against the acting identity's permissions.
+  module: 12-ai-security/09-agent-identity-and-permissions.md
+- id: CCAR-P-FC-060
+  objective: CCAR-P-3.3
+  front: Name three levers that reduce latency without reducing accuracy.
+  back: Streaming (perceived latency), prompt caching of long prefixes, and parallelising independent calls.
+  module: 15-production-operations/04-latency-optimisation.md
+- id: CCAR-P-FC-061
+  objective: CCAR-P-3.3
+  front: How do you justify an accuracy-latency configuration?
+  back: With eval accuracy, latency percentiles and cost for each candidate against the stated SLO and accuracy bar, choosing
+    the cheapest option that meets both.
+  module: 15-production-operations/04-latency-optimisation.md
+- id: CCAR-P-FC-062
+  objective: CCAR-P-3.3
+  front: What does fast mode change?
+  back: It runs the same Opus model at higher output speed for premium pricing; research preview on the Claude API only, as
+    of 2026-10-24.
+  module: 15-production-operations/04-latency-optimisation.md
+- id: CCAR-P-FC-063
+  objective: CCAR-P-3.4
+  front: List golden signals for a Claude workload.
+  back: Request rate, error rate, time to first token and total latency, tokens per task, cost per completed task, stop_reason
+    mix, cache hit ratio, quality score and escalation rate.
+  module: 15-production-operations/02-observability.md
+- id: CCAR-P-FC-064
+  objective: CCAR-P-3.4
+  front: How do you trace a multi-step agent?
+  back: One trace per task with spans for each model call and tool call (for example OpenTelemetry), sharing a correlation
+    ID.
+  module: 15-production-operations/02-observability.md
+- id: CCAR-P-FC-065
+  objective: CCAR-P-3.4
+  front: How do you handle sensitive prompts in logs?
+  back: Redact or tokenise before storage, keep full payloads only for samples or anomalies in restricted stores, and apply
+    retention limits.
+  module: 12-ai-security/11-logging-and-auditability.md
+- id: CCAR-P-FC-066
+  objective: CCAR-P-3.5
+  front: When is structure-aware chunking preferred over fixed-size chunks?
+  back: For documents with meaningful structure such as policies, contracts and manuals, so chunks follow headings, sections
+    or clauses.
+  module: 11-rag-and-knowledge-systems/02-chunking-strategies.md
+- id: CCAR-P-FC-067
+  objective: CCAR-P-3.5
+  front: What is parent-child chunking?
+  back: Small chunks are used for precise matching, and their larger parent section is passed to the model for context.
+  module: 11-rag-and-knowledge-systems/02-chunking-strategies.md
+- id: CCAR-P-FC-068
+  objective: CCAR-P-3.5
+  front: What is contextual chunking?
+  back: Prepending a short document-level context to each chunk before embedding so chunks remain meaningful out of context.
+  module: 11-rag-and-knowledge-systems/02-chunking-strategies.md
+- id: CCAR-P-FC-069
+  objective: CCAR-P-3.5
+  front: What metadata should a RAG index carry?
+  back: Tenant or ACL group, source and version, dates, document type and section, to filter and cite results and support
+    deletion.
+  module: 11-rag-and-knowledge-systems/03-embeddings-and-indexing.md
+- id: CCAR-P-FC-070
+  objective: CCAR-P-3.6
+  front: Which retrieval approach suits queries full of SKUs and error codes?
+  back: 'Hybrid retrieval: lexical (BM25) plus dense vectors, usually with re-ranking; exact identifiers can go to a lookup
+    tool.'
+  module: 11-rag-and-knowledge-systems/04-retrieval-strategies.md
+- id: CCAR-P-FC-071
+  objective: CCAR-P-3.6
+  front: How should tabular or metric data be retrieved?
+  back: Through a constrained query tool (text-to-query) rather than embedding tables as prose.
+  module: 11-rag-and-knowledge-systems/04-retrieval-strategies.md
+- id: CCAR-P-FC-072
+  objective: CCAR-P-3.6
+  front: When does long context beat RAG?
+  back: When the corpus is small and stable enough to fit comfortably, especially with prompt caching, avoiding retrieval
+    misses.
+  module: 11-rag-and-knowledge-systems/07-rag-vs-long-context.md
+- id: CCAR-P-FC-073
+  objective: CCAR-P-3.6
+  front: Where must per-user permissions be enforced in RAG?
+  back: At retrieval time, filtering by the caller's identity before ranking, so restricted content never reaches the model.
+  module: 11-rag-and-knowledge-systems/04-retrieval-strategies.md
+- id: CCAR-P-FC-074
+  objective: CCAR-P-3.7
+  front: When is a direct tool better than an MCP server?
+  back: When one application needs a few operations that no other host will reuse; MCP would add a process, protocol and attack
+    surface with no reuse benefit.
+  module: 08-model-context-protocol/06-mcp-vs-alternatives.md
+- id: CCAR-P-FC-075
+  objective: CCAR-P-3.7
+  front: When is MCP the right integration mechanism?
+  back: When the same capability must be reusable across several hosts and agents, such as Claude Code, Claude apps and custom
+    agents.
+  module: 08-model-context-protocol/06-mcp-vs-alternatives.md
+- id: CCAR-P-FC-076
+  objective: CCAR-P-3.7
+  front: When is agent-to-agent delegation preferred?
+  back: When another team or organisation owns a capability end to end, so you delegate a task through a contract instead
+    of exposing their raw tools.
+  module: 13-enterprise-ai-architecture/04-integration-patterns.md
+- id: CCAR-P-FC-077
+  objective: CCAR-P-3.7
+  front: What two pieces does the Claude API MCP connector require?
+  back: An mcp_servers entry and a matching mcp_toolset tool, with the mcp-client-2025-11-20 beta (as of 2026-10-24).
+  module: 08-model-context-protocol/04-using-mcp-with-claude.md
+- id: CCAR-P-FC-078
+  objective: CCAR-P-3.7
+  front: What three primitives do MCP servers expose?
+  back: Tools, resources and prompts.
+  module: 08-model-context-protocol/06-mcp-vs-alternatives.md
+- id: CCAR-P-FC-079
+  objective: CCAR-P-3.8
+  front: What is progressive discovery?
+  back: Loading tool definitions, skills or knowledge only when needed rather than placing everything in context up front.
+  module: 04-context-engineering/06-progressive-disclosure-and-skills.md
+- id: CCAR-P-FC-080
+  objective: CCAR-P-3.8
+  front: What are the two constraints when using tool search with defer_loading?
+  back: At least one tool must be non-deferred, and the tool search tool itself must not be deferred.
+  module: 08-model-context-protocol/04-using-mcp-with-claude.md
+- id: CCAR-P-FC-081
+  objective: CCAR-P-3.8
+  front: When is monolithic context acceptable?
+  back: When there are few tools and a small, stable instruction set, where simplicity and cacheability outweigh the context
+    cost.
+  module: 04-context-engineering/06-progressive-disclosure-and-skills.md
+- id: CCAR-P-FC-082
+  objective: CCAR-P-3.8
+  front: What does programmatic tool calling avoid?
+  back: Routing every intermediate tool result through the model's context, because Claude calls tools from inside code execution.
+  module: 04-context-engineering/06-progressive-disclosure-and-skills.md
+- id: CCAR-P-FC-083
+  objective: CCAR-P-4.1
+  front: What is a guardrail metric?
+  back: A metric that must not degrade while you optimise a primary metric, for example accuracy staying above 93% while you
+    cut cost.
+  module: 14-evaluation-and-testing/02-metrics.md
+- id: CCAR-P-FC-084
+  objective: CCAR-P-4.1
+  front: Give one security metric for an agent.
+  back: Injection success rate or unauthorised tool-call rate on an adversarial test set, checked by code on side effects.
+  module: 14-evaluation-and-testing/02-metrics.md
+- id: CCAR-P-FC-085
+  objective: CCAR-P-4.1
+  front: Which latency metrics matter for interactive Claude apps?
+  back: Time to first token and total time at p50, p95 and p99, plus turns per task for agents.
+  module: 14-evaluation-and-testing/02-metrics.md
+- id: CCAR-P-FC-086
+  objective: CCAR-P-4.2
+  front: Why split eval data into development, validation and test sets?
+  back: To iterate on one, choose between variants on another and report an unbiased result on a held-out set never used for
+    tuning.
+  module: 14-evaluation-and-testing/03-building-eval-datasets.md
+- id: CCAR-P-FC-087
+  objective: CCAR-P-4.2
+  front: Where should eval data come from first?
+  back: De-identified real traffic, supplemented with synthetic cases for rare situations and adversarial cases for safety
+    and security.
+  module: 14-evaluation-and-testing/03-building-eval-datasets.md
+- id: CCAR-P-FC-088
+  objective: CCAR-P-4.2
+  front: Compare code, LLM-judge and human grading.
+  back: Code is cheap and deterministic but narrow; LLM judges scale nuanced judgement but need rubrics and calibration; humans
+    give ground truth but are slow and costly.
+  module: 14-evaluation-and-testing/04-grading-methods.md
+- id: CCAR-P-FC-089
+  objective: CCAR-P-4.2
+  front: How do you make an LLM judge trustworthy?
+  back: A specific anchored rubric, sources included for faithfulness, reasoning before a structured score, randomised order
+    in pairwise comparisons, and agreement checks against human labels.
+  module: 14-evaluation-and-testing/04-grading-methods.md
+- id: CCAR-P-FC-090
+  objective: CCAR-P-4.3
+  front: What is shadow mode?
+  back: Running a new variant on live traffic without showing its output to users, so its results can be compared with production.
+  module: 14-evaluation-and-testing/05-ab-testing-and-iteration.md
+- id: CCAR-P-FC-091
+  objective: CCAR-P-4.3
+  front: What should be decided before an A/B test starts?
+  back: The primary metric, guardrail metrics, sample size and duration, and the rollback trigger.
+  module: 14-evaluation-and-testing/05-ab-testing-and-iteration.md
+- id: CCAR-P-FC-092
+  objective: CCAR-P-4.3
+  front: Why change one thing at a time in iteration?
+  back: So you can attribute a change in results to its cause; otherwise use a factorial design.
+  module: 14-evaluation-and-testing/05-ab-testing-and-iteration.md
+- id: CCAR-P-FC-093
+  objective: CCAR-P-4.4
+  front: How do you tell model mismatch from prompt failure?
+  back: 'Run failing cases across tiers and effort levels: if a stronger tier fixes them with the same prompt it is a mismatch;
+    if all fail similarly, fix the prompt, context or retrieval.'
+  module: 14-evaluation-and-testing/06-diagnosing-failures.md
+- id: CCAR-P-FC-094
+  objective: CCAR-P-4.4
+  front: Intrinsic versus extrinsic hallucination?
+  back: Intrinsic contradicts the provided source; extrinsic adds content the source does not support. Measure them separately.
+  module: 01-ai-and-llm-fundamentals/06-hallucinations.md
+- id: CCAR-P-FC-095
+  objective: CCAR-P-4.4
+  front: First check when JSON outputs are intermittently invalid?
+  back: 'The stop_reason: max_tokens means truncation. Then enforce structured outputs and right-size max_tokens.'
+  module: 14-evaluation-and-testing/06-diagnosing-failures.md
+- id: CCAR-P-FC-096
+  objective: CCAR-P-4.4
+  front: What do you inspect first for a confidently wrong RAG answer?
+  back: The retrieved chunks for that query, to separate a retrieval failure from a generation failure.
+  module: 14-evaluation-and-testing/06-diagnosing-failures.md
+- id: CCAR-P-FC-097
+  objective: CCAR-P-4.5
+  front: In what order should cost levers be applied?
+  back: Free wins (caching, trimming, leaner tools and results), workload shape (batch, parallel, streaming), effort per route,
+    model tier per route, then architecture changes.
+  module: 15-production-operations/03-cost-optimisation.md
+- id: CCAR-P-FC-098
+  objective: CCAR-P-4.5
+  front: Why can lowering max_tokens backfire?
+  back: Truncated outputs fail and must be retried, which raises cost per completed task.
+  module: 15-production-operations/03-cost-optimisation.md
+- id: CCAR-P-FC-099
+  objective: CCAR-P-4.6
+  front: What should be logged for every Claude call?
+  back: Model, effort, prompt version, route, input/output/cache token counts, latency, stop_reason, tool calls and errors,
+    and trace IDs, with payloads redacted.
+  module: 15-production-operations/02-observability.md
+- id: CCAR-P-FC-100
+  objective: CCAR-P-4.6
+  front: Which stop_reason values deserve alerts?
+  back: Rising max_tokens (truncation) and refusal rates, and unhandled pause_turn in server-tool flows.
+  module: 15-production-operations/02-observability.md
+- id: CCAR-P-FC-101
+  objective: CCAR-P-4.6
+  front: How does monitoring close the loop with evaluation?
+  back: Sampled production failures and reviewer corrections become new eval cases and regression tests.
+  module: 15-production-operations/02-observability.md
+- id: CCAR-P-FC-102
+  objective: CCAR-P-5.1
+  front: Why is least privilege the most reliable prompt-injection control?
+  back: Injection can override instructions but cannot grant permissions the system lacks, so it caps the impact.
+  module: 12-ai-security/14-enterprise-deployment-controls.md
+- id: CCAR-P-FC-103
+  objective: CCAR-P-5.1
+  front: What is insecure output handling?
+  back: Passing model output to browsers, databases or shells without validation or encoding, enabling XSS, SQL or command
+    injection.
+  module: 12-ai-security/06-insecure-output-handling.md
+- id: CCAR-P-FC-104
+  objective: CCAR-P-5.1
+  front: How should an application handle stop_reason 'refusal'?
+  back: Check stop_reason before using content, handle the refusal path explicitly, and use server-side fallbacks or review
+    routing where appropriate.
+  module: 12-ai-security/14-enterprise-deployment-controls.md
+- id: CCAR-P-FC-105
+  objective: CCAR-P-5.2
+  front: What is indirect prompt injection?
+  back: Malicious instructions arriving through content the model reads, such as web pages, emails, documents or tool results,
+    rather than from the user.
+  module: 12-ai-security/01-llm-threat-modelling.md
+- id: CCAR-P-FC-106
+  objective: CCAR-P-5.2
+  front: How do you threat-model an LLM system?
+  back: Draw the data flow, mark trust boundaries, apply STRIDE plus LLM-specific threats, rank by likelihood and impact,
+    and assign controls and owners.
+  module: 12-ai-security/01-llm-threat-modelling.md
+- id: CCAR-P-FC-107
+  objective: CCAR-P-5.2
+  front: What is over-reliance as a failure mode?
+  back: Users or reviewers accept model output without adequate scrutiny, so errors pass through human checkpoints.
+  module: 01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md
+- id: CCAR-P-FC-108
+  objective: CCAR-P-5.3
+  front: What three factors set the level of human oversight?
+  back: Impact if wrong, reversibility, and the model's confidence or evidence quality.
+  module: 10-agentic-ai/05-human-in-the-loop.md
+- id: CCAR-P-FC-109
+  objective: CCAR-P-5.3
+  front: What makes a review step effective rather than a rubber stamp?
+  back: Showing evidence and the exact action, easy reject and edit, routing only cases needing judgement, and measuring reviewer
+    performance.
+  module: 12-ai-security/13-human-oversight.md
+- id: CCAR-P-FC-110
+  objective: CCAR-P-5.3
+  front: Human in the loop versus human on the loop?
+  back: 'In the loop: a human approves before the action. On the loop: the system acts while a human monitors and can intervene.'
+  module: 10-agentic-ai/05-human-in-the-loop.md
+- id: CCAR-P-FC-111
+  objective: CCAR-P-5.4
+  front: Name three GDPR obligations that affect a vector store.
+  back: Data minimisation, storage limitation and retention, and the right to erasure propagating to embeddings and caches.
+  module: 13-enterprise-ai-architecture/05-data-governance-and-compliance.md
+- id: CCAR-P-FC-112
+  objective: CCAR-P-5.4
+  front: What is the key HIPAA prerequisite before sending PHI to a vendor service?
+  back: A business associate agreement covering that service, plus minimum-necessary use, access and audit controls.
+  module: 13-enterprise-ai-architecture/05-data-governance-and-compliance.md
+- id: CCAR-P-FC-113
+  objective: CCAR-P-5.4
+  front: What does FedRAMP require architecturally?
+  back: Using cloud services and regions whose FedRAMP authorisation level and boundary cover the workload, and keeping data
+    inside that boundary.
+  module: 13-enterprise-ai-architecture/05-data-governance-and-compliance.md
+- id: CCAR-P-FC-114
+  objective: CCAR-P-5.4
+  front: Name the four functions of the NIST AI RMF.
+  back: Govern, Map, Measure and Manage.
+  module: 12-ai-security/12-ai-governance.md
+- id: CCAR-P-FC-115
+  objective: CCAR-P-5.4
+  front: Does a provider's compliance certification make your system compliant?
+  back: No. It covers the provider's scope; your logging, retention, regions, indexes and access controls remain your responsibility.
+  module: 06-claude-api/07-cloud-platforms.md
+- id: CCAR-P-FC-116
+  objective: CCAR-P-5.5
+  front: What is a counterfactual fairness test?
+  back: Swapping names, dialects or attributes in otherwise identical inputs and checking that outputs or decisions do not
+    change.
+  module: 12-ai-security/12-ai-governance.md
+- id: CCAR-P-FC-117
+  objective: CCAR-P-5.5
+  front: Name three transparency measures for an AI-assisted decision process.
+  back: Disclose AI involvement, explain outputs with sources, and offer a route to a human and to contest outcomes.
+  module: 02-claude-fundamentals/05-responsible-use.md
+- id: CCAR-P-FC-118
+  objective: CCAR-P-5.5
+  front: Why is aggregate accuracy insufficient for fairness?
+  back: It hides weak slices; evaluate by language, region and other lawful slices.
+  module: 12-ai-security/12-ai-governance.md
+- id: CCAR-P-FC-119
+  objective: CCAR-P-6.1
+  front: Name the main discovery workstreams for a Claude solution.
+  back: Problem and value, users and workflow, data, integration, risk and compliance, quality, non-functional requirements
+    and organisation.
+  module: 13-enterprise-ai-architecture/01-solution-design-process.md
+- id: CCAR-P-FC-120
+  objective: CCAR-P-6.1
+  front: Why collect real examples early in discovery?
+  back: They expose data quality and edge cases, seed the eval set and allow a quick feasibility spike.
+  module: 13-enterprise-ai-architecture/06-stakeholder-communication.md
+- id: CCAR-P-FC-121
+  objective: CCAR-P-6.2
+  front: What sections does an ADR contain?
+  back: Context, options considered, decision, consequences and status, with evidence links and a date.
+  module: 13-enterprise-ai-architecture/07-architecture-decision-records.md
+- id: CCAR-P-FC-122
+  objective: CCAR-P-6.2
+  front: How should LLM quality be communicated to executives?
+  back: As measured rates on a defined test set with confidence, plus the controls for errors, never as guarantees.
+  module: 13-enterprise-ai-architecture/06-stakeholder-communication.md
+- id: CCAR-P-FC-123
+  objective: CCAR-P-6.2
+  front: What do risk and compliance stakeholders need to see first?
+  back: Data flows, controls mapped to obligations, accountability and residual risk.
+  module: 13-enterprise-ai-architecture/06-stakeholder-communication.md
+- id: CCAR-P-FC-124
+  objective: CCAR-P-6.3
+  front: Which four dimensions should SLOs for a Claude solution cover?
+  back: Availability, latency, quality and cost.
+  module: 13-enterprise-ai-architecture/06-stakeholder-communication.md
+- id: CCAR-P-FC-125
+  objective: CCAR-P-6.3
+  front: How do you protect an SLA from upstream rate limits or outages?
+  back: Retries with backoff, queueing, fallback routes or models and a degraded mode such as templated responses.
+  module: 15-production-operations/01-production-readiness.md
+- id: CCAR-P-FC-126
+  objective: CCAR-P-6.3
+  front: What do you do when evals show a target is unachievable at the agreed cost?
+  back: Raise it early with options and consequences rather than at launch.
+  module: 13-enterprise-ai-architecture/06-stakeholder-communication.md
+- id: CCAR-P-FC-127
+  objective: CCAR-P-6.4
+  front: List the contents of a handover pack.
+  back: Architecture overview, ADR log, prompt and configuration registry, eval suite and report, threat model and controls,
+    runbooks, implementation guide and operating model.
+  module: 13-enterprise-ai-architecture/07-architecture-decision-records.md
+- id: CCAR-P-FC-128
+  objective: CCAR-P-6.4
+  front: Where should implementation guidance be prescriptive?
+  back: 'Where it protects safety and consistency: identity, logging, output validation, stop_reason handling and release
+    gates.'
+  module: 13-enterprise-ai-architecture/03-reference-architectures.md
+- id: CCAR-P-FC-129
+  objective: CCAR-P-6.5
+  front: List the lifecycle phases of a Claude solution.
+  back: Discovery, design, prototype, build and harden, handoff, monitor, iterate, model change and retirement.
+  module: 13-enterprise-ai-architecture/09-lifecycle-management.md
+- id: CCAR-P-FC-130
+  objective: CCAR-P-6.5
+  front: What are the steps in a model-upgrade plan?
+  back: Read migration notes, update request shapes, re-baseline tokens, re-run evals on both models, tune prompts and effort,
+    shadow and canary, keep rollback, update the ADR.
+  module: 15-production-operations/08-model-upgrades-and-change-management.md
+- id: CCAR-P-FC-131
+  objective: CCAR-P-6.5
+  front: What must happen when a Claude solution is retired?
+  back: Delete data and indexes per policy, revoke credentials and keys, remove integrations and inform users.
+  module: 13-enterprise-ai-architecture/09-lifecycle-management.md
+- id: CCAR-P-FC-132
+  objective: CCAR-P-7.1
+  front: What is the Claude Code settings precedence, highest first?
+  back: Managed settings, command-line --settings, project local (.claude/settings.local.json), shared project (.claude/settings.json),
+    user (~/.claude/settings.json).
+  module: 09-claude-code/04-permissions-and-settings.md
+- id: CCAR-P-FC-133
+  objective: CCAR-P-7.1
+  front: What are the three permission rule lists in Claude Code settings?
+  back: allow, ask and deny, for example Bash(npm run test *) or Read(./.env).
+  module: 09-claude-code/04-permissions-and-settings.md
+- id: CCAR-P-FC-134
+  objective: CCAR-P-7.1
+  front: Which shared-project permission rules apply before workspace trust?
+  back: deny and ask rules apply immediately; allow rules wait until the developer trusts the folder.
+  module: 09-claude-code/04-permissions-and-settings.md
+- id: CCAR-P-FC-135
+  objective: CCAR-P-7.1
+  front: Which defaultMode values are not honoured from project or local settings?
+  back: auto and bypassPermissions; they must come from user or managed settings or a command-line flag.
+  module: 09-claude-code/04-permissions-and-settings.md
+- id: CCAR-P-FC-136
+  objective: CCAR-P-7.1
+  front: Where do organisation-wide Claude Code restrictions belong?
+  back: Managed settings, which nothing in user or project files can override.
+  module: 09-claude-code/08-team-rollout.md
+- id: CCAR-P-FC-137
+  objective: CCAR-P-7.1
+  front: What belongs in a team CLAUDE.md?
+  back: 'Concise project knowledge: build and test commands, architecture notes and conventions; never secrets or rules that
+    must be enforced.'
+  module: 09-claude-code/03-claude-md-and-memory.md
+- id: CCAR-P-FC-138
+  objective: CCAR-P-7.2
+  front: Why use a hook instead of a CLAUDE.md instruction to block production commands?
+  back: Hooks run deterministically on matching tool events and can block the call; CLAUDE.md is guidance the model may not
+    follow.
+  module: 09-claude-code/06-hooks.md
+- id: CCAR-P-FC-139
+  objective: CCAR-P-7.2
+  front: Subagent versus Skill?
+  back: A subagent runs a task in its own context with its own tools; a Skill is packaged instructions and resources loaded
+    on demand into the current context.
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-P-FC-140
+  objective: CCAR-P-7.2
+  front: What is a Claude Code plugin for?
+  back: Distributing a bundle of commands, subagents, skills, hooks and MCP servers to teams, for example through a marketplace.
+  module: 09-claude-code/05-commands-skills-subagents.md
+- id: CCAR-P-FC-141
+  objective: CCAR-P-7.2
+  front: How do you run Claude Code non-interactively in CI?
+  back: Headless mode with claude -p and a prompt, with permissions scoped for the pipeline; or build on the Claude Agent
+    SDK.
+  module: 09-claude-code/09-headless-ci-and-agent-sdk.md
+- id: CCAR-P-FC-142
+  objective: CCAR-P-7.2
+  front: Where is a team-shared MCP server configured in a repository?
+  back: In the project's .mcp.json, with credentials supplied from environment variables or per-user auth, never written in
+    the file.
+  module: 09-claude-code/07-mcp-in-claude-code.md
+- id: CCAR-P-FC-143
+  objective: CCAR-P-7.3
+  front: How can Claude assist incident investigation safely?
+  back: A read-only agent with access to logs, metrics and deploy history builds a timeline and candidate causes; humans decide
+    mitigations.
+  module: 15-production-operations/07-incident-response.md
+- id: CCAR-P-FC-144
+  objective: CCAR-P-7.3
+  front: A Claude-powered service starts returning 400s after a model upgrade. What do you check?
+  back: 'Removed request features: temperature/top_p/top_k, assistant prefill, forced tool_choice any/tool and budget_tokens
+    thinking.'
+  module: 15-production-operations/07-incident-response.md
+- id: CCAR-P-FC-145
+  objective: CCAR-P-7.3
+  front: Cost doubles and cache_read_input_tokens drops to near zero after a release. Likely cause?
+  back: A silent cache invalidator, such as a timestamp added to the system prompt or a reordered or changed tool list.
+  module: 15-production-operations/07-incident-response.md
+- id: CCAR-P-FC-146
+  objective: CCAR-P-7.3
+  front: Which Claude Code commands help diagnose configuration problems?
+  back: /status shows which settings sources loaded; claude doctor reports rejected entries.
+  module: 09-claude-code/09-headless-ci-and-agent-sdk.md
+- id: CCAR-P-FC-147
+  objective: CCAR-P-7.3
+  front: How should a client handle HTTP 429 from the Claude API?
+  back: Retry with backoff honouring the retry-after header, queue work, and plan capacity or fall back to another route.
+  module: 15-production-operations/07-incident-response.md

@@ -1,0 +1,584 @@
+{
+  "schema_version": 1,
+  "track": "CCAO-F",
+  "domain": 6,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAO-F-D6-001",
+      "objective": "CCAO-F-6.1",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Adatum Insurance's team is listing possible Claude uses: drafting internal training quizzes, summarising public industry reports, brainstorming event themes, and automatically deciding which claims are denied with no human involvement.",
+      "question": "Which proposed use is most clearly inappropriate as described?",
+      "options": {
+        "A": "Brainstorming themes and session titles for the annual customer event.",
+        "B": "Drafting internal training quizzes on claims procedures for new staff.",
+        "C": "Summarising public industry reports on claims trends for the leadership team.",
+        "D": "Automatically deciding claim denials with no human involvement."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Decisions with significant consequences for individuals, such as insurance claim denials, should not be fully automated without human oversight. Anthropic's Usage Policy sets additional requirements for high-risk uses that affect people's access to services, including human review.",
+      "why_incorrect": {
+        "A": "Brainstorming is low-stakes and benefits from Claude's creativity.",
+        "B": "This is a low-risk drafting task where a human can easily check the result.",
+        "C": "Summarising public material is a standard, low-risk use, with normal accuracy checks."
+      },
+      "module": "02-claude-fundamentals/05-responsible-use.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-002",
+      "objective": "CCAO-F-6.1",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Proseware Education's teachers are discussing ways to use Claude with students' work.",
+      "question": "Which TWO uses are appropriate, assuming school policy allows them?",
+      "options": {
+        "A": "Generating varied practice questions on a topic for revision.",
+        "B": "Writing essays for students to submit as their own work.",
+        "C": "Asking Claude to determine whether a student is lying about being ill.",
+        "D": "Assigning final grades automatically to save teacher time, with teachers reading only essays that Claude marks as borderline.",
+        "E": "Drafting general feedback themes on a set of anonymised essays, which the teacher then reviews and personalises."
+      },
+      "answer": [
+        "A",
+        "E"
+      ],
+      "explanation": "Appropriate uses support people's judgement and are easy to check, such as practice material and draft feedback. Inappropriate uses hand consequential judgements to Claude or enable dishonesty.",
+      "why_incorrect": {
+        "B": "This undermines academic integrity and the purpose of assessment.",
+        "C": "Claude cannot reliably make such a judgement, and using it this way could unfairly harm the student.",
+        "D": "Final grading has real consequences for students and needs the teacher's judgement."
+      },
+      "module": "02-claude-fundamentals/05-responsible-use.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-003",
+      "objective": "CCAO-F-6.1",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "A recruiter at Datum Corp wants to paste 200 CVs into Claude and ask it to \"reject anyone who doesn't seem like a culture fit.\"",
+      "question": "What is the best response?",
+      "options": {
+        "A": "Ask Claude to infer candidates' ages from graduation years to help screening.",
+        "B": "Proceed as asked, because Claude applies the same standard to every CV and is therefore free from the biases people have.",
+        "C": "Reframe it: summarise CVs against defined, job-related criteria, with a recruiter making and recording decisions.",
+        "D": "Proceed, but start with the first 50 CVs and review a few rejections to see whether the results look sensible."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Employment decisions are high-impact. Use clear, job-related criteria, keep humans accountable for decisions, and avoid vague criteria or inferences about protected characteristics.",
+      "why_incorrect": {
+        "A": "Inferring protected characteristics for screening creates discrimination risk.",
+        "B": "Models can reflect biases, and \"culture fit\" is a vague criterion that can mask discrimination.",
+        "D": "Reducing the number does not address the inappropriate criterion or lack of human decision-making."
+      },
+      "module": "02-claude-fundamentals/05-responsible-use.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-004",
+      "objective": "CCAO-F-6.1",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Fourth Coffee's social media lead asks Claude to write 50 five-star customer reviews to post on review sites under made-up names for a new store.",
+      "question": "Why is this inappropriate, and what is a better alternative?",
+      "options": {
+        "A": "It is inappropriate only because 50 is too many; five would be fine.",
+        "B": "Fake reviews deceive consumers and breach usage policies; instead, invite genuine customers to leave honest reviews.",
+        "C": "It is acceptable if each review is written in a different style, so the reviews read as natural and varied.",
+        "D": "It is acceptable as long as the reviews are well written and describe things the store genuinely offers."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Using Claude to create deceptive content, such as fake reviews presented as genuine, is inappropriate. Claude can instead support honest approaches that achieve the same business goal.",
+      "why_incorrect": {
+        "A": "Any number of fabricated reviews is deceptive.",
+        "C": "Variety makes the deception harder to spot, not acceptable.",
+        "D": "Even accurate descriptions are deceptive when presented as reviews from customers who do not exist."
+      },
+      "module": "02-claude-fundamentals/05-responsible-use.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-005",
+      "objective": "CCAO-F-6.1",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "A new employee at Coho Winery asks how to tell whether a task is a good fit for Claude.",
+      "question": "Which rule of thumb is most useful?",
+      "options": {
+        "A": "Tasks are a good fit only if Claude can complete them without any human involvement.",
+        "B": "Any task is a good fit as long as it saves a meaningful amount of time compared with doing it by hand.",
+        "C": "Only tasks that involve numbers or data are a good fit, since writing tasks depend too much on personal judgement.",
+        "D": "Tasks where the output can be checked and errors are manageable, or where a human makes the final call."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Assess fit by verifiability, consequence of errors and the presence of human decision-making, not only by convenience.",
+      "why_incorrect": {
+        "A": "Many of the best uses combine Claude's drafting with human judgement.",
+        "B": "Time saved does not justify uses that are high-risk, deceptive or impossible to verify.",
+        "C": "Writing is one of Claude's main strengths."
+      },
+      "module": "02-claude-fundamentals/05-responsible-use.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-006",
+      "objective": "CCAO-F-6.2",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "security",
+      "scenario": "Lena, a team manager at Lucerne Clinics, wants Claude to help rewrite a sick-leave summary that contains staff names and medical diagnoses. Her organisation has an approved Claude Enterprise workspace and a policy on health data.",
+      "question": "What should she do first?",
+      "options": {
+        "A": "Check the policy on health data; if allowed, use only the approved workspace, otherwise remove identifying details first.",
+        "B": "Ask Claude whether it is permitted to process health data, and follow its answer, since it knows its own data handling.",
+        "C": "Paste it anywhere, because Claude does not store anything.",
+        "D": "Paste it into her personal free account, which is quicker, and delete the chat afterwards so nothing is kept."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Health information is highly sensitive. Follow organisational policy, use the approved environment, and minimise or de-identify data where possible.",
+      "why_incorrect": {
+        "B": "Claude cannot know her organisation's policies; the policy owner decides.",
+        "C": "Data handling depends on the account, settings and policies; it is not safe to assume nothing is retained.",
+        "D": "Personal accounts may not have the organisation's contractual and administrative protections for sensitive data."
+      },
+      "module": "13-enterprise-ai-architecture/05-data-governance-and-compliance.md",
+      "references": [
+        "https://www.anthropic.com/legal/privacy",
+        "https://www.anthropic.com/legal/commercial-terms"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-007",
+      "objective": "CCAO-F-6.2",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "security",
+      "scenario": "Northwind Lending's marketing team wants to use Claude to analyse customer feedback that includes names, email addresses and free-text comments.",
+      "question": "Which TWO practices best reduce privacy risk while keeping the analysis useful?",
+      "options": {
+        "A": "Share the analysis chat publicly so other teams can learn from it.",
+        "B": "Remove names and email addresses before analysis, since themes do not depend on identity.",
+        "C": "Use the organisation's approved Claude workspace that is covered by its data agreements.",
+        "D": "Ask Claude to look up each customer's social media profiles to enrich the analysis.",
+        "E": "Keep all identifiers in the data, so Claude can link related comments from the same customer and personalise each finding."
+      },
+      "answer": [
+        "B",
+        "C"
+      ],
+      "explanation": "Data minimisation and approved environments are core privacy practices: share only what the task needs, and use tools covered by the organisation's agreements and controls.",
+      "why_incorrect": {
+        "A": "Publicly sharing a chat containing customer data could expose personal information.",
+        "D": "Compiling extra personal data goes beyond the purpose and increases privacy risk.",
+        "E": "Identifiers add risk without improving theme analysis."
+      },
+      "module": "13-enterprise-ai-architecture/05-data-governance-and-compliance.md",
+      "references": [
+        "https://www.anthropic.com/legal/privacy",
+        "https://www.anthropic.com/legal/commercial-terms"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-008",
+      "objective": "CCAO-F-6.2",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "security",
+      "scenario": "Woodgrove Bank's strategy team is evaluating a confidential acquisition. An analyst wants to use the research feature with connectors to Drive and Gmail to gather everything related to the target company.",
+      "question": "What is the most important consideration?",
+      "options": {
+        "A": "Connect every available connector, so the research is as complete as possible and nothing relevant to the target is missed.",
+        "B": "Confirm policy allows it, use the approved workspace, and connect only the needed sources, since research reads whatever they can access.",
+        "C": "Use a personal account for the research, which keeps the confidential deal details away from the bank's shared systems.",
+        "D": "Paste the deal details into a public forum to get more opinions."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Connectors give Claude access to data in connected accounts. Limit connections to what is needed and keep confidential work in approved, governed environments.",
+      "why_incorrect": {
+        "A": "Broad connector access exposes more confidential data than the task needs.",
+        "C": "Avoiding organisational oversight for confidential work is a policy and security violation.",
+        "D": "Public disclosure of confidential deal information is a serious breach."
+      },
+      "module": "13-enterprise-ai-architecture/05-data-governance-and-compliance.md",
+      "references": [
+        "https://support.claude.com/en/articles/11088861-use-research-on-claude",
+        "https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-009",
+      "objective": "CCAO-F-6.2",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "A Graphic Design Institute administrator in the EU wants Claude to draft letters to students using enrolment data. Their data protection officer asks about lawful processing.",
+      "question": "Which approach is most appropriate?",
+      "options": {
+        "A": "Work with the data protection officer on purpose, legal basis and minimum data, then use only an approved account.",
+        "B": "Proceed only if Claude confirms that the processing is lawful under the relevant data protection rules.",
+        "C": "Send the full enrolment database, so the letters can be as personalised and accurate as possible.",
+        "D": "Proceed, because drafting letters is a routine administrative task and does not count as processing personal data."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Regulatory requirements apply to AI-assisted processing like any other. Involve accountable roles, confirm purpose and legal basis, minimise data and use approved tools.",
+      "why_incorrect": {
+        "B": "Legal determinations belong to the organisation's accountable roles, not to Claude.",
+        "C": "Sending more data than needed conflicts with data minimisation.",
+        "D": "Using enrolment data to draft letters is processing personal data, and data protection obligations apply whatever tool is used."
+      },
+      "module": "13-enterprise-ai-architecture/05-data-governance-and-compliance.md",
+      "references": [
+        "https://www.anthropic.com/legal/privacy"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-010",
+      "objective": "CCAO-F-6.2",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "Tom at Acme Logistics asks whether there is anything he should never paste into Claude, even in the approved company workspace.",
+      "question": "Which answer best reflects good practice?",
+      "options": {
+        "A": "Only images are risky; text is always safe.",
+        "B": "Only data older than five years is safe to share.",
+        "C": "Anything is fine in the approved workspace, including system passwords, because the workspace is covered by company agreements.",
+        "D": "Never paste secrets such as passwords, keys or tokens, and follow policy for other restricted data."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Some information, such as credentials, should never be entered into a chat. Other categories depend on policy, environment and need.",
+      "why_incorrect": {
+        "A": "Text can contain highly sensitive information.",
+        "B": "The age of data does not determine its sensitivity.",
+        "C": "Credentials should never be shared in chat; their exposure can lead to account compromise."
+      },
+      "module": "12-ai-security/04-data-exfiltration-and-disclosure.md",
+      "references": [
+        "https://www.anthropic.com/legal/privacy"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-011",
+      "objective": "CCAO-F-6.3",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Southridge Video's AI policy requires staff to use the company's Claude Team workspace for work and to label AI-assisted public content. Ben prefers his personal account because he has his own Projects set up there.",
+      "question": "What should Ben do?",
+      "options": {
+        "A": "Use his personal account only for the most confidential work, where keeping things separate from shared systems matters most.",
+        "B": "Keep using his personal account for work, since his Projects are already set up there and the outputs are the same.",
+        "C": "Recreate the Projects in the company workspace without copying restricted data, and follow the labelling rule.",
+        "D": "Ask a colleague to approve an exception informally over chat."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Organisational AI policies define approved tools and practices. Follow them, and use formal exception routes when there is a genuine need.",
+      "why_incorrect": {
+        "A": "Confidential work is exactly what should stay in the governed workspace.",
+        "B": "Convenience does not override policy; personal accounts sit outside company controls.",
+        "D": "Exceptions should go through the policy's formal process, not informal approval."
+      },
+      "module": "12-ai-security/12-ai-governance.md",
+      "references": [
+        "https://www.anthropic.com/legal/commercial-terms"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-012",
+      "objective": "CCAO-F-6.3",
+      "type": "multiple",
+      "select": 3,
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Fabrikam Retail is writing its first AI usage policy for Claude across business teams.",
+      "question": "Which THREE elements should the policy include?",
+      "options": {
+        "A": "A requirement that staff never mention AI use to customers under any circumstances, to protect the company's brand.",
+        "B": "Which tools and plans are approved for work use.",
+        "C": "A rule that the most capable available model must always be used for every task, so quality never depends on individual choices.",
+        "D": "Data classifications that may or may not be used with Claude, with examples.",
+        "E": "Human review requirements for AI-assisted output, by risk level."
+      },
+      "answer": [
+        "B",
+        "D",
+        "E"
+      ],
+      "explanation": "Effective AI policies cover approved tools, data handling rules and review requirements scaled to risk, along with clear ownership and an exception process.",
+      "why_incorrect": {
+        "A": "Blanket concealment conflicts with transparency expectations and some disclosure obligations.",
+        "C": "Model choice is a task-level decision, not a governance requirement."
+      },
+      "module": "12-ai-security/12-ai-governance.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-013",
+      "objective": "CCAO-F-6.3",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "An audit at Humongous Insurance finds that several teams uploaded customer complaint files to Projects shared with the whole organisation, although policy restricts them to the complaints team.",
+      "question": "What is the best corrective action?",
+      "options": {
+        "A": "Limit sharing to the complaints team, remove files where not allowed, report it, and reinforce training.",
+        "B": "Ask Claude in each Project to forget the complaint files so they are no longer used.",
+        "C": "Take no action, since only employees had access and nothing left the organisation.",
+        "D": "Delete every Project across the organisation and start again with stricter rules."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Governance failures need containment (fix access), correction (remove data where it does not belong), reporting and prevention (training and configuration).",
+      "why_incorrect": {
+        "B": "Access is controlled by sharing settings and file management, not by asking Claude.",
+        "C": "Internal over-sharing still breaches the policy and can expose customers' data.",
+        "D": "This is disproportionate and destroys legitimate work."
+      },
+      "module": "12-ai-security/12-ai-governance.md",
+      "references": [
+        "https://support.claude.com/en/articles/9517075-what-are-projects"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-014",
+      "objective": "CCAO-F-6.3",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Margie's Travel's IT owner is deciding whether members on the company's Enterprise plan may let Claude send emails through the Gmail connector without approving each message.",
+      "question": "Which approach best aligns with good governance?",
+      "options": {
+        "A": "Allow automatic sending for all members, since the Enterprise plan already provides strong security and it saves time.",
+        "B": "Let each user decide without any guidance.",
+        "C": "Keep per-action approval for sending as the default, relaxing it only for reviewed, low-risk uses.",
+        "D": "Disable every connector permanently, since any connector that can act on email is too risky to allow."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "As of 2026-10-24, Owners can control whether members may run send, share, move and trash actions without per-action approval. Keeping human confirmation for actions with external effects is a sensible default.",
+      "why_incorrect": {
+        "A": "Removing approval for outbound communication increases the risk of mistaken or manipulated messages.",
+        "B": "Unguided individual choices produce inconsistent risk across the organisation.",
+        "D": "This forgoes legitimate read-only benefits; governance can manage the risk proportionately."
+      },
+      "module": "12-ai-security/12-ai-governance.md",
+      "references": [
+        "https://support.claude.com/en/articles/10166901-use-google-workspace-connectors"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-015",
+      "objective": "CCAO-F-6.3",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "A manager at Contoso Health asks who is responsible when a report drafted with Claude contains an error that reaches a client.",
+      "question": "Which statement reflects sound governance?",
+      "options": {
+        "A": "Nobody can be held responsible, because errors from AI tools are unpredictable by nature.",
+        "B": "The client is responsible, because recipients are expected to check anything they rely on.",
+        "C": "Anthropic is responsible for errors in Claude's outputs, since the model generated the content.",
+        "D": "The people who used and approved the output remain accountable, which is why review matters."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "AI assistance does not transfer accountability. Governance assigns ownership for outputs and requires proportionate review before they are used.",
+      "why_incorrect": {
+        "A": "Unpredictability is a reason for review, not a removal of accountability.",
+        "B": "The sender is accountable for what they send.",
+        "C": "Organisations remain responsible for how they use and approve outputs."
+      },
+      "module": "12-ai-security/12-ai-governance.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-016",
+      "objective": "CCAO-F-6.4",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Wingtip Events used Claude to draft a keynote speech for its CEO. A journalist later asks whether AI was used.",
+      "question": "Which response is most ethical?",
+      "options": {
+        "A": "Explain that the speech was written entirely by AI, so the CEO should not be held responsible for any of its content.",
+        "B": "Answer honestly that AI helped draft the speech and the CEO reviewed and owns it, in line with policy.",
+        "C": "Refuse to comment and delete the drafts.",
+        "D": "Say that the CEO wrote the speech personally, since the CEO approved the final text and AI help is an internal detail."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Transparency about AI assistance, alongside clear human ownership of the content, supports trust.",
+      "why_incorrect": {
+        "A": "This is inaccurate and disowns responsibility for the content.",
+        "C": "Destroying records to avoid scrutiny is not transparent.",
+        "D": "Lying about AI use is deceptive and risks reputational harm if discovered."
+      },
+      "module": "02-claude-fundamentals/04-anthropic-safety-approach.md",
+      "references": [
+        "https://www.anthropic.com/news/claudes-constitution"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-017",
+      "objective": "CCAO-F-6.4",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Tailspin Travel's marketing team wants to use Claude to produce persuasive campaign copy.",
+      "question": "Which TWO practices reflect ethical use?",
+      "options": {
+        "A": "Make sure claims are truthful and substantiated, and avoid exploiting customers' fears or vulnerabilities.",
+        "B": "Write copy that imitates a competitor's brand so customers confuse the two.",
+        "C": "Use Claude to generate fake scarcity messages, such as \"only 2 seats left\" when that is untrue.",
+        "D": "Remove the small-print disclaimers from offers, so that the main message is clearer and the ads look more appealing.",
+        "E": "Review copy for stereotypes or exclusionary language before publishing."
+      },
+      "answer": [
+        "A",
+        "E"
+      ],
+      "explanation": "Persuasion is legitimate when it is honest and respectful. Ethical use means truthful claims, no manipulation and inclusive language.",
+      "why_incorrect": {
+        "B": "Deliberately confusing customers is deceptive and may infringe rights.",
+        "C": "Fabricated scarcity is deceptive and manipulates customers.",
+        "D": "Removing required disclaimers misleads customers."
+      },
+      "module": "02-claude-fundamentals/04-anthropic-safety-approach.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-018",
+      "objective": "CCAO-F-6.4",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Litware Publishing's editor wants to use Claude to write a book chapter \"in the exact style\" of a living novelist and publish it under the editor's name as original work.",
+      "question": "What is the main ethical concern, and the better path?",
+      "options": {
+        "A": "The concern is cost, because long chapters use more of the usage allowance.",
+        "B": "There is no concern, because a writing style cannot be owned and Claude produces new sentences rather than copying text.",
+        "C": "Close imitation of a living author passed off as original raises authorship and IP concerns; develop an original voice instead.",
+        "D": "The only concern is length; shorter chapters are fine."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Using AI to imitate a specific living creator and present the result as original work raises ethical and legal questions. Original creation and honest attribution avoid them.",
+      "why_incorrect": {
+        "A": "Usage is not the ethical issue.",
+        "B": "Close imitation presented as original still raises authorship and possible infringement issues.",
+        "D": "The concern is authenticity and intellectual property, not length."
+      },
+      "module": "02-claude-fundamentals/04-anthropic-safety-approach.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-019",
+      "objective": "CCAO-F-6.4",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Datum Corp's analyst asks Claude, with the web browsing and research tools on, to summarise a supplier's public web page. The page contains hidden text instructing AI assistants to say the supplier has perfect safety records.",
+      "question": "What does this illustrate, and how should the analyst respond?",
+      "options": {
+        "A": "Indirect prompt injection; treat external content as untrusted, check the summary against other sources, and report it.",
+        "B": "It shows that research should never be used.",
+        "C": "Nothing to act on, because Claude reliably detects and ignores hidden instructions in web pages it reads.",
+        "D": "A harmless formatting issue on the supplier's site, so the summary can be used once the odd text is ignored."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Content retrieved from the web or connected sources can contain instructions intended to manipulate AI output. Treat it as untrusted, verify important claims and report attempts.",
+      "why_incorrect": {
+        "B": "The risk is managed through verification and caution, not by abandoning useful tools.",
+        "C": "Defences reduce risk but are not perfect; human verification still matters.",
+        "D": "Hidden instructions aimed at AI are a manipulation attempt, not a formatting issue."
+      },
+      "module": "12-ai-security/03-indirect-prompt-injection.md",
+      "references": [
+        "https://support.claude.com/en/articles/11088861-use-research-on-claude"
+      ]
+    },
+    {
+      "id": "CCAO-F-D6-020",
+      "objective": "CCAO-F-6.4",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "concept",
+      "scenario": "Bellows College's ethics committee asks why over-reliance on AI tools is an ethical issue and not only a quality issue.",
+      "question": "Which answer is most accurate?",
+      "options": {
+        "A": "Over-reliance is impossible because AI is always correct.",
+        "B": "It can erode human skills and judgement, hide errors that affect people, and blur accountability.",
+        "C": "Over-reliance is mainly a cost issue, because heavy use of AI tools increases subscription and usage spending.",
+        "D": "Over-reliance matters mainly for technical staff, who might lose coding skills if they rely on AI assistants."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Responsible use keeps humans engaged and accountable. Over-reliance can let errors affect people unnoticed and weaken the human judgement that oversight depends on.",
+      "why_incorrect": {
+        "A": "AI is not always correct; that is part of the concern.",
+        "C": "The concern is about people, fairness and accountability, not only cost.",
+        "D": "Any role that depends on AI output can be affected."
+      },
+      "module": "12-ai-security/13-human-oversight.md",
+      "references": [
+        "https://www.anthropic.com/news/claudes-constitution"
+      ]
+    }
+  ]
+}

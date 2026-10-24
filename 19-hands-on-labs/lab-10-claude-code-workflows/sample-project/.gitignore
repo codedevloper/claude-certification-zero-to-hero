@@ -1,0 +1,8 @@
+# Personal Claude Code files stay out of version control
+CLAUDE.local.md
+.claude/settings.local.json
+# Secrets never belong in the repository
+.env
+.env.*
+secrets/
+__pycache__/

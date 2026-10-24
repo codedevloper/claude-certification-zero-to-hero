@@ -1,0 +1,18 @@
+{"id": "q01", "question": "How long does a shipper have to request a return after delivery?", "relevant": [["returns-policy", "Return window"]], "answer_keywords": ["30"]}
+{"id": "q02", "question": "What is the return window for perishable goods?", "relevant": [["returns-policy", "Return window"]], "answer_keywords": ["72 hours"]}
+{"id": "q03", "question": "Who decides on a damage claim of 400 euros and how fast?", "relevant": [["returns-policy", "Damaged on arrival"]], "answer_keywords": ["supervisor", "two business days"]}
+{"id": "q04", "question": "What fee is charged when a consignee refuses a parcel at the door?", "relevant": [["returns-policy", "Refused deliveries"]], "answer_keywords": ["6.50"]}
+{"id": "q05", "question": "What temperature range applies to chilled goods?", "relevant": [["cold-chain", "Temperature bands"]], "answer_keywords": ["2", "8"]}
+{"id": "q06", "question": "What counts as a temperature excursion and what happens to the consignment?", "relevant": [["cold-chain", "Excursions"]], "answer_keywords": ["30", "hold"]}
+{"id": "q07", "question": "How long must a reefer trailer be pre-cooled before loading?", "relevant": [["cold-chain", "Vehicle pre-cooling"]], "answer_keywords": ["45 minutes"]}
+{"id": "q08", "question": "When must a driver take a break and for how long?", "relevant": [["driver-safety", "Driving hours"]], "answer_keywords": ["4.5 hours", "45 minutes"]}
+{"id": "q09", "question": "What should a driver do if they feel too tired to drive?", "relevant": [["driver-safety", "Fatigue reporting"]], "answer_keywords": ["night desk"]}
+{"id": "q10", "question": "How many days does a shipper have to dispute an invoice line?", "relevant": [["billing-faq", "Disputes"]], "answer_keywords": ["60 days"]}
+{"id": "q11", "question": "What interest is charged on late invoices?", "relevant": [["billing-faq", "Late payment"]], "answer_keywords": ["1 percent"]}
+{"id": "q12", "question": "How many people are needed to open the high-value cage?", "relevant": [["security-handbook", "High-value cage"]], "answer_keywords": ["two"]}
+{"id": "q13", "question": "How long are visitor logs kept?", "relevant": [["security-handbook", "Visitor access"]], "answer_keywords": ["90 days"]}
+{"id": "q14", "question": "What is the company policy on parental leave for warehouse staff?", "relevant": [], "answer_keywords": []}
+{"id": "q15", "question": "How long does reefer precooling take?", "relevant": [["cold-chain", "Vehicle pre-cooling"]], "answer_keywords": ["45 minutes"]}
+{"id": "q16", "question": "What is the maximum daily drive time for a trucker?", "relevant": [["driver-safety", "Driving hours"]], "answer_keywords": ["9 hours"]}
+{"id": "q17", "question": "Which bay holds returned items that fail inspection?", "relevant": [["returns-policy", "Restocking"]], "answer_keywords": ["Q3"]}
+{"id": "q18", "question": "What must staff do when a scanner goes missing?", "relevant": [["security-handbook", "Handheld devices"]], "answer_keywords": ["IT service desk"]}

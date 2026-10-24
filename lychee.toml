@@ -1,0 +1,12 @@
+# External link checking (CI, weekly and on PRs). Internal links: tools/check_links.py
+max_concurrency = 8
+accept = ["200..=299", "403", "429"]   # some doc sites block bots or rate-limit; manual review if they persist
+timeout = 30
+max_retries = 3
+exclude_path = [".venv", ".site", "site"]
+exclude = [
+  "^http://localhost",
+  "^https://example\\.com",
+  "^https://api\\.anthropic\\.com/v1",  # API endpoints in examples, not pages
+  "anthropic-partners\\.skilljar\\.com",   # partner portal can require sign-in
+]

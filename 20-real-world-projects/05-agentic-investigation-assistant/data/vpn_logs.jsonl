@@ -1,0 +1,5 @@
+{"ts": "2026-10-20T08:03:05Z", "user": "dana.reyes", "event": "vpn_connect", "src_ip": "198.51.100.24", "assigned_ip": "10.8.0.21", "client": "NWL-VPN 6.2 (managed)"}
+{"ts": "2026-10-20T17:31:12Z", "user": "dana.reyes", "event": "vpn_disconnect", "assigned_ip": "10.8.0.21", "bytes_out": 48211904}
+{"ts": "2026-10-21T02:53:10Z", "user": "dana.reyes", "event": "vpn_connect", "src_ip": "203.0.113.45", "assigned_ip": "10.8.0.77", "client": "openconnect 9.12 (unmanaged)"}
+{"ts": "2026-10-21T03:41:55Z", "user": "dana.reyes", "event": "vpn_disconnect", "assigned_ip": "10.8.0.77", "bytes_out": 1932735283}
+{"ts": "2026-10-21T08:06:20Z", "user": "dana.reyes", "event": "vpn_connect", "src_ip": "198.51.100.24", "assigned_ip": "10.8.0.22", "client": "NWL-VPN 6.2 (managed)"}

@@ -1,0 +1,67 @@
+{
+  "organisation": "Northwind Lending (fictional)",
+  "description": "Synthetic monthly traffic profile for an internal policy assistant used by support, operations and risk staff.",
+  "days_per_month": 30,
+  "shared_prefix_tokens": 6000,
+  "assumptions": {
+    "interactive_cache_hit_rate": 0.95,
+    "batch_cache_hit_rate": 0.60,
+    "cache_ttl": "5m",
+    "note": "Hit rates are planning assumptions, not measurements. Replace them with cache_read_input_tokens / (cache_read_input_tokens + cache_creation_input_tokens) from your own usage logs."
+  },
+  "request_types": [
+    {
+      "name": "faq_lookup",
+      "true_tier": "simple",
+      "latency_sensitive": true,
+      "daily_requests": 4000,
+      "suffix_input_tokens": 150,
+      "output_tokens": 120
+    },
+    {
+      "name": "document_classification",
+      "true_tier": "simple",
+      "latency_sensitive": false,
+      "daily_requests": 6000,
+      "suffix_input_tokens": 900,
+      "output_tokens": 40
+    },
+    {
+      "name": "email_draft",
+      "true_tier": "medium",
+      "latency_sensitive": true,
+      "daily_requests": 800,
+      "suffix_input_tokens": 400,
+      "output_tokens": 350
+    },
+    {
+      "name": "case_summary",
+      "true_tier": "medium",
+      "latency_sensitive": false,
+      "daily_requests": 1500,
+      "suffix_input_tokens": 3000,
+      "output_tokens": 500
+    },
+    {
+      "name": "policy_analysis",
+      "true_tier": "complex",
+      "latency_sensitive": true,
+      "daily_requests": 150,
+      "suffix_input_tokens": 2500,
+      "output_tokens": 1200
+    },
+    {
+      "name": "portfolio_review",
+      "true_tier": "complex",
+      "latency_sensitive": false,
+      "daily_requests": 10,
+      "suffix_input_tokens": 20000,
+      "output_tokens": 2500
+    }
+  ],
+  "tier_models": {
+    "simple": "claude-haiku-5-5",
+    "medium": "claude-sonnet-5-5",
+    "complex": "claude-opus-5-5"
+  }
+}

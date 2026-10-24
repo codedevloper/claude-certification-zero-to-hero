@@ -1,0 +1,14 @@
+{
+  "incident_id": "INC-2026-0417",
+  "organisation": "Northwind Lending (fictional)",
+  "title": "Impossible travel and repeated MFA pushes for dana.reyes",
+  "opened": "2026-10-21T09:00:00Z",
+  "alert_source": "IdP risk engine (synthetic)",
+  "alert_detail": "Sign-in from Bucharest, RO at 02:50Z after a Denver, US sign-in the previous day; two denied MFA pushes before an approval.",
+  "scope": {
+    "users": ["dana.reyes"],
+    "window_start": "2026-10-20T00:00:00Z",
+    "window_end": "2026-10-21T23:59:59Z"
+  },
+  "data_sources": ["auth", "vpn", "endpoint", "directory", "intel"]
+}

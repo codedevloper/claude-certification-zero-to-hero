@@ -1,0 +1,549 @@
+# CCAO-F flashcard deck. Original, unofficial study cards; not exam content.
+# Objective IDs come from 16-certification-tracks/registry.yaml. Product facts are as of 2026-10-24
+# (checked against support.claude.com); recheck after the updated exam guide is published on 2026-11-17.
+deck: ccao-f
+title: CCAO-F — Claude Certified Associate Foundations
+cards:
+  # ---- Domain 1: Prompting and Task Execution ----
+  - id: CCAO-F-FC-001
+    objective: CCAO-F-1.1
+    front: "Name the six elements of a strong business prompt."
+    back: "Goal, context (why and background), audience, constraints, output format, and success criteria."
+    module: 03-prompt-engineering/01-clear-direct-instructions.md
+  - id: CCAO-F-FC-002
+    objective: CCAO-F-1.1
+    front: "Why explain the reason behind a rule in a prompt?"
+    back: "Claude can apply the intent sensibly to cases the rule did not anticipate, instead of following it rigidly or missing the point."
+    module: 03-prompt-engineering/01-clear-direct-instructions.md
+  - id: CCAO-F-FC-003
+    objective: CCAO-F-1.1
+    front: "What is the fastest way to communicate a specific style or format to Claude?"
+    back: "Give one or two short, varied examples of the output you want (few-shot), rather than a list of adjectives."
+    module: 03-prompt-engineering/03-examples-few-shot.md
+  - id: CCAO-F-FC-004
+    objective: CCAO-F-1.1
+    front: "When pasting a long document with a question, where should the question go?"
+    back: "After the material, with the parts clearly labelled so Claude can tell instructions from source text."
+    module: 02-claude-fundamentals/03-prompt-fundamentals.md
+  - id: CCAO-F-FC-005
+    objective: CCAO-F-1.2
+    front: "What is prompt chaining?"
+    back: "Splitting a task into sequential steps where each step's output feeds the next, with a check between steps."
+    module: 03-prompt-engineering/05-task-decomposition-and-chaining.md
+  - id: CCAO-F-FC-006
+    objective: CCAO-F-1.2
+    front: "Give three signs a request should be decomposed."
+    back: "Distinct phases, several deliverables, too long to review at once, different expertise per phase, or an early error would be costly downstream."
+    module: 03-prompt-engineering/05-task-decomposition-and-chaining.md
+  - id: CCAO-F-FC-007
+    objective: CCAO-F-1.2
+    front: "What is the 'plan first' decomposition technique?"
+    back: "Ask Claude to propose the steps (and what it needs from you) before doing the work; review and edit the plan, then run it."
+    module: 03-prompt-engineering/05-task-decomposition-and-chaining.md
+  - id: CCAO-F-FC-008
+    objective: CCAO-F-1.3
+    front: "What are the four steps of diagnostic prompt iteration?"
+    back: "Name the specific problem, find its cause in the prompt, change one thing, compare with the previous version."
+    module: 03-prompt-engineering/08-iterating-on-prompts.md
+  - id: CCAO-F-FC-009
+    objective: CCAO-F-1.3
+    front: "When is editing the original prompt better than a follow-up message?"
+    back: "When the first attempt went off track, so carrying the bad draft forward would anchor later answers, or the fix is missing context that belongs in the request."
+    module: 03-prompt-engineering/08-iterating-on-prompts.md
+  - id: CCAO-F-FC-010
+    objective: CCAO-F-1.3
+    front: "A prompt now works well and will be reused weekly. What should you do with it?"
+    back: "Save it where it can be reused consistently: Project instructions, a Skill or a team prompt library."
+    module: 03-prompt-engineering/08-iterating-on-prompts.md
+  - id: CCAO-F-FC-011
+    objective: CCAO-F-1.4
+    front: "What does a brainstorming prompt need that an analysis prompt does not?"
+    back: "A request for volume and variety across categories with judgement deferred, followed by ranking against explicit criteria."
+    module: 03-prompt-engineering/04-reasoning-and-thinking.md
+  - id: CCAO-F-FC-012
+    objective: CCAO-F-1.4
+    front: "What should a research-type prompt specify?"
+    back: "Scope, time frame, preferred source types, what to exclude, and a request for citations and for what could not be found."
+    module: 03-prompt-engineering/04-reasoning-and-thinking.md
+  - id: CCAO-F-FC-013
+    objective: CCAO-F-1.4
+    front: "Does giving Claude a role replace context in a prompt?"
+    back: "No. A role can set tone and focus, but the task, audience, material and format still need to be stated."
+    module: 03-prompt-engineering/07-system-prompts-and-roles.md
+  - id: CCAO-F-FC-014
+    objective: CCAO-F-1.4
+    front: "For a hard analytical problem, what prompt move often improves quality?"
+    back: "Ask Claude to reason through the problem step by step before giving its conclusion, or use a more capable model."
+    module: 03-prompt-engineering/04-reasoning-and-thinking.md
+
+  # ---- Domain 2: Output Evaluation and Validation ----
+  - id: CCAO-F-FC-015
+    objective: CCAO-F-2.1
+    front: "Why is 'accurate' not the same as 'complete'?"
+    back: "An output can state only true things yet omit a required point, a document or the item that matters most."
+    module: 14-evaluation-and-testing/01-why-evaluate.md
+  - id: CCAO-F-FC-016
+    objective: CCAO-F-2.1
+    front: "How do you check completeness when you gave Claude several documents?"
+    back: "Check against the brief item by item and ask Claude which document each point came from; missing sources become visible."
+    module: 14-evaluation-and-testing/02-metrics.md
+  - id: CCAO-F-FC-017
+    objective: CCAO-F-2.1
+    front: "What does 'faithfulness' mean when evaluating a summary?"
+    back: "The summary says what the source says, without adding, softening, exaggerating or changing meaning."
+    module: 14-evaluation-and-testing/02-metrics.md
+  - id: CCAO-F-FC-018
+    objective: CCAO-F-2.2
+    front: "What is a hallucination?"
+    back: "Fluent, confident output that is not supported by any source, such as an invented figure, quote, name or reference."
+    module: 01-ai-and-llm-fundamentals/06-hallucinations.md
+  - id: CCAO-F-FC-019
+    objective: CCAO-F-2.2
+    front: "Which details in an output should you verify first?"
+    back: "Specific details you did not supply: numbers, dates, clause or section numbers, quotations, URLs and names."
+    module: 01-ai-and-llm-fundamentals/06-hallucinations.md
+  - id: CCAO-F-FC-020
+    objective: CCAO-F-2.2
+    front: "Give a quick test for bias in a people-related output."
+    back: "Swap names or group descriptors and see whether the output changes; also check for coded language and missing perspectives."
+    module: 02-claude-fundamentals/05-responsible-use.md
+  - id: CCAO-F-FC-021
+    objective: CCAO-F-2.2
+    front: "What is an internal inconsistency in an output?"
+    back: "A contradiction within the output itself, for example a total that does not add up or a date in the summary that differs from the table."
+    module: 01-ai-and-llm-fundamentals/06-hallucinations.md
+  - id: CCAO-F-FC-022
+    objective: CCAO-F-2.3
+    front: "Does Claude saying it is 'very sure' count as checking the answer?"
+    back: "No. Self-assessment comes from the same model; validation needs a source outside the answer, such as the primary document."
+    module: 11-rag-and-knowledge-systems/05-grounding-and-citations.md
+  - id: CCAO-F-FC-023
+    objective: CCAO-F-2.3
+    front: "Claude's answer includes citations. Are you done verifying?"
+    back: "No. Open the citations and confirm they exist and actually support the claim."
+    module: 11-rag-and-knowledge-systems/05-grounding-and-citations.md
+  - id: CCAO-F-FC-024
+    objective: CCAO-F-2.3
+    front: "Name four fact-checking techniques."
+    back: "Check the primary source, ask for supporting quotes and verify them, recalculate figures, cross-check with an independent source, spot-check samples, or get expert review."
+    module: 14-evaluation-and-testing/04-grading-methods.md
+  - id: CCAO-F-FC-025
+    objective: CCAO-F-2.3
+    front: "What instruction makes document-grounded answers easier to verify?"
+    back: "Ask Claude to quote the sentence from the source that supports each claim, and to say 'not stated' when the source is silent."
+    module: 11-rag-and-knowledge-systems/05-grounding-and-citations.md
+  - id: CCAO-F-FC-026
+    objective: CCAO-F-2.4
+    front: "List the six factors that raise the level of human review."
+    back: "Stakes, audience (external or senior), irreversibility, need for specialist expertise, novelty, and decisions affecting individuals."
+    module: 12-ai-security/13-human-oversight.md
+  - id: CCAO-F-FC-027
+    objective: CCAO-F-2.4
+    front: "What review does contract language or a regulatory filing drafted with Claude need?"
+    back: "Review and sign-off by a qualified expert; the Claude output is a draft only."
+    module: 12-ai-security/13-human-oversight.md
+  - id: CCAO-F-FC-028
+    objective: CCAO-F-2.4
+    front: "Who is accountable for an output you send after drafting it with Claude?"
+    back: "You (and your organisation). 'The AI wrote it' does not transfer responsibility."
+    module: 10-agentic-ai/05-human-in-the-loop.md
+  - id: CCAO-F-FC-029
+    objective: CCAO-F-2.5
+    front: "How should you compare two Claude drafts?"
+    back: "Against criteria written in advance (accuracy, required points, tone, length, actionability), not gut feel or length."
+    module: 14-evaluation-and-testing/04-grading-methods.md
+  - id: CCAO-F-FC-030
+    objective: CCAO-F-2.5
+    front: "What is the main risk when shortening or simplifying an output for a new audience?"
+    back: "Meaning drift: facts, commitments or nuance change. Recheck key facts in every audience version."
+    module: 03-prompt-engineering/08-iterating-on-prompts.md
+  - id: CCAO-F-FC-031
+    objective: CCAO-F-2.5
+    front: "What should an executive version of an update lead with?"
+    back: "The decision or conclusion first, then a few supporting points, risks and the ask."
+    module: 03-prompt-engineering/01-clear-direct-instructions.md
+  - id: CCAO-F-FC-032
+    objective: CCAO-F-2.6
+    front: "When should output be an artifact rather than inline text?"
+    back: "When it is substantial, self-contained and likely to be edited, reused or shared, such as a document, deck, dashboard or small tool."
+    module: 05-claude-products-and-models/05-artifacts-and-output-formats.md
+  - id: CCAO-F-FC-033
+    objective: CCAO-F-2.6
+    front: "When is structured data (a table, CSV or JSON) the right format?"
+    back: "When the output feeds another tool or needs sorting, filtering or row-by-row checking."
+    module: 03-prompt-engineering/06-structured-output.md
+  - id: CCAO-F-FC-034
+    objective: CCAO-F-2.6
+    front: "Which setting must be on for artifacts in the Claude apps (as of 2026-10-24)?"
+    back: "The code execution and file creation capability, labelled 'Create and edit files', under Settings > Capabilities (organisation settings on Team and Enterprise)."
+    module: 05-claude-products-and-models/05-artifacts-and-output-formats.md
+  - id: CCAO-F-FC-035
+    objective: CCAO-F-2.6
+    front: "How does artifact sharing differ between Free/Pro/Max and Team/Enterprise (as of 2026-10-24)?"
+    back: "On Free, Pro and Max a published artifact is viewable by anyone with the link; on Team and Enterprise sharing stays within the organisation."
+    module: 05-claude-products-and-models/05-artifacts-and-output-formats.md
+
+  # ---- Domain 3: Product and Model Selection ----
+  - id: CCAO-F-FC-036
+    objective: CCAO-F-3.1
+    front: "Which scenario signals point to a Project rather than a single chat?"
+    back: "Recurring work, the same reference material each time, or the need for consistent behaviour across many chats or people."
+    module: 05-claude-products-and-models/04-projects-and-knowledge.md
+  - id: CCAO-F-FC-037
+    objective: CCAO-F-3.1
+    front: "What does research do that web search does not?"
+    back: "Runs many searches that build on each other across the web and enabled connectors, then returns a cited report; it takes longer and uses limits faster."
+    module: 05-claude-products-and-models/01-product-ecosystem.md
+  - id: CCAO-F-FC-038
+    objective: CCAO-F-3.1
+    front: "What are research's requirements (as of 2026-10-24)?"
+    back: "A paid plan (Pro, Max, Team or Enterprise) and web search turned on. On mobile it searches only the web, not connectors."
+    module: 05-claude-products-and-models/01-product-ecosystem.md
+  - id: CCAO-F-FC-039
+    objective: CCAO-F-3.1
+    front: "Which model does research run on (as of 2026-10-24)?"
+    back: "Claude Opus 5.5 (falling back to Claude Opus 4.8), regardless of the model selected in the chat."
+    module: 05-claude-products-and-models/01-product-ecosystem.md
+  - id: CCAO-F-FC-040
+    objective: CCAO-F-3.1
+    front: "What is an incognito chat, and is it a substitute for data policy?"
+    back: "A chat not saved to history or memory and not used for training. It does not make prohibited data acceptable; policy still applies."
+    module: 05-claude-products-and-models/01-product-ecosystem.md
+  - id: CCAO-F-FC-041
+    objective: CCAO-F-3.2
+    front: "Order Haiku, Sonnet and Opus by capability."
+    back: "Opus (most capable of the three), then Sonnet (balanced), then Haiku (fastest and lowest cost)."
+    module: 05-claude-products-and-models/02-model-families.md
+  - id: CCAO-F-FC-042
+    objective: CCAO-F-3.2
+    front: "What is Haiku best suited for?"
+    back: "Simple, well-defined, high-volume or latency-sensitive tasks such as classification, short extraction and quick rewrites."
+    module: 05-claude-products-and-models/02-model-families.md
+  - id: CCAO-F-FC-043
+    objective: CCAO-F-3.2
+    front: "Which family is the usual default for everyday professional work?"
+    back: "Sonnet: a balance of capability, speed and cost for drafting, analysis and summarisation."
+    module: 05-claude-products-and-models/02-model-families.md
+  - id: CCAO-F-FC-044
+    objective: CCAO-F-3.2
+    front: "What is Claude Fable 5.1 (as of 2026-10-24)?"
+    back: "Anthropic's most capable widely released model, priced above the Opus tier, for the most demanding reasoning and long-running work."
+    module: 05-claude-products-and-models/02-model-families.md
+  - id: CCAO-F-FC-045
+    objective: CCAO-F-3.3
+    front: "What is the rule of thumb for choosing a model?"
+    back: "Pick the cheapest, fastest model that meets the quality bar on real examples of the task."
+    module: 05-claude-products-and-models/03-model-selection.md
+  - id: CCAO-F-FC-046
+    objective: CCAO-F-3.3
+    front: "Three questions for matching a model to a task?"
+    back: "How hard is the reasoning? How much volume and how fast must it be? What does an error cost?"
+    module: 05-claude-products-and-models/03-model-selection.md
+  - id: CCAO-F-FC-047
+    objective: CCAO-F-3.3
+    front: "Does choosing a more capable model remove the need to verify outputs?"
+    back: "No. It lowers error rates but does not eliminate hallucination; verify in proportion to stakes."
+    module: 05-claude-products-and-models/03-model-selection.md
+  - id: CCAO-F-FC-048
+    objective: CCAO-F-3.4
+    front: "What is the context window?"
+    back: "Everything Claude can consider at once in a conversation (messages, replies, files, Project content in use), measured in tokens."
+    module: 01-ai-and-llm-fundamentals/05-context-windows.md
+  - id: CCAO-F-FC-049
+    objective: CCAO-F-3.4
+    front: "How large are context windows on paid Claude plans (as of 2026-10-24)?"
+    back: "Up to 1 million tokens for the newest models; others 500,000 or 200,000. Part is reserved for Claude's reply."
+    module: 01-ai-and-llm-fundamentals/05-context-windows.md
+  - id: CCAO-F-FC-050
+    objective: CCAO-F-3.4
+    front: "Name the three remedies for context problems."
+    back: "Restart (drifted chat or new topic), summarise (long but healthy chat), persist (Project knowledge, instructions, Skills or memory for information needed across chats)."
+    module: 04-context-engineering/02-managing-long-context.md
+  - id: CCAO-F-FC-051
+    objective: CCAO-F-3.4
+    front: "What happens when a chat on a paid plan nears the context limit (as of 2026-10-24)?"
+    back: "With code execution enabled, Claude automatically summarises earlier messages (compaction) so the chat can continue; long chats still use more of your limits."
+    module: 04-context-engineering/05-compaction-and-context-editing.md
+  - id: CCAO-F-FC-052
+    objective: CCAO-F-3.4
+    front: "Why should team rules not live only in Claude's memory?"
+    back: "Memory is personal, built automatically and less visible; shared rules belong in Project instructions or knowledge with an owner."
+    module: 04-context-engineering/04-memory-and-persistence.md
+  - id: CCAO-F-FC-053
+    objective: CCAO-F-3.4
+    front: "What sensitive information does Claude's memory avoid storing (as of 2026-10-24)?"
+    back: "By default, topics such as health, religion and politics; categories like government ID numbers and financial account numbers are never saved."
+    module: 04-context-engineering/04-memory-and-persistence.md
+
+  # ---- Domain 4: Workflow Integration and Solution Design ----
+  - id: CCAO-F-FC-054
+    objective: CCAO-F-4.1
+    front: "Characteristics of a good first Claude use case?"
+    back: "Frequent, time-consuming today, text-heavy, easy to check, low to medium risk, using non-sensitive or approved data."
+    module: 13-enterprise-ai-architecture/01-solution-design-process.md
+  - id: CCAO-F-FC-055
+    objective: CCAO-F-4.1
+    front: "Claude finds that two stakeholders describe a process differently. Who resolves it?"
+    back: "The people who own the process. Claude surfaces the contradiction; humans decide."
+    module: 13-enterprise-ai-architecture/01-solution-design-process.md
+  - id: CCAO-F-FC-056
+    objective: CCAO-F-4.1
+    front: "Name two warning signs that a use case is a poor fit."
+    back: "Errors are hard to spot, it makes regulated or people-affecting decisions, it is irreversible, it uses restricted data, or it needs guaranteed precise calculation or authoritative legal or medical judgement."
+    module: 01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md
+  - id: CCAO-F-FC-057
+    objective: CCAO-F-4.2
+    front: "How can Claude help optimise an existing process?"
+    back: "Map the described steps, find bottlenecks, duplicated effort and unnecessary approvals, and propose options at several levels of change with trade-offs."
+    module: 10-agentic-ai/02-workflow-patterns.md
+  - id: CCAO-F-FC-058
+    objective: CCAO-F-4.2
+    front: "How do you stress-test a project plan with Claude?"
+    back: "Ask for the most likely reasons it would slip or fail, then add mitigations, owners and dependencies."
+    module: 13-enterprise-ai-architecture/01-solution-design-process.md
+  - id: CCAO-F-FC-059
+    objective: CCAO-F-4.3
+    front: "What is a test set, for an Associate building a Claude workflow?"
+    back: "A saved set of real examples (easy, typical and awkward) rerun after every change to confirm quality."
+    module: 03-prompt-engineering/08-iterating-on-prompts.md
+  - id: CCAO-F-FC-060
+    objective: CCAO-F-4.3
+    front: "Why prototype with an artifact?"
+    back: "Stakeholders can try a working version of the idea (form, checklist, dashboard) instead of reading about it, which speeds feedback."
+    module: 13-enterprise-ai-architecture/02-architecture-patterns.md
+  - id: CCAO-F-FC-061
+    objective: CCAO-F-4.3
+    front: "When should an Associate escalate solution design to Architects or Developers?"
+    back: "When it needs system integrations, automation at scale, custom connectors, public-facing products or writes to systems of record."
+    module: 13-enterprise-ai-architecture/01-solution-design-process.md
+  - id: CCAO-F-FC-062
+    objective: CCAO-F-4.4
+    front: "Augment, automate a step, redesign: what is the difference?"
+    back: "Augment helps a person do an existing step; automate has Claude do a defined step with review; redesign rethinks the process around Claude, needing new controls."
+    module: 10-agentic-ai/01-workflows-vs-agents.md
+  - id: CCAO-F-FC-063
+    objective: CCAO-F-4.4
+    front: "Where must the human checkpoint sit in a Claude-assisted workflow?"
+    back: "Before anything external, irreversible or affecting individuals leaves the team or changes a record."
+    module: 13-enterprise-ai-architecture/04-integration-patterns.md
+  - id: CCAO-F-FC-064
+    objective: CCAO-F-4.4
+    front: "A redesign removes a review step. What must replace it?"
+    back: "An equal or better control, supported by pilot evidence and approval from the process owner."
+    module: 10-agentic-ai/02-workflow-patterns.md
+  - id: CCAO-F-FC-065
+    objective: CCAO-F-4.4
+    front: "Why measure a baseline before a pilot?"
+    back: "Without the before measure (time, errors, rework) you cannot credibly claim or size any improvement."
+    module: 13-enterprise-ai-architecture/04-integration-patterns.md
+  - id: CCAO-F-FC-066
+    objective: CCAO-F-4.5
+    front: "What goes in a one-page brief on a Claude pilot?"
+    back: "Problem and baseline, what Claude does and what people do, evidence including failures, limitations and controls, cost, and the decision needed."
+    module: 13-enterprise-ai-architecture/06-stakeholder-communication.md
+  - id: CCAO-F-FC-067
+    objective: CCAO-F-4.5
+    front: "Why show failures when presenting pilot results?"
+    back: "It builds credibility and demonstrates that the controls catch errors; hiding them undermines trust when they surface later."
+    module: 13-enterprise-ai-architecture/08-business-value-and-roi.md
+
+  # ---- Domain 5: Configuration and Knowledge Management ----
+  - id: CCAO-F-FC-068
+    objective: CCAO-F-5.1
+    front: "What are the three layers of a Claude Project?"
+    back: "Instructions (how to behave), knowledge (what to know) and chats (the work). Instructions and knowledge apply to every chat in the Project."
+    module: 05-claude-products-and-models/04-projects-and-knowledge.md
+  - id: CCAO-F-FC-069
+    objective: CCAO-F-5.1
+    front: "Are Projects available on the Free plan (as of 2026-10-24)?"
+    back: "Yes. All plans have Projects; Free accounts can create up to five."
+    module: 05-claude-products-and-models/04-projects-and-knowledge.md
+  - id: CCAO-F-FC-070
+    objective: CCAO-F-5.1
+    front: "What is RAG mode in Projects (as of 2026-10-24)?"
+    back: "On paid plans, when knowledge nears the context limit Claude retrieves relevant parts instead of reading everything, expanding capacity by up to about 10x."
+    module: 05-claude-products-and-models/04-projects-and-knowledge.md
+  - id: CCAO-F-FC-071
+    objective: CCAO-F-5.1
+    front: "Project sharing permissions on Team and Enterprise?"
+    back: "'Can view' (see contents, chat) and 'Can edit' (change instructions and knowledge, manage members). Give edit rights only to maintainers."
+    module: 05-claude-products-and-models/04-projects-and-knowledge.md
+  - id: CCAO-F-FC-072
+    objective: CCAO-F-5.1
+    front: "Is something discussed in one Project chat automatically available in the other chats?"
+    back: "No. Each chat has its own conversation; add information to Project knowledge if every chat needs it."
+    module: 05-claude-products-and-models/04-projects-and-knowledge.md
+  - id: CCAO-F-FC-073
+    objective: CCAO-F-5.2
+    front: "Uploaded knowledge or connector: which stays current automatically?"
+    back: "The connector reads the live version. Uploaded knowledge is a snapshot you must replace when the source changes."
+    module: 05-claude-products-and-models/06-connectors-and-integrations.md
+  - id: CCAO-F-FC-074
+    objective: CCAO-F-5.2
+    front: "Whose permissions does a connector use?"
+    back: "Each user's own. Users authenticate individually, so Claude can reach what that user can access, and results can differ between users."
+    module: 05-claude-products-and-models/06-connectors-and-integrations.md
+  - id: CCAO-F-FC-075
+    objective: CCAO-F-5.2
+    front: "Who enables connectors on Team and Enterprise plans (as of 2026-10-24)?"
+    back: "An Owner (or Primary Owner) enables them for the organisation; owners can also set actions to always allow, needs approval or blocked."
+    module: 05-claude-products-and-models/06-connectors-and-integrations.md
+  - id: CCAO-F-FC-076
+    objective: CCAO-F-5.2
+    front: "Are custom (remote MCP) connectors verified by Anthropic?"
+    back: "No. Connect only to services from trusted organisations, review requested permissions and follow your organisation's approval process."
+    module: 08-model-context-protocol/01-what-is-mcp.md
+  - id: CCAO-F-FC-077
+    objective: CCAO-F-5.2
+    front: "What risk comes with Claude reading external content through connectors or the web?"
+    back: "Indirect prompt injection: the content may contain text trying to instruct Claude. Keep a human checkpoint before actions and use least access."
+    module: 12-ai-security/03-indirect-prompt-injection.md
+  - id: CCAO-F-FC-078
+    objective: CCAO-F-5.2
+    front: "What does the Google Drive connector read from documents (as of 2026-10-24)?"
+    back: "Text content. Images embedded in documents are not processed."
+    module: 05-claude-products-and-models/06-connectors-and-integrations.md
+  - id: CCAO-F-FC-079
+    objective: CCAO-F-5.3
+    front: "What six sections make a reliable Project instruction set?"
+    back: "Purpose, audience, use of knowledge, format, rules (with reasons) and what to do when unsure."
+    module: 03-prompt-engineering/07-system-prompts-and-roles.md
+  - id: CCAO-F-FC-080
+    objective: CCAO-F-5.3
+    front: "Which single instruction most reduces invented facts in a Project?"
+    back: "A fallback rule: if the information is not in the Project files, say so and ask rather than guessing."
+    module: 03-prompt-engineering/07-system-prompts-and-roles.md
+  - id: CCAO-F-FC-081
+    objective: CCAO-F-5.3
+    front: "Project instructions or a Skill: which for a repeatable procedure used across many Projects?"
+    back: "A Skill: packaged instructions (and optional files) Claude loads only when a task needs them. Project instructions govern one workspace."
+    module: 04-context-engineering/06-progressive-disclosure-and-skills.md
+  - id: CCAO-F-FC-082
+    objective: CCAO-F-5.3
+    front: "Are Project instructions a security control?"
+    back: "No. They guide behaviour; boundaries come from permissions, admin settings, data policy and human review."
+    module: 03-prompt-engineering/07-system-prompts-and-roles.md
+  - id: CCAO-F-FC-083
+    objective: CCAO-F-5.4
+    front: "What four things keep a Project maintainable?"
+    back: "A named owner, a review date, a change log and a saved test set rerun after changes."
+    module: 13-enterprise-ai-architecture/09-lifecycle-management.md
+  - id: CCAO-F-FC-084
+    objective: CCAO-F-5.4
+    front: "A Project gives conflicting answers about a policy. First thing to check?"
+    back: "Whether knowledge contains more than one version of the policy; remove the superseded file and label the current one with its date."
+    module: 05-claude-products-and-models/04-projects-and-knowledge.md
+  - id: CCAO-F-FC-085
+    objective: CCAO-F-5.4
+    front: "What should you do after a model update or new feature release?"
+    back: "Rerun your test set and adjust instructions if behaviour changed."
+    module: 15-production-operations/08-model-upgrades-and-change-management.md
+
+  # ---- Domain 6: Governance, Risk, and Responsible Use ----
+  - id: CCAO-F-FC-086
+    objective: CCAO-F-6.1
+    front: "Five-question appropriateness test before using Claude for a task?"
+    back: "Permitted by policy? Data allowed in this tool? Who is harmed if it is wrong? Does a qualified human decide? Would you be comfortable explaining the use?"
+    module: 02-claude-fundamentals/05-responsible-use.md
+  - id: CCAO-F-FC-087
+    objective: CCAO-F-6.1
+    front: "Give an example of an inappropriate use and its appropriate alternative."
+    back: "Auto-rejecting applicants based on AI ranking is inappropriate; using Claude to draft job-related criteria and summaries for a trained human reviewer, with bias checks, is appropriate."
+    module: 02-claude-fundamentals/05-responsible-use.md
+  - id: CCAO-F-FC-088
+    objective: CCAO-F-6.2
+    front: "Name five data-minimisation techniques."
+    back: "Redaction, pseudonymisation (key kept outside the tool), aggregation, synthetic or sample data, and sharing only relevant excerpts."
+    module: 12-ai-security/04-data-exfiltration-and-disclosure.md
+  - id: CCAO-F-FC-089
+    objective: CCAO-F-6.2
+    front: "Is telling Claude 'don't retain this file' an adequate data control?"
+    back: "No. A model instruction does not change platform processing or retention and does not satisfy policy. Minimise the data and use the approved tool."
+    module: 12-ai-security/04-data-exfiltration-and-disclosure.md
+  - id: CCAO-F-FC-090
+    objective: CCAO-F-6.2
+    front: "Is customer data used for training on Team, Enterprise and API (as of 2026-10-24)?"
+    back: "Not by default. On commercial products the customer is the data controller and Anthropic acts as processor."
+    module: 13-enterprise-ai-architecture/05-data-governance-and-compliance.md
+  - id: CCAO-F-FC-091
+    objective: CCAO-F-6.2
+    front: "Sensitive data is involved. Is skipping the task the safest answer?"
+    back: "Usually not. Prefer a compliant route (anonymise, aggregate, synthetic data, approved workspace); skip only if none exists."
+    module: 13-enterprise-ai-architecture/05-data-governance-and-compliance.md
+  - id: CCAO-F-FC-092
+    objective: CCAO-F-6.3
+    front: "Your AI policy does not cover a task. What do you do?"
+    back: "Pause the risky part and ask the policy owner (privacy, security or governance). Silence is not permission."
+    module: 12-ai-security/12-ai-governance.md
+  - id: CCAO-F-FC-093
+    objective: CCAO-F-6.3
+    front: "Can you use a personal Claude account for client data if training is off?"
+    back: "No. Use only the organisation's approved workspace; approval covers contracts, controls and audit, not one setting."
+    module: 12-ai-security/14-enterprise-deployment-controls.md
+  - id: CCAO-F-FC-094
+    objective: CCAO-F-6.3
+    front: "You realise you uploaded restricted data. What now?"
+    back: "Stop, remove it where your tools allow, and report promptly through the official incident channel; do not quietly delete and move on."
+    module: 12-ai-security/12-ai-governance.md
+  - id: CCAO-F-FC-095
+    objective: CCAO-F-6.4
+    front: "Name four ethical themes in everyday Claude use."
+    back: "Accuracy and honesty, fairness and bias, transparency about AI use, accountability, privacy, intellectual property, impact on people, over-reliance."
+    module: 02-claude-fundamentals/04-anthropic-safety-approach.md
+  - id: CCAO-F-FC-096
+    objective: CCAO-F-6.4
+    front: "Why should AI not make final decisions about people's jobs, credit or health?"
+    back: "Models can reflect bias and make errors, and these decisions need accountable, qualified human judgement under law and policy."
+    module: 12-ai-security/13-human-oversight.md
+
+  # ---- Domain 7: Troubleshooting and Optimization ----
+  - id: CCAO-F-FC-097
+    objective: CCAO-F-7.1
+    front: "Output is generic and bland. Most likely cause?"
+    back: "Missing context, purpose or audience in the prompt or instructions."
+    module: 24-troubleshooting/prompts-and-outputs.md
+  - id: CCAO-F-FC-098
+    objective: CCAO-F-7.1
+    front: "Claude ignores a Project rule. Three likely causes?"
+    back: "The rule is vague, buried in long instructions, or contradicted by another instruction."
+    module: 14-evaluation-and-testing/06-diagnosing-failures.md
+  - id: CCAO-F-FC-099
+    objective: CCAO-F-7.1
+    front: "What should you check before blaming the model for a poor output?"
+    back: "The inputs: outdated or conflicting files, contradictory instructions, missing context, wrong feature, or a drifting chat."
+    module: 14-evaluation-and-testing/06-diagnosing-failures.md
+  - id: CCAO-F-FC-100
+    objective: CCAO-F-7.1
+    front: "Why change only one thing at a time when fixing a prompt?"
+    back: "So you know which change helped and do not introduce new problems unnoticed."
+    module: 03-prompt-engineering/08-iterating-on-prompts.md
+  - id: CCAO-F-FC-101
+    objective: CCAO-F-7.2
+    front: "Reviewers keep correcting the same issue. Where should the fix go?"
+    back: "Into the configuration (Project instructions, knowledge or a Skill), not into individual chats."
+    module: 14-evaluation-and-testing/05-ab-testing-and-iteration.md
+  - id: CCAO-F-FC-102
+    objective: CCAO-F-7.2
+    front: "How do you confirm a change actually improved results?"
+    back: "Rerun the same saved examples before and after, and score them against criteria set in advance."
+    module: 14-evaluation-and-testing/05-ab-testing-and-iteration.md
+  - id: CCAO-F-FC-103
+    objective: CCAO-F-7.2
+    front: "Repeated, well-diagnosed fixes still miss the quality bar. What now?"
+    back: "Reconsider task fit, redesign the approach, or escalate to Architects or Developers; persisting blindly wastes effort."
+    module: 03-prompt-engineering/08-iterating-on-prompts.md
+  - id: CCAO-F-FC-104
+    objective: CCAO-F-7.3
+    front: "Name four ways to use fewer usage limits in the Claude apps without hurting quality."
+    back: "Reuse Project knowledge (cached) instead of re-uploading, keep chats short and focused, use a lighter model for simple work, batch similar items, use Skills or templates."
+    module: 15-production-operations/03-cost-optimisation.md
+  - id: CCAO-F-FC-105
+    objective: CCAO-F-7.3
+    front: "A workflow is 50% faster but sends more errors to customers. Is it optimised?"
+    back: "No. Optimise quality per unit of effort; track a quality measure alongside time saved."
+    module: 15-production-operations/03-cost-optimisation.md
+  - id: CCAO-F-FC-106
+    objective: CCAO-F-7.3
+    front: "Why does a long, all-day chat burn through usage faster?"
+    back: "Each new message is processed with the accumulated history, so every turn costs more; summarise and restart instead."
+    module: 04-context-engineering/02-managing-long-context.md

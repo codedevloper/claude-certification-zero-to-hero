@@ -1,0 +1,8 @@
+{
+  "description": "Synthetic analyst decisions for the demo. Keys are action IDs printed by the triage run.",
+  "decisions": {
+    "ALRT-1001-A3": {"decision": "approve", "approver": "analyst.r.hale", "reason": "Source IP is on two blocklists; block at the edge."},
+    "ALRT-1002-A2": {"decision": "approve", "approver": "analyst.r.hale", "reason": "Encoded PowerShell from Word with outbound C2-like traffic."},
+    "ALRT-1003-A2": {"decision": "deny", "approver": "analyst.m.osei", "reason": "Second sign-in traced to the user's approved travel and a managed device; no containment needed."}
+  }
+}

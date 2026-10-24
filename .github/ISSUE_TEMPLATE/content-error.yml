@@ -1,0 +1,29 @@
+name: Content error or outdated fact
+description: Something is wrong, unclear or out of date
+labels: ["content", "accuracy"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: File and section
+      placeholder: 06-claude-api/02-messages-api.md, "Stop reasons"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong?
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Official source that shows the correct information
+      placeholder: https://platform.claude.com/docs/...
+  - type: checkboxes
+    id: integrity
+    attributes:
+      label: Exam integrity
+      options:
+        - label: This report does not contain or describe real exam content
+          required: true

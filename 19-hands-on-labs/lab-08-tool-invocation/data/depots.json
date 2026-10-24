@@ -1,0 +1,5 @@
+{
+  "BRS": {"name": "Bristol depot", "hours": {"mon-fri": "07:00-19:00", "sat": "08:00-13:00", "sun": "closed"}},
+  "MAN": {"name": "Manchester depot", "hours": {"mon-fri": "07:00-20:00", "sat": "08:00-16:00", "sun": "10:00-14:00"}},
+  "LDS": {"name": "Leeds depot", "hours": {"mon-fri": "08:00-18:00", "sat": "closed", "sun": "closed"}}
+}

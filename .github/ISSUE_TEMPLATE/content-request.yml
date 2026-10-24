@@ -1,0 +1,14 @@
+name: Content request
+description: Suggest a topic, lab, project or certification track
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like added?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Who would it help, and how?

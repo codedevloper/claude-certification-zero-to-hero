@@ -1,0 +1,20 @@
+{
+  "alert_id": "ALRT-1004",
+  "rule_name": "Large upload to a personal cloud storage service",
+  "rule_severity": "medium",
+  "source": "secure-web-gateway",
+  "timestamp": "2026-10-23T17:22:48Z",
+  "description": "Synthetic alert. 4.2 GB uploaded to a personal file-sharing service from a finance laptop outside working hours, two days after the user's resignation was recorded.",
+  "entities": {
+    "hosts": ["FIN-LT-0207"],
+    "users": ["s.bianchi"],
+    "ips": [],
+    "domains": ["files.personal-share.example"]
+  },
+  "evidence": {
+    "bytes_uploaded": 4509715660,
+    "file_count": 1874,
+    "hr_signal": "resignation recorded 2026-10-21",
+    "data_classification_of_source_share": "confidential"
+  }
+}

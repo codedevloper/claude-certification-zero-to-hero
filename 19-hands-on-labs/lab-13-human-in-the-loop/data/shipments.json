@@ -1,0 +1,5 @@
+{
+  "SHP-7781": {"customer": "Tailspin Toys", "status": "delivered", "condition": "damaged on arrival", "declared_value_usd": 1800, "address": "14 Kite Lane, Example City", "customs_hold": false},
+  "SHP-7790": {"customer": "Fabrikam", "status": "in_transit", "eta": "2026-10-27", "declared_value_usd": 5200, "address": "200 Market Street, Example City", "customs_hold": false},
+  "SHP-7802": {"customer": "Contoso Health", "status": "held", "eta": "unknown", "declared_value_usd": 940, "address": "7 Clinic Row, Example Town", "customs_hold": true, "hold_reason": "commercial invoice does not match packing list"}
+}

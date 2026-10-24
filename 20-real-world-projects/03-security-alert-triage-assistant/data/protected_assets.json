@@ -1,0 +1,6 @@
+{
+  "description": "Assets that the assistant must never propose for automated containment. Actions against them are removed and escalated to the incident manager.",
+  "hosts": ["DC-01", "DC-02", "VPN-GW-01"],
+  "users": ["admin.backup", "svc-backup", "break-glass-01"],
+  "ips": []
+}

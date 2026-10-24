@@ -1,0 +1,8 @@
+[
+  {"id": "RB-101", "title": "Disk usage above 90 percent", "keywords": ["disk", "full", "usage", "logrotate", "log", "rotation", "space"],
+   "steps": "1) Confirm growth rate from metrics. 2) Check logrotate errors in the system log. 3) If rotation failed, open a severity-2 ticket for the platform team to fix directory permissions; do not delete logs manually. 4) If growth exceeds 1 GB per hour and disk is above 95 percent, page the on-call engineer."},
+  {"id": "RB-204", "title": "High API latency", "keywords": ["latency", "slow", "p95", "upstream", "timeout", "api"],
+   "steps": "1) Compare p95 latency with the 300 ms objective. 2) Look for slow upstream dependencies in the log. 3) Check connection-pool saturation. 4) Open a severity-3 ticket naming the slow dependency."},
+  {"id": "RB-310", "title": "Replication lag", "keywords": ["replication", "lag", "replica", "database"],
+   "steps": "1) Lag under 30 seconds is normal for the reporting replica. 2) Above 300 seconds, open a severity-2 ticket."}
+]

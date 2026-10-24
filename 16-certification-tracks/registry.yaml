@@ -1,0 +1,254 @@
+# Certification registry — the single source of truth for tracks, domains and objectives.
+#
+# Every practice question, flashcard, lab and coverage-matrix row refers to the
+# objective IDs defined here. Adding a new Anthropic certification means adding a
+# new entry under `certifications:`; no other folder needs to be reorganised.
+#
+# Objective wording is a short paraphrase of the official exam guide. The official
+# guide is the source of truth — always read it before you sit an exam.
+#
+# status:
+#   supported  — full track: study guide, questions, mock exams, coverage matrix
+#   planned    — exam facts recorded; track content not yet written
+# verified:     date the facts below were last checked against the official guide
+
+schema_version: 1
+last_reviewed: "2026-10-24"
+program:
+  name: Claude Certification Program
+  owner: Anthropic
+  delivery: Pearson VUE (online proctored or test centre)
+  registration: Anthropic Partner Academy (Skilljar), then Pearson VUE scheduling
+  eligibility: >-
+    Open to organisations in the Claude Partner Network. Free Anthropic Academy courses
+    are open to everyone but award completion certificates, not certifications.
+  retake_policy: >-
+    Waiting period of 14 days after the first failed attempt, 30 days after the second,
+    90 days after the third; at most four attempts per exam in a rolling 12 months.
+  reschedule_policy: >-
+    The v1.0 exam guides say changes are allowed up to 24 hours before the appointment, but the
+    Partner Academy FAQ and Pearson VUE page (checked 2026-10-24) require at least 48 hours.
+    Treat 48 hours as the effective deadline; later changes forfeit the exam fee.
+  upcoming_change: >-
+    Pearson VUE states that updated exam guides will be published on 2026-11-17 and that
+    CCAO-F, CCDV-F and CCAR-P will include updated content from 2026-12-07. Re-verify
+    this registry after 2026-11-17.
+  sources:
+    - title: Pearson VUE — Claude Certification Program
+      url: https://www.pearsonvue.com/us/en/anthropic.html
+      verified: "2026-10-24"
+    - title: Anthropic Partner Academy — certifications page (exam guides and policies)
+      url: https://anthropic-partners.skilljar.com/page/partner-certifications
+      verified: "2026-10-24"
+
+certifications:
+  - code: CCAO-F
+    slug: ccao-f
+    name: Claude Certified Associate – Foundations
+    status: supported
+    track_dir: 16-certification-tracks/ccao-f
+    question_dir: 17-practice-questions/ccao-f
+    guide_version: "1.0 (effective July 2026)"
+    verified: "2026-10-24"
+    audience: >-
+      Business and knowledge workers (operations, marketing, project management, education,
+      communications) who use Claude as a productivity tool and build Claude Projects.
+      Not aimed at API developers.
+    prerequisites: None mandatory. Regular hands-on Claude use is recommended.
+    format:
+      items: 60
+      item_types: [multiple-choice, multiple-response]
+      minutes: 120
+      passing: Scaled score 720 on a 100–1,000 scale
+      fee_usd: 99
+      validity_months: 12
+      result: Pass/fail + scaled score + percent-correct by domain
+    source:
+      title: Claude Certified Associate – Foundations Exam Guide v1.0
+      url: https://anthropic-partners.skilljar.com/page/partner-certifications
+    domains:
+      - id: 1
+        name: Prompting and Task Execution
+        weight: 14
+        objectives:
+          - {id: CCAO-F-1.1, text: Write effective prompts for business and technical tasks}
+          - {id: CCAO-F-1.2, text: Decompose complex requests into structured sub-tasks}
+          - {id: CCAO-F-1.3, text: Iterate on prompts to improve output quality}
+          - {id: CCAO-F-1.4, text: Adapt prompting strategy to task type (analysis, research, drafting, brainstorming)}
+      - id: 2
+        name: Output Evaluation and Validation
+        weight: 21
+        objectives:
+          - {id: CCAO-F-2.1, text: Evaluate outputs for accuracy and completeness}
+          - {id: CCAO-F-2.2, text: Spot hallucinations, inconsistencies and bias}
+          - {id: CCAO-F-2.3, text: Apply fact-checking and validation techniques}
+          - {id: CCAO-F-2.4, text: Decide when human review or extra verification is needed}
+          - {id: CCAO-F-2.5, text: Edit, adapt and compare outputs for the intended audience}
+          - {id: CCAO-F-2.6, text: Curate information and choose output formats (artifacts, inline, structured data)}
+      - id: 3
+        name: Product and Model Selection
+        weight: 12
+        objectives:
+          - {id: CCAO-F-3.1, text: Choose the right Claude product feature (Projects, research, chat, artifacts)}
+          - {id: CCAO-F-3.2, text: Differentiate Claude model families (Haiku, Sonnet, Opus)}
+          - {id: CCAO-F-3.3, text: Match model choice to cost, speed and quality needs}
+          - {id: CCAO-F-3.4, text: Manage context limits and memory (restart, summarise or persist)}
+      - id: 4
+        name: Workflow Integration and Solution Design
+        weight: 16
+        objectives:
+          - {id: CCAO-F-4.1, text: Use Claude to analyse requirements and use cases}
+          - {id: CCAO-F-4.2, text: Use Claude for research, planning and process optimisation}
+          - {id: CCAO-F-4.3, text: Use Claude to support solution design and iteration}
+          - {id: CCAO-F-4.4, text: Integrate Claude into existing workflows to augment or redesign them}
+          - {id: CCAO-F-4.5, text: Communicate Claude's value and limitations to stakeholders}
+      - id: 5
+        name: Configuration and Knowledge Management
+        weight: 12
+        objectives:
+          - {id: CCAO-F-5.1, text: Configure Projects with instructions and knowledge sources}
+          - {id: CCAO-F-5.2, text: Manage uploaded knowledge and connectors (e.g. Google Drive, Gmail)}
+          - {id: CCAO-F-5.3, text: Write effective system-level instructions}
+          - {id: CCAO-F-5.4, text: Maintain and update configurations, knowledge and instructions}
+      - id: 6
+        name: Governance, Risk, and Responsible Use
+        weight: 15
+        objectives:
+          - {id: CCAO-F-6.1, text: Distinguish appropriate from inappropriate use cases}
+          - {id: CCAO-F-6.2, text: Apply data-sensitivity, regulatory and privacy considerations}
+          - {id: CCAO-F-6.3, text: Follow organisational AI policy and governance standards}
+          - {id: CCAO-F-6.4, text: Understand the ethical implications of AI use}
+      - id: 7
+        name: Troubleshooting and Optimization
+        weight: 10
+        objectives:
+          - {id: CCAO-F-7.1, text: Diagnose and fix underperforming prompts or poor outputs}
+          - {id: CCAO-F-7.2, text: Adjust approach based on feedback and results}
+          - {id: CCAO-F-7.3, text: Optimise workflows for efficiency and effectiveness}
+
+  - code: CCAR-P
+    slug: ccar-p
+    name: Claude Certified Architect – Professional
+    status: supported
+    track_dir: 16-certification-tracks/ccar-p
+    question_dir: 17-practice-questions/ccar-p
+    guide_version: "1.0 (effective July 2026)"
+    verified: "2026-10-24"
+    audience: >-
+      Mid- to senior-level solution architects, AI/ML engineers, technical leads and senior
+      software engineers who design and deliver production Claude solutions.
+    prerequisites: >-
+      None mandatory. Recommended: 3+ years in systems architecture or platform engineering
+      and 6+ months hands-on with Claude or comparable LLM systems in production.
+    format:
+      items: 63
+      item_types: [multiple-choice, multiple-response]
+      minutes: 120
+      passing: Scaled score 720 on a 100–1,000 scale
+      fee_usd: 175
+      validity_months: 12
+      result: Pass/fail + scaled score + percent-correct by domain
+    source:
+      title: Claude Certified Architect – Professional Exam Guide v1.0
+      url: https://anthropic-partners.skilljar.com/page/partner-certifications
+    domains:
+      - id: 1
+        name: Solution Design & Architecture
+        weight: 17
+        objectives:
+          - {id: CCAR-P-1.1, text: Translate business problems into Claude-based solutions}
+          - {id: CCAR-P-1.2, text: Design end-to-end architectures (input, processing, output, feedback loops)}
+          - {id: CCAR-P-1.3, text: Select architectural patterns (workflow, agentic, augmented LLM)}
+          - {id: CCAR-P-1.4, text: Design multi-agent systems and orchestration strategies}
+          - {id: CCAR-P-1.5, text: Apply decomposition techniques to complex problems}
+          - {id: CCAR-P-1.6, text: Align solutions to business value (efficiency, transformation, productivity, cost, SLAs)}
+      - id: 2
+        name: Claude Models, Prompting & Context Engineering
+        weight: 13
+        objectives:
+          - {id: CCAR-P-2.1, text: Select Claude models based on trade-offs}
+          - {id: CCAR-P-2.2, text: Design system prompts, templates and guardrails}
+          - {id: CCAR-P-2.3, text: Apply zero-shot, few-shot and chain-of-thought techniques}
+          - {id: CCAR-P-2.4, text: Optimise context windows and token usage}
+          - {id: CCAR-P-2.5, text: Reuse prompts via caching, modular prompts and Skills}
+      - id: 3
+        name: Integration
+        weight: 19
+        objectives:
+          - {id: CCAR-P-3.1, text: Evaluate tool and agent configuration for capability bloat}
+          - {id: CCAR-P-3.2, text: Analyse authentication and authorisation to find security gaps}
+          - {id: CCAR-P-3.3, text: Evaluate accuracy–latency trade-offs and justify configuration}
+          - {id: CCAR-P-3.4, text: Analyse observability challenges and choose monitoring at scale}
+          - {id: CCAR-P-3.5, text: Design RAG pipelines with suitable chunking and indexing}
+          - {id: CCAR-P-3.6, text: Match retrieval strategy to data shape and query pattern}
+          - {id: CCAR-P-3.7, text: Choose integration mechanism (MCP, API/CLI, agent-to-agent)}
+          - {id: CCAR-P-3.8, text: Evaluate progressive discovery versus monolithic context}
+      - id: 4
+        name: Evaluation, Testing & Optimization
+        weight: 16
+        objectives:
+          - {id: CCAR-P-4.1, text: Define evaluation metrics (accuracy, latency, cost, safety, security)}
+          - {id: CCAR-P-4.2, text: Design evaluation datasets and mixed-method test frameworks}
+          - {id: CCAR-P-4.3, text: Run A/B tests and iterative improvement}
+          - {id: CCAR-P-4.4, text: Diagnose prompt failure, hallucination and model mismatch}
+          - {id: CCAR-P-4.5, text: Optimise token usage, latency and cost-performance}
+          - {id: CCAR-P-4.6, text: Monitor performance with logging and observability tooling}
+      - id: 5
+        name: Governance, Safety & Risk Management
+        weight: 14
+        objectives:
+          - {id: CCAR-P-5.1, text: Implement guardrails and safety controls}
+          - {id: CCAR-P-5.2, text: Identify risks, limitations and failure modes of LLM systems}
+          - {id: CCAR-P-5.3, text: Apply human-in-the-loop validation}
+          - {id: CCAR-P-5.4, text: Ensure regulatory compliance (e.g. GDPR, HIPAA, FedRAMP)}
+          - {id: CCAR-P-5.5, text: Address bias, fairness and transparency}
+      - id: 6
+        name: Stakeholder Communication & Lifecycle Management
+        weight: 14
+        objectives:
+          - {id: CCAR-P-6.1, text: Run structured discovery and requirements gathering}
+          - {id: CCAR-P-6.2, text: Communicate architectural decisions and trade-offs}
+          - {id: CCAR-P-6.3, text: Manage stakeholder feedback loops and expectations, including SLAs}
+          - {id: CCAR-P-6.4, text: Document architectures and give implementation guidance}
+          - {id: CCAR-P-6.5, text: Support lifecycle phases (discovery, design, handoff, monitoring, iteration)}
+      - id: 7
+        name: Developer Productivity & Operational Enablement
+        weight: 7
+        objectives:
+          - {id: CCAR-P-7.1, text: Configure Claude tools and environments for teams (e.g. Claude Code)}
+          - {id: CCAR-P-7.2, text: Improve developer workflows with AI-assisted tooling}
+          - {id: CCAR-P-7.3, text: Support debugging and operational issue resolution}
+
+  # ---- Recorded for future tracks (facts verified, no track content yet) ----
+  - code: CCAR-F
+    slug: ccar-f
+    name: Claude Certified Architect – Foundations
+    status: planned
+    guide_version: "1.0 (effective July 2026)"
+    verified: "2026-10-24"
+    format: {items: 60, item_types: [multiple-choice, multiple-response], minutes: 120, passing: Scaled score 720 on a 100–1,000 scale, fee_usd: 125, validity_months: 12}
+    source: {title: Claude Certified Architect – Foundations Exam Guide v1.0, url: https://anthropic-partners.skilljar.com/page/partner-certifications}
+    domains:
+      - {id: 1, name: Agentic Architecture & Orchestration, weight: 27, objectives: []}
+      - {id: 2, name: Tool Design & MCP Integration, weight: 18, objectives: []}
+      - {id: 3, name: Claude Code Configuration & Workflows, weight: 20, objectives: []}
+      - {id: 4, name: Prompt Engineering & Structured Output, weight: 20, objectives: []}
+      - {id: 5, name: Context Management & Reliability, weight: 15, objectives: []}
+
+  - code: CCDV-F
+    slug: ccdv-f
+    name: Claude Certified Developer – Foundations
+    status: planned
+    guide_version: "1.0 (effective July 2026)"
+    verified: "2026-10-24"
+    format: {items: 53, item_types: [multiple-choice, multiple-response], minutes: 120, passing: Scaled score 720 on a 100–1,000 scale, fee_usd: 125, validity_months: 12}
+    source: {title: Claude Certified Developer – Foundations Exam Guide v1.0, url: https://anthropic-partners.skilljar.com/page/partner-certifications}
+    domains:
+      - {id: 1, name: Agents and Workflows, weight: 14.7, objectives: []}
+      - {id: 2, name: Applications and Integration, weight: 33.1, objectives: []}
+      - {id: 3, name: Claude Code, weight: 3.1, objectives: []}
+      - {id: 4, name: Eval, Testing, and Debugging, weight: 2.6, objectives: []}
+      - {id: 5, name: Model Selection and Optimization, weight: 16.8, objectives: []}
+      - {id: 6, name: Prompt and Context Engineering, weight: 11.0, objectives: []}
+      - {id: 7, name: Security and Safety, weight: 8.1, objectives: []}
+      - {id: 8, name: Tools and MCPs, weight: 10.6, objectives: []}

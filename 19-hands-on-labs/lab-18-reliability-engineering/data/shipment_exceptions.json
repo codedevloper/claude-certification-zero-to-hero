@@ -1,0 +1,16 @@
+{
+  "organisation": "Acme Logistics (fictional)",
+  "description": "Synthetic shipment exceptions. Carriers, depots and customers are invented.",
+  "exceptions": [
+    {"shipment_id": "SHP-1001", "exception_code": "LATE-DEPOT", "carrier": "Bluefin Freight", "location": "Harrowgate depot", "reason": "trailer arrived after the sort window closed", "hours_delayed": 6, "customer_tier": "standard", "recommended_action": "rebook on the next linehaul"},
+    {"shipment_id": "SHP-1002", "exception_code": "ADDR-CHECK", "carrier": "Kestrel Parcel", "location": "Mill Lane hub", "reason": "unit number missing from the delivery address", "hours_delayed": 18, "customer_tier": "priority", "recommended_action": "contact the consignee to confirm the unit"},
+    {"shipment_id": "SHP-1003", "exception_code": "DAMAGE-OUTER", "carrier": "Bluefin Freight", "location": "Eastport cross-dock", "reason": "outer carton crushed, contents not yet inspected", "hours_delayed": 4, "customer_tier": "standard", "recommended_action": "inspect contents and photograph before onward movement"},
+    {"shipment_id": "SHP-1004", "exception_code": "CUSTOMS-HOLD", "carrier": "Orchid Air Cargo", "location": "Northfield air terminal", "reason": "commercial invoice value does not match the declaration", "hours_delayed": 30, "customer_tier": "priority", "recommended_action": "request a corrected invoice from the shipper"},
+    {"shipment_id": "SHP-1005", "exception_code": "MISROUTE", "carrier": "Kestrel Parcel", "location": "Southmere hub", "reason": "parcel scanned at the wrong regional hub", "hours_delayed": 12, "customer_tier": "standard", "recommended_action": "redirect via the evening trunk"},
+    {"shipment_id": "SHP-1006", "exception_code": "TEMP-EXCURSION", "carrier": "Polar Line Reefers", "location": "Coldharbour store", "reason": "reefer logged 9C for 40 minutes against a 2-8C range", "hours_delayed": 2, "customer_tier": "priority", "recommended_action": "quarantine pallet and notify the quality team"},
+    {"shipment_id": "SHP-1007", "exception_code": "REFUSED-DELIVERY", "carrier": "Bluefin Freight", "location": "Riverside retail park", "reason": "consignee refused delivery citing a late appointment", "hours_delayed": 24, "customer_tier": "standard", "recommended_action": "agree a new appointment slot"},
+    {"shipment_id": "SHP-2001", "exception_code": "LATE-DEPOT", "carrier": "Orchid Air Cargo", "location": "Northfield air terminal", "reason": "flight offloaded due to weight limits", "hours_delayed": 20, "customer_tier": "priority", "recommended_action": "rebook on the morning flight"},
+    {"shipment_id": "SHP-2002", "exception_code": "ADDR-CHECK", "carrier": "Kestrel Parcel", "location": "Mill Lane hub", "reason": "postcode does not match the street", "hours_delayed": 8, "customer_tier": "standard", "recommended_action": "validate the address with the shipper"},
+    {"shipment_id": "SHP-3001", "exception_code": "DAMAGE-OUTER", "carrier": "Polar Line Reefers", "location": "Coldharbour store", "reason": "pallet wrap torn, two cases loose", "hours_delayed": 5, "customer_tier": "standard", "recommended_action": "re-wrap and recount the pallet"}
+  ]
+}

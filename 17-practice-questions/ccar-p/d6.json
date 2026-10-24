@@ -1,0 +1,559 @@
+{
+  "schema_version": 1,
+  "track": "CCAR-P",
+  "domain": 6,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAR-P-D6-001",
+      "objective": "CCAR-P-6.1",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Harbourline Credit Union's COO asks you to 'add AI to the loan process'. You have two weeks of discovery before a design review.",
+      "question": "Which discovery activity should come first?",
+      "options": {
+        "A": "Select the model and platform so engineering can start early",
+        "B": "Build a quick chatbot demo to generate executive excitement",
+        "C": "Send a survey asking staff which AI features they would like",
+        "D": "Map the current loan workflow with the staff who run it, measuring where time, errors and cost concentrate and which decisions are regulated"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Structured discovery begins by understanding the current process and its pain points: map the workflow with the people who do it, measure where time, errors and cost concentrate, and identify which decisions are regulated. This grounds the use-case shortlist in evidence and establishes baselines for later value measurement. Choosing a model or building a demo first anchors the project on a solution before the problem is understood.",
+      "why_incorrect": {
+        "A": "Choosing technology before understanding the problem biases the solution.",
+        "B": "A demo may help later, but it does not establish the problem, baseline or constraints.",
+        "C": "Feature wish-lists capture opinions, not where measurable value lies."
+      },
+      "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-002",
+      "objective": "CCAR-P-6.1",
+      "type": "multiple",
+      "select": 3,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "During discovery for Meridian Clinics' referral-triage project, you are compiling non-functional requirements.",
+      "question": "Which THREE questions are most important to resolve during discovery because they constrain the architecture? (Choose 3.)",
+      "options": {
+        "A": "What data classifications and regulatory regimes apply, including PHI and data residency",
+        "B": "What latency and availability levels the clinics need, and what happens when the AI component is unavailable",
+        "C": "Which colour theme clinicians prefer for the triage screen",
+        "D": "Which triage decisions require clinician sign-off and what audit evidence is needed",
+        "E": "Which marketing claims the vendor makes about model accuracy"
+      },
+      "answer": [
+        "A",
+        "B",
+        "D"
+      ],
+      "explanation": "Non-functional requirements that constrain architecture should be surfaced early: data classification and regulatory scope (PHI, residency) determine the deployment path and controls; latency and availability expectations shape model, serving and fallback choices; and the required human oversight for clinical decisions determines workflow design. UI colour preferences and the vendor's marketing materials do not constrain architecture.",
+      "why_incorrect": {
+        "C": "A UX preference that does not constrain the AI architecture.",
+        "E": "Vendor marketing is not a requirement and should not drive design."
+      },
+      "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
+      "references": [
+        "https://www.nist.gov/itl/ai-risk-management-framework"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-003",
+      "objective": "CCAR-P-6.1",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Six weeks into building a contract-review assistant for Lucerne Publishing, the legal team says the output 'is not what we needed': they wanted risk scores per clause, not summaries. The original requirement said 'help lawyers review contracts faster'.",
+      "question": "Which discovery practice would most likely have prevented this?",
+      "options": {
+        "A": "Agree concrete success criteria with users, including worked examples of the desired output, and use them as the first evaluation cases",
+        "B": "Write a longer requirements document describing the assistant's features",
+        "C": "Increase the frequency of status meetings",
+        "D": "Let engineering choose the output format based on technical convenience"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Vague goals such as 'review faster' need to be turned into concrete, testable success criteria during discovery, ideally with examples of the desired output agreed by users (for example annotated sample contracts showing clause-level risk ratings). Those examples double as the first evaluation cases. Longer documents or more meetings without concrete artefacts do not resolve ambiguity.",
+      "why_incorrect": {
+        "B": "Length does not remove ambiguity unless it specifies observable outputs.",
+        "C": "More meetings without concrete examples rarely surface the mismatch.",
+        "D": "This shifts a business decision to the wrong owner."
+      },
+      "module": "13-enterprise-ai-architecture/01-solution-design-process.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-004",
+      "objective": "CCAR-P-6.1",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "concept",
+      "scenario": "Kestrel Payments' discovery has produced 18 candidate Claude use cases. Leadership wants three to pursue first.",
+      "question": "Which TWO criteria are most appropriate for prioritisation? (Choose 2.)",
+      "options": {
+        "A": "Expected measurable value against a baseline, such as volume and time or cost saved",
+        "B": "Feasibility and risk, including data availability, how easily outputs can be verified and the cost of errors",
+        "C": "Which use cases sound most innovative in a press release",
+        "D": "Which use cases a competitor has announced",
+        "E": "Which use cases need the largest model"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "Use-case prioritisation should weigh measurable value against feasibility and risk. Value includes volume, time saved and strategic importance against a measured baseline. Feasibility and risk include data availability, how verifiable outputs are, regulatory exposure and the cost of errors. Novelty or competitor press releases are weak signals.",
+      "why_incorrect": {
+        "C": "Novelty does not indicate value or feasibility.",
+        "D": "Competitor announcements do not reflect this organisation's data, risks or value.",
+        "E": "Model size is an implementation detail, not a prioritisation criterion."
+      },
+      "module": "13-enterprise-ai-architecture/08-business-value-and-roi.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-005",
+      "objective": "CCAR-P-6.2",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "You must explain to Woodgrove Bank's risk committee why the design uses a workflow with human approval instead of a fully autonomous agent.",
+      "question": "Which communication approach is most effective for this audience?",
+      "options": {
+        "A": "Walk through the API request format and tool schemas",
+        "B": "Present the options considered, the risks and value of each, the controls in the chosen design, and evaluation evidence, in business terms",
+        "C": "State that autonomous agents are not yet mature, without further detail",
+        "D": "Share the vendor's marketing material on agent safety"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Executive and risk audiences need decisions framed in terms of business risk, controls and outcomes, not implementation detail. Presenting the options considered, the risk and value of each, the controls in the chosen design and the evidence from evaluation lets the committee make or endorse the decision. Deep technical detail or vendor claims do not answer their questions.",
+      "why_incorrect": {
+        "A": "Implementation detail does not address the committee's risk questions.",
+        "C": "An unsupported assertion does not let the committee assess the trade-off.",
+        "D": "Vendor material is not evidence about this design's risks."
+      },
+      "module": "13-enterprise-ai-architecture/06-stakeholder-communication.md",
+      "references": [
+        "https://www.anthropic.com/engineering/building-effective-agents"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-006",
+      "objective": "CCAR-P-6.2",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Proseware's architecture team decides to use MCP for internal tool integration rather than per-application custom tools. Six months later, new engineers keep asking why.",
+      "question": "Which artefact best preserves this decision and its trade-offs?",
+      "options": {
+        "A": "A Slack thread where the decision was discussed",
+        "B": "A slide deck from the original design review",
+        "C": "An Architecture Decision Record capturing context, the decision, alternatives considered, consequences, and conditions for revisiting it",
+        "D": "A comment at the top of the MCP server's main file"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "An Architecture Decision Record (ADR) captures the context, the decision, the alternatives considered, and the consequences (both positive and negative) in a short, version-controlled document. It answers 'why' for future engineers and records when a decision should be revisited. Chat logs and slide decks are hard to find and rarely capture alternatives and consequences.",
+      "why_incorrect": {
+        "A": "Chat threads are hard to find and rarely state alternatives and consequences.",
+        "B": "Slides lose detail and are not maintained with the code.",
+        "D": "A code comment cannot capture the wider context and alternatives."
+      },
+      "module": "13-enterprise-ai-architecture/07-architecture-decision-records.md",
+      "references": [
+        "https://modelcontextprotocol.io/docs/getting-started/intro"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-007",
+      "objective": "CCAR-P-6.2",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "cost-performance",
+      "scenario": "The CFO of Bluefin Grocers asks why the proposed design uses a more expensive model for one step when a cheaper one 'seems fine'.",
+      "question": "Which explanation best communicates the trade-off?",
+      "options": {
+        "A": "Explain that the expensive model is the vendor's flagship",
+        "B": "Say the engineering team prefers it",
+        "C": "Agree to the cheaper model to avoid conflict",
+        "D": "Show eval results for both models on that step, the cost of the errors the cheaper model makes, and the resulting total cost per completed task, with a plan to re-evaluate periodically"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Trade-offs land with finance stakeholders when they are framed as total cost and risk per business outcome, with evidence. Showing eval results for each model on that step, the error cost (for example manual rework per error) and the resulting cost per completed task makes the choice transparent, and committing to re-evaluate when new models arrive shows discipline. Appeals to authority or to general capability do not justify spend.",
+      "why_incorrect": {
+        "A": "Flagship status does not justify spend for a specific step.",
+        "B": "Preference is not evidence of value.",
+        "C": "This avoids the conversation without assessing whether quality would drop."
+      },
+      "module": "13-enterprise-ai-architecture/06-stakeholder-communication.md",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-008",
+      "objective": "CCAR-P-6.2",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Contoso Health's clinical leaders and its security team disagree: clinicians want the assistant to read full patient histories for better summaries, while security wants minimum-necessary data.",
+      "question": "Which TWO actions best help resolve the disagreement? (Choose 2.)",
+      "options": {
+        "A": "Evaluate summary quality with full versus scoped histories to quantify the actual clinical benefit",
+        "B": "Implement the clinicians' preference because they are the users",
+        "C": "Present options with their residual risks, controls and costs to the accountable decision-makers, and record the outcome in an ADR",
+        "D": "Implement the security team's preference because security always wins",
+        "E": "Defer the decision until after launch"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanation": "Conflicting requirements are resolved with evidence and explicit trade-offs, not by picking a side. Running an evaluation that compares summary quality with full versus scoped histories quantifies the clinical benefit, and presenting options with their residual risks and controls lets accountable owners decide. Escalating without data or quietly implementing one side's preference undermines trust.",
+      "why_incorrect": {
+        "B": "This ignores a legitimate risk owner and leaves the trade-off undocumented.",
+        "D": "This ignores clinical value without evidence about the impact.",
+        "E": "Deferring leaves an unresolved risk in production."
+      },
+      "module": "13-enterprise-ai-architecture/06-stakeholder-communication.md",
+      "references": [
+        "https://www.nist.gov/privacy-framework"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-009",
+      "objective": "CCAR-P-6.3",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Two weeks after launch of Tailspin Insurance's claims-summary assistant, adjusters say it 'sometimes gets things wrong', but feedback comes through hallway conversations.",
+      "question": "Which feedback mechanism is most useful?",
+      "options": {
+        "A": "An in-product flag with error categories and an optional note, stored with the request's trace ID so the team can reproduce and add it to the eval set",
+        "B": "A quarterly satisfaction survey",
+        "C": "An email address for complaints",
+        "D": "Wait until adjusters escalate through their managers"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Useful feedback is structured, captured in context and actionable. An in-product control that lets adjusters flag a summary, choose an error category and add a note, stored with the trace ID, lets the team reproduce, categorise and prioritise issues and turn them into eval cases. Informal channels and periodic surveys lose the specifics.",
+      "why_incorrect": {
+        "B": "Surveys are too infrequent and lack the specific examples needed to fix problems.",
+        "C": "Unstructured email lacks the context and categorisation needed to act.",
+        "D": "Escalation filters out most issues and delays action."
+      },
+      "module": "13-enterprise-ai-architecture/09-lifecycle-management.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-010",
+      "objective": "CCAR-P-6.3",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "concept",
+      "scenario": "Alpine Ski House's executive sponsor expects the new booking assistant to be '100% accurate' from day one.",
+      "question": "Which TWO actions best set realistic expectations? (Choose 2.)",
+      "options": {
+        "A": "Promise 100% accuracy to secure funding, and manage issues later",
+        "B": "Agree measurable quality targets per task based on evaluation, with zero-tolerance areas enforced by deterministic controls",
+        "C": "Avoid discussing accuracy so the sponsor stays enthusiastic",
+        "D": "Explain how errors are detected and corrected, and share a roadmap for improving quality after launch",
+        "E": "State that accuracy cannot be measured for generative AI"
+      },
+      "answer": [
+        "B",
+        "D"
+      ],
+      "explanation": "LLM-based systems have error rates that must be measured and managed. Setting expectations means agreeing measurable targets per task (for example 95% correct bookings on the eval, with zero tolerance for payment errors enforced by deterministic checks), explaining how errors are caught, and sharing a plan for improvement over time. Promising perfection or hiding error rates sets the project up to lose trust.",
+      "why_incorrect": {
+        "A": "Unrealistic promises erode trust when errors inevitably appear.",
+        "C": "Withholding risk information prevents informed decisions.",
+        "E": "Accuracy can be measured with appropriate eval sets and graders."
+      },
+      "module": "13-enterprise-ai-architecture/06-stakeholder-communication.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-011",
+      "objective": "CCAR-P-6.3",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Fabrikam Retail's support organisation wants an SLA for its Claude-powered order-status assistant. The assistant depends on the Claude API, an order-management API and a retrieval index.",
+      "question": "Which approach to defining the SLA is most sound?",
+      "options": {
+        "A": "Adopt the model provider's availability target as the assistant's SLA",
+        "B": "Define user-facing SLOs end to end, decompose them across the model, order API and retrieval index, measure each with indicators, and specify graceful degradation and an error budget",
+        "C": "Commit to an aggressive SLA and add retries to meet it",
+        "D": "Avoid an SLA because AI responses vary"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "A sound SLA is defined end to end from the user's perspective, decomposed into service level objectives for each dependency, and backed by measured indicators. It accounts for dependency availability and rate limits, defines graceful degradation (for example show order status from the order API directly when the model is unavailable) and sets an error budget. Quoting one dependency's figure or a target with no measurement is not an SLA.",
+      "why_incorrect": {
+        "A": "The assistant has other dependencies; one provider's figure is not the system's SLA.",
+        "C": "Retries cannot overcome dependency outages and may worsen rate limiting.",
+        "D": "Variability in content does not prevent defining availability and latency objectives."
+      },
+      "module": "15-production-operations/05-reliability-engineering.md",
+      "references": [
+        "https://platform.claude.com/docs/en/api/rate-limits"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-012",
+      "objective": "CCAR-P-6.3",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Six months after launch, Relecloud's users say the knowledge assistant 'got worse'. Nothing in the application has changed, but the knowledge base has grown from 2,000 to 15,000 documents and new departments have joined.",
+      "question": "What is the best way to respond to this feedback?",
+      "options": {
+        "A": "Explain that nothing changed in the application so quality cannot have dropped",
+        "B": "Switch to a newer model immediately",
+        "C": "Re-run evaluation with current content and recent real queries, compare against the launch baseline by department, share the findings and a remediation plan",
+        "D": "Remove the new departments' documents"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "When users report degradation, confirm it with data before acting. Production monitoring and the eval set should be re-run with current traffic and content; growth in the corpus and new user groups can shift retrieval quality and query mix. Communicating findings and a remediation plan to stakeholders closes the loop. Dismissing feedback or making untested changes erodes trust.",
+      "why_incorrect": {
+        "A": "The corpus and user mix changed, which can affect quality without code changes.",
+        "B": "An untested change may not address the cause and could introduce regressions.",
+        "D": "This may hide the problem while removing value for those departments."
+      },
+      "module": "13-enterprise-ai-architecture/09-lifecycle-management.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-013",
+      "objective": "CCAR-P-6.4",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Your design for Northwind Lending's document-intake system is being handed to an implementation team in another region.",
+      "question": "Which documentation set gives the most useful implementation guidance?",
+      "options": {
+        "A": "A summary slide deck from the steering committee",
+        "B": "A list of the model IDs and API keys to use",
+        "C": "Access to the architect's personal notes",
+        "D": "Context and data-flow diagrams with trust boundaries, ADRs for key decisions, versioned prompt and tool specifications, the eval suite with acceptance thresholds, and operational runbooks"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Implementation guidance should let another team build and operate the system correctly without the original architects: architecture diagrams with data flows and trust boundaries, ADRs explaining key decisions, prompt and tool specifications under version control, the evaluation suite and acceptance thresholds, and operational runbooks. A slide deck or a list of model names leaves too many decisions open.",
+      "why_incorrect": {
+        "A": "Slides lack the detail needed to build and operate the system.",
+        "B": "Model IDs are a small part of the design, and keys must never be shared in documentation.",
+        "C": "Unstructured notes are hard to follow and may be outdated."
+      },
+      "module": "13-enterprise-ai-architecture/03-reference-architectures.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-014",
+      "objective": "CCAR-P-6.4",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Proseware is documenting its agent platform for internal teams. Security reviewers want the documentation to support threat modelling.",
+      "question": "Which TWO elements should the architecture documentation include for that purpose? (Choose 2.)",
+      "options": {
+        "A": "Data-flow diagrams marking trust boundaries, including where untrusted content such as retrieved documents and tool results enters",
+        "B": "A marketing summary of the platform's benefits",
+        "C": "A table of monthly token costs by team",
+        "D": "An inventory of each agent's tools, permissions, credentials and approval requirements",
+        "E": "The full text of every prompt, stored in the public wiki"
+      },
+      "answer": [
+        "A",
+        "D"
+      ],
+      "explanation": "Threat modelling needs to know where trust changes and what each component can do. Data-flow diagrams marking trust boundaries (user input, retrieved content, tool results, external services) and an inventory of each agent's tools, permissions and credentials let reviewers analyse injection paths and excessive agency. Marketing descriptions and cost tables are useful elsewhere but not for threat modelling.",
+      "why_incorrect": {
+        "B": "Benefits statements do not support security analysis.",
+        "C": "Cost data is operationally useful but not relevant to threat modelling.",
+        "E": "Publishing prompts broadly is not required for threat modelling and may expose internal details."
+      },
+      "module": "12-ai-security/01-llm-threat-modelling.md",
+      "references": [
+        "https://genai.owasp.org/llm-top-10/"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-015",
+      "objective": "CCAR-P-6.4",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "concept",
+      "scenario": "Wingtip Toys' prompts are currently embedded as strings in application code across six services, and nobody knows which version is in production.",
+      "question": "Which practice gives the clearest implementation guidance for managing prompts?",
+      "options": {
+        "A": "Keep prompts in version control with review, record the eval results for each change, and log the prompt version with every request",
+        "B": "Let each service owner edit prompts directly in production for agility",
+        "C": "Store prompts in a wiki page that engineers copy from",
+        "D": "Generate prompts dynamically with Claude at runtime"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Prompts are part of the system's behaviour and should be treated like code: stored in version control, reviewed, tied to the eval results that justified each change, and deployed with an identifiable version that is logged with each request. This makes changes auditable and regressions traceable. Ad hoc editing or storing prompts only in a wiki loses that traceability.",
+      "why_incorrect": {
+        "B": "Uncontrolled edits make regressions impossible to trace.",
+        "C": "Copying from a wiki creates drift and no link to what is deployed.",
+        "D": "Runtime-generated prompts are hard to test, review or reproduce."
+      },
+      "module": "13-enterprise-ai-architecture/09-lifecycle-management.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-016",
+      "objective": "CCAR-P-6.4",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "An on-call engineer at Kestrel Payments receives an alert that the dispute assistant's refusal rate jumped from 1% to 12%. There is no runbook and the original team has moved on.",
+      "question": "Which runbook content would have helped most?",
+      "options": {
+        "A": "A high-level description of the system's purpose",
+        "B": "Alert-specific diagnosis steps (dashboards, filtering traces by stop reason), a list of recent-change checks such as prompt, model and configuration versions, rollback steps and escalation contacts",
+        "C": "Links to the general API documentation",
+        "D": "The original project charter"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Runbooks turn architecture knowledge into operational steps: what each alert means, where to look (dashboards, traces filtered by `stop_reason`), recent changes to check (prompt, model or configuration versions), how to roll back, and when to escalate and to whom. A design overview or vendor documentation alone does not give the on-call engineer a path to resolution.",
+      "why_incorrect": {
+        "A": "Purpose statements do not tell the engineer what to do.",
+        "C": "General docs do not cover this system's configuration or rollback.",
+        "D": "A charter does not support incident response."
+      },
+      "module": "15-production-operations/07-incident-response.md",
+      "references": [
+        "https://platform.claude.com/docs/en/api/errors"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-017",
+      "objective": "CCAR-P-6.5",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Lucerne Publishing's translation assistant has been in production for a year. A newer model generation has been released, and the provider has announced a retirement date for the model currently in use.",
+      "question": "Which lifecycle approach is most appropriate?",
+      "options": {
+        "A": "Wait until the retirement date and switch the model ID that day",
+        "B": "Switch immediately to the new model ID because newer is always better",
+        "C": "Run the eval suite on the new model, adjust prompts for behavioural differences, compare quality, latency and cost, then roll out gradually with monitoring and a rollback path before the retirement date",
+        "D": "Pin the old model indefinitely to avoid change"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Model upgrades are a planned lifecycle activity: run the existing eval suite on the new model, review and adjust prompts for behavioural differences, compare quality, latency and cost, roll out gradually (for example a canary or A/B) with monitoring, keep a rollback path, and complete the migration before the retirement date. Waiting for retirement or switching blindly both create avoidable risk.",
+      "why_incorrect": {
+        "A": "Last-minute switches leave no time to discover and fix regressions.",
+        "B": "Newer models can behave differently with existing prompts; unevaluated switches risk regressions.",
+        "D": "Retired models stop being available, so this is not viable."
+      },
+      "module": "15-production-operations/08-model-upgrades-and-change-management.md",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/models/overview"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-018",
+      "objective": "CCAR-P-6.5",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "concept",
+      "scenario": "Civic Benefits Agency asks how its Claude solution will be handled after the initial build team hands over to an operations team.",
+      "question": "Which TWO elements are most important to include in the handoff phase? (Choose 2.)",
+      "options": {
+        "A": "A final demo recording for leadership",
+        "B": "Runbooks, dashboards, alerts and the evaluation suite, with training on how to use them",
+        "C": "Named owners and a change-management process for prompts, models, tools and knowledge sources",
+        "D": "Launch announcement materials",
+        "E": "Removing all monitoring to reduce operations cost"
+      },
+      "answer": [
+        "B",
+        "C"
+      ],
+      "explanation": "Handoff should transfer both knowledge and ownership: operational runbooks, dashboards and alerts, the eval suite and how to run it, and a clear owner for prompts, models and data changes with an agreed change-management process. Without these, the system degrades silently. A final demo or celebratory launch materials do not equip the operations team.",
+      "why_incorrect": {
+        "A": "Useful for communication but does not equip operations to run the system.",
+        "D": "Announcements do not transfer operational capability.",
+        "E": "Removing monitoring prevents detecting degradation after handoff."
+      },
+      "module": "13-enterprise-ai-architecture/09-lifecycle-management.md",
+      "references": [
+        "https://www.nist.gov/itl/ai-risk-management-framework"
+      ]
+    },
+    {
+      "id": "CCAR-P-D6-019",
+      "objective": "CCAR-P-6.5",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Fourth Coffee's team proposes a lifecycle plan that ends at launch: discovery, design, build, launch. The sponsor asks what is missing.",
+      "question": "Which addition makes the lifecycle plan complete for a Claude-based system?",
+      "options": {
+        "A": "A longer build phase to ensure the system is perfect at launch",
+        "B": "A larger launch marketing campaign",
+        "C": "A one-time post-launch review after a week",
+        "D": "Ongoing monitoring, feedback collection, eval-set growth and periodic iteration, including planned model upgrades"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "LLM systems need continuing lifecycle phases after launch: monitoring of quality, cost and safety; collecting feedback and new eval cases; periodic iteration on prompts, retrieval and tools; and planned model upgrades. Inputs, users and models change over time, so a plan that ends at launch leaves the system to drift. A longer build phase or a bigger launch does not address that.",
+      "why_incorrect": {
+        "A": "No amount of pre-launch work removes the need to monitor and adapt to changing inputs and models.",
+        "B": "Marketing does not maintain system quality.",
+        "C": "A single review does not cover drift that emerges over months."
+      },
+      "module": "13-enterprise-ai-architecture/09-lifecycle-management.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      ]
+    }
+  ]
+}

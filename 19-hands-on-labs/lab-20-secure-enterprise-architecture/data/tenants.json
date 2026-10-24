@@ -1,0 +1,44 @@
+{
+  "_comment": "Synthetic per-tenant policy for the Lab 20 AI gateway. All organisations are fictional.",
+  "tenants": {
+    "contoso-health": {
+      "display_name": "Contoso Health (fictional clinic group)",
+      "allowed_models": ["claude-haiku-5-5", "claude-sonnet-5-5"],
+      "default_model": "claude-sonnet-5-5",
+      "max_tokens_cap": 2048,
+      "effort": "low",
+      "allowed_tools": ["lookup_appointment"],
+      "approval_required_tools": [],
+      "data_rules": {"EMAIL": "redact", "PHONE": "redact", "CARD": "redact", "SSN": "block"},
+      "daily_token_budget": 20000,
+      "rate_limit": {"capacity": 5, "refill_per_second": 1.0},
+      "system_prompt": "You help clinic staff with scheduling and administrative questions. Do not give medical advice."
+    },
+    "northwind-lending": {
+      "display_name": "Northwind Lending (fictional consumer lender)",
+      "allowed_models": ["claude-opus-5-5", "claude-sonnet-5-5"],
+      "default_model": "claude-opus-5-5",
+      "max_tokens_cap": 4096,
+      "effort": "medium",
+      "allowed_tools": ["get_loan_status", "schedule_payment_change"],
+      "approval_required_tools": ["schedule_payment_change"],
+      "data_rules": {"EMAIL": "redact", "PHONE": "redact", "CARD": "block", "SSN": "block"},
+      "daily_token_budget": 50000,
+      "rate_limit": {"capacity": 10, "refill_per_second": 2.0},
+      "system_prompt": "You help loan-servicing agents answer borrower questions using the tools provided."
+    },
+    "acme-logistics": {
+      "display_name": "Acme Logistics (fictional parcel carrier)",
+      "allowed_models": ["claude-haiku-5-5"],
+      "default_model": "claude-haiku-5-5",
+      "max_tokens_cap": 256,
+      "effort": "low",
+      "allowed_tools": ["track_parcel"],
+      "approval_required_tools": [],
+      "data_rules": {"EMAIL": "redact", "PHONE": "redact", "CARD": "redact", "SSN": "redact"},
+      "daily_token_budget": 500,
+      "rate_limit": {"capacity": 1, "refill_per_second": 0.2},
+      "system_prompt": "You classify and summarise shipment exceptions for depot staff."
+    }
+  }
+}

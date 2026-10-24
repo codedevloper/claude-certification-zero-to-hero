@@ -1,0 +1,28 @@
+name: Bug in code, labs or tooling
+description: A lab, project, the mock-exam engine or a tool does not work
+labels: ["bug"]
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Component
+      placeholder: 19-hands-on-labs/lab-08-tool-invocation
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options: ["mock (default)", "live", "not applicable"]
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce and the output you got
+      description: Remove any API keys or personal data before pasting
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Python version and OS

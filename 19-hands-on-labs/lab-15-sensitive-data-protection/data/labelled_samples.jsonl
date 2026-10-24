@@ -1,0 +1,20 @@
+{"id": "L01", "text": "Contact ana.silva@example.com about the late fee.", "entities": [{"type": "EMAIL", "value": "ana.silva@example.com"}]}
+{"id": "L02", "text": "Card on file: 4111-1111-1111-1111, expiry not provided.", "entities": [{"type": "CARD", "value": "4111111111111111"}]}
+{"id": "L03", "text": "Invoice 1234 5678 9012 3456 is overdue.", "entities": []}
+{"id": "L04", "text": "Call the borrower on (646) 555-0199 after 5pm.", "entities": [{"type": "PHONE", "value": "6465550199"}]}
+{"id": "L05", "text": "ITIN supplied: 987-65-4321 for the co-signer.", "entities": [{"type": "SSN", "value": "987654321"}]}
+{"id": "L06", "text": "Form field shows 000-12-3456 which is a placeholder.", "entities": []}
+{"id": "L07", "text": "Test value 123-00-4567 should be ignored by the scanner.", "entities": []}
+{"id": "L08", "text": "Amex 3782 822463 10005 was used for the deposit.", "entities": [{"type": "CARD", "value": "378282246310005"}]}
+{"id": "L09", "text": "Shipment tracking 4111111111111112 arrived late.", "entities": []}
+{"id": "L10", "text": "Reach me on 415.555.0110 or j.wu@contoso-health.invalid", "entities": [{"type": "PHONE", "value": "4155550110"}, {"type": "EMAIL", "value": "j.wu@contoso-health.invalid"}]}
+{"id": "L11", "text": "Discover 6011 1111 1111 1117 and Mastercard 5105 1051 0510 5100 both declined.", "entities": [{"type": "CARD", "value": "6011111111111117"}, {"type": "CARD", "value": "5105105105105100"}]}
+{"id": "L12", "text": "Loan amount 25000.00 approved on 2026-10-24 at rate 7.25%.", "entities": []}
+{"id": "L13", "text": "Version 3.10.12 of the app crashed on login.", "entities": []}
+{"id": "L14", "text": "Area code 666 is never issued, so 666-12-3456 is not a real identifier.", "entities": []}
+{"id": "L15", "text": "Customer said: email me at sam dot lee at example dot com", "entities": [{"type": "EMAIL", "value": "sam dot lee at example dot com"}]}
+{"id": "L16", "text": "My cell is 555-0142, no area code sorry.", "entities": [{"type": "PHONE", "value": "5550142"}]}
+{"id": "L17", "text": "Escalate to ops-team@acme-logistics.example and copy +1 202 555 0175.", "entities": [{"type": "EMAIL", "value": "ops-team@acme-logistics.example"}, {"type": "PHONE", "value": "2025550175"}]}
+{"id": "L18", "text": "Visa 4000 0566 5566 5556 was flagged; SSN-like value 921-45-6780 also on the form.", "entities": [{"type": "CARD", "value": "4000056655665556"}, {"type": "SSN", "value": "921456780"}]}
+{"id": "L19", "text": "Batch job 20261024-0001 finished with 0 errors.", "entities": []}
+{"id": "L20", "text": "Order reference 9876543210987654 has shipped.", "entities": []}

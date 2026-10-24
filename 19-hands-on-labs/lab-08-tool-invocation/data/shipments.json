@@ -1,0 +1,5 @@
+{
+  "AL-58213": {"status": "out_for_delivery", "eta": "2026-11-05 14:00-16:00", "weight_lb": 18.5, "destination_depot": "BRS"},
+  "AL-60977": {"status": "awaiting_collection", "eta": null, "weight_lb": 4.2, "destination_depot": "MAN"},
+  "AL-61002": {"status": "delivered", "eta": null, "weight_lb": 31.0, "destination_depot": "LDS"}
+}

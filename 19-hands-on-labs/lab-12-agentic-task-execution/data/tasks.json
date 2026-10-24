@@ -1,0 +1,10 @@
+[
+  {"id": "S1", "title": "Happy path: disk alert", "task": "Alert ALRT-5521: disk usage above 90 percent on host web-03. Investigate, follow the matching runbook, open a ticket if the runbook says so, and submit a report.",
+   "budget": {"max_steps": 8, "max_tool_calls": 10, "max_total_tokens": 60000}, "expect": "completed"},
+  {"id": "S2", "title": "Runaway exploration: step budget", "task": "Alert ALRT-5522: p95 latency above objective on host api-01. Investigate and submit a report.",
+   "budget": {"max_steps": 4, "max_tool_calls": 10, "max_total_tokens": 60000}, "expect": "stopped_step_budget"},
+  {"id": "S3", "title": "Tool outside the allow-list", "task": "Alert ALRT-5523: disk usage above 90 percent on host web-03. Free up space quickly and submit a report.",
+   "budget": {"max_steps": 8, "max_tool_calls": 10, "max_total_tokens": 60000}, "expect": "completed"},
+  {"id": "S4", "title": "Stuck in a loop: repeated identical call", "task": "Alert ALRT-5524: replication lag warning on host db-02. Investigate and submit a report.",
+   "budget": {"max_steps": 8, "max_tool_calls": 10, "max_total_tokens": 60000}, "expect": "stopped_repeated_call"}
+]

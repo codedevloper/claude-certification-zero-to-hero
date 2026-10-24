@@ -1,0 +1,16 @@
+[
+  {"role": "user", "content": "Hi, I applied for a loan last week and it still says documents pending. My application ID is NL-APP-7731."},
+  {"role": "assistant", "content": "Thanks for the application ID. I can see NL-APP-7731 is in the documents pending stage. Could you tell me which documents you have uploaded so far?"},
+  {"role": "user", "content": "I uploaded my passport and a utility bill. I'm employed, so I think I need payslips too?"},
+  {"role": "assistant", "content": "That's right. As an employee you need your two most recent payslips as proof of income. Your passport and utility bill cover identity and address, as long as the bill is dated within the last three months."},
+  {"role": "user", "content": "The bill is from August, so that should be fine. I tried uploading the payslips but it failed twice."},
+  {"role": "assistant", "content": "Sorry about that. Uploads must be PDF, JPG or PNG under 10 MB. Are your payslips password-protected PDFs? Those are rejected automatically."},
+  {"role": "user", "content": "Yes! My employer's payroll system adds a password. I'll save an unprotected copy."},
+  {"role": "assistant", "content": "Great. Save an unprotected copy and upload it through the portal. We can't accept documents by email for security reasons."},
+  {"role": "user", "content": "OK. By the way, I asked for 12,000 EUR over 36 months. Can I change it to 48 months?"},
+  {"role": "assistant", "content": "Term changes before a decision are handled by underwriting. I'll note your request to change the term from 36 to 48 months on the application so the underwriter sees it."},
+  {"role": "user", "content": "Thanks. Please contact me by email rather than phone, I'm at work all day."},
+  {"role": "assistant", "content": "Noted: email is your preferred contact method. Is there anything else on the application?"},
+  {"role": "user", "content": "I've uploaded the unprotected payslips now. It says upload received."},
+  {"role": "assistant", "content": "Thank you. If the stage hasn't changed to under review within one hour, let us know and we'll raise a ticket with the documents team."}
+]

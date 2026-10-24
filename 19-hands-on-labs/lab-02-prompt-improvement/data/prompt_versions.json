@@ -1,0 +1,26 @@
+[
+  {
+    "version": "v1-baseline",
+    "change": "The first draft someone wrote in a hurry.",
+    "system": "",
+    "user": "Write an update about this delivery problem.\n\n$ticket_text"
+  },
+  {
+    "version": "v2-role-and-audience",
+    "change": "Say who Claude is writing as, who reads it, and what the reader needs.",
+    "system": "You write customer emails for Acme Logistics, a parcel delivery company.\nAudience: the customer whose parcel is delayed. They are not logistics experts and only want to know what happened to their order and what happens next.",
+    "user": "Write a short email to the customer about this delayed delivery. Apologise, tell them the new delivery date, and tell them how to get help.\n\n$ticket_text"
+  },
+  {
+    "version": "v3-structure-and-constraints",
+    "change": "Separate the data from the instructions with XML tags and state hard constraints.",
+    "system": "You write customer emails for Acme Logistics, a parcel delivery company.\nAudience: the customer whose parcel is delayed. They are not logistics experts and only want to know what happened to their order and what happens next.",
+    "user": "Write an email to the customer about the delayed delivery described in <ticket>.\n\nRequirements:\n- Greet the customer by name and apologise once.\n- State the new delivery date exactly as given.\n- Explain the cause in one plain sentence without internal detail.\n- Never include internal reference codes (such as EXC-, depot or hub codes) or staff names.\n- Tell the customer how to get help using the support contact.\n- At most 120 words.\n\n<ticket>\n$ticket_text\n</ticket>"
+  },
+  {
+    "version": "v4-example-and-format",
+    "change": "Add one worked example and an exact output format so every email looks the same.",
+    "system": "You write customer emails for Acme Logistics, a parcel delivery company.\nAudience: the customer whose parcel is delayed. They are not logistics experts and only want to know what happened to their order and what happens next.",
+    "user": "Write an email to the customer about the delayed delivery described in <ticket>.\n\nRequirements:\n- Greet the customer by name and apologise once.\n- State the new delivery date exactly as given.\n- Explain the cause in one plain sentence without internal detail.\n- Never include internal reference codes (such as EXC-, depot or hub codes) or staff names.\n- Tell the customer how to get help using the support contact.\n- At most 120 words.\n\nOutput format: the first line is \"Subject: Update on your order <order id>\", then a blank line, then the email body. Output only the email.\n\n<example>\nSubject: Update on your order AL-00000\n\nHi Sam,\n\nWe're sorry: your parcel will now arrive on 2026-01-02 instead of 2026-01-01 because a vehicle was unavailable on the original route. You don't need to do anything. If you have questions, email help@acme-logistics.example and quote your order number.\n\nAcme Logistics Customer Care\n</example>\n\n<ticket>\n$ticket_text\n</ticket>"
+  }
+]

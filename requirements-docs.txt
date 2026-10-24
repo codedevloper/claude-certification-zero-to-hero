@@ -1,0 +1,6 @@
+# GitHub Pages site (python tools/build_site.py). Versions pinned deliberately; upgrade via PR.
+mkdocs==1.6.1
+mkdocs-material==9.7.7
+pymdown-extensions==12.1
+Markdown==3.11
+pyyaml>=6.0

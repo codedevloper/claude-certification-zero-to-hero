@@ -1,0 +1,34 @@
+{
+  "organisation": "Fabrikam Retail (fictional)",
+  "hosts": {
+    "web-03": {
+      "role": "storefront web server",
+      "metrics": {"cpu_pct": 41, "mem_pct": 63, "disk_pct": 96, "disk_growth_gb_per_hour": 1.8, "p95_latency_ms": 210},
+      "log": [
+        "2026-10-24T01:00:02Z logrotate[2211]: error: skipping /var/log/storefront/access.log because parent directory has insecure permissions",
+        "2026-10-24T01:00:02Z logrotate[2211]: error: could not rotate /var/log/storefront/app.log",
+        "2026-10-24T03:12:45Z storefront[901]: WARN request log volume high (12,400 lines/min)",
+        "2026-10-24T05:40:10Z kernel: EXT4-fs warning: /dev/sda1 usage 94%",
+        "2026-10-24T06:15:33Z storefront[901]: WARN write latency to /var/log above 200 ms"
+      ]
+    },
+    "api-01": {
+      "role": "order API",
+      "metrics": {"cpu_pct": 77, "mem_pct": 71, "disk_pct": 48, "disk_growth_gb_per_hour": 0.1, "p95_latency_ms": 940},
+      "log": [
+        "2026-10-24T06:01:10Z orders[440]: WARN upstream inventory-svc slow (1,800 ms)",
+        "2026-10-24T06:01:55Z orders[440]: WARN upstream inventory-svc slow (2,100 ms)",
+        "2026-10-24T06:02:40Z orders[440]: INFO retrying inventory lookup",
+        "2026-10-24T06:03:12Z orders[440]: WARN connection pool 48/50 in use"
+      ]
+    },
+    "db-02": {
+      "role": "reporting database replica",
+      "metrics": {"cpu_pct": 22, "mem_pct": 58, "disk_pct": 71, "disk_growth_gb_per_hour": 0.3, "p95_latency_ms": 35},
+      "log": [
+        "2026-10-24T04:00:00Z postgres[77]: LOG checkpoint complete",
+        "2026-10-24T05:00:00Z postgres[77]: LOG replication lag 2s"
+      ]
+    }
+  }
+}

@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Secrets: never commit real credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local output
+out/
+*.log
+lab-output/
+.DS_Store
+.vscode/
+.idea/
+
+# GitHub Pages build output (python tools/build_site.py)
+.site/
+site/

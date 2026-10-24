@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Content validation and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - name: Questions, flashcards, internal links, exam claims, secrets, coverage, forms, web bundle
+        run: python tools/validate_all.py
+      - name: Lab smoke tests (mock mode, no API key)
+        run: python tools/run_lab_smoke.py
+      - name: Repository tests
+        run: python -m pytest tests -q
+      - name: Site builds cleanly (strict mode, warnings fail)
+        env:
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          pip install -r requirements-docs.txt
+          python tools/build_site.py --strict
+      - name: Project tests (mock mode)
+        env:
+          CLAUDE_LAB_MODE: mock
+        run: |
+          for p in 20-real-world-projects/*/; do
+            if [ -d "$p/tests" ]; then
+              echo "::group::$p"
+              (cd "$p" && python -m pytest tests -q)
+              echo "::endgroup::"
+            fi
+          done
+
+  markdown-lint:
+    name: Markdown lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: "**/*.md"
+
+  secrets:
+    name: Secret scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

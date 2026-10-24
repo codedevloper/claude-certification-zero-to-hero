@@ -1,0 +1,3 @@
+{"user": "dana.reyes", "display_name": "Dana Reyes", "department": "Loan Operations", "title": "Senior Underwriter", "manager": "priya.nair", "home_location": "Denver, US", "privileged": false, "managed_devices": ["NWL-LT-0193"]}
+{"user": "sam.okafor", "display_name": "Sam Okafor", "department": "Loan Operations", "title": "Underwriter", "manager": "priya.nair", "home_location": "Denver, US", "privileged": false, "managed_devices": ["NWL-LT-0201"]}
+{"user": "it.admin", "display_name": "Break-glass administrator", "department": "IT", "title": "Emergency access account", "manager": "cio.office", "home_location": "n/a", "privileged": true, "break_glass": true, "managed_devices": []}

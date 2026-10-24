@@ -1,0 +1,12 @@
+{
+  "description": "Scripted decisions for the simulated approver. Matching is by tool name; the first matching rule wins.",
+  "approvers": {
+    "ops.lead@acme-logistics.example": ["issue_carrier_credit", "reroute_shipment", "release_customs_hold"]
+  },
+  "rules": [
+    {"tool": "issue_carrier_credit", "decision": "approve", "approver": "ops.lead@acme-logistics.example", "reason": "Matches damage claim CLM-220; photos on file", "think_seconds": 240},
+    {"tool": "reroute_shipment", "decision": "reject", "approver": "ops.lead@acme-logistics.example", "reason": "Address change arrived by unverified email; confirm through the account portal first", "think_seconds": 300},
+    {"tool": "release_customs_hold", "decision": "no_response"}
+  ],
+  "default": {"decision": "no_response"}
+}

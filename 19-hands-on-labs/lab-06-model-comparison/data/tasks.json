@@ -1,0 +1,42 @@
+[
+  {
+    "id": "classify",
+    "kind": "Simple classification",
+    "prompt": "Classify this customer message for Acme Logistics into one category.\n\n<message>I was charged the delivery fee twice on my October statement for the same parcel.</message>",
+    "schema": {
+      "type": "object",
+      "properties": {"category": {"type": "string", "enum": ["billing", "delivery_status", "damage_claim", "account_access", "other"]}},
+      "required": ["category"],
+      "additionalProperties": false
+    },
+    "expected": {"category": "billing"}
+  },
+  {
+    "id": "extract",
+    "kind": "Field extraction",
+    "prompt": "Extract the invoice number, the total amount due in EUR (as a number) and the due date (YYYY-MM-DD).\n\n<invoice>Fjord Freight AS (fictional). Invoice INV-2026-0419 for Acme Logistics. Line-haul Oslo to Hamburg, 2 trailers. Subtotal 1,250.00 EUR. VAT 25%: 312.50 EUR. Total due 1,562.50 EUR. Payment terms: 30 days from the invoice date of 2026-10-21, due 2026-11-20.</invoice>",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "invoice_number": {"type": "string"},
+        "total_eur": {"type": "number"},
+        "due_date": {"type": "string"}
+      },
+      "required": ["invoice_number", "total_eur", "due_date"],
+      "additionalProperties": false
+    },
+    "expected": {"invoice_number": "INV-2026-0419", "total_eur": 1562.5, "due_date": "2026-11-20"}
+  },
+  {
+    "id": "reason",
+    "kind": "Multi-constraint reasoning",
+    "prompt": "It is Monday 07:00. Acme Logistics must move 3 pallets from Rotterdam to Lyon so they arrive by Thursday 17:00. Loading takes 3 hours and must finish before the shipment departs; loading can start now. Options:\nA: road, departs Tuesday 08:00, arrives Thursday 08:00, costs 840 EUR.\nB: rail and road, departs Monday 09:00, arrives Thursday 09:00, costs 610 EUR.\nC: express road, departs Wednesday 06:00, arrives Thursday 06:00, costs 1,150 EUR.\nWhich is the cheapest option that is feasible and arrives on time? Give the letter and a one-sentence reason.",
+    "schema": {
+      "type": "object",
+      "properties": {"option": {"type": "string", "enum": ["A", "B", "C"]}, "reason": {"type": "string"}},
+      "required": ["option", "reason"],
+      "additionalProperties": false
+    },
+    "expected": {"option": "A"}
+  }
+]

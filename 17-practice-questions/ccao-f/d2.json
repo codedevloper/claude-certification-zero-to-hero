@@ -1,0 +1,785 @@
+{
+  "schema_version": 1,
+  "track": "CCAO-F",
+  "domain": 2,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAO-F-D2-001",
+      "objective": "CCAO-F-2.1",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Claude summarised a 20-page vendor proposal for Ana, a procurement officer at Fabrikam Retail. The summary reads well, but she must send it to the approval committee today.",
+      "question": "What is the most effective way for Ana to evaluate the summary's completeness?",
+      "options": {
+        "A": "Check the summary against a list of what the committee needs (price, term, service levels, exit terms), confirming each in the proposal.",
+        "B": "Check that the summary is roughly one page, since a one-page summary of a 20-page proposal is the usual completeness benchmark.",
+        "C": "Ask Claude in the same chat whether the summary is complete and accurate, and send it once Claude confirms that it is.",
+        "D": "Check that the summary is grammatically correct and well formatted."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Completeness is judged against the reader's needs. A short checklist of required elements, each confirmed in the source document, is a fast, repeatable way to catch omissions before a decision is made on the summary.",
+      "why_incorrect": {
+        "B": "Every summary is shorter; length is not a measure of completeness.",
+        "C": "Self-assessment can help but is not independent; Claude may confidently confirm an incomplete summary.",
+        "D": "Polish says nothing about whether important content was left out."
+      },
+      "module": "01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-002",
+      "objective": "CCAO-F-2.1",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Claude produced a competitor feature comparison table for Southridge Video's product team, using public web pages gathered with web search.",
+      "question": "Which TWO checks most directly test the table's accuracy?",
+      "options": {
+        "A": "Check that every row and column is filled in, since an empty or inconsistent cell is the usual sign that a source was misread.",
+        "B": "Ask Claude to regenerate the table in a new chat and compare it with the first; cells that match in both versions can be treated as verified.",
+        "C": "Open the cited sources for a sample of cells, especially surprising ones, and confirm they say what the table claims.",
+        "D": "Confirm the table uses the company's brand colours.",
+        "E": "Check source dates, because competitor features and prices change and older pages may be out of date."
+      },
+      "answer": [
+        "C",
+        "E"
+      ],
+      "explanation": "Accuracy checks go back to evidence: verify claims against the cited sources, prioritising surprising or high-impact cells, and confirm the sources are current. Formatting and regeneration do not test truth.",
+      "why_incorrect": {
+        "A": "Consistent structure is about formatting, not whether the facts in the cells are true.",
+        "B": "Two similar outputs can both be wrong; consistency is not the same as accuracy.",
+        "D": "Visual styling has no bearing on accuracy."
+      },
+      "module": "11-rag-and-knowledge-systems/05-grounding-and-citations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations",
+        "https://support.claude.com/en/articles/11088861-use-research-on-claude"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-003",
+      "objective": "CCAO-F-2.1",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Claude extracted action items from a two-hour project meeting transcript for Contoso Health. A team member points out that two commitments made near the end of the meeting are missing.",
+      "question": "What is the most useful next step?",
+      "options": {
+        "A": "Reduce the transcript to the first hour to make it easier.",
+        "B": "Ask Claude to add two further plausible action items to the list, based on the overall themes of the meeting.",
+        "C": "Accept the list as it stands, since Claude rarely misses items and the two missing commitments may have been informal remarks.",
+        "D": "Ask Claude to work through the transcript section by section, quoting the line behind each action item, re-checking the end."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "When output may be incomplete, ask Claude to ground each item in a quoted passage and to work systematically through the source. Quotes make each item verifiable and a section-by-section pass reduces skipped content in long inputs.",
+      "why_incorrect": {
+        "A": "The missing items are near the end; cutting the transcript would remove them entirely.",
+        "B": "Inventing items to fill a gap creates fabricated commitments instead of finding the real ones.",
+        "C": "A known gap has already been reported; it should be fixed rather than dismissed."
+      },
+      "module": "11-rag-and-knowledge-systems/05-grounding-and-citations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-004",
+      "objective": "CCAO-F-2.1",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "A finance analyst at Northwind Lending asks Claude to total quarterly travel expenses from an uploaded CSV and explain the trend. The narrative is convincing, but she needs the numbers to be exact.",
+      "question": "What is the most reliable way to validate the figures?",
+      "options": {
+        "A": "Ask Claude to restate the totals with more decimal places.",
+        "B": "Recompute the totals independently (a spreadsheet formula or Claude's analysis tool) and reconcile any differences.",
+        "C": "Trust the figures because the narrative is internally consistent, and a consistent explanation of the trend is good evidence the totals are right.",
+        "D": "Ask Claude to recheck its totals in the same chat, and accept them if it reports the same figures a second time."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Numbers that will be reported should be checked by an independent calculation. Computed results (from a spreadsheet or code execution) are more dependable than figures produced in prose, and reconciling the two catches mistakes.",
+      "why_incorrect": {
+        "A": "More precision in the display does not make an incorrect sum correct.",
+        "C": "A coherent story can sit on top of an arithmetic mistake; consistency of narrative does not prove the numbers.",
+        "D": "Asking the same chat to recheck is not independent; a repeated figure can repeat the same mistake."
+      },
+      "module": "01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-005",
+      "objective": "CCAO-F-2.1",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "Tom, a new team lead at Blue Yonder Airlines, says: \"Claude's answers sound so confident that I assume they are correct.\"",
+      "question": "What is the most accurate response?",
+      "options": {
+        "A": "Confident wording is not evidence of accuracy; important claims still need checking.",
+        "B": "Accuracy problems mainly affected older models, so with a current model confident answers can usually be used as they are.",
+        "C": "If Claude were unsure about an answer, it would always say so or decline to answer, so a confident answer is a reliable one.",
+        "D": "Claude only sounds confident when it has verified its answer against the internet."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Language models produce fluent text whether or not the content is correct. Evaluate claims on their evidence, not on how assured they sound, and scale the checking to how much the output matters.",
+      "why_incorrect": {
+        "B": "All language models can make mistakes; newer models reduce but do not eliminate them.",
+        "C": "Claude can express uncertainty, but it does not reliably refuse every time it might be wrong.",
+        "D": "Confidence of tone is a writing style, not a signal that verification has happened."
+      },
+      "module": "01-ai-and-llm-fundamentals/06-hallucinations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-006",
+      "objective": "CCAO-F-2.2",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Claude drafted a market overview for Litware Publishing that includes the line \"According to a 2025 Harrow Institute study, 64% of readers prefer audio formats.\" Nobody on the team has heard of the study.",
+      "question": "What should the team do?",
+      "options": {
+        "A": "Change \"64%\" to \"most readers\" so the claim is less precise, which reduces the risk if the figure turns out to be slightly off.",
+        "B": "Ask Claude whether the Harrow Institute study is real, and keep the statistic in the overview if Claude confirms it.",
+        "C": "Keep it, because a precise percentage, a year and a named institute are details that are unlikely to have been made up.",
+        "D": "Treat it as unverified, search for the study independently, and remove it if no reliable source turns up."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Unfamiliar studies, precise statistics and named experts are classic places where hallucinations appear. Verify them independently before use; if the source cannot be found, the claim should not appear in published material.",
+      "why_incorrect": {
+        "A": "Softening the number still attributes a claim to a source that may not exist.",
+        "B": "Claude may repeat the claim; independent verification is needed for a statistic that will be published.",
+        "C": "Specific-looking details are a common feature of fabricated citations; specificity is not proof."
+      },
+      "module": "01-ai-and-llm-fundamentals/06-hallucinations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-007",
+      "objective": "CCAO-F-2.2",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Claude produced a 15-page onboarding guide for Acme Logistics' new depot managers from three uploaded policy documents.",
+      "question": "Which TWO signals should prompt a closer check for inconsistency or fabrication?",
+      "options": {
+        "A": "The guide is written in plain English rather than the formal language of the policies, so some wording differs from the originals.",
+        "B": "The guide gives two different overtime approval limits in different sections.",
+        "C": "The guide cites a \"Policy 7.4\" that does not appear in any of the uploaded documents.",
+        "D": "The guide uses headings, numbered steps and bullet lists, which suggests Claude restructured the source material rather than quoting it.",
+        "E": "The guide repeats the company name several times."
+      },
+      "answer": [
+        "B",
+        "C"
+      ],
+      "explanation": "Internal contradictions and references to material not present in the sources are strong indicators that something has gone wrong. Both should be traced back to the uploaded documents before the guide is distributed.",
+      "why_incorrect": {
+        "A": "Plain language is often a requested style and is not a warning sign by itself.",
+        "D": "Formatting is normal and does not indicate a factual problem.",
+        "E": "Repeating a company name is not an accuracy signal."
+      },
+      "module": "01-ai-and-llm-fundamentals/06-hallucinations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-008",
+      "objective": "CCAO-F-2.2",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Graphic Design Institute's admissions office asks Claude to draft profiles of \"a typical successful applicant\" for marketing. Every draft describes applicants from the same narrow background and age range, though the institute's actual intake is diverse.",
+      "question": "What is the best interpretation and response?",
+      "options": {
+        "A": "The issue is purely stylistic; ask for more colourful language.",
+        "B": "Stop using AI for any marketing content, since bias in outputs means the tool cannot be used responsibly in admissions.",
+        "C": "The drafts may reflect stereotypes; give Claude real intake data, ask for varied profiles, and review them before use.",
+        "D": "The drafts are probably accurate, because Claude has been trained on very large amounts of data about students and education."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Model outputs can reproduce stereotypes present in training data, especially when asked for a \"typical\" person. Ground the task in real data, ask for diversity explicitly, and include a human review focused on fairness and representation.",
+      "why_incorrect": {
+        "A": "Language style does not address who is being represented.",
+        "B": "Bias can be reduced with grounding, explicit instructions and review; abandoning the tool is not the only option.",
+        "D": "Large training data can still contain skewed patterns; it does not guarantee representative output."
+      },
+      "module": "01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md",
+      "references": [
+        "https://www.anthropic.com/news/claudes-constitution"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-009",
+      "objective": "CCAO-F-2.2",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Claude summarised a long email thread for Haruto at Margie's Travel. The summary says the client approved the itinerary on Tuesday, but a later email in the thread shows the client withdrew approval on Thursday.",
+      "question": "What kind of error is this, and how should Haruto prevent it next time?",
+      "options": {
+        "A": "A tool failure that cannot be avoided, so stop summarising threads.",
+        "B": "A later reversal was missed; ask Claude to track decisions in date order and flag any that were changed.",
+        "C": "A wording error; ask Claude to proofread the summary carefully and correct any mistakes in the dates it mentions.",
+        "D": "A formatting problem; ask for the summary as a table with one row per email so that nothing in the thread is overlooked."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Summaries of evolving conversations can capture an earlier state and miss later reversals. Asking for a dated decision log, with the latest status and any changes highlighted, makes such inconsistencies visible.",
+      "why_incorrect": {
+        "A": "Asking for a chronological decision log with reversals is a practical fix; the task does not need to be abandoned.",
+        "C": "The problem is factual and temporal, not orthographic.",
+        "D": "A table could repeat the same mistake; the issue is how decisions over time are captured."
+      },
+      "module": "01-ai-and-llm-fundamentals/06-hallucinations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-010",
+      "objective": "CCAO-F-2.2",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "A trainer at Adatum Insurance is explaining to new staff what a \"hallucination\" means in the context of Claude.",
+      "question": "Which definition is most accurate?",
+      "options": {
+        "A": "Content presented as fact that the sources or reality do not support, such as an invented quote or reference.",
+        "B": "A response in which Claude says it is unsure or does not have enough information to answer.",
+        "C": "Any content Claude invents, including the characters and events it writes when asked for a short story.",
+        "D": "An answer that is much longer or more detailed than the question required."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "A hallucination is unsupported content presented as fact. Knowing this helps staff focus checks on claims, names, numbers and references, which is where fabrication causes harm.",
+      "why_incorrect": {
+        "B": "Stating uncertainty is the honest alternative to hallucinating, not an example of it.",
+        "C": "Invented content in fiction is requested, not a factual error.",
+        "D": "Length is a style issue, not a hallucination."
+      },
+      "module": "01-ai-and-llm-fundamentals/06-hallucinations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-011",
+      "objective": "CCAO-F-2.3",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Claude answered a question for Fatima, a compliance assistant at Woodgrove Bank, using an uploaded 80-page internal procedures manual.",
+      "question": "Which instruction best supports fast fact-checking of the answer?",
+      "options": {
+        "A": "Ask Claude to answer from general banking knowledge instead.",
+        "B": "Ask Claude to keep the answer to a few sentences, so there is less text for her to check against the 80-page manual.",
+        "C": "Ask Claude to add a confidence percentage to each statement, so she knows which parts to check most carefully.",
+        "D": "Ask Claude to back each statement with a direct quote from the manual and the section heading it comes from."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Grounding answers in direct quotes with locations lets a reviewer check each claim in seconds. It also discourages statements that the source does not support, because each one must be tied to text.",
+      "why_incorrect": {
+        "A": "General knowledge is harder to verify and may not match the organisation's own procedures.",
+        "B": "Brevity does not help her locate the supporting text.",
+        "C": "A self-reported percentage is not evidence and cannot be checked against the manual."
+      },
+      "module": "11-rag-and-knowledge-systems/05-grounding-and-citations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-012",
+      "objective": "CCAO-F-2.3",
+      "type": "multiple",
+      "select": 3,
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Relecloud's marketing team will publish a blog post drafted with Claude that includes product specifications, a customer quote and an industry growth figure.",
+      "question": "Which THREE validation steps are appropriate before publishing?",
+      "options": {
+        "A": "Run the post through a grammar and style checker as the final validation step before it goes to the web team.",
+        "B": "Confirm product specifications against the official product documentation.",
+        "C": "Confirm the customer quote with the customer or the signed testimonial record.",
+        "D": "Ask Claude to rewrite the post so each claim is phrased more cautiously, using words like \"around\" and \"reportedly\" instead of specifics.",
+        "E": "Trace the growth figure to its original publisher and check the date and definition."
+      },
+      "answer": [
+        "B",
+        "C",
+        "E"
+      ],
+      "explanation": "Each type of claim has a natural primary source: product docs for specifications, the person quoted for quotations, and the original publisher for statistics. Validation means checking claims at the source, not adjusting wording.",
+      "why_incorrect": {
+        "A": "A grammar checker improves language but does not confirm facts.",
+        "D": "Vaguer wording does not verify anything and may still mislead readers."
+      },
+      "module": "11-rag-and-knowledge-systems/05-grounding-and-citations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-013",
+      "objective": "CCAO-F-2.3",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Jonas, an analyst at Trey Research, used Claude's research feature to prepare a briefing on a regulatory consultation. The report includes citations to several web pages.",
+      "question": "What is the best way to use the citations when fact-checking?",
+      "options": {
+        "A": "Count the citations per section; sections with more independent sources can be trusted and need no further checking.",
+        "B": "Check only that each citation link opens without an error.",
+        "C": "Open the cited pages for the key claims and confirm each page actually says what is attributed to it.",
+        "D": "Rely on the citations as they are, since research is designed to read each page and cite only what supports the claim."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Citations make verification possible but are not verification in themselves. Spot-check that the cited source really supports the claim, focusing on the claims that matter most to the decision.",
+      "why_incorrect": {
+        "A": "Volume of citations does not show that each claim is correctly supported.",
+        "B": "A working link does not confirm that the page supports the specific claim attributed to it.",
+        "D": "Research can misread or over-generalise sources; citations exist so you can check."
+      },
+      "module": "11-rag-and-knowledge-systems/05-grounding-and-citations.md",
+      "references": [
+        "https://support.claude.com/en/articles/11088861-use-research-on-claude",
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-014",
+      "objective": "CCAO-F-2.3",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Alpine Ski House's analytics lead wants a lightweight, repeatable fact-checking routine for monthly performance reports drafted with Claude from uploaded booking data.",
+      "question": "Which routine is most effective?",
+      "options": {
+        "A": "A fixed checklist: reconcile headline figures to source data, check comparisons to last month, and get a second reviewer for decision-driving claims.",
+        "B": "Use a different model each month, so that any systematic mistakes from one model are caught by the next.",
+        "C": "Ask Claude to grade its own report from 1 to 10 each month and publish if it scores 8 or higher.",
+        "D": "Check the report thoroughly only when a reader raises a concern, since most months are routine and errors are rare."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Good validation is systematic and proportionate: reconcile key figures to source data, check comparisons, and add human review where decisions depend on the output. A written routine makes the checks consistent month to month.",
+      "why_incorrect": {
+        "B": "Changing models adds variation without verifying the numbers.",
+        "C": "Self-grading is not independent and the score is not tied to specific checks.",
+        "D": "Reactive checking lets errors reach decision-makers first."
+      },
+      "module": "01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-015",
+      "objective": "CCAO-F-2.3",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "troubleshooting",
+      "scenario": "Claude gave Mariam at Fourth Coffee an answer about local food-hygiene inspection frequency without saying where the information came from. She needs to rely on it for a store-opening plan.",
+      "question": "What should she do first?",
+      "options": {
+        "A": "Use the answer as given, since food-hygiene inspection rules are broadly standardised and an unsourced summary is usually enough.",
+        "B": "Ask Claude to restate the answer in more formal, precise language so it can be quoted directly in the opening plan.",
+        "C": "Ask an experienced colleague whether the inspection frequency sounds about right, and proceed if they agree.",
+        "D": "Check the official authority's website, or ask Claude to find and cite the official source, then confirm it."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "For requirements that carry consequences, verify against an authoritative primary source. Claude can help find and cite it, but the final check is against the official publication.",
+      "why_incorrect": {
+        "A": "Requirements vary by location and over time, so an unsourced general answer is risky.",
+        "B": "Rewording does not add a source or confirm the requirement.",
+        "C": "An opinion that it \"sounds right\" is weaker than checking the official source."
+      },
+      "module": "11-rag-and-knowledge-systems/05-grounding-and-citations.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-016",
+      "objective": "CCAO-F-2.4",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Coho Winery uses Claude for several tasks: brainstorming social media hashtags, drafting internal meeting agendas, summarising staff survey comments, and drafting the allergen statement printed on product labels.",
+      "question": "Which output most clearly requires formal expert review before use?",
+      "options": {
+        "A": "The hashtag brainstorm, because posts are public and any wording could be seen by customers.",
+        "B": "The allergen statement for product labels.",
+        "C": "A first-pass summary of survey comments for the team to discuss.",
+        "D": "The internal meeting agenda, because it sets the decisions the leadership team will discuss."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Review effort should scale with impact. Content that affects health, legal compliance or public safety, such as allergen labelling, needs expert sign-off. Low-stakes internal drafts need only a sensible read-through.",
+      "why_incorrect": {
+        "A": "Hashtags are low-risk and easy to adjust; a quick read is enough.",
+        "C": "Internal discussion material deserves a sense check, but errors are lower-stakes than safety-critical label content.",
+        "D": "An agenda is internal and easily corrected in the meeting itself."
+      },
+      "module": "12-ai-security/13-human-oversight.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-017",
+      "objective": "CCAO-F-2.4",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Lucerne Clinics is piloting Claude to help administrative staff draft replies to patient enquiries about appointments, billing and general clinic information.",
+      "question": "Which TWO situations should always be routed to a qualified human before anything is sent?",
+      "options": {
+        "A": "A message describing new chest pain and asking whether to come in.",
+        "B": "A thank-you note from a patient.",
+        "C": "A request for the clinic's parking information and opening hours over the holiday period.",
+        "D": "A request to move a routine follow-up appointment to the following week because the patient will be travelling.",
+        "E": "A billing dispute where the patient says they are being charged for a procedure they did not have."
+      },
+      "answer": [
+        "A",
+        "E"
+      ],
+      "explanation": "Human review is essential where an error could cause harm or significant financial or legal consequences: clinical symptoms and contested charges are clear examples. Low-risk informational replies can follow a lighter process.",
+      "why_incorrect": {
+        "B": "A courtesy acknowledgement carries little risk.",
+        "C": "Factual, low-risk information can follow a lighter review process.",
+        "D": "Routine scheduling is low risk and can follow a standard, lighter check."
+      },
+      "module": "10-agentic-ai/05-human-in-the-loop.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-018",
+      "objective": "CCAO-F-2.4",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "cost-performance",
+      "scenario": "Tailspin Travel's content team produces about 200 destination blurbs a month with Claude. Reviewing every blurb in depth takes too long, but errors have occasionally reached the website.",
+      "question": "What review approach balances effort and risk best?",
+      "options": {
+        "A": "Ask Claude to review and correct its own blurbs before publishing, replacing the human review step with an automated check.",
+        "B": "Review every blurb in full depth, regardless of its content, because any error on the website is equally damaging.",
+        "C": "Check all blurbs for high-risk content such as visa or safety statements, and spot-check a sample of the rest.",
+        "D": "Stop reviewing, since errors are rare and the time saved can be spent on producing more destination content each month."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Risk-based review targets human attention where errors matter most, with sampling to monitor overall quality. Feedback from sampling tells the team when to tighten or relax checks.",
+      "why_incorrect": {
+        "A": "Self-review can help but is not an independent check on high-risk claims.",
+        "B": "Uniform deep review is the cost the team cannot sustain, and it spends effort on low-risk text.",
+        "D": "Errors have already reached the website, so removing review increases risk."
+      },
+      "module": "12-ai-security/13-human-oversight.md",
+      "references": [
+        "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-019",
+      "objective": "CCAO-F-2.4",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "concept",
+      "scenario": "A manager at Datum Corp asks when it is acceptable to use a Claude draft without further checking.",
+      "question": "Which guideline is most sensible?",
+      "options": {
+        "A": "Whenever the draft was produced by the most capable model available on the company's plan.",
+        "B": "Whenever the draft is long and detailed, since detail shows that Claude has considered the topic thoroughly.",
+        "C": "Never; every word Claude writes must be reviewed by a lawyer.",
+        "D": "When the content is low-stakes, easy to correct, and you can judge its quality yourself."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "The need for review depends on stakes, reversibility and your ability to judge the content. Low-risk, easily corrected work can be used with a light read; consequential output needs proportionate verification.",
+      "why_incorrect": {
+        "A": "Any model can make errors; capability does not remove the need for review on important work.",
+        "B": "Length and detail do not indicate accuracy.",
+        "C": "This is disproportionate for low-risk content and would make the tool impractical."
+      },
+      "module": "12-ai-security/13-human-oversight.md",
+      "references": [
+        "https://www.anthropic.com/legal/aup"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-020",
+      "objective": "CCAO-F-2.5",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Claude drafted a technical incident summary for Relecloud's engineering team. The same incident must now be explained to customers in a status update.",
+      "question": "What is the best way to adapt the content?",
+      "options": {
+        "A": "Send the engineering summary unchanged, because customers appreciate full technical transparency about what went wrong.",
+        "B": "Ask Claude to rewrite it for customers: plain language, impact on them, what was done, and what happens next.",
+        "C": "Shorten the engineering summary by about half, removing the most technical paragraphs and keeping the rest as it is.",
+        "D": "Translate the summary into formal legal language to be safe."
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Adapting for an audience means changing vocabulary, emphasis and level of detail, not just length. Tell Claude who the reader is and what they need to know, and remove internal details that do not serve them.",
+      "why_incorrect": {
+        "A": "Internal jargon and system names confuse customers and may expose unnecessary internal detail.",
+        "C": "Mechanical cutting keeps the wrong vocabulary and may drop the information customers need.",
+        "D": "Legal register does not make the update clearer or more useful to customers."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-021",
+      "objective": "CCAO-F-2.5",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Wingtip Events asked Claude for two versions of a sponsorship proposal: one emphasising brand visibility, one emphasising lead generation. The sales director must pick one for a technology sponsor.",
+      "question": "What is the most useful way to use Claude in comparing them?",
+      "options": {
+        "A": "Ask Claude to compare both versions against the sponsor's stated goals, listing strengths, gaps and edits for each.",
+        "B": "Ask Claude which version it prefers overall, since it wrote both and is well placed to judge which one is stronger.",
+        "C": "Pick the longer version, because a sponsor making a significant investment will expect more detail.",
+        "D": "Merge both versions in full so nothing is lost."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Comparison is most useful when anchored to explicit criteria, here the sponsor's goals. Claude can structure the comparison, but the decision rests on fit with audience needs.",
+      "why_incorrect": {
+        "B": "Preference without criteria does not help the director decide for this sponsor.",
+        "C": "Length does not indicate fit with the sponsor's priorities.",
+        "D": "Combining everything produces an unfocused proposal that serves neither goal well."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-022",
+      "objective": "CCAO-F-2.5",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Bellows College needs Claude's draft research summary on student well-being adapted for three audiences: the governing board, students, and the student-services team.",
+      "question": "Which TWO adaptations are appropriate?",
+      "options": {
+        "A": "For the student-services team: remove all recommendations so they are not influenced.",
+        "B": "For students: include the full statistical appendix so they can see the methodology.",
+        "C": "For all three audiences: send the same draft to ensure consistency.",
+        "D": "For the board: a one-page summary leading with decisions needed, risks and resource implications.",
+        "E": "For students: plain, supportive language focused on what changes for them and where to get help."
+      },
+      "answer": [
+        "D",
+        "E"
+      ],
+      "explanation": "The same facts should be framed differently for each audience: decisions and risks for leaders, practical meaning and support for affected people, and actionable detail for operational teams.",
+      "why_incorrect": {
+        "A": "Operational teams need recommendations to act on; removing them defeats the purpose.",
+        "B": "Most students need the practical implications, not detailed statistics; the appendix can be linked for those who want it.",
+        "C": "Consistent facts matter, but identical wording ignores very different needs."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-023",
+      "objective": "CCAO-F-2.5",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Claude rewrote a dense policy for Humongous Insurance's frontline staff in simpler language. In simplifying, it turned \"may, subject to manager approval\" into \"can\".",
+      "question": "What is the main risk, and what should the editor do?",
+      "options": {
+        "A": "The main risk is tone; ask Claude to make the simplified policy sound friendlier and more supportive.",
+        "B": "The main risk is that the text is now too short to be taken seriously; ask Claude to expand it again.",
+        "C": "Simplifying changed the meaning; check conditions and permissions survive, and tell Claude to keep such qualifiers.",
+        "D": "There is no real risk, because simpler language always improves compliance among frontline staff."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "When adapting text for a new audience, check that meaning-carrying words such as conditions, exceptions and obligations survive. Telling Claude which qualifiers must be preserved prevents simplifications that change the rule.",
+      "why_incorrect": {
+        "A": "Tone does not fix the missing approval requirement.",
+        "B": "Length is not the issue; a key condition was dropped.",
+        "D": "Simpler is better only if the meaning stays the same; here a condition was lost."
+      },
+      "module": "03-prompt-engineering/08-iterating-on-prompts.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-024",
+      "objective": "CCAO-F-2.6",
+      "type": "single",
+      "difficulty": "foundation",
+      "category": "scenario",
+      "scenario": "Nadia at Fabrikam Retail wants Claude to build a reusable one-page store-visit checklist that her team will edit and refer to over several weeks.",
+      "question": "Which output format fits best?",
+      "options": {
+        "A": "An artifact, which sits beside the chat and can be revisited, edited and shared.",
+        "B": "A screenshot of the chat.",
+        "C": "A short inline chat reply, so the checklist stays in the conversation flow where the team already discusses visits.",
+        "D": "A long, unstructured paragraph covering every item, so that nothing is lost when people copy it into emails."
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Artifacts suit substantial, self-contained content that people will reuse or edit, such as documents, checklists or small tools. Quick answers and conversational explanations usually stay inline.",
+      "why_incorrect": {
+        "B": "A screenshot cannot be edited and is awkward to reuse.",
+        "C": "Inline replies are good for quick answers, but substantial content that will be reused and edited fits an artifact better.",
+        "D": "A checklist needs structure; an unstructured paragraph is harder to use."
+      },
+      "module": "05-claude-products-and-models/05-artifacts-and-output-formats.md",
+      "references": [
+        "https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-025",
+      "objective": "CCAO-F-2.6",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "A data coordinator at Proseware Education asks Claude to extract course codes, titles, credit values and prerequisites from 40 pages of course descriptions. The results will be imported into a spreadsheet.",
+      "question": "Which output format should she request?",
+      "options": {
+        "A": "A flexible list where each course is described in whatever layout best fits its information.",
+        "B": "A narrative summary of each course in short paragraphs, so that prerequisites and context are explained clearly.",
+        "C": "A slide outline with one course per slide.",
+        "D": "A table or CSV with fixed column names, one row per course, and an explicit value for missing fields."
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "When output feeds another tool, ask for a defined structure with fixed fields and a rule for missing data. This makes the result machine-friendly and makes gaps visible.",
+      "why_incorrect": {
+        "A": "Inconsistent layouts break the import and hide missing values.",
+        "B": "Paragraphs are hard to import and make it easy to miss a field.",
+        "C": "Slides are a presentation format, not a data-import format."
+      },
+      "module": "03-prompt-engineering/06-structured-output.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-026",
+      "objective": "CCAO-F-2.6",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Datum Corp's chief of staff asks Claude to turn 60 pages of department updates into material for a 30-minute executive meeting.",
+      "question": "Which TWO curation choices are most helpful?",
+      "options": {
+        "A": "Remove all numbers and metrics to keep the material short and readable for the 30-minute meeting.",
+        "B": "Lead with decisions required and top risks, and move routine status details into an appendix.",
+        "C": "Include every update verbatim, organised by department, so executives can see each team's full report and nothing is lost in curation.",
+        "D": "Order updates alphabetically by department name.",
+        "E": "Group updates by strategic priority rather than by department, so executives can see progress against goals."
+      },
+      "answer": [
+        "B",
+        "E"
+      ],
+      "explanation": "Curating means selecting and organising information for the reader's purpose: decisions and risks first, structure aligned with goals, and supporting detail available but not in the way.",
+      "why_incorrect": {
+        "A": "Key metrics are often what executives need; removing all numbers loses important evidence.",
+        "C": "Executives cannot absorb 60 pages in 30 minutes; curation is the point of the task.",
+        "D": "Alphabetical order is neutral but does not help executives focus on priorities or decisions."
+      },
+      "module": "05-claude-products-and-models/05-artifacts-and-output-formats.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+      ]
+    },
+    {
+      "id": "CCAO-F-D2-027",
+      "objective": "CCAO-F-2.6",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Margie's Travel's operations manager wants a simple interactive tool that lets agents enter trip length and party size and see an estimated insurance premium band. She has no coding skills.",
+      "question": "Which approach in the Claude app is most suitable?",
+      "options": {
+        "A": "Ask Claude to describe the band rules clearly in prose and have agents work out the premium band by hand each time.",
+        "B": "Paste the rules into a long inline reply and ask agents to search it each time.",
+        "C": "Ask Claude to build an interactive artifact with the inputs and her band rules, test it on known cases, then share it.",
+        "D": "Ask Claude to create the premium bands itself using typical industry averages, so she does not need to supply the rules."
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Artifacts can be small interactive tools, not only documents. When the rules come from the business and are tested against known cases, a non-technical user can create a useful internal helper.",
+      "why_incorrect": {
+        "A": "This works but misses the request; an interactive artifact meets it directly without coding.",
+        "B": "A long inline reply is hard to use repeatedly compared with a dedicated tool.",
+        "D": "Pricing rules must come from the business; invented bands would be unreliable."
+      },
+      "module": "05-claude-products-and-models/05-artifacts-and-output-formats.md",
+      "references": [
+        "https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them"
+      ]
+    }
+  ]
+}

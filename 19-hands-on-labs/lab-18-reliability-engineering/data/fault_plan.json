@@ -1,0 +1,26 @@
+{
+  "description": "Faults the lab injects, in order, for each shipment's calls to Claude. Steps are consumed one per API call; when a job runs out of steps its calls reach the real (or mock) model. Edit this file to try your own failure patterns.",
+  "seed": 18,
+  "jobs": {
+    "SHP-1001": [],
+    "SHP-1002": [{"kind": "http", "status": 429, "retry_after": 2, "message": "rate_limit_error (injected)"}],
+    "SHP-1003": [{"kind": "http", "status": 529, "message": "overloaded_error (injected)"},
+                 {"kind": "http", "status": 500, "message": "api_error (injected)"}],
+    "SHP-1004": [{"kind": "timeout"}],
+    "SHP-1005": [{"kind": "http", "status": 400, "message": "invalid_request_error (injected)"}],
+    "SHP-1006": [],
+    "SHP-1007": [{"kind": "refusal", "category": "cyber", "explanation": "Injected refusal so the lab can exercise its refusal path."}],
+    "SHP-2001": [{"kind": "http", "status": 503, "message": "service unavailable (injected outage)"},
+                 {"kind": "http", "status": 503, "message": "service unavailable (injected outage)"},
+                 {"kind": "http", "status": 503, "message": "service unavailable (injected outage)"}],
+    "SHP-2002": [],
+    "SHP-3001": [{"kind": "http", "status": 529, "retry_after": 2, "message": "overloaded_error (injected)"},
+                 {"kind": "http", "status": 529, "retry_after": 2, "message": "overloaded_error (injected)"},
+                 {"kind": "http", "status": 529, "retry_after": 2, "message": "overloaded_error (injected)"},
+                 {"kind": "http", "status": 529, "retry_after": 2, "message": "overloaded_error (injected)"}]
+  },
+  "job_settings": {
+    "SHP-1006": {"max_tokens": 60}
+  },
+  "lost_ticket_ack": ["SHP-1002"]
+}

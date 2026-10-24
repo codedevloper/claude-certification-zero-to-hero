@@ -1,0 +1,767 @@
+{
+  "schema_version": 1,
+  "track": "CCAR-P",
+  "domain": 3,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAR-P-D3-001",
+      "objective": "CCAR-P-3.1",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Proseware's internal DevOps agent was connected to a cloud-provider MCP server that exposes 140 tools, including IAM policy editing, VPC deletion and billing changes. The agent's job is to answer engineers' questions about deployment status and recent log errors.",
+      "question": "Which TWO changes best address capability bloat in this configuration? (Choose 2.)",
+      "options": {
+        "A": "Allowlist only the read-only status and log tools the agent needs, rather than loading the full 140-tool server",
+        "B": "Run the MCP server with credentials scoped to read-only access for deployment status and logs",
+        "C": "Keep all tools but add a system-prompt rule never to call destructive ones",
+        "D": "Keep all tools and rely on tool search so unused ones are rarely loaded",
+        "E": "Upgrade to a more capable model that is less likely to misuse tools"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "Capability bloat is when an agent holds far more tools or permissions than its job needs, which widens the blast radius of mistakes and prompt injection (OWASP calls this excessive agency) and dilutes tool selection. The fix is to expose only the read-only tools the job requires, ideally through an allowlist at the client or a purpose-built server, and to run the server under credentials scoped to read access so that even an unexpected call cannot mutate infrastructure. Prompt rules and confirmation prompts help but are not a substitute for removing the capability.",
+      "why_incorrect": {
+        "C": "A prompt rule is not an enforcement boundary; injected or mistaken calls can still execute.",
+        "D": "Tool search reduces context usage, but every tool remains callable, so the risk is unchanged.",
+        "E": "Model capability does not remove the excessive permissions."
+      },
+      "module": "07-tool-use-and-function-calling/06-tool-security.md",
+      "references": [
+        "https://genai.owasp.org/llmrisk/llm062025-excessive-agency/",
+        "https://www.anthropic.com/engineering/writing-tools-for-agents"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-002",
+      "objective": "CCAR-P-3.1",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "Fourth Coffee's store-operations agent has grown to 55 custom tools over a year. Several overlap: `get_store`, `fetch_store_info`, `lookup_location` and `store_details` return similar data. Evaluations show rising rates of wrong tool selection.",
+      "question": "What is the most effective remediation?",
+      "options": {
+        "A": "Consolidate overlapping tools into a smaller set of clearly named, distinctly described tools and re-run the tool-selection eval",
+        "B": "Add few-shot examples showing which of the four store tools to use in each case",
+        "C": "Enable tool search so only a few tools load per request",
+        "D": "Increase effort so the model deliberates longer over tool choice"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Overlapping tools with vague boundaries confuse tool selection and waste context on near-duplicate definitions. Consolidating them into fewer, well-named tools with clear descriptions and distinct purposes (for example one `get_store` tool with an optional fields parameter) is the guidance for writing tools for agents. More examples or a bigger model treat symptoms; tool search helps scale, but it would still surface four confusingly similar tools.",
+      "why_incorrect": {
+        "B": "This papers over a design problem and adds prompt tokens without removing the ambiguity.",
+        "C": "Tool search reduces upfront context but would still surface near-duplicate tools with unclear boundaries.",
+        "D": "More deliberation does not resolve tools that genuinely overlap."
+      },
+      "module": "07-tool-use-and-function-calling/05-tool-design-best-practices.md",
+      "references": [
+        "https://www.anthropic.com/engineering/writing-tools-for-agents"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-003",
+      "objective": "CCAR-P-3.1",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Contoso Health is configuring Claude Code subagents for its platform team: a code reviewer, a test writer and a release-notes writer. Currently all three inherit every tool from the main session, including Bash and the production database MCP server.",
+      "question": "Which configuration best follows least privilege?",
+      "options": {
+        "A": "Let all three inherit every tool, but tell each in its prompt which tools to avoid",
+        "B": "Give each subagent an explicit tool list matched to its job (read-only tools for the reviewer and release-notes writer, edit and test-run tools for the test writer) and exclude the production database server from all three",
+        "C": "Merge the three into a single general subagent to reduce configuration",
+        "D": "Remove Bash from the main session so subagents cannot inherit it"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Subagents can be given an explicit tool list. A reviewer needs to read code, a test writer needs to read and edit files and run the test command, and a release-notes writer needs read access to the repository history. None needs the production database MCP server. Declaring tools per subagent narrows each one's capability to its job, which limits damage from mistakes or injected instructions. Inheriting everything 'for flexibility' is the bloat to avoid.",
+      "why_incorrect": {
+        "A": "Prompt guidance does not restrict which tools can actually be invoked.",
+        "C": "This concentrates every capability in one agent and loses the benefit of scoping.",
+        "D": "This hurts the main workflow and still leaves the production database server available to subagents."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/sub-agents"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-004",
+      "objective": "CCAR-P-3.1",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "cost-performance",
+      "scenario": "Relecloud's agent connects to six MCP servers whose tool definitions total roughly 60,000 tokens. Any single request uses at most three or four of those tools, all of which the agent legitimately needs across its workload.",
+      "question": "Which change best reduces the context cost without removing legitimately needed capabilities?",
+      "options": {
+        "A": "Shorten every tool description to one line to save tokens",
+        "B": "Mark every tool, including the search tool, with `defer_loading: true`",
+        "C": "Use the tool search tool and mark most tool definitions with `defer_loading: true` so only the needed ones are loaded per request",
+        "D": "Split the agent into six agents, one per MCP server"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "When an agent genuinely needs a large catalogue of tools but uses only a few per request, the tool search tool lets you send all definitions with `defer_loading: true` on most of them; Claude then discovers and loads only the tools it needs. At least one tool, usually the search tool itself, must stay non-deferred. This addresses context bloat without the security trade-off of removing tools the job requires. Truncating descriptions harms selection quality.",
+      "why_incorrect": {
+        "A": "Thin descriptions degrade tool selection, which is the main cost of a large catalogue.",
+        "B": "At least one tool must remain non-deferred; deferring everything is rejected.",
+        "D": "Six agents add coordination overhead for a single workload that only needs a few tools per request."
+      },
+      "module": "07-tool-use-and-function-calling/05-tool-design-best-practices.md",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-005",
+      "objective": "CCAR-P-3.2",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Woodgrove Bank exposes an internal MCP server for account analytics over HTTP. Claude-based clients obtain OAuth tokens from the corporate identity provider. A review finds the server accepts any valid token from that identity provider and forwards the same token to a downstream ledger API.",
+      "question": "Which TWO findings are genuine authorisation gaps under the MCP authorization specification? (Choose 2.)",
+      "options": {
+        "A": "The server does not validate that tokens were issued for it as the intended audience",
+        "B": "The clients use PKCE during the authorization code flow",
+        "C": "The server passes the client's token through to the downstream ledger API instead of obtaining its own credentials",
+        "D": "The server is reached over HTTPS",
+        "E": "Tokens come from the corporate identity provider rather than from the MCP server itself"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanation": "Under the MCP authorization specification a server may only honour access tokens minted for itself (audience validation), and it must never hand a client's token on to other services. Accepting any token from the identity provider allows tokens minted for other applications to be replayed here, and forwarding the client's token to the ledger API creates a confused-deputy risk and breaks audit separation. HTTPS and PKCE are required by the spec, so their presence is not a gap.",
+      "why_incorrect": {
+        "B": "PKCE is required by the specification; using it is correct, not a gap.",
+        "D": "Transport security is expected; it is not an authorisation gap.",
+        "E": "The specification supports a separate authorization server; this is a normal deployment."
+      },
+      "module": "12-ai-security/08-mcp-server-security.md",
+      "references": [
+        "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-006",
+      "objective": "CCAR-P-3.2",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Northwind Lending's loan-officer assistant calls a `get_application(application_id)` tool. The tool service authenticates with a single service account that can read every application. Officers should only see applications in their own branch.",
+      "question": "Where should the authorisation decision be enforced?",
+      "options": {
+        "A": "In the system prompt, by instructing Claude to request only applications from the officer's branch",
+        "B": "In the model's output, by filtering responses that mention other branches",
+        "C": "Nowhere additional; the service account is authenticated, which is sufficient",
+        "D": "In the tool service, which should receive the officer's verified identity and check branch entitlement before returning any application"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Authorisation must be enforced deterministically by the system that owns the data, using the identity of the end user on whose behalf the agent acts. The tool service should receive the officer's identity (for example via a delegated, user-scoped token or a signed context it can verify) and check branch entitlement before returning data. Relying on the model to decide, or on the system prompt to list allowed IDs, places a security decision in a component that can be manipulated.",
+      "why_incorrect": {
+        "A": "The model can be confused or injected; prompt instructions are not access control.",
+        "B": "Post-hoc filtering of text is unreliable and the data has already been exposed to the model.",
+        "C": "Authentication of the service account says nothing about whether this officer may see this record."
+      },
+      "module": "12-ai-security/09-agent-identity-and-permissions.md",
+      "references": [
+        "https://genai.owasp.org/llmrisk/llm062025-excessive-agency/",
+        "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-007",
+      "objective": "CCAR-P-3.2",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "security",
+      "scenario": "Fabrikam Retail's engineering team stores a long-lived Anthropic API key in a shared `.env` file committed to a private repository so that every service can call the Claude API.",
+      "question": "Which remediation best closes the authentication gap?",
+      "options": {
+        "A": "Revoke and rotate the key, purge it from repository history, and issue per-service credentials from a secrets manager or workload identity federation, scoped by workspace",
+        "B": "Keep the key but restrict repository access to senior engineers",
+        "C": "Base64-encode the key in the `.env` file",
+        "D": "Add a code comment asking developers not to copy the key elsewhere"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Long-lived shared keys in source control are a common credential-exposure path: anyone with repository access, or any leaked clone, can use them, and usage cannot be attributed. Remediation is to revoke and rotate the key, remove it from history, and give each service its own credential from a secrets manager or a short-lived workload identity, scoped to the workspace it needs. Making the repository private or adding a comment does not change exposure.",
+      "why_incorrect": {
+        "B": "Fewer readers reduces exposure but leaves a shared, long-lived, unattributable secret in source control.",
+        "C": "Encoding is not encryption; the key remains trivially recoverable.",
+        "D": "A comment provides no technical control."
+      },
+      "module": "12-ai-security/10-secrets-management.md",
+      "references": [
+        "https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-008",
+      "objective": "CCAR-P-3.2",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Meridian Clinics' patient-portal assistant uses a `get_lab_results(patient_id)` tool. A penetration test shows that a logged-in patient can ask 'show lab results for patient 10442' and receive another patient's results.",
+      "question": "What is the root cause and correct fix?",
+      "options": {
+        "A": "The system prompt is too permissive; add a rule that patients may only ask about themselves",
+        "B": "The tool trusts a model-supplied identifier; bind the tool to the authenticated session's patient identity on the server and reject mismatched IDs",
+        "C": "The model is hallucinating patient IDs; use a more capable model",
+        "D": "Patient IDs are guessable; switch to random UUIDs"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "This is an insecure direct object reference reached through the model: the tool trusts a model-supplied `patient_id`. The fix is to derive the patient identity from the authenticated session on the server side and ignore or reject any identifier the model supplies that does not match, so the model has no way to request another patient's data. Prompt instructions and output filters are bypassable; hiding IDs from users does not stop guessing.",
+      "why_incorrect": {
+        "A": "Prompt rules can be bypassed; the backend still serves any ID it is given.",
+        "C": "The model is following the user's request; the vulnerability is in the tool's authorisation logic.",
+        "D": "Harder-to-guess IDs reduce enumeration but do not enforce that a patient can only see their own data."
+      },
+      "module": "12-ai-security/09-agent-identity-and-permissions.md",
+      "references": [
+        "https://genai.owasp.org/llmrisk/llm062025-excessive-agency/"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-009",
+      "objective": "CCAR-P-3.3",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "cost-performance",
+      "scenario": "Kestrel Payments' real-time fraud-explanation feature must show an analyst a two-sentence rationale within one second p95. A prototype on Claude Opus 5.5 at `high` effort scores 94% on the rationale-quality eval with 4.2-second p95 latency; at `low` effort it scores 92% with 1.1-second p95. Claude Haiku 5.5 at `low` effort scores 90% with 0.6-second p95. The quality floor is 90%.",
+      "question": "Which configuration is best justified?",
+      "options": {
+        "A": "Claude Opus 5.5 at high effort, because quality matters most for fraud",
+        "B": "Claude Opus 5.5 at low effort, because 1.1 seconds is close enough",
+        "C": "Claude Haiku 5.5 at low effort, because it is the only option that meets the latency SLA while meeting the quality floor, then work on prompt improvements to add quality margin",
+        "D": "Claude Opus 5.5 at max effort with streaming so the first token appears sooner"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "When a hard latency SLA and a quality floor both apply, choose the configuration that satisfies both with the best margin, and document the trade-off. Claude Haiku 5.5 at low effort meets the 1-second target and exactly meets the 90% floor; Opus at low effort is still slightly over the latency target. The decision should be recorded with the eval evidence and revisited, for example by improving the prompt to add quality margin on the faster model. Picking the highest-quality option ignores the SLA.",
+      "why_incorrect": {
+        "A": "4.2-second p95 latency breaks the stated one-second requirement.",
+        "B": "It misses the agreed SLA; trade-offs should be decided against stated targets, not proximity.",
+        "D": "Max effort increases total latency, and analysts need the whole two-sentence rationale."
+      },
+      "module": "15-production-operations/04-latency-optimisation.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-010",
+      "objective": "CCAR-P-3.3",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Alpine Ski House's booking chatbot feels slow: users wait about six seconds before any text appears, although total answer quality is good.",
+      "question": "Which TWO changes most directly improve perceived latency without lowering quality? (Choose 2.)",
+      "options": {
+        "A": "Cut `max_tokens` to 200 so responses finish sooner",
+        "B": "Stream responses to the UI so text appears as it is generated",
+        "C": "Switch to the smallest model regardless of eval results",
+        "D": "Cache the stable system prompt and tool definitions so repeated requests process less uncached input",
+        "E": "Send the same request twice and use whichever returns first"
+      },
+      "answer": [
+        "B",
+        "D"
+      ],
+      "explanation": "Perceived latency is dominated by time to first token. Streaming the response shows text as soon as it is generated, and prompt caching of the stable prefix (system prompt and tools) reduces input processing time on repeated requests. Switching to a smaller model or cutting `max_tokens` can reduce latency but may reduce quality or truncate answers, which the question rules out.",
+      "why_incorrect": {
+        "A": "A low cap risks truncated answers, lowering quality.",
+        "C": "This may reduce quality, which the requirement says to preserve.",
+        "E": "Duplicate requests double cost and consume rate limits for marginal gains."
+      },
+      "module": "15-production-operations/04-latency-optimisation.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-011",
+      "objective": "CCAR-P-3.3",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Trey Research's analysts ask for 'faster answers' from a Claude Opus 5.5 research agent hosted on Amazon Bedrock. A colleague suggests enabling fast mode.",
+      "question": "What should the architect point out, as of 2026-10-24?",
+      "options": {
+        "A": "Fast mode is free on Bedrock and should be enabled immediately",
+        "B": "Fast mode reduces quality by switching to a smaller model",
+        "C": "Fast mode only works with the Batch API",
+        "D": "Fast mode is not available on Amazon Bedrock; evaluate lower effort, streaming, caching or a faster model for sub-tasks instead, or weigh a platform change explicitly"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Fast mode is a research preview that runs the same model at higher output speed for premium pricing, but as of 2026-10-24 it is available on the Claude API only, not on Amazon Bedrock, Google Cloud or Microsoft Foundry. On Bedrock, the levers are lowering effort for routine requests, streaming, caching and choosing a faster model for sub-tasks, each validated on the eval. Moving platforms for speed alone would also need to account for data-residency and procurement constraints.",
+      "why_incorrect": {
+        "A": "Fast mode carries premium pricing and is not offered on Bedrock.",
+        "B": "Fast mode runs the same model at higher output speed; the issue here is availability and price.",
+        "C": "Fast mode is not available with the Batch API."
+      },
+      "module": "15-production-operations/04-latency-optimisation.md",
+      "references": [
+        "https://platform.claude.com/docs/en/about-claude/models/overview"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-012",
+      "objective": "CCAR-P-3.4",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Tailspin Insurance's claims agent occasionally produces wrong settlement recommendations. Each request is logged only as the final answer text and total latency. Engineers cannot reconstruct why a recommendation was made.",
+      "question": "Which observability design best supports diagnosis at scale?",
+      "options": {
+        "A": "Emit a trace per task with spans for every model call and tool call, capturing inputs and outputs (with redaction), stop reason, token usage, latency, and prompt and model version",
+        "B": "Ask the agent to include its full reasoning in the final answer so logs contain the explanation",
+        "C": "Log only failed requests to save storage",
+        "D": "Increase log retention for the existing final-answer logs"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Agentic systems need traces, not just final outputs: a trace ID per task, spans for each model call and tool call with inputs, outputs, `stop_reason`, token usage and latency, plus the prompt and model version used. This lets engineers replay a failure, see which tool returned what, and correlate errors with releases. Sensitive fields should be redacted or tokenised before storage. More verbose final answers or sampling only successes do not reveal the causal chain.",
+      "why_incorrect": {
+        "B": "This inflates user-facing output and still omits tool inputs and results needed for diagnosis.",
+        "C": "Failures are often detected later; without traces of normal runs you cannot compare or find silent errors.",
+        "D": "Keeping more of the same insufficient data does not reveal the causal chain."
+      },
+      "module": "15-production-operations/02-observability.md",
+      "references": [
+        "https://genai.owasp.org/llmrisk/llm092025-misinformation/"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-013",
+      "objective": "CCAR-P-3.4",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Lucerne Publishing runs Claude Code across 300 developers and wants dashboards showing usage, cost and tool acceptance by team, exported to its existing observability platform.",
+      "question": "Which approach is supported by Claude Code?",
+      "options": {
+        "A": "Ask each developer to paste session summaries into a shared spreadsheet weekly",
+        "B": "Enable Claude Code's OpenTelemetry export through managed settings and send metrics and events to the existing collector",
+        "C": "Parse developers' shell history for `claude` invocations",
+        "D": "Rely only on the monthly invoice total"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Claude Code can export metrics and events through OpenTelemetry when telemetry is enabled (for example `CLAUDE_CODE_ENABLE_TELEMETRY=1` with an OTLP exporter configured). Administrators can deliver these variables, including the exporter selectors, through managed settings so they apply consistently to every developer, then route data to their existing collector. Scraping terminal output or surveying developers does not scale and misses cost data.",
+      "why_incorrect": {
+        "A": "Manual reporting is incomplete, delayed and unreliable at 300 users.",
+        "C": "Shell history shows invocations, not tokens, cost or tool decisions.",
+        "D": "An invoice total cannot be broken down by team, tool use or acceptance rate."
+      },
+      "module": "09-claude-code/08-team-rollout.md",
+      "references": [
+        "https://code.claude.com/docs/en/monitoring-usage"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-014",
+      "objective": "CCAR-P-3.4",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Contoso Health wants full prompt and response logging for its clinical assistant to support incident investigation. Prompts contain protected health information (PHI).",
+      "question": "Which TWO practices best balance observability with privacy obligations? (Choose 2.)",
+      "options": {
+        "A": "Redact or tokenise PHI in traces at capture time, keeping a controlled re-identification path for authorised investigators",
+        "B": "Disable prompt logging entirely so no PHI is ever stored",
+        "C": "Send full transcripts to the marketing analytics platform so product teams can explore them",
+        "D": "Store any logs that contain PHI in an access-controlled, encrypted, audited store with a defined retention period",
+        "E": "Log everything unredacted but delete it after one hour"
+      },
+      "answer": [
+        "A",
+        "D"
+      ],
+      "explanation": "Observability data is itself sensitive data. PHI should be redacted or tokenised at capture time where possible, with re-identification limited to an authorised process. Logs containing PHI must sit in a store with access controls, encryption, audit trails and a retention schedule aligned to policy. Disabling logging leaves incidents uninvestigable, and sending raw transcripts to a general-purpose analytics tool widens exposure.",
+      "why_incorrect": {
+        "B": "This removes the ability to investigate incidents and evaluate quality, trading one risk for another.",
+        "C": "This widens access to PHI far beyond what is necessary.",
+        "E": "Very short retention defeats investigation and unredacted PHI is still exposed while stored."
+      },
+      "module": "12-ai-security/11-logging-and-auditability.md",
+      "references": [
+        "https://genai.owasp.org/llmrisk/llm022025-sensitive-information-disclosure/",
+        "https://www.nist.gov/privacy-framework"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-015",
+      "objective": "CCAR-P-3.5",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Adatum Pharma indexes standard operating procedures (SOPs). Each SOP has numbered sections; a step often says 'as described in 4.2'. Fixed 300-token chunks frequently cut steps in half, and answers miss the referenced section.",
+      "question": "Which chunking strategy best fits this content?",
+      "options": {
+        "A": "Reduce chunk size to 100 tokens so each chunk is more precise",
+        "B": "Index each SOP as a single chunk so nothing is ever cut",
+        "C": "Chunk by section boundaries, attach SOP ID, section number and title as metadata, and allow referenced sections to be fetched by identifier",
+        "D": "Use random overlapping windows so every sentence appears in several chunks"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Chunking should follow the document's natural structure. Splitting at section boundaries keeps steps intact, and attaching metadata such as the SOP ID, section number and title allows the retriever (or a follow-up tool call) to fetch referenced sections like '4.2'. Smaller fixed chunks increase fragmentation, and one chunk per document defeats retrieval precision.",
+      "why_incorrect": {
+        "A": "Smaller fixed chunks split steps even more often and lose surrounding context.",
+        "B": "Whole-document chunks reduce retrieval precision and push large irrelevant text into context.",
+        "D": "Random windows ignore structure and inflate index size without guaranteeing intact steps."
+      },
+      "module": "11-rag-and-knowledge-systems/02-chunking-strategies.md",
+      "references": [
+        "https://www.anthropic.com/engineering/contextual-retrieval"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-016",
+      "objective": "CCAR-P-3.5",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Woodgrove Bank's policy assistant retrieves chunks such as 'The limit increases to 25% after the review period.' Users complain answers are vague because chunks do not say which product or policy they belong to.",
+      "question": "Which TWO indexing improvements best address the problem? (Choose 2.)",
+      "options": {
+        "A": "Remove chunk overlap to save storage",
+        "B": "Prepend each chunk with a short generated context describing its source document and section before indexing",
+        "C": "Combine embedding search with a lexical index such as BM25 so exact product names and codes are matched",
+        "D": "Increase top-k from 5 to 50 so the right chunk is more likely to be included",
+        "E": "Lower the embedding dimensionality to speed up search"
+      },
+      "answer": [
+        "B",
+        "C"
+      ],
+      "explanation": "Chunks lose meaning when separated from their document. Contextual retrieval prepends a short, document-aware description to each chunk before embedding and keyword indexing, which helps both retrievers find the right chunk. Hybrid retrieval combining embeddings with a lexical index (such as BM25) catches exact terms like product codes that embeddings may blur. Reducing overlap or increasing top-k without fixing chunk context mostly adds noise.",
+      "why_incorrect": {
+        "A": "Saving storage does not help chunks that lack identifying context.",
+        "D": "Retrieving many more chunks adds noise and cost without making individual chunks interpretable.",
+        "E": "Speed is not the reported problem, and lower dimensionality can reduce retrieval quality."
+      },
+      "module": "11-rag-and-knowledge-systems/03-embeddings-and-indexing.md",
+      "references": [
+        "https://www.anthropic.com/engineering/contextual-retrieval"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-017",
+      "objective": "CCAR-P-3.5",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Civic Benefits Agency is building a RAG assistant for caseworkers over a shared vector index containing documents from several departments, some restricted to specific roles.",
+      "question": "Which indexing design best prevents unauthorised disclosure through retrieval?",
+      "options": {
+        "A": "Tell the model in the system prompt not to reveal restricted content",
+        "B": "Redact restricted terms from the model's answer after generation",
+        "C": "Encrypt the embeddings at rest",
+        "D": "Store access-control metadata with every chunk and filter retrieval by the requesting caseworker's verified entitlements before any text reaches the prompt"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "In a shared index, access control must be applied at retrieval time, not left to the model. Storing access metadata (department, classification, permitted roles) with each chunk and filtering queries by the caller's verified entitlements ensures restricted text never reaches the prompt. OWASP lists this under vector and embedding weaknesses. Prompt instructions and post-generation redaction are too late: the model has already seen the data.",
+      "why_incorrect": {
+        "A": "The restricted text is already in context; prompt instructions are not a reliable control.",
+        "B": "Output filtering is incomplete and occurs after the model has processed restricted data.",
+        "C": "Encryption at rest protects storage, not which users can retrieve which chunks."
+      },
+      "module": "11-rag-and-knowledge-systems/03-embeddings-and-indexing.md",
+      "references": [
+        "https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-018",
+      "objective": "CCAR-P-3.6",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Fabrikam Retail wants an assistant to answer questions like 'what were total returns for SKU 88-1043 in Q3 by region?' The data lives in a relational warehouse.",
+      "question": "Which retrieval strategy best matches this data shape and query pattern?",
+      "options": {
+        "A": "Provide a read-only, parameterised query tool over a governed warehouse view so Claude can compute the exact aggregation",
+        "B": "Embed every warehouse row as text and use vector search to find relevant rows",
+        "C": "Export the warehouse to PDF reports and use RAG over them",
+        "D": "Put the full quarterly table in the prompt each time"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Aggregations over structured data are answered precisely by querying the database, not by semantic search over text. Giving Claude a tool that runs parameterised, read-only queries against a governed view (or a text-to-SQL step with validation) lets it compute exact totals. Embedding rows as text loses numeric precision and cannot aggregate reliably.",
+      "why_incorrect": {
+        "B": "Similarity search cannot reliably aggregate thousands of rows or guarantee exact totals.",
+        "C": "This adds staleness and loses the precision of the structured source.",
+        "D": "Large tables waste context and invite arithmetic errors when a query could compute the answer."
+      },
+      "module": "11-rag-and-knowledge-systems/04-retrieval-strategies.md",
+      "references": [
+        "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-019",
+      "objective": "CCAR-P-3.6",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Lucerne Publishing's rights team asks questions of two kinds: exact lookups ('which contracts mention clause code RX-14?') and conceptual ones ('which contracts limit audiobook adaptations?'). The current dense-vector retriever does well on the second kind but misses many exact codes.",
+      "question": "Which retrieval approach best fits both query patterns?",
+      "options": {
+        "A": "Replace embeddings with keyword search only",
+        "B": "Hybrid retrieval combining lexical (BM25) and embedding search, with result fusion and reranking",
+        "C": "Increase embedding dimensions until exact codes are matched",
+        "D": "Ask users to tick a box saying whether their query is exact or conceptual"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Exact identifiers and rare tokens are matched well by lexical retrieval such as BM25, while conceptual questions benefit from dense embeddings. Hybrid retrieval runs both and fuses the results, often followed by a reranking step to order the merged set. Abandoning embeddings would hurt conceptual queries, and asking users to choose a mode pushes design complexity to them.",
+      "why_incorrect": {
+        "A": "Keyword-only search handles exact codes but loses the conceptual matches the team relies on.",
+        "C": "Embedding size does not make dense retrieval reliable for rare exact tokens.",
+        "D": "This shifts the routing burden to users and fails for mixed queries."
+      },
+      "module": "11-rag-and-knowledge-systems/04-retrieval-strategies.md",
+      "references": [
+        "https://www.anthropic.com/engineering/contextual-retrieval"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-020",
+      "objective": "CCAR-P-3.6",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "cost-performance",
+      "scenario": "Coho Winery's compliance team has a single 180-page regulatory handbook that changes once a year. They ask detailed questions about it several times a day. An engineer proposes building a vector-search pipeline.",
+      "question": "Which approach is most appropriate?",
+      "options": {
+        "A": "Build a vector-search pipeline because RAG is always more accurate than long context",
+        "B": "Fine-tune a model on the handbook so no context is needed",
+        "C": "Place the full handbook in context as a cached prefix and ask questions against it, revisiting RAG only if the corpus grows",
+        "D": "Split the handbook into 180 one-page chunks and send them all in separate requests"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Retrieval is not always required. When the corpus is a single document that fits comfortably in the context window and changes rarely, placing it in context with prompt caching is often simpler and more accurate than chunked retrieval, because the model sees the whole document and cross-references. Caching keeps repeated requests economical. A RAG pipeline becomes worthwhile as the corpus grows beyond what fits or changes frequently.",
+      "why_incorrect": {
+        "A": "RAG adds retrieval errors; for one stable document that fits in context, long context is often simpler and more accurate.",
+        "B": "Fine-tuning is not the mechanism for document grounding here and loses citation ability.",
+        "D": "Separate requests lose cross-references and multiply cost."
+      },
+      "module": "11-rag-and-knowledge-systems/07-rag-vs-long-context.md",
+      "references": [
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+        "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-021",
+      "objective": "CCAR-P-3.7",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Northwind Lending has an internal credit-bureau API that will be used by its own customer-service application (one backend service), by analysts in Claude Desktop, and by developers in Claude Code.",
+      "question": "Which integration decisions are most appropriate? (Choose 2.)",
+      "options": {
+        "A": "Build an agent-to-agent protocol endpoint so each client negotiates with a 'bureau agent'",
+        "B": "Have each client implement its own bespoke integration for consistency",
+        "C": "Wrap the bureau API in an MCP server so Claude Desktop and Claude Code can both use it through one integration",
+        "D": "Have the customer-service backend call the bureau API directly through a custom tool definition in its own Claude API requests",
+        "E": "Expose the API as a CLI only, and have analysts run commands manually"
+      },
+      "answer": [
+        "C",
+        "D"
+      ],
+      "explanation": "MCP standardises how AI applications discover and call tools, so one MCP server can serve many MCP clients such as Claude Desktop and Claude Code without per-client integration work. For a single backend service that the team owns end to end, calling the API directly through a custom tool definition is simpler and avoids an extra hop. Agent-to-agent protocols address coordination between independent agents, which is not the need here.",
+      "why_incorrect": {
+        "A": "Agent-to-agent coordination adds complexity when the need is simply to expose a tool.",
+        "B": "Bespoke integrations multiply maintenance and are exactly what MCP standardises.",
+        "E": "A CLI-only interface does not integrate with Claude Desktop analysts' workflow."
+      },
+      "module": "08-model-context-protocol/06-mcp-vs-alternatives.md",
+      "references": [
+        "https://modelcontextprotocol.io/docs/getting-started/intro",
+        "https://modelcontextprotocol.io/docs/learn/architecture"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-022",
+      "objective": "CCAR-P-3.7",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "cost-performance",
+      "scenario": "Wingtip Toys' Claude Code users need to interact with GitHub. The `gh` CLI is installed and authenticated on every developer machine. Someone proposes also installing a GitHub MCP server that exposes 90 tools.",
+      "question": "What is the strongest argument for preferring the existing CLI in this environment?",
+      "options": {
+        "A": "MCP servers are insecure and should never be used for source control",
+        "B": "CLIs are always faster than any API",
+        "C": "Claude Code cannot connect to MCP servers",
+        "D": "The CLI is already authenticated and familiar to the model, and adds no tool definitions to context, whereas 90 MCP tool definitions consume context on every request"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "When an agent already has a capable shell and a well-known CLI, the CLI can be the leaner integration: the model is familiar with it, no tool definitions occupy context, and authentication is already handled. MCP shines when clients lack shell access, when you need structured, discoverable tools across many clients, or when you need centrally managed auth. The choice is context-dependent, not a matter of one being universally insecure.",
+      "why_incorrect": {
+        "A": "MCP can be deployed securely; this overgeneralises.",
+        "B": "Speed depends on the operation; this is not the deciding factor.",
+        "C": "Claude Code supports MCP servers."
+      },
+      "module": "08-model-context-protocol/06-mcp-vs-alternatives.md",
+      "references": [
+        "https://code.claude.com/docs/en/mcp",
+        "https://www.anthropic.com/engineering/code-execution-with-mcp"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-023",
+      "objective": "CCAR-P-3.7",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Proseware and a logistics partner each run their own autonomous agents. Proseware's procurement agent must negotiate delivery windows with the partner's scheduling agent, which is owned, hosted and secured by the partner.",
+      "question": "Which integration mechanism best fits this requirement?",
+      "options": {
+        "A": "An agent-to-agent integration in which each organisation's agent exchanges task requests and results over an authenticated channel, without exposing internal tools",
+        "B": "Have the partner expose its internal scheduling database as MCP tools that Proseware's agent calls directly",
+        "C": "Share the partner's API credentials with Proseware's agent",
+        "D": "Merge both agents into one shared deployment"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "When two independently owned agents need to collaborate on a task, each keeping its own tools, data and policies, an agent-to-agent integration is appropriate: they exchange task requests and results over an authenticated channel without exposing internal tools. Exposing the partner's internal scheduling database as an MCP tool to Proseware's agent would bypass the partner's own controls, and sharing credentials is a security anti-pattern.",
+      "why_incorrect": {
+        "B": "This bypasses the partner agent's policies and exposes internal systems across an organisational boundary.",
+        "C": "Sharing credentials across organisations removes accountability and violates least privilege.",
+        "D": "The agents are owned by different organisations with separate controls; merging them is not realistic or desirable."
+      },
+      "module": "08-model-context-protocol/06-mcp-vs-alternatives.md",
+      "references": [
+        "https://modelcontextprotocol.io/docs/learn/architecture"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-024",
+      "objective": "CCAR-P-3.8",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Litware's enterprise agent can handle 40 business procedures, each with several pages of instructions and helper scripts. Loading all of them into the system prompt costs about 90,000 tokens per request and accuracy on routine requests has dropped.",
+      "question": "Which TWO designs apply progressive discovery effectively? (Choose 2.)",
+      "options": {
+        "A": "Package each procedure as an Agent Skill so only names and descriptions load by default and full instructions load when relevant",
+        "B": "Expose procedures as files in a navigable directory with an index the agent can list and read on demand",
+        "C": "Keep all procedures in the system prompt but cache them",
+        "D": "Compress all 40 procedures into a single summary paragraph",
+        "E": "Move to a model with a larger context window"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "Progressive discovery (or disclosure) keeps a lightweight index in context and loads detail only when needed. Agent Skills do this by keeping each skill's name and description in context and reading the full instructions and scripts on demand. Similarly, presenting tools or files as a discoverable hierarchy that the agent can list and read when relevant avoids paying for everything up front. Summarising everything into the prompt loses detail, and relying on a larger window keeps the distraction.",
+      "why_incorrect": {
+        "C": "Caching reduces price, but the 90,000 tokens still occupy context and dilute attention.",
+        "D": "This loses the operational detail the agent needs to execute procedures correctly.",
+        "E": "More room does not fix the accuracy loss from irrelevant material."
+      },
+      "module": "04-context-engineering/06-progressive-disclosure-and-skills.md",
+      "references": [
+        "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills",
+        "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-025",
+      "objective": "CCAR-P-3.8",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "concept",
+      "scenario": "An architect at Fourth Coffee is choosing between monolithic context (everything loaded up front) and progressive discovery for a small FAQ assistant with a 3,000-token knowledge base used in every conversation.",
+      "question": "Which statement best reflects the trade-off?",
+      "options": {
+        "A": "Progressive discovery is always better because it minimises tokens",
+        "B": "Monolithic context is reasonable here because the knowledge base is small and almost always relevant; progressive discovery adds round-trips and failure points without enough savings",
+        "C": "Monolithic context is never acceptable in production",
+        "D": "The choice only matters for models with small context windows"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Progressive discovery pays off when the full body of instructions or knowledge is large relative to what any one request needs. For a small knowledge base that is relevant to nearly every conversation, loading it up front is simpler, has no discovery step to fail, and can be cached. The added round-trips and complexity of on-demand loading would not be repaid.",
+      "why_incorrect": {
+        "A": "Discovery adds tool calls, latency and a chance of missing content; it is not always better.",
+        "C": "Small, always-relevant context is a common and sound production design.",
+        "D": "Context quality and cost matter at any window size."
+      },
+      "module": "04-context-engineering/06-progressive-disclosure-and-skills.md",
+      "references": [
+        "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+      ]
+    },
+    {
+      "id": "CCAR-P-D3-026",
+      "objective": "CCAR-P-3.8",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "cost-performance",
+      "scenario": "Relecloud's data agent connects to an MCP server that exposes thousands of operations. Intermediate results (for example 10,000-row query outputs) flow back through the model's context even though the agent only needs a filtered summary.",
+      "question": "Which approach reduces both tool-definition and intermediate-result overhead?",
+      "options": {
+        "A": "Load all tool definitions up front and ask the agent to summarise results itself",
+        "B": "Increase `max_tokens` so large results fit in responses",
+        "C": "Let the agent discover tool interfaces on demand and call them from code in a sandboxed execution environment, returning only filtered results to the model's context",
+        "D": "Paginate results to 10 rows and ask the user to request more"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Having the agent write code that calls tools inside a code-execution environment lets it discover only the tool interfaces it needs and filter or aggregate large intermediate results before anything returns to the model's context. This combines progressive discovery of tools with keeping bulky data out of the context window. Bigger windows or more verbose summaries keep the overhead.",
+      "why_incorrect": {
+        "A": "Every definition and every large result still passes through context.",
+        "B": "`max_tokens` limits output, not the size of tool results entering context.",
+        "D": "This degrades the analysis and pushes work onto the user."
+      },
+      "module": "04-context-engineering/06-progressive-disclosure-and-skills.md",
+      "references": [
+        "https://www.anthropic.com/engineering/code-execution-with-mcp"
+      ]
+    }
+  ]
+}

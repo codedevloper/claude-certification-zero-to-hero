@@ -1,0 +1,19 @@
+/* Small brand and readability tweaks on top of Material's defaults. */
+:root {
+  --md-primary-fg-color: #b5532f;
+  --md-primary-fg-color--light: #d0714d;
+  --md-primary-fg-color--dark: #8f3f22;
+  --md-accent-fg-color: #c4532a;
+}
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #8f3f22;
+  --md-accent-fg-color: #e0835f;
+}
+.md-typeset table:not([class]) { font-size: .72rem; }
+.md-typeset table:not([class]) th { white-space: nowrap; }
+.md-typeset blockquote { border-left-color: var(--md-accent-fg-color); }
+.app-launch {
+  display: inline-block; margin: .4rem 0 1rem; padding: .55rem 1.1rem; border-radius: .3rem;
+  background: var(--md-primary-fg-color); color: #fff !important; font-weight: 600;
+}
+.app-launch:hover { background: var(--md-accent-fg-color); }

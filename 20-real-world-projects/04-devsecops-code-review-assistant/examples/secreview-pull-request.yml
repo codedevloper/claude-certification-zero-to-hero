@@ -1,0 +1,64 @@
+# Example GitHub Actions workflow for secreview (project 04).
+# Copy it to .github/workflows/ in YOUR application repository and adjust the paths.
+# It is kept here, not in this repository's .github/, so it never runs against this repo.
+#
+# Security notes
+# - Trigger is `pull_request`, not `pull_request_target`: the job runs with the PR's code but
+#   without write tokens or secrets for forked PRs. Never review untrusted fork code in a job
+#   that holds secrets.
+# - Least-privilege token: read contents, write only security-events (for the SARIF upload).
+# - Pin third-party actions to a full commit SHA in production; tags are shown for readability.
+# - The review never pushes commits or applies fixes. Findings appear as code-scanning alerts.
+name: secreview
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: secreview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  security-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # Secrets cannot be referenced in `if:` directly, so expose a boolean once at job level.
+      HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the SDK (live mode only)
+        if: ${{ env.HAS_KEY == 'true' }}
+        run: pip install "anthropic>=0.116"
+
+      - name: Build the diff for this pull request
+        run: git diff --no-color "origin/${{ github.base_ref }}...HEAD" > pr.diff
+
+      - name: Run secreview
+        env:
+          # Live mode when the repository has the secret; mock (offline) otherwise, e.g. fork PRs.
+          CLAUDE_LAB_MODE: ${{ env.HAS_KEY == 'true' && 'live' || 'mock' }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        # Adjust the path to wherever you vendor the tool (and its claude_lab helper).
+        run: |
+          python tools/secreview/run.py --diff pr.diff --sarif-out secreview.sarif --fail-on high
+
+      - name: Upload SARIF to code scanning
+        if: ${{ always() && hashFiles('secreview.sarif') != '' }}
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: secreview.sarif
+          category: secreview

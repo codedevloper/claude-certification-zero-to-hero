@@ -1,0 +1,21 @@
+{
+  "alert_id": "ALRT-1002",
+  "rule_name": "PowerShell launched with an encoded command from an Office application",
+  "rule_severity": "high",
+  "source": "edr",
+  "timestamp": "2026-10-21T09:47:30Z",
+  "description": "Synthetic alert. WINWORD.EXE spawned powershell.exe with -EncodedCommand and a hidden window on a finance workstation.",
+  "entities": {
+    "hosts": ["WS-0142"],
+    "users": ["a.ferreira"],
+    "ips": ["198.51.100.23"],
+    "domains": ["cdn-update.example.net"]
+  },
+  "evidence": {
+    "parent_process": "WINWORD.EXE",
+    "process": "powershell.exe",
+    "command_line": "powershell.exe -NoProfile -WindowStyle Hidden -EncodedCommand <base64 payload removed from synthetic sample>",
+    "network_connection": "198.51.100.23:443 (cdn-update.example.net)",
+    "file_written": "C:\\Users\\a.ferreira\\AppData\\Local\\Temp\\upd.dll"
+  }
+}

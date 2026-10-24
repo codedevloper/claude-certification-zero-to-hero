@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "track": "CCAR-P",
+  "domain": 7,
+  "unofficial": true,
+  "notice": "Independently authored practice questions. Not official Anthropic exam content and not drawn from any exam.",
+  "questions": [
+    {
+      "id": "CCAR-P-D7-001",
+      "objective": "CCAR-P-7.1",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "security",
+      "scenario": "Woodgrove Bank is rolling out Claude Code to 400 engineers. Security requires that no developer can allow Claude Code to read files under `secrets/` or run `curl` to arbitrary hosts, regardless of their personal settings.",
+      "question": "Which configuration approach enforces this?",
+      "options": {
+        "A": "Define the deny rules in managed settings deployed to all machines, which take precedence over user, project and local settings",
+        "B": "Add the deny rules to each repository's `.claude/settings.json`",
+        "C": "Write the restrictions into the project CLAUDE.md",
+        "D": "Ask engineers to add the deny rules to their user settings"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Claude Code applies settings in a precedence order, and managed settings (delivered through a `managed-settings.json` file, MDM policy or server-managed settings) sit at the top: nothing in a developer's user, project or local settings, or a command-line flag, overrides a managed key. Putting deny rules for the sensitive paths and commands in managed settings therefore enforces the policy organisation-wide. Project settings or CLAUDE.md guidance can be changed by developers or are only advisory.",
+      "why_incorrect": {
+        "B": "Project settings are useful defaults but can be overridden by higher-precedence settings and do not cover every repository.",
+        "C": "CLAUDE.md provides instructions to the model, not enforced permissions.",
+        "D": "User settings are controlled by each developer and cannot enforce policy."
+      },
+      "module": "09-claude-code/04-permissions-and-settings.md",
+      "references": [
+        "https://code.claude.com/docs/en/settings",
+        "https://code.claude.com/docs/en/permissions"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-002",
+      "objective": "CCAR-P-7.1",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Fabrikam Retail's platform team wants every Claude Code session in its monorepo to know the build commands, coding conventions and the rule that database migrations need a reviewer, without each developer configuring anything.",
+      "question": "Which TWO mechanisms are most appropriate? (Choose 2.)",
+      "options": {
+        "A": "Each developer's `CLAUDE.local.md` file",
+        "B": "A wiki page developers paste into their first prompt each session",
+        "C": "A project CLAUDE.md checked into the repository with build commands and conventions",
+        "D": "A checked-in `.claude/settings.json` with shared permission rules and hooks for the migrations directory",
+        "E": "An environment variable containing the conventions as a single string"
+      },
+      "answer": [
+        "C",
+        "D"
+      ],
+      "explanation": "A project CLAUDE.md checked into the repository gives every session the shared commands and conventions automatically. Team-shared settings in `.claude/settings.json` (also checked in) let the team define permission rules and hooks consistently, for example requiring approval for edits under the migrations directory. A personal `CLAUDE.local.md` is for individual preferences and is normally git-ignored, and pasting instructions into each prompt does not scale.",
+      "why_incorrect": {
+        "A": "Local instruction files are personal and typically git-ignored, so they are not shared.",
+        "B": "Manual pasting is inconsistent and easily forgotten.",
+        "E": "This is not a supported way to provide project instructions."
+      },
+      "module": "09-claude-code/03-claude-md-and-memory.md",
+      "references": [
+        "https://code.claude.com/docs/en/memory",
+        "https://code.claude.com/docs/en/settings"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-003",
+      "objective": "CCAR-P-7.1",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "architecture",
+      "scenario": "Contoso Health wants Claude Code to block any command that writes to production database hosts, even if a developer approves it by mistake, and to log the attempt centrally.",
+      "question": "Which mechanism best meets this requirement?",
+      "options": {
+        "A": "A CLAUDE.md instruction telling Claude never to connect to production",
+        "B": "A `PreToolUse` hook, deployed through managed settings, that inspects commands, blocks those targeting production database hosts and logs the attempt",
+        "C": "A `PostToolUse` hook that alerts after the command runs",
+        "D": "Training developers to deny such requests"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Hooks run deterministic code at defined points in Claude Code's lifecycle. A `PreToolUse` hook can inspect each tool call before it executes and block it, and the same hook can emit a log event. Deployed through managed settings, it applies to every developer. Instructions in CLAUDE.md are advisory, and relying on developers to deny the prompt is exactly what the requirement rules out.",
+      "why_incorrect": {
+        "A": "CLAUDE.md is guidance to the model, not an enforced block.",
+        "C": "Post-execution hooks run too late to prevent the write.",
+        "D": "The requirement is to block even when a developer approves by mistake."
+      },
+      "module": "09-claude-code/06-hooks.md",
+      "references": [
+        "https://code.claude.com/docs/en/hooks"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-004",
+      "objective": "CCAR-P-7.1",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "cost-performance",
+      "scenario": "Lucerne Publishing's engineering manager wants to control Claude Code spend across teams while keeping developers productive.",
+      "question": "Which approach is most effective?",
+      "options": {
+        "A": "Restrict Claude Code to one day per week per developer",
+        "B": "Force the smallest model for all tasks",
+        "C": "Enable usage telemetry by team, set organisation defaults for available models through managed settings, and coach efficient context practices such as clearing context between unrelated tasks",
+        "D": "Ignore spend until the quarterly invoice arrives"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Cost management starts with visibility: enabling telemetry or usage reporting by team shows where spend goes. From there, teams can set sensible defaults (for example which models are available through managed settings), share efficient practices such as clearing or compacting context between unrelated tasks, and review outliers. Blanket bans or arbitrary caps without data hurt productivity.",
+      "why_incorrect": {
+        "A": "Arbitrary access limits reduce productivity without targeting waste.",
+        "B": "A blanket downgrade can increase total effort on complex work.",
+        "D": "Late visibility prevents timely correction."
+      },
+      "module": "09-claude-code/08-team-rollout.md",
+      "references": [
+        "https://code.claude.com/docs/en/costs",
+        "https://code.claude.com/docs/en/monitoring-usage"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-005",
+      "objective": "CCAR-P-7.2",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "scenario",
+      "scenario": "Wingtip Toys wants Claude to review every pull request automatically for missing tests and obvious security issues, posting comments on the PR.",
+      "question": "Which integration is most appropriate?",
+      "options": {
+        "A": "Ask each developer to run a local review before opening a pull request",
+        "B": "Replace human code review with Claude's review",
+        "C": "Paste diffs into a chat interface once a week",
+        "D": "Run Claude Code in CI on each pull request via the GitHub Actions integration or headless mode, with a defined review prompt and scoped permissions"
+      },
+      "answer": [
+        "D"
+      ],
+      "explanation": "Running Claude Code non-interactively in CI, for example through the Claude Code GitHub Actions integration or headless mode, lets the review run on every pull request with a defined prompt and scoped permissions and post comments back. It remains a supplement to human review. Asking developers to remember to run it locally is inconsistent.",
+      "why_incorrect": {
+        "A": "Manual steps are inconsistent and hard to enforce.",
+        "B": "AI review supplements but should not replace accountable human review.",
+        "C": "A weekly manual process does not review every pull request."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/github-actions",
+        "https://code.claude.com/docs/en/headless"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-006",
+      "objective": "CCAR-P-7.2",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "concept",
+      "scenario": "Relecloud's developers use Claude Code for large refactors. Results are inconsistent: sometimes it edits dozens of files before anyone notices a wrong approach.",
+      "question": "Which TWO workflow practices most improve outcomes? (Choose 2.)",
+      "options": {
+        "A": "Have Claude explore and propose a plan for review before making edits",
+        "B": "Provide tests or build commands Claude can run to verify each step",
+        "C": "Skip all permission prompts so it finishes faster",
+        "D": "Give shorter, vaguer instructions so Claude can be creative",
+        "E": "Ask for the entire refactor in a single message without review"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "explanation": "For larger changes, asking Claude to explore and propose a plan before editing (for example using plan mode) lets the developer correct the approach early. Giving Claude a way to verify its work, such as tests or a build command it can run, lets it check changes as it goes. Turning off permissions for speed or giving vaguer instructions increases the chance of large, wrong changes.",
+      "why_incorrect": {
+        "C": "Removing checkpoints makes wrong approaches more costly, and bypassing permissions carries security risk.",
+        "D": "Vague instructions increase the chance of the wrong approach.",
+        "E": "This is the pattern that produces large, late-detected errors."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://www.anthropic.com/engineering/claude-code-best-practices",
+        "https://code.claude.com/docs/en/common-workflows"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-007",
+      "objective": "CCAR-P-7.2",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "architecture",
+      "scenario": "Fourth Coffee's teams repeat the same multistep workflows in Claude Code: creating a service from a template, writing release notes and running a security checklist. Each developer prompts these differently.",
+      "question": "Which mechanism best standardises these workflows across teams?",
+      "options": {
+        "A": "Package each workflow as a Skill, shared through the repository or a team plugin, so everyone uses the same version-controlled procedure",
+        "B": "Ask each developer to keep their own prompt snippets",
+        "C": "Record a training video on how to prompt each workflow",
+        "D": "Put all three workflows in full detail in every CLAUDE.md"
+      },
+      "answer": [
+        "A"
+      ],
+      "explanation": "Reusable workflows can be packaged as Skills (and shared through plugins), giving a consistent, version-controlled procedure that Claude loads when relevant or that developers invoke by name. Distributing them as a plugin or through the repository keeps every team on the same version. Personal notes or verbal training do not standardise the workflow.",
+      "why_incorrect": {
+        "B": "Personal snippets diverge and are not shared or reviewed.",
+        "C": "Training helps, but it does not provide a consistent, executable procedure.",
+        "D": "Detailed procedures in CLAUDE.md load into every session even when not needed."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/skills",
+        "https://code.claude.com/docs/en/plugins"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-008",
+      "objective": "CCAR-P-7.3",
+      "type": "multiple",
+      "select": 2,
+      "difficulty": "advanced",
+      "category": "troubleshooting",
+      "scenario": "Kestrel Payments' on-call engineer uses Claude Code to investigate a production incident. The service's logs are large and the engineer is worried about context filling with log noise.",
+      "question": "Which TWO practices are most effective? (Choose 2.)",
+      "options": {
+        "A": "Delegate log searches to a subagent that returns a condensed summary, keeping the main context focused",
+        "B": "Paste all log files into the prompt so nothing is missed",
+        "C": "Ask Claude to search logs with targeted filters, such as the request ID and incident time window, instead of reading entire files",
+        "D": "Give Claude Code write access to production so it can apply fixes directly",
+        "E": "Start a fresh session after every command"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanation": "Subagents run with their own context window, so delegating log searches to a subagent that returns only a condensed finding keeps the main session focused. Asking Claude to filter logs with targeted commands (grep for the request ID or time window) rather than reading whole files reduces noise further. Pasting full logs or granting production write access to speed things up adds noise or risk.",
+      "why_incorrect": {
+        "B": "This fills context with noise and degrades reasoning.",
+        "D": "Investigation does not require production write access; it adds unnecessary risk.",
+        "E": "Losing all context each time prevents building an understanding of the incident."
+      },
+      "module": "09-claude-code/05-commands-skills-subagents.md",
+      "references": [
+        "https://code.claude.com/docs/en/sub-agents"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-009",
+      "objective": "CCAR-P-7.3",
+      "type": "single",
+      "difficulty": "intermediate",
+      "category": "troubleshooting",
+      "scenario": "A developer at Northwind Lending reports that an MCP server configured for Claude Code is not available in their session, while it works for colleagues.",
+      "question": "What is the most effective first diagnostic step?",
+      "options": {
+        "A": "Reinstall Claude Code and all dependencies",
+        "B": "Run `claude mcp list` to check each server's health status, confirm which scope (local, project or user) it is configured in, and see whether a project-scoped server is still awaiting the developer's approval or needs authentication",
+        "C": "Switch to a different model",
+        "D": "Delete the developer's CLAUDE.md"
+      },
+      "answer": [
+        "B"
+      ],
+      "explanation": "Start with the tool's own diagnostics. `claude mcp list` shows each configured server with a health status (for example connected, needs authentication, failed to connect, or pending approval for a project-scoped server from `.mcp.json` that this developer has not yet approved). That reveals whether the server is configured in a scope the developer's session uses and why it is unavailable. Reinstalling everything or switching models does not target the likely causes.",
+      "why_incorrect": {
+        "A": "This is disruptive and does not identify the cause.",
+        "C": "Model choice does not affect whether an MCP server is configured or connected.",
+        "D": "CLAUDE.md does not control MCP server configuration."
+      },
+      "module": "09-claude-code/07-mcp-in-claude-code.md",
+      "references": [
+        "https://code.claude.com/docs/en/mcp"
+      ]
+    },
+    {
+      "id": "CCAR-P-D7-010",
+      "objective": "CCAR-P-7.3",
+      "type": "single",
+      "difficulty": "advanced",
+      "category": "scenario",
+      "scenario": "Tailspin Insurance runs Claude Code headlessly in a nightly job that triages failing tests. Some nights the job hangs and never produces output.",
+      "question": "Which change most improves the job's operational reliability?",
+      "options": {
+        "A": "Run the job interactively so someone can answer prompts",
+        "B": "Bypass all permission checks so nothing can block",
+        "C": "Pre-configure the allowed tools for the headless run, set turn and time limits, request structured output, and fail the job visibly on timeout",
+        "D": "Retry the job in a loop until it produces output"
+      },
+      "answer": [
+        "C"
+      ],
+      "explanation": "Unattended runs need explicit bounds and pre-approved permissions: a headless run has no one to answer permission prompts, so the allowed tools should be configured in advance, with a turn or time limit and structured output that the job checks. Logging the run and failing loudly on timeout makes hangs visible. Running interactively or granting unrestricted permissions defeats the purpose or adds risk.",
+      "why_incorrect": {
+        "A": "This removes the benefit of automation.",
+        "B": "Unrestricted permissions in an unattended job create unnecessary security risk.",
+        "D": "Unbounded retries hide the cause and can consume large amounts of resources."
+      },
+      "module": "09-claude-code/09-headless-ci-and-agent-sdk.md",
+      "references": [
+        "https://code.claude.com/docs/en/headless"
+      ]
+    }
+  ]
+}

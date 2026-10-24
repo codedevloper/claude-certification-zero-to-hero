@@ -1,0 +1,5 @@
+[
+  {"id": "RB-101", "title": "VPN client cannot connect", "service": "vpn", "steps": ["Check the user's account is not locked in the identity portal.", "Ask the user to reinstall the VPN profile from the self-service catalogue.", "If the gateway status is degraded, link the ticket to the open incident instead of troubleshooting further."]},
+  {"id": "RB-102", "title": "Shared mailbox missing in mail client", "service": "email", "steps": ["Confirm the user is in the mailbox's access group.", "Allow up to 60 minutes for group changes to sync.", "Ask the user to restart the mail client."]},
+  {"id": "RB-103", "title": "Loan origination portal slow", "service": "loan-portal", "steps": ["Check the service status for loan-portal.", "If status is degraded, do not restart anything; raise or link a P2 incident.", "Collect the user's timestamp and browser for the incident record."]}
+]

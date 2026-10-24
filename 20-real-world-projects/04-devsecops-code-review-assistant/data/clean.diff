@@ -1,0 +1,14 @@
+diff --git a/app/routes/health.py b/app/routes/health.py
+new file mode 100644
+--- /dev/null
++++ b/app/routes/health.py
+@@ -0,0 +1,9 @@
++from flask import Blueprint, jsonify
++
++bp = Blueprint("health", __name__)
++
++
++@bp.route("/healthz")
++def healthz():
++    """Liveness probe. Returns a constant body and reads no user input."""
++    return jsonify({"status": "ok"})

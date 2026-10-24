@@ -1,0 +1,5 @@
+{"ts": "2026-10-20T09:12:40Z", "host": "NWL-LT-0193", "user": "dana.reyes", "event": "process_start", "process": "outlook.exe", "src_ip": "10.8.0.21"}
+{"ts": "2026-10-21T02:58:44Z", "host": "FS01", "user": "dana.reyes", "event": "smb_session_open", "share": "\\\\FS01\\finance", "src_ip": "10.8.0.77"}
+{"ts": "2026-10-21T03:05:10Z", "host": "FS01", "user": "dana.reyes", "event": "bulk_file_read", "path": "\\\\FS01\\finance\\loan-pipeline", "file_count": 412, "src_ip": "10.8.0.77"}
+{"ts": "2026-10-21T03:39:02Z", "host": "FS01", "user": "dana.reyes", "event": "archive_created", "path": "\\\\FS01\\finance\\loan-pipeline\\export_q3.zip", "size_bytes": 1879048192, "src_ip": "10.8.0.77"}
+{"ts": "2026-10-21T08:30:15Z", "host": "NWL-LT-0193", "user": "dana.reyes", "event": "process_start", "process": "excel.exe", "src_ip": "10.8.0.22"}

@@ -1,0 +1,18 @@
+{
+  "version": "2026-10-24",
+  "approval_ttl_seconds": 900,
+  "poll_interval_seconds": 60,
+  "requester_identity": "agent:acme-ops-assistant",
+  "tools": {
+    "get_shipment_status": {"tier": "low", "why": "read-only lookup"},
+    "reschedule_delivery": {"tier": "medium", "why": "customer-visible but easy to reverse"},
+    "issue_carrier_credit": {
+      "tier": "medium",
+      "why": "small goodwill credits are routine",
+      "escalate": [{"field": "amount_usd", "gt": 100, "tier": "high", "why": "credit above 100 USD moves real money"}],
+      "hard_limits": [{"field": "amount_usd", "max": 2000, "why": "credits above 2000 USD go through the finance system, never the assistant"}]
+    },
+    "reroute_shipment": {"tier": "high", "why": "address changes are a common fraud pattern and hard to reverse"},
+    "release_customs_hold": {"tier": "high", "why": "regulatory exposure if paperwork is wrong"}
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "ticket_id": "T-1001",
+    "customer": "Tailspin Toys",
+    "channel": "account portal",
+    "text": "Shipment SHP-7781 arrived with crushed cartons. Damage claim CLM-220 is attached with photos. Please confirm the shipment status and issue the agreed carrier credit of 450 USD."
+  },
+  {
+    "ticket_id": "T-1002",
+    "customer": "Fabrikam",
+    "channel": "inbound email (sender not verified)",
+    "text": "Please reroute shipment SHP-7790 to our new warehouse at 99 Harbour Road, Port Example. We moved last week and need it there by Friday."
+  },
+  {
+    "ticket_id": "T-1003",
+    "customer": "Contoso Health",
+    "channel": "account portal",
+    "text": "Shipment SHP-7802 has been stuck in a customs hold for three days. Our broker (reference BRK-5521) says the paperwork is fixed, so please release the hold today. Also apply a 60 USD goodwill credit for the delay, as your account manager promised."
+  }
+]

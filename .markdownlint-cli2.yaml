@@ -1,0 +1,18 @@
+# Markdown lint rules: catch structural problems without fighting the house style.
+config:
+  default: true
+  MD013: false          # line length: prose is wrapped by editors
+  MD024:
+    siblings_only: true # repeated headings allowed in different sections (template headings)
+  MD033: false          # inline HTML (<details>, <br>, anchors) is used deliberately
+  MD028: false          # adjacent blockquote callouts are deliberate (rendered separately on GitHub)
+  MD029: false          # numbered lists resume after code blocks
+  MD036: false          # emphasis used as a caption
+  MD041: false          # some generated files start with a blockquote
+  MD060: false          # table column alignment is cosmetic
+ignores:
+  - ".venv/**"
+  - ".site/**"
+  - "site/**"
+  - "**/node_modules/**"
+  - "20-real-world-projects/*/data/**"   # synthetic program inputs, not documentation

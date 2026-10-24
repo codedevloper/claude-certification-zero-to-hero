@@ -1,0 +1,17 @@
+{
+  "description": "Allowlist of MITRE ATT&CK Enterprise technique IDs that the triage assistant may suggest. Names follow the public ATT&CK knowledge base (https://attack.mitre.org/). Extend this list deliberately; IDs outside it are dropped.",
+  "techniques": {
+    "T1003.001": "OS Credential Dumping: LSASS Memory",
+    "T1021.001": "Remote Services: Remote Desktop Protocol",
+    "T1027": "Obfuscated Files or Information",
+    "T1048": "Exfiltration Over Alternative Protocol",
+    "T1059.001": "Command and Scripting Interpreter: PowerShell",
+    "T1071.001": "Application Layer Protocol: Web Protocols",
+    "T1078": "Valid Accounts",
+    "T1110": "Brute Force",
+    "T1110.003": "Brute Force: Password Spraying",
+    "T1204.002": "User Execution: Malicious File",
+    "T1566.001": "Phishing: Spearphishing Attachment",
+    "T1567.002": "Exfiltration Over Web Service: Exfiltration to Cloud Storage"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "properties": {
+    "category": {
+      "type": "string",
+      "enum": ["plumbing", "electrical", "lighting", "heating_cooling", "furniture", "cleaning", "other"]
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "building": {"type": "string"},
+        "floor": {"type": "string"},
+        "area": {"type": "string"}
+      },
+      "required": ["building", "floor", "area"],
+      "additionalProperties": false
+    },
+    "summary": {"type": "string"},
+    "safety_risk": {"type": "boolean"},
+    "affected_items": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "required": ["category", "priority", "location", "summary", "safety_risk", "affected_items"],
+  "additionalProperties": false
+}

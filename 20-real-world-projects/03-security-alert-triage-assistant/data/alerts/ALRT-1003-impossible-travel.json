@@ -1,0 +1,20 @@
+{
+  "alert_id": "ALRT-1003",
+  "rule_name": "Impossible travel between two successful sign-ins",
+  "rule_severity": "medium",
+  "source": "identity-provider",
+  "timestamp": "2026-10-22T13:05:12Z",
+  "description": "Synthetic alert. The same account signed in from two countries 25 minutes apart. Distance requires travel speed above 2,000 km/h.",
+  "entities": {
+    "hosts": [],
+    "users": ["t.nakamura"],
+    "ips": ["192.0.2.10", "198.51.100.77"],
+    "domains": []
+  },
+  "evidence": {
+    "first_sign_in": {"ip": "192.0.2.10", "country": "NL", "time": "2026-10-22T12:40:02Z", "device": "managed laptop"},
+    "second_sign_in": {"ip": "198.51.100.77", "country": "BR", "time": "2026-10-22T13:05:12Z", "device": "unknown browser"},
+    "mfa_method": "push notification approved",
+    "known_vpn_egress": false
+  }
+}

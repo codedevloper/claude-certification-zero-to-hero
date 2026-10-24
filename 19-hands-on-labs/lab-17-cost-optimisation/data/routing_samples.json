@@ -1,0 +1,29 @@
+{
+  "description": "Synthetic, hand-labelled prompts for testing the lab's complexity router. Labels say which tier is the cheapest one expected to meet the quality bar.",
+  "samples": [
+    {"prompt": "What time does the Northwind support desk close on Fridays?", "tier": "simple"},
+    {"prompt": "Which form do I use to update a borrower's mailing address?", "tier": "simple"},
+    {"prompt": "Classify this upload as payslip, bank statement or ID: 'Statement period 01-31 March, opening balance 1,204.10'", "tier": "simple"},
+    {"prompt": "Is the hardship hotline open on public holidays?", "tier": "simple"},
+    {"prompt": "Tag this message as complaint, question or praise: 'The app keeps logging me out.'", "tier": "simple"},
+    {"prompt": "How many days do we keep call recordings?", "tier": "simple"},
+    {"prompt": "Where is the escalation matrix stored?", "tier": "simple"},
+    {"prompt": "Classify this ticket priority: 'Customer cannot see their payment schedule.'", "tier": "simple"},
+    {"prompt": "Draft a polite email telling a borrower their document upload was received and is under review.", "tier": "medium"},
+    {"prompt": "Summarise this 3-page case history into five bullet points for the next agent.", "tier": "medium"},
+    {"prompt": "Rewrite this payment reminder so it reads more warmly without changing the due date.", "tier": "medium"},
+    {"prompt": "Explain the difference between a payment holiday and a payment plan in plain English for a customer.", "tier": "medium"},
+    {"prompt": "Draft a reply to a customer asking why their autopay date moved.", "tier": "medium"},
+    {"prompt": "Summarise last week's escalation notes for the team stand-up.", "tier": "medium"},
+    {"prompt": "Turn these meeting notes into an action list with owners.", "tier": "medium"},
+    {"prompt": "Write a short internal announcement about the new document upload portal.", "tier": "medium"},
+    {"prompt": "Analyse these three hardship-policy drafts, compare their operational risk and recommend one with trade-offs.", "tier": "complex"},
+    {"prompt": "Review this portfolio summary and identify segments where the arrears trend and the policy change interact.", "tier": "complex"},
+    {"prompt": "Compare our escalation process with the proposed one and assess the impact on complaint handling times.", "tier": "complex"},
+    {"prompt": "Assess the risk of moving document retention to a new vendor and propose controls.", "tier": "complex"},
+    {"prompt": "Design a decision tree for routing hardship requests, including edge cases and failure modes.", "tier": "complex"},
+    {"prompt": "Evaluate whether the proposed fee waiver rule could treat customer groups inconsistently and explain why.", "tier": "complex"},
+    {"prompt": "What changed in the collections script between version 4 and version 5, and why might agents push back?", "tier": "complex"},
+    {"prompt": "Check this summary of a 40-page audit report for anything it left out.", "tier": "complex"}
+  ]
+}

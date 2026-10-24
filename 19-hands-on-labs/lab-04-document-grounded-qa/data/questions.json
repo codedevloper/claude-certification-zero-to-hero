@@ -1,0 +1,8 @@
+[
+  {"id": "Q1", "question": "What is the hotel limit per night in a capital city?", "expect_found": true},
+  {"id": "Q2", "question": "I booked a flight 5 days before departure. Do I need anyone's approval?", "expect_found": true},
+  {"id": "Q3", "question": "Can I claim a taxi from the airport to my hotel?", "expect_found": true},
+  {"id": "Q4", "question": "Can I bring my dog on a business trip and expense the pet hotel?", "expect_found": false},
+  {"id": "Q5", "question": "How many days of paternity leave do employees get?", "expect_found": false},
+  {"id": "Q6", "question": "Is there a per-person limit when I take a client to dinner?", "expect_found": true}
+]

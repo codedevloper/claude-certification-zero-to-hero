@@ -1,0 +1,29 @@
+name: Practice question problem
+description: A practice question has a wrong key, an ambiguity or a poor explanation
+labels: ["questions"]
+body:
+  - type: input
+    id: qid
+    attributes:
+      label: Question ID
+      placeholder: CCAR-P-D3-007
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is the problem?
+      description: For example, the answer key is wrong, two options are both defensible, or the explanation is unclear
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Supporting official documentation
+  - type: checkboxes
+    id: integrity
+    attributes:
+      label: Exam integrity
+      options:
+        - label: I am not sharing or comparing against real exam content
+          required: true

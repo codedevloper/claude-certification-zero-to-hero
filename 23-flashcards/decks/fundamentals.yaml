@@ -1,0 +1,398 @@
+# Fundamentals flashcard deck: general Claude and LLM knowledge shared by every track.
+# Original, unofficial study cards; not exam content. Cards with no `objective` are cross-track fundamentals.
+# Product and API facts are as of 2026-10-24 (checked against the claude-api reference material,
+# platform.claude.com/docs, code.claude.com/docs and modelcontextprotocol.io). Validate with: python tools/flashcards.py
+deck: fundamentals
+title: Fundamentals — Claude, LLMs, prompting, API, tools, MCP, RAG and security
+cards:
+  # ---- LLM fundamentals ----
+  - id: FUN-FC-001
+    front: "What does a large language model fundamentally do?"
+    back: "Predicts the next token given all previous tokens; repeating that prediction generates text. Instruction tuning and feedback training turn it into an assistant."
+    module: 01-ai-and-llm-fundamentals/03-large-language-models.md
+  - id: FUN-FC-002
+    front: "What is a token?"
+    back: "The unit of text a model reads and writes, often a word piece. Cost, context limits and output length are all measured in tokens."
+    module: 01-ai-and-llm-fundamentals/04-tokens-and-tokenisation.md
+  - id: FUN-FC-003
+    front: "How should you measure how many tokens a prompt uses for Claude?"
+    back: "Call the token-counting endpoint (POST /v1/messages/count_tokens). Estimates based on characters or other tokenizers are unreliable, and tokenizers differ between model generations."
+    module: 06-claude-api/08-token-counting-and-cost.md
+  - id: FUN-FC-004
+    front: "What is the context window?"
+    back: "The maximum number of tokens a model can consider in one request: system prompt, tools, history, documents and output together."
+    module: 01-ai-and-llm-fundamentals/05-context-windows.md
+  - id: FUN-FC-005
+    front: "As of 2026-10-24, what context window do current Claude models (Opus 5.5, Sonnet 5.5, Haiku 5.5) offer?"
+    back: "1M tokens. Check the models overview page for current values before relying on them."
+    module: 05-claude-products-and-models/02-model-families.md
+  - id: FUN-FC-006
+    front: "Define hallucination."
+    back: "Fluent, confident output that is false or unsupported by the provided sources, such as invented citations, figures or API methods."
+    module: 01-ai-and-llm-fundamentals/06-hallucinations.md
+  - id: FUN-FC-007
+    front: "Name four ways to reduce hallucinations."
+    back: "Supply sources and require answers from them; allow 'I don't know'; ask for quotes or citations and verify them; compute numbers with code. Keep human review for high-stakes output."
+    module: 01-ai-and-llm-fundamentals/06-hallucinations.md
+  - id: FUN-FC-008
+    front: "Why can a model not know about events after its training cutoff?"
+    back: "Its knowledge comes from training data collected up to a date. Current information must be supplied in context, for example through retrieval, search tools or uploaded documents."
+    module: 01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md
+  - id: FUN-FC-009
+    front: "Generative AI versus traditional (discriminative) machine learning: what is the difference?"
+    back: "Traditional models classify or predict a label or number; generative models produce new content such as text, code or images."
+    module: 01-ai-and-llm-fundamentals/02-generative-ai.md
+  - id: FUN-FC-010
+    front: "What are the three Claude model families and their general positioning?"
+    back: "Haiku: fastest and cheapest for high-volume tasks. Sonnet: balance of capability, speed and cost. Opus: most capable in everyday use for complex work. (Fable is a higher, premium tier.)"
+    module: 05-claude-products-and-models/02-model-families.md
+  # ---- Claude and Anthropic ----
+  - id: FUN-FC-011
+    front: "What three qualities does Anthropic train Claude to have?"
+    back: "Helpful, honest and harmless."
+    module: 02-claude-fundamentals/04-anthropic-safety-approach.md
+  - id: FUN-FC-012
+    front: "What is Constitutional AI, in one sentence?"
+    back: "A training approach where a written set of principles guides the model in critiquing and revising its own outputs, reducing reliance on human labels for harmlessness."
+    module: 02-claude-fundamentals/04-anthropic-safety-approach.md
+  - id: FUN-FC-013
+    front: "What is Anthropic's Responsible Scaling Policy about?"
+    back: "Tying required safety and security measures to the capability levels of models, so stronger safeguards apply as models become more capable."
+    module: 02-claude-fundamentals/04-anthropic-safety-approach.md
+  - id: FUN-FC-014
+    front: "Name the main ways to access Claude."
+    back: "Claude apps (web, desktop, mobile), Claude Code, the Claude API (Claude Developer Platform), and cloud platforms such as Amazon Bedrock, Google Vertex AI and Microsoft Foundry."
+    module: 05-claude-products-and-models/01-product-ecosystem.md
+  - id: FUN-FC-015
+    front: "What is a Claude Project?"
+    back: "A workspace in the Claude apps with its own custom instructions and knowledge files, shared across the chats inside it."
+    objective: CCAO-F-5.1
+    module: 05-claude-products-and-models/04-projects-and-knowledge.md
+  - id: FUN-FC-016
+    front: "What is an artifact in the Claude apps?"
+    back: "Substantial standalone content (a document, code, diagram or small app) shown in a dedicated panel so it can be viewed, iterated and reused."
+    objective: CCAO-F-2.6
+    module: 05-claude-products-and-models/05-artifacts-and-output-formats.md
+  - id: FUN-FC-017
+    front: "What is a connector in the Claude apps?"
+    back: "An integration (often an MCP server) that lets Claude read from or act in another service such as a document store or email, within the user's permissions and the organisation's settings."
+    objective: CCAO-F-5.2
+    module: 05-claude-products-and-models/06-connectors-and-integrations.md
+  # ---- Prompting ----
+  - id: FUN-FC-018
+    front: "The 'new colleague' test for prompts is...?"
+    back: "If a capable new colleague would need to ask a clarifying question to do the task, the prompt is missing context."
+    module: 03-prompt-engineering/01-clear-direct-instructions.md
+  - id: FUN-FC-019
+    front: "Why use XML tags in prompts?"
+    back: "To separate instructions, data and examples clearly so Claude can tell them apart and you can refer to parts by name; it also helps keep untrusted data from being read as instructions."
+    module: 03-prompt-engineering/02-structure-with-xml-tags.md
+  - id: FUN-FC-020
+    front: "How many few-shot examples are typically useful, and what should they look like?"
+    back: "About three to five, varied, covering edge cases, wrapped in example tags. Examples that are too similar make Claude copy their quirks."
+    module: 03-prompt-engineering/03-examples-few-shot.md
+  - id: FUN-FC-021
+    front: "Where should long documents go relative to the question?"
+    back: "Before the question and instructions, clearly tagged. Placing the query at the end tends to improve answers over long context."
+    module: 03-prompt-engineering/02-structure-with-xml-tags.md
+  - id: FUN-FC-022
+    front: "What is prompt chaining?"
+    back: "Splitting a complex task into sequential calls where each output feeds the next, making each step simpler, testable and easier to debug."
+    module: 03-prompt-engineering/05-task-decomposition-and-chaining.md
+  - id: FUN-FC-023
+    front: "What belongs in a system prompt?"
+    back: "Operator-level role, rules, tone, safety boundaries and stable context that apply across the conversation. Task-specific data belongs in user turns."
+    module: 03-prompt-engineering/07-system-prompts-and-roles.md
+  - id: FUN-FC-024
+    front: "Why give the reason behind an instruction?"
+    back: "Claude generalises the intent to cases the rule did not foresee, instead of applying it rigidly."
+    module: 03-prompt-engineering/01-clear-direct-instructions.md
+  - id: FUN-FC-025
+    front: "Positive or negative framing for style instructions?"
+    back: "Positive: say what to do ('write in flowing paragraphs') rather than only what not to do."
+    module: 03-prompt-engineering/01-clear-direct-instructions.md
+  - id: FUN-FC-026
+    front: "What is the right way to iterate on a prompt?"
+    back: "Define success criteria, build a small test set, change one thing at a time, compare on the same inputs, and keep versions."
+    module: 03-prompt-engineering/08-iterating-on-prompts.md
+  - id: FUN-FC-027
+    front: "Is assistant-message prefill supported on current Claude models?"
+    back: "No. A request ending with an assistant message returns a 400. Use structured outputs or instructions to shape output."
+    module: 03-prompt-engineering/06-structured-output.md
+  - id: FUN-FC-028
+    front: "Can you tune temperature, top_p or top_k on current Claude models?"
+    back: "No. Sending them returns a 400 (as of 2026-10-24). Control output with instructions, examples, effort and structured outputs."
+    module: 06-claude-api/02-messages-api.md
+  # ---- Thinking and effort ----
+  - id: FUN-FC-029
+    front: "What is adaptive thinking?"
+    back: "thinking={'type': 'adaptive'}: Claude decides when and how much to reason before answering. It replaces fixed thinking budgets."
+    module: 03-prompt-engineering/04-reasoning-and-thinking.md
+  - id: FUN-FC-030
+    front: "What does the effort parameter control and where is it set?"
+    back: "How thorough Claude is and how many tokens it spends; set in output_config as low, medium, high, xhigh or max."
+    module: 03-prompt-engineering/04-reasoning-and-thinking.md
+  - id: FUN-FC-031
+    front: "Is budget_tokens the way to control thinking on current models?"
+    back: "No. budget_tokens is legacy and rejected on current models; use adaptive thinking plus effort."
+    module: 03-prompt-engineering/04-reasoning-and-thinking.md
+  - id: FUN-FC-032
+    front: "Which effort level suits chat or classification versus long agentic coding?"
+    back: "Low (or medium) for chat and classification; high or xhigh for coding and long agentic work. Measure before changing defaults."
+    module: 05-claude-products-and-models/03-model-selection.md
+  # ---- Context engineering ----
+  - id: FUN-FC-033
+    front: "Define context engineering."
+    back: "Deciding what information occupies the context window at each step: retrieved documents, history, tools, memory and their order, treating context as a scarce resource."
+    module: 04-context-engineering/01-what-is-context-engineering.md
+  - id: FUN-FC-034
+    front: "How does prompt caching match requests?"
+    back: "By exact prefix, in the order tools, system, messages. Any byte change before a breakpoint invalidates the cache from that point."
+    module: 04-context-engineering/03-prompt-caching.md
+  - id: FUN-FC-035
+    front: "Default cache lifetime and the longer option?"
+    back: "5 minutes, refreshed on each read; a 1-hour TTL is available at a higher write price."
+    module: 04-context-engineering/03-prompt-caching.md
+  - id: FUN-FC-036
+    front: "How do you confirm prompt caching is working?"
+    back: "Check usage.cache_read_input_tokens on repeat requests. Zero means something in the prefix changes, such as a timestamp."
+    module: 04-context-engineering/03-prompt-caching.md
+  - id: FUN-FC-037
+    front: "Name two common silent cache breakers."
+    back: "Timestamps or request IDs in the system prompt, unsorted JSON, a tool list that changes per request, or switching models."
+    module: 04-context-engineering/03-prompt-caching.md
+  - id: FUN-FC-038
+    front: "Compaction versus context editing?"
+    back: "Compaction summarises earlier conversation to free space; context editing clears specific old content such as stale tool results."
+    module: 04-context-engineering/05-compaction-and-context-editing.md
+  - id: FUN-FC-039
+    front: "What is progressive disclosure in Agent Skills?"
+    back: "Only a skill's name and description sit in context; its full instructions and files load only when relevant."
+    module: 04-context-engineering/06-progressive-disclosure-and-skills.md
+  - id: FUN-FC-040
+    front: "In the Claude apps, what can you do when a long chat starts losing track?"
+    back: "Ask for a summary, start a new chat with it, or move durable reference material into a Project's knowledge."
+    objective: CCAO-F-3.4
+    module: 04-context-engineering/02-managing-long-context.md
+  # ---- API ----
+  - id: FUN-FC-041
+    front: "Which three fields are required in a Messages API request?"
+    back: "model, max_tokens and messages."
+    module: 06-claude-api/02-messages-api.md
+  - id: FUN-FC-042
+    front: "Name the current Claude model IDs (as of 2026-10-24)."
+    back: "claude-opus-5-5 (default), claude-sonnet-5-5, claude-haiku-5-5 and claude-fable-5-1. No date suffixes."
+    module: 05-claude-products-and-models/02-model-families.md
+  - id: FUN-FC-043
+    front: "List the stop_reason values you must handle."
+    back: "end_turn, max_tokens, stop_sequence, tool_use, pause_turn and refusal."
+    module: 06-claude-api/02-messages-api.md
+  - id: FUN-FC-044
+    front: "What does stop_reason max_tokens mean for your code?"
+    back: "Output was truncated at your cap. Do not parse it as complete; raise max_tokens, stream, or ask for shorter output."
+    module: 06-claude-api/02-messages-api.md
+  - id: FUN-FC-045
+    front: "What does stop_reason refusal mean?"
+    back: "A safety classifier declined the request (HTTP 200). stop_details gives a category and explanation; handle it gracefully rather than retrying blindly."
+    module: 06-claude-api/02-messages-api.md
+  - id: FUN-FC-046
+    front: "Two ways to get schema-guaranteed JSON from Claude?"
+    back: "output_config.format with a JSON Schema, or the SDK's client.messages.parse() with a typed model."
+    module: 03-prompt-engineering/06-structured-output.md
+  - id: FUN-FC-047
+    front: "What does strict: true on a tool definition do?"
+    back: "Guarantees the tool_use input validates against the tool's schema; the schema needs required fields and additionalProperties false."
+    module: 07-tool-use-and-function-calling/02-defining-tools.md
+  - id: FUN-FC-048
+    front: "When should you stream responses?"
+    back: "When users wait for output, and for long outputs or large max_tokens, to avoid HTTP timeouts."
+    module: 06-claude-api/03-streaming.md
+  - id: FUN-FC-049
+    front: "Message Batches: discount, maximum duration and how to match results?"
+    back: "50% of standard prices; up to 24 hours (most within 1 hour); results arrive in any order, so match by custom_id."
+    module: 06-claude-api/05-batch-processing.md
+  - id: FUN-FC-050
+    front: "Which HTTP errors should a client retry?"
+    back: "429 (rate limit), 500 (api_error), 529 (overloaded) and connection errors, with exponential backoff and jitter. Not 400, 401, 403 or 404."
+    module: 06-claude-api/06-errors-rate-limits-retries.md
+  - id: FUN-FC-051
+    front: "A 404 not_found_error mentioning model: usually means...?"
+    back: "A mistyped or retired model ID, or a model not available to your organisation. List available models with GET /v1/models."
+    module: 06-claude-api/06-errors-rate-limits-retries.md
+  - id: FUN-FC-052
+    front: "How should API keys be supplied to code?"
+    back: "From environment variables or a secrets manager (for example ANTHROPIC_API_KEY), never hardcoded or committed."
+    module: 06-claude-api/01-getting-started-with-the-api.md
+  - id: FUN-FC-053
+    front: "What is the Files API for?"
+    back: "Uploading a file once and referencing it by file_id in later requests instead of re-sending base64 data."
+    module: 06-claude-api/04-vision-documents-and-citations.md
+  - id: FUN-FC-054
+    front: "How do you get citations from documents?"
+    back: "Set citations enabled on document content blocks; cited text blocks carry citations with the quoted text and location. Not combinable with structured outputs in one request."
+    module: 06-claude-api/04-vision-documents-and-citations.md
+  # ---- Tools and agents ----
+  - id: FUN-FC-055
+    front: "Describe the tool-use loop."
+    back: "Claude returns tool_use blocks (stop_reason tool_use); your code runs them and returns tool_result blocks in the next user message; repeat until end_turn."
+    module: 07-tool-use-and-function-calling/03-the-tool-use-loop.md
+  - id: FUN-FC-056
+    front: "How must results for parallel tool calls be returned?"
+    back: "All tool_result blocks in a single user message, one per tool_use id. Splitting them discourages parallel calls."
+    module: 07-tool-use-and-function-calling/03-the-tool-use-loop.md
+  - id: FUN-FC-057
+    front: "How do you report a failed tool call to Claude?"
+    back: "Return a tool_result with is_error true and a helpful message, so Claude can adapt. Never drop the result."
+    module: 07-tool-use-and-function-calling/03-the-tool-use-loop.md
+  - id: FUN-FC-058
+    front: "Which tool_choice values work on current Claude models?"
+    back: "auto (default) and none. any and tool return a 400; steer with instructions, descriptions and strict tools."
+    module: 07-tool-use-and-function-calling/02-defining-tools.md
+  - id: FUN-FC-059
+    front: "Client tools versus server tools?"
+    back: "Client tools run in your code; server tools (web search, web fetch, code execution) run on Anthropic's infrastructure and return results in the same response."
+    module: 07-tool-use-and-function-calling/04-server-tools.md
+  - id: FUN-FC-060
+    front: "What makes a good tool description?"
+    back: "What it does, when to use it and when not, input formats with examples, and what it returns, written like documentation for a new colleague."
+    module: 07-tool-use-and-function-calling/05-tool-design-best-practices.md
+  - id: FUN-FC-061
+    front: "Workflow versus agent?"
+    back: "A workflow follows steps your code defines; an agent lets the model choose the next step and tools in a loop. Start with the simplest that works."
+    module: 10-agentic-ai/01-workflows-vs-agents.md
+  - id: FUN-FC-062
+    front: "Name five workflow patterns."
+    back: "Prompt chaining, routing, parallelisation, orchestrator-workers and evaluator-optimiser."
+    module: 10-agentic-ai/02-workflow-patterns.md
+  - id: FUN-FC-063
+    front: "Why give an agent a maximum turn count?"
+    back: "To stop runaway loops and unbounded cost; pair it with clear completion criteria and budgets."
+    module: 10-agentic-ai/07-agent-reliability.md
+  - id: FUN-FC-064
+    front: "When do sub-agents help?"
+    back: "For parallel, independent work or reading-heavy subtasks, because each has its own context and returns a concise summary."
+    module: 10-agentic-ai/04-multi-agent-architecture.md
+  - id: FUN-FC-065
+    front: "Tool Runner versus Claude Agent SDK?"
+    back: "Tool Runner is a helper in the regular API SDK that loops over tools you define. The Agent SDK is the Claude Code harness as a library, with built-in file, shell and web tools."
+    module: 10-agentic-ai/06-managed-agents-and-agent-sdk.md
+  - id: FUN-FC-066
+    front: "Where should approval for a consequential agent action be enforced?"
+    back: "In code: the tool refuses to act without an approval artefact created outside the model's control. Prompt instructions alone are not enforcement."
+    module: 10-agentic-ai/05-human-in-the-loop.md
+  # ---- MCP ----
+  - id: FUN-FC-067
+    front: "What is the Model Context Protocol?"
+    back: "An open JSON-RPC 2.0 based standard for connecting AI applications (hosts) to external systems (servers) through a common interface."
+    module: 08-model-context-protocol/01-what-is-mcp.md
+  - id: FUN-FC-068
+    front: "MCP roles: host, client, server?"
+    back: "Host: the AI application. Client: the connector inside the host for one server. Server: the program exposing capabilities."
+    module: 08-model-context-protocol/02-architecture.md
+  - id: FUN-FC-069
+    front: "The three MCP server primitives and who controls each?"
+    back: "Tools (model-controlled), resources (application-controlled) and prompts (user-controlled)."
+    module: 08-model-context-protocol/02-architecture.md
+  - id: FUN-FC-070
+    front: "The two standard MCP transports?"
+    back: "stdio for local subprocess servers, and Streamable HTTP for remote servers. The older HTTP+SSE transport is deprecated."
+    module: 08-model-context-protocol/02-architecture.md
+  - id: FUN-FC-071
+    front: "What changed in the 2026-07-28 MCP revision?"
+    back: "The protocol became stateless: no initialize handshake; each request carries protocol version and client capabilities in _meta, and servers implement server/discover."
+    module: 08-model-context-protocol/02-architecture.md
+  - id: FUN-FC-072
+    front: "What authorization framework does MCP use for HTTP servers?"
+    back: "OAuth 2.1, with Protected Resource Metadata (RFC 9728), resource indicators (RFC 8707) for audience-bound tokens, and PKCE. No token passthrough."
+    module: 08-model-context-protocol/05-mcp-security.md
+  - id: FUN-FC-073
+    front: "Claude Code MCP installation scopes?"
+    back: "local (default, you, this project), project (.mcp.json, shared via version control) and user (all your projects)."
+    module: 09-claude-code/07-mcp-in-claude-code.md
+  - id: FUN-FC-074
+    front: "What is tool poisoning in MCP?"
+    back: "Hidden or malicious instructions in a tool's description or metadata that steer the model; treat descriptions from untrusted servers as untrusted."
+    module: 12-ai-security/08-mcp-server-security.md
+  # ---- RAG ----
+  - id: FUN-FC-075
+    front: "Define retrieval-augmented generation."
+    back: "Retrieving relevant chunks of your content at query time and placing them in the prompt so Claude answers from current, private sources."
+    module: 11-rag-and-knowledge-systems/01-rag-fundamentals.md
+  - id: FUN-FC-076
+    front: "What is an embedding?"
+    back: "A vector of numbers representing the meaning of text, so similar meanings are close together; used for semantic search."
+    module: 11-rag-and-knowledge-systems/03-embeddings-and-indexing.md
+  - id: FUN-FC-077
+    front: "Why use hybrid search?"
+    back: "Combining keyword (for example BM25) and vector search catches exact identifiers and rare terms that embeddings handle poorly."
+    module: 11-rag-and-knowledge-systems/04-retrieval-strategies.md
+  - id: FUN-FC-078
+    front: "What does a reranker do?"
+    back: "Re-scores a larger candidate set from first-stage retrieval with a more precise model, keeping only the most relevant few."
+    module: 11-rag-and-knowledge-systems/04-retrieval-strategies.md
+  - id: FUN-FC-079
+    front: "Chunks too small versus too large?"
+    back: "Too small loses context (facts without their subject); too large dilutes relevance and costs tokens. Tune on an eval set, splitting on document structure."
+    module: 11-rag-and-knowledge-systems/02-chunking-strategies.md
+  - id: FUN-FC-080
+    front: "Where must document permissions be enforced in RAG?"
+    back: "At retrieval time, filtering by the user's entitlements before ranking, never by asking the model to withhold content."
+    module: 11-rag-and-knowledge-systems/04-retrieval-strategies.md
+  - id: FUN-FC-081
+    front: "What is recall@k in RAG evaluation?"
+    back: "The share of questions where a correct source chunk appears in the top k results; it measures retrieval separately from answer quality."
+    module: 11-rag-and-knowledge-systems/06-rag-evaluation.md
+  - id: FUN-FC-082
+    front: "When might long context beat RAG?"
+    back: "When the knowledge is small and stable enough to fit, ideally cached, avoiding retrieval misses."
+    module: 11-rag-and-knowledge-systems/07-rag-vs-long-context.md
+  # ---- Security ----
+  - id: FUN-FC-083
+    front: "Direct versus indirect prompt injection?"
+    back: "Direct: the user types malicious instructions. Indirect: instructions hidden in content the model processes, such as web pages, emails, files or tool results."
+    module: 12-ai-security/03-indirect-prompt-injection.md
+  - id: FUN-FC-084
+    front: "Name the OWASP Top 10 for LLM Applications 2025 entries LLM01, LLM05 and LLM06."
+    back: "LLM01 Prompt Injection, LLM05 Improper Output Handling, LLM06 Excessive Agency."
+    module: 12-ai-security/owasp-llm-mapping.md
+  - id: FUN-FC-085
+    front: "What is excessive agency?"
+    back: "Giving an LLM system more tools, permissions or autonomy than the task needs, so errors or manipulation cause outsized harm."
+    module: 12-ai-security/05-tool-misuse-and-excessive-agency.md
+  - id: FUN-FC-086
+    front: "Why should model output be treated as untrusted?"
+    back: "It can be manipulated or wrong; escape it before rendering, parameterise it before queries, validate it before acting, and never eval it."
+    module: 12-ai-security/06-insecure-output-handling.md
+  - id: FUN-FC-087
+    front: "Why must secrets never go in a system prompt?"
+    back: "Prompts can leak (system prompt leakage). Keep credentials in a secrets manager and enforce authorisation in code."
+    module: 12-ai-security/10-secrets-management.md
+  - id: FUN-FC-088
+    front: "The four functions of the NIST AI Risk Management Framework?"
+    back: "Govern, Map, Measure and Manage."
+    module: 12-ai-security/12-ai-governance.md
+  - id: FUN-FC-089
+    front: "What is the exfiltration trifecta for agents?"
+    back: "Access to private data, exposure to untrusted content and a way to communicate externally. Break at least one leg."
+    module: 12-ai-security/04-data-exfiltration-and-disclosure.md
+  - id: FUN-FC-090
+    front: "Claude Code permission rule evaluation order?"
+    back: "deny, then ask, then allow; the first match wins, so a broad deny beats a narrower allow."
+    module: 09-claude-code/04-permissions-and-settings.md
+  # ---- Evaluation and operations ----
+  - id: FUN-FC-091
+    front: "Three ways to grade LLM outputs in an eval?"
+    back: "Code-based (exact match, schema checks), model-based (an LLM judge with a rubric) and human grading."
+    module: 14-evaluation-and-testing/04-grading-methods.md
+  - id: FUN-FC-092
+    front: "Name two biases of LLM judges and a mitigation."
+    back: "Length bias and position bias; use specific rubrics, randomise order and calibrate against human labels."
+    module: 14-evaluation-and-testing/04-grading-methods.md
+  - id: FUN-FC-093
+    front: "Why compare models by cost per completed task?"
+    back: "A cheaper model that needs retries or more turns can cost more overall; per-request price misleads."
+    module: 15-production-operations/03-cost-optimisation.md
+  - id: FUN-FC-094
+    front: "What should you log for every Claude API call?"
+    back: "Request ID, model, prompt version, stop_reason, token usage including cache reads, latency and tool calls, with sensitive data redacted."
+    module: 15-production-operations/02-observability.md

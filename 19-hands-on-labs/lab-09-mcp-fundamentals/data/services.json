@@ -1,0 +1,5 @@
+{
+  "vpn": {"status": "operational", "last_change": "2026-10-23T18:02:00Z"},
+  "email": {"status": "operational", "last_change": "2026-10-20T07:45:00Z"},
+  "loan-portal": {"status": "degraded", "last_change": "2026-10-24T08:51:00Z", "note": "Elevated response times under investigation"}
+}

@@ -1,0 +1,195 @@
+# CCAO-F objective map: each official objective (IDs from ../registry.yaml) mapped to the
+# learning-module pages and hands-on labs that teach it. This file is the input to
+# tools/build_coverage.py, which generates coverage-matrix.md. Paths are repository-relative
+# and must match docs/CONTENT-MAP.md exactly.
+#
+# The labs are Python-based. CCAO-F candidates do not need to code: each lab README explains
+# the concept first, and the practical-exercises.md page gives an equivalent no-code exercise
+# in the Claude apps for every domain.
+
+track: CCAO-F
+objectives:
+  # ---- Domain 1: Prompting and Task Execution (14%) ----
+  CCAO-F-1.1:
+    modules:
+      - 03-prompt-engineering/01-clear-direct-instructions.md
+      - 02-claude-fundamentals/03-prompt-fundamentals.md
+      - 03-prompt-engineering/03-examples-few-shot.md
+    labs: [19-hands-on-labs/lab-02-prompt-improvement, 19-hands-on-labs/lab-01-first-claude-interaction]
+  CCAO-F-1.2:
+    modules:
+      - 03-prompt-engineering/05-task-decomposition-and-chaining.md
+      - 03-prompt-engineering/02-structure-with-xml-tags.md
+    labs: [19-hands-on-labs/lab-02-prompt-improvement, 19-hands-on-labs/lab-12-agentic-task-execution]
+  CCAO-F-1.3:
+    modules:
+      - 03-prompt-engineering/08-iterating-on-prompts.md
+      - 02-claude-fundamentals/03-prompt-fundamentals.md
+    labs: [19-hands-on-labs/lab-02-prompt-improvement, 19-hands-on-labs/lab-16-evaluation-framework]
+  CCAO-F-1.4:
+    modules:
+      - 03-prompt-engineering/04-reasoning-and-thinking.md
+      - 03-prompt-engineering/03-examples-few-shot.md
+      - 03-prompt-engineering/07-system-prompts-and-roles.md
+    labs: [19-hands-on-labs/lab-02-prompt-improvement, 19-hands-on-labs/lab-03-structured-outputs]
+
+  # ---- Domain 2: Output Evaluation and Validation (21%) ----
+  CCAO-F-2.1:
+    modules:
+      - 14-evaluation-and-testing/01-why-evaluate.md
+      - 14-evaluation-and-testing/02-metrics.md
+      - 01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md
+    labs: [19-hands-on-labs/lab-04-document-grounded-qa, 19-hands-on-labs/lab-16-evaluation-framework]
+  CCAO-F-2.2:
+    modules:
+      - 01-ai-and-llm-fundamentals/06-hallucinations.md
+      - 11-rag-and-knowledge-systems/05-grounding-and-citations.md
+      - 02-claude-fundamentals/05-responsible-use.md
+    labs: [19-hands-on-labs/lab-04-document-grounded-qa, 19-hands-on-labs/lab-16-evaluation-framework]
+  CCAO-F-2.3:
+    modules:
+      - 11-rag-and-knowledge-systems/05-grounding-and-citations.md
+      - 01-ai-and-llm-fundamentals/06-hallucinations.md
+      - 14-evaluation-and-testing/04-grading-methods.md
+    labs: [19-hands-on-labs/lab-04-document-grounded-qa]
+  CCAO-F-2.4:
+    modules:
+      - 12-ai-security/13-human-oversight.md
+      - 10-agentic-ai/05-human-in-the-loop.md
+    labs: [19-hands-on-labs/lab-13-human-in-the-loop]
+  CCAO-F-2.5:
+    modules:
+      - 03-prompt-engineering/08-iterating-on-prompts.md
+      - 03-prompt-engineering/01-clear-direct-instructions.md
+      - 14-evaluation-and-testing/04-grading-methods.md
+    labs: [19-hands-on-labs/lab-02-prompt-improvement, 19-hands-on-labs/lab-06-model-comparison]
+  CCAO-F-2.6:
+    modules:
+      - 05-claude-products-and-models/05-artifacts-and-output-formats.md
+      - 03-prompt-engineering/06-structured-output.md
+    labs: [19-hands-on-labs/lab-03-structured-outputs]
+
+  # ---- Domain 3: Product and Model Selection (12%) ----
+  CCAO-F-3.1:
+    modules:
+      - 05-claude-products-and-models/01-product-ecosystem.md
+      - 05-claude-products-and-models/04-projects-and-knowledge.md
+      - 05-claude-products-and-models/05-artifacts-and-output-formats.md
+    labs: [19-hands-on-labs/lab-01-first-claude-interaction, 19-hands-on-labs/lab-04-document-grounded-qa]
+  CCAO-F-3.2:
+    modules:
+      - 05-claude-products-and-models/02-model-families.md
+    labs: [19-hands-on-labs/lab-06-model-comparison]
+  CCAO-F-3.3:
+    modules:
+      - 05-claude-products-and-models/03-model-selection.md
+      - 15-production-operations/03-cost-optimisation.md
+    labs: [19-hands-on-labs/lab-06-model-comparison, 19-hands-on-labs/lab-17-cost-optimisation]
+  CCAO-F-3.4:
+    modules:
+      - 01-ai-and-llm-fundamentals/05-context-windows.md
+      - 04-context-engineering/02-managing-long-context.md
+      - 04-context-engineering/04-memory-and-persistence.md
+      - 04-context-engineering/05-compaction-and-context-editing.md
+    labs: [19-hands-on-labs/lab-05-context-management]
+
+  # ---- Domain 4: Workflow Integration and Solution Design (16%) ----
+  CCAO-F-4.1:
+    modules:
+      - 13-enterprise-ai-architecture/01-solution-design-process.md
+      - 01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md
+    labs: [19-hands-on-labs/lab-02-prompt-improvement, 19-hands-on-labs/lab-04-document-grounded-qa]
+  CCAO-F-4.2:
+    modules:
+      - 05-claude-products-and-models/01-product-ecosystem.md
+      - 10-agentic-ai/02-workflow-patterns.md
+      - 13-enterprise-ai-architecture/01-solution-design-process.md
+    labs: [19-hands-on-labs/lab-12-agentic-task-execution, 19-hands-on-labs/lab-04-document-grounded-qa]
+  CCAO-F-4.3:
+    modules:
+      - 13-enterprise-ai-architecture/01-solution-design-process.md
+      - 13-enterprise-ai-architecture/02-architecture-patterns.md
+      - 03-prompt-engineering/08-iterating-on-prompts.md
+    labs: [19-hands-on-labs/lab-12-agentic-task-execution, 19-hands-on-labs/lab-02-prompt-improvement]
+  CCAO-F-4.4:
+    modules:
+      - 10-agentic-ai/01-workflows-vs-agents.md
+      - 10-agentic-ai/02-workflow-patterns.md
+      - 13-enterprise-ai-architecture/04-integration-patterns.md
+      - 05-claude-products-and-models/06-connectors-and-integrations.md
+    labs: [19-hands-on-labs/lab-12-agentic-task-execution, 19-hands-on-labs/lab-13-human-in-the-loop]
+  CCAO-F-4.5:
+    modules:
+      - 13-enterprise-ai-architecture/06-stakeholder-communication.md
+      - 13-enterprise-ai-architecture/08-business-value-and-roi.md
+      - 01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md
+    labs: [19-hands-on-labs/lab-06-model-comparison, 19-hands-on-labs/lab-17-cost-optimisation]
+
+  # ---- Domain 5: Configuration and Knowledge Management (12%) ----
+  CCAO-F-5.1:
+    modules:
+      - 05-claude-products-and-models/04-projects-and-knowledge.md
+      - 03-prompt-engineering/07-system-prompts-and-roles.md
+    labs: [19-hands-on-labs/lab-04-document-grounded-qa]
+  CCAO-F-5.2:
+    modules:
+      - 05-claude-products-and-models/06-connectors-and-integrations.md
+      - 05-claude-products-and-models/04-projects-and-knowledge.md
+      - 08-model-context-protocol/01-what-is-mcp.md
+      - 12-ai-security/03-indirect-prompt-injection.md
+    labs: [19-hands-on-labs/lab-09-mcp-fundamentals, 19-hands-on-labs/lab-04-document-grounded-qa]
+  CCAO-F-5.3:
+    modules:
+      - 03-prompt-engineering/07-system-prompts-and-roles.md
+      - 03-prompt-engineering/02-structure-with-xml-tags.md
+      - 04-context-engineering/06-progressive-disclosure-and-skills.md
+    labs: [19-hands-on-labs/lab-02-prompt-improvement, 19-hands-on-labs/lab-03-structured-outputs]
+  CCAO-F-5.4:
+    modules:
+      - 05-claude-products-and-models/04-projects-and-knowledge.md
+      - 13-enterprise-ai-architecture/09-lifecycle-management.md
+      - 15-production-operations/08-model-upgrades-and-change-management.md
+    labs: [19-hands-on-labs/lab-04-document-grounded-qa, 19-hands-on-labs/lab-16-evaluation-framework]
+
+  # ---- Domain 6: Governance, Risk, and Responsible Use (15%) ----
+  CCAO-F-6.1:
+    modules:
+      - 02-claude-fundamentals/05-responsible-use.md
+      - 01-ai-and-llm-fundamentals/07-capabilities-and-limitations.md
+      - 02-claude-fundamentals/04-anthropic-safety-approach.md
+    labs: [19-hands-on-labs/lab-13-human-in-the-loop]
+  CCAO-F-6.2:
+    modules:
+      - 12-ai-security/04-data-exfiltration-and-disclosure.md
+      - 13-enterprise-ai-architecture/05-data-governance-and-compliance.md
+    labs: [19-hands-on-labs/lab-15-sensitive-data-protection]
+  CCAO-F-6.3:
+    modules:
+      - 12-ai-security/12-ai-governance.md
+      - 12-ai-security/14-enterprise-deployment-controls.md
+    labs: [19-hands-on-labs/lab-15-sensitive-data-protection, 19-hands-on-labs/lab-20-secure-enterprise-architecture]
+  CCAO-F-6.4:
+    modules:
+      - 02-claude-fundamentals/04-anthropic-safety-approach.md
+      - 02-claude-fundamentals/05-responsible-use.md
+      - 12-ai-security/13-human-oversight.md
+    labs: [19-hands-on-labs/lab-13-human-in-the-loop]
+
+  # ---- Domain 7: Troubleshooting and Optimization (10%) ----
+  CCAO-F-7.1:
+    modules:
+      - 03-prompt-engineering/08-iterating-on-prompts.md
+      - 14-evaluation-and-testing/06-diagnosing-failures.md
+      - 24-troubleshooting/prompts-and-outputs.md
+    labs: [19-hands-on-labs/lab-02-prompt-improvement, 19-hands-on-labs/lab-16-evaluation-framework]
+  CCAO-F-7.2:
+    modules:
+      - 03-prompt-engineering/08-iterating-on-prompts.md
+      - 14-evaluation-and-testing/05-ab-testing-and-iteration.md
+    labs: [19-hands-on-labs/lab-16-evaluation-framework, 19-hands-on-labs/lab-02-prompt-improvement]
+  CCAO-F-7.3:
+    modules:
+      - 15-production-operations/03-cost-optimisation.md
+      - 04-context-engineering/02-managing-long-context.md
+      - 10-agentic-ai/02-workflow-patterns.md
+    labs: [19-hands-on-labs/lab-17-cost-optimisation, 19-hands-on-labs/lab-05-context-management]
