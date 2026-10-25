@@ -1,4 +1,4 @@
 # Tooling for validation and tests (no API key needed)
 pyyaml>=6.0
 jsonschema>=4.21
-pytest>=8.0
+pytest>=9.1.1
